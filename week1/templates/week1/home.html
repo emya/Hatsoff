@@ -1,0 +1,25 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+
+<div id="home">
+<p>Hi {{user.username}}</p>
+Profile Picture
+<br>
+Name:{{user.username}}
+<br>
+Profile:{{profile.profile}}
+<br>
+Works at:{{profile.worksAt}}
+<br>
+City:{{profile.city}}
+<br>
+Education:{{profile.education}}
+<br>
+Skills:{{profile.skills}}
+<br>
+
+Edit
+
+</div>
+{% endblock %}

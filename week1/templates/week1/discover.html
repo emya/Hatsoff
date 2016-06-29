@@ -1,0 +1,36 @@
+{% extends 'week1/base.html'%}
+
+{% block content %}
+<div id="discover">
+
+<div id="discover-left">
+<h3>BE DISCOVERED</h3>
+<p>
+Showcase your work and talent &amp; what you’re working on next. Have your fans help you with your projects, your career.
+<br>
+<br>
+0% free
+</p>
+</div>
+
+<div id="discover-center">
+    <form action="" class="signuptable" method="POST">{% csrf_token %}
+        <table border="0" align="center" width="200">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Signup" align="center" />
+<form>
+</div>
+
+<div id="discover-right">
+<h3>DISCOVERE TALENT</h3>
+<p>
+Discover and support creators, entrepreneurs, dreamers you love. Help shape their projects and career and/or pitch a proposal or job. 
+<br>
+<br>
+0% free
+</p>
+</div>
+
+</div>
+{% endblock %}

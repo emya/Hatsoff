@@ -1,0 +1,68 @@
+#body {
+   min-height: 100%;
+}
+
+#wrapper {
+   padding; 30px 0 50px;
+}
+
+#header {
+   border-bottom: 2px solid #808080;
+/*
+   margin-top: -30px;
+   height: 30px;
+   width: 100%;
+*/
+}
+
+#header .header-menus {
+   text-align:center;
+}
+
+#header .header-menus a {
+   text-decoration: none;
+}
+
+#footer {
+   background-color: #808080;
+   margin-bottom: -50px;
+   height: 50px;
+   width: 100%;
+}
+
+#about #sidemenu{
+   position: fixed;
+   right: 0;
+   margin-right: 10px;
+   top: 100px;
+}
+
+#about #sidemenu li {
+   margin: 10px 0;
+}
+
+#discover {
+   min-height: 100%;
+   line-height: 1.7;
+}
+
+#discover #discover-left {
+   position: absolute;
+   padding: 20px;
+   left: 30px;
+   width: 35%;
+}
+
+#discover #discover-center {
+   position: fixed;
+   left: 40%;
+   top: 50px;
+   background-color: #f3f3f3;
+}
+
+#discover #discover-right {
+   position: absolute;
+   padding: 20px;
+   right: 30px;
+   width: 35%;
+}

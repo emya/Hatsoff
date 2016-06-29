@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
+<div id='body'>
+
+<div id='header'>
+    <div class='header-menus'>
+	    <a href="{% url 'week1:about' %}">HOME</a>
+	    <a href="{% url 'week1:index' %}">Notifications</a>
+	    <a href="{% url 'week1:index' %}">Message</a>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<div id='footer'>
+    <div class='footer-menus'>
+	    <a href="{% url 'week1:index' %}">ABOUT</a>
+	    <a href="{% url 'week1:index' %}">DISCOVER</a>
+	    <a href="{% url 'week1:index' %}">DOWNLOAD</a>
+	    <a href="{% url 'week1:index' %}">SIGN UP</a>
+	    <a href="{% url 'week1:index' %}">LOG IN</a>
+</div>
+
+</div>

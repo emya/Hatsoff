@@ -1,0 +1,22 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+<div id="home-edit">
+
+<div id="edit-form">
+    <form action="" class="signuptable" method="POST">{% csrf_token %}
+    {{ form }}
+        Profile Picture: <input type='text' name='profilepicture'><br/>
+        Full Name: <input type='text' name='fullname' value='{{ profile.fullname }}'><br/>
+        Profile: <input type='text' name='profile' value='{{ profile.profile }}'><br/>
+        Works at: <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
+        City: <input type='text' name='city' value='{{ profile.city }}'><br/>
+        Education: <input type='text' name='education' value='{{ profile.education }}'><br/>
+        Skills: <input type='text' name='skills' value='{{ profile.skills }}'><br/>
+        <input type="submit" value="Register" align="center" />
+<form>
+
+</div>
+
+</div>
+{% endblock %}

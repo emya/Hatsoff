@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404 
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -66,3 +66,31 @@ def home(request):
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
+
+@login_required
+def home_edit(request):
+    print "username", request.user.username
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if request.method == 'POST':
+        profilepicture = request.POST.get('profilepicture')
+        fullname = request.POST.get('fullname')
+        profile = request.POST.get('profile')
+        worksAt = request.POST.get('worksAt')
+        city = request.POST.get('city')
+        education = request.POST.get('education')
+        skills = request.POST.get('skills')
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser, profilepicture=profilepicture, fullname=fullname, profile=profile, worksAt=worksAt, city=city, education=education, skills=skills)
+            p.save()
+        else:
+            Profile.objects.filter(user=currentuser).update(profilepicture=profilepicture, fullname=fullname, profile=profile, worksAt=worksAt, city=city)
+    else:
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+
+
+    print "currentuser", currentuser.username
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit.html', {'profile':usersprofile})
+

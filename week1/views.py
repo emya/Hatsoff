@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect
 
 from .models import Profile
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ProfileForm
 
 # Create your views here.
 def index(request):
@@ -61,14 +61,43 @@ def discover(request):
 @login_required
 def home(request):
     print "userid", request.user.id
-    profile = Profile.objects.filter(user=request.user)
-    return render_to_response('week1/home.html', {'user':request.user, 'profile': profile})
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile': profile})
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
 
 @login_required
 def home_edit(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if request.method == "POST":
+        MyProfile = ProfileForm(request.POST, request.FILES)
+
+        if MyProfile.is_valid():
+            photo = MyProfile.cleaned_data["photo"]
+            fullname = MyProfile.cleaned_data["fullname"]
+            profile = MyProfile.cleaned_data["profile"]
+            worksAt = MyProfile.cleaned_data["worksAt"]
+            city = MyProfile.cleaned_data["city"]
+            education = MyProfile.cleaned_data["education"]
+            skills = MyProfile.cleaned_data["skills"]
+
+            if num_result == 0:
+                p = Profile.objects.create(user=currentuser, photo=photo, fullname=fullname, profile=profile, worksAt=worksAt, city=city, education=education, skills=skills)
+                p.save()
+            else:
+                Profile.objects.filter(user=currentuser).update(photo=photo, fullname=fullname, profile=profile, worksAt=worksAt, city=city, education=education, skills=skills)
+
+    else:
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit.html', {'profile':usersprofile})
+
+"""
     print "username", request.user.username
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
@@ -94,3 +123,4 @@ def home_edit(request):
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit.html', {'profile':usersprofile})
 
+"""

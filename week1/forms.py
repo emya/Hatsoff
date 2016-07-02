@@ -20,3 +20,18 @@ class RegistrationForm(forms.Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two passwords did not match."))
         return self.cleaned_data
+
+class ProfileForm(forms.Form):
+    photo = forms.ImageField(required=False)
+    fullname = forms.CharField(max_length=100, required=False)
+    profile = forms.CharField(max_length=200, required=False)
+    worksAt = forms.CharField(max_length=100, required=False)
+    city = forms.CharField(max_length=100, required=False)
+    education = forms.CharField(max_length=200, required=False)
+    skills = forms.CharField(max_length=200, required=False)
+    fQuote = forms.CharField(max_length=200, required=False)
+    fFilmmaker = forms.CharField(max_length=100, required=False)
+    fTvandYoutube = forms.CharField(max_length=100, required=False)
+    fMillennial = forms.CharField(max_length=100, required=False)
+    fBook = forms.CharField(max_length=100, required=False)
+    showcase = forms.CharField(max_length=200, required=False)

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
     user = models.ForeignKey(User)
-    profilepicture = models.CharField(max_length=200, default='', blank=True)
+    photo = models.ImageField(upload_to='photoimg/', null=True, blank=True)
     fullname = models.CharField(max_length=100, default='', blank=True)
     profile = models.CharField(max_length=200, default='', blank=True)
     worksAt = models.CharField(max_length=100, default='', blank=True)

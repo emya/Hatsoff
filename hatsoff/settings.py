@@ -82,6 +82,11 @@ DATABASES = {
     }
 }
 
+# Full path to a directory to store uploaded file
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = '/Users/ayadaemi/djcode/hatsoff/week1/media'
+MEDIA_URL = '/media/'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

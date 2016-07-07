@@ -1,43 +1,67 @@
 {% extends 'week1/base.html'%}
+{% load staticfiles %}
 
 {% block content %}
-<div id="about">
-
-<div id="sidebar">
-<h3>Discover &amp; support creators, entrepreneurs, dreamers you love.</h3>
-<p>Help shape their dreams.</p>
-	<ul style="list-style: none;" id="sidemenu">
-		<li><a href="">hats off</a>
-		<li><a href="">send a message/chat</a>
-		<li><a href="">contribute with your skills</a>
-		<li><a href="">help fund a project</a>
-		<li><a href="">pitch a project/job</a>
-	</ul>
-</div>
 <div class="paragraph">
-<h3>Be discovered</h3>
-<p>
-Showcase your best work to the world,
-show what you are working on next
-&amp; have your fans help you with your 
-project and career.
-</p>
+	<p>
+	Our mission is to create a community that empowers creators, entrepreneurs, and dreamers to innovate, do what they love, and succeed.
+	</p>
+
+	<p>
+	MIXHAT does not take a fee. 100% of funds and earned income goes directly to the creatives.
+	</p>
 </div>
+<table style="width: 100%">
+   <tr>
+	<td><img src="{% static 'week1/templogo.jpeg'%}" width="30px"></td>
+        <td style="width:200px">Hats off</td>
+        <td>Tip off your hat to show respect and support</td>
+   </tr>
 
-<div class="paragraph">
-<p>
-Could more people be doing what they love doing? We believe so. 
-</p>
+   <tr>
+	<td><img src="{% static 'week1/templogo.jpeg'%}" width="30px"></td>
+        <td>Send a message/chat</td>
+        <td>Messages from people you follow will go to your main inbox. Other messages will go to a separate message request inbox. Chats will be enabled when two people follow each other.</td>
+   </tr>
 
-<p>
-Mission
-</p>
+</table>
 
-<p>
-Create a community that empowers creators, entrepreneurs, and dreamers to innovate, do what they love, and succeed.
+<table style="width: 100%">
+   <tr>
+        <td></td>
+        <td></td>
+        <td><h3>Support</h3></td>
+        <td><h3>Recieve Support</h3></td>
+   </tr>
 
-We do not take a fee. 100% of funds and earned income goes directly to the creatives. 
-</p>
-</div>
-</div>
+   <tr>
+	<td><img src="{% static 'week1/templogo.jpeg'%}" width="30px"></td>
+        <td style="width:200px">Contribute with your skills</td>
+        <td>Support a project with your skills</td>
+        <td>Find people with the skills that you need</td>
+   </tr>
+
+   <tr>
+	<td><img src="{% static 'week1/templogo.jpeg'%}" width="30px"></td>
+        <td style="width:200px">Introduce a friend</td>
+        <td>Introduce a friend</td>
+        <td>Have someone introduce a friend</td>
+   </tr>
+
+   <tr>
+	<td><img src="{% static 'week1/templogo.jpeg'%}" width="30px"></td>
+        <td style="width:200px">Help fund a project</td>
+        <td>Contribute to a project via a donation</td>
+        <td>Raise funds</td>
+   </tr>
+
+   <tr>
+	<td><img src="{% static 'week1/templogo.jpeg'%}" width="30px"></td>
+        <td style="width:200px">Pitch a project/job</td>
+        <td>Pitch a project/job</td>
+        <td>Find talent by pitching or get pitched a project or job</td>
+   </tr>
+
+</table>
+
 {% endblock %}

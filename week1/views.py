@@ -15,12 +15,46 @@ from .forms import RegistrationForm, ProfileForm
 
 # Create your views here.
 def index(request):
-    template = loader.get_template('week1/index.html')
-    return HttpResponse(template.render())
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                 username = form.cleaned_data['username'],
+                 password = form.cleaned_data['password1'],
+                 email = form.cleaned_data['email'],
+            )
+
+            name = request.POST.get('username')
+            email = request.POST.get('email')
+
+            return HttpResponseRedirect('success/')
+    else:
+        form = RegistrationForm()
+
+    variables = RequestContext(request, {'form':form})
+    #template = loader.get_template('week1/discover.html')
+    return render_to_response('week1/index.html', variables, )
 
 def about(request):
-    template = loader.get_template('week1/about.html')
-    return HttpResponse(template.render())
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                 username = form.cleaned_data['username'],
+                 password = form.cleaned_data['password1'],
+                 email = form.cleaned_data['email'],
+            )
+
+            name = request.POST.get('username')
+            email = request.POST.get('email')
+
+            return HttpResponseRedirect('success/')
+    else:
+        form = RegistrationForm()
+
+    variables = RequestContext(request, {'form':form})
+    #template = loader.get_template('week1/discover.html')
+    return render_to_response('week1/about.html', variables, )
 
 def signin(request):
     logout(request)

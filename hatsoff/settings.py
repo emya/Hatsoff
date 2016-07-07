@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'week1',
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,6 +69,11 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+)
 
 WSGI_APPLICATION = 'hatsoff.wsgi.application'
 
@@ -106,3 +112,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#Authentication
+AUTH_PROFILE_MODULE = 'week.Profile'
+AUTHENTICATION_BACKENDS = (
+  'social.backends.facebook.FacebookOAuth2',
+  'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/week1/home/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1779927112242216'
+SOCIAL_AUTH_FACEBOOK_SECRET = '1af73692199bb499bb055154a0d1db8b'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.mail.mail_validation',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'week1.pipeline.get_profile_picture',
+)

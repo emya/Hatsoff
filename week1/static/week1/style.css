@@ -1,5 +1,31 @@
 #body {
    min-height: 100%;
+   width: 100%;
+}
+
+#body #body-left {
+   display: inline-block;
+   width: 66%;
+}
+
+#body #body-right {
+   position: fixed;
+   display: inline-block;
+   width: 32%;
+   background-color: #f3f3f3;
+   padding: 10px 20px;
+}
+
+#body #body-right input[type=submit]{
+   color: white;
+   background-color:#CC1771;
+   border:0px;
+   width: 50px;
+   float: right;
+}
+
+#body #body-left table{
+   padding: 20px;
 }
 
 #wrapper {
@@ -7,23 +33,42 @@
 }
 
 #header {
-   border-bottom: 2px solid #808080;
-   height: 50px;
-   line-height: 50px
-/*
-   margin-top: -30px;
-   width: 100%;
-*/
+   background-color: #AC4F7D;
+   /*border-bottom: 2px solid #808080;*/
+   height: 100px;
+   line-height: 100px;
 }
 
-#header .header-menus {
+#header #logo {
+   display: inline-block;
+   width: 10%;
+}
+
+#header #logo img {
+   top:30;
+   left:30;
+}
+
+#header #header-menus {
+   display: inline-block;
+   width: 50%;
    text-align:center;
 }
 
-#header .header-menus a {
+#header #header-login {
+   display: inline-block;
+}
+
+#header #header-login input[type=submit]{
+   color: white;
+   background-color:#7D0541;
+   border:0px;
+}
+
+#header #header-menus a {
    text-decoration: none;
    vertical-align: middle;
-   color:black;
+   color: white;
    padding: 0 10px;
 }
 
@@ -54,16 +99,49 @@
    width: 52%;
 }
 
+#body-left #hometop {
+   width:100%;
+}
+
+#body-left h3 {
+   text-align: center;
+}
+
+#body-left .paragraph {
+   padding: 10px 20px;
+}
+
+#body-left #hometop #hometop-left {
+   display: inline-block;
+   width: 45%;
+   padding: 10px;
+   background-color: #CCCCCC;
+   border-radius: 20px;
+}
+
+#body-left #hometop #hometop-right {
+   display: inline-block;
+   width: 45%;
+   padding: 10px 25px;
+   background-color: #CCCCCC;
+   border-radius: 20px;
+}
+
 #about {
    margin: 30px;
    min-height: 100%;
 }
 
-#about #sidebar {
-   width: 300px;
+#about #about-left {
+   display: inline-block;
+   width: 68%;
+}
+
+#about #about-right {
    position: fixed;
-   right: 30px;
-   top: 80px;
+   display: inline-block;
+   width: 32%;
+   background-color: #f3f3f3;
 }
 
 /*
@@ -72,11 +150,11 @@
    right: 20px;
    top: 100px;
 }
-*/
 
 #about #sidemenu li {
    margin: 10px 0;
 }
+*/
 
 #about .paragraph {
    padding-right: 350px

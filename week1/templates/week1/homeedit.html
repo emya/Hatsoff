@@ -3,7 +3,6 @@
 {% block content %}
 <div id="home-edit">
 
-<div id="edit-form">
     <form action="" class="signuptable" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form }}
         Full Name: <input type='text' name='fullname' value='{{ profile.fullname }}'><br/>
@@ -17,7 +16,6 @@
         <input type="hidden" name="next" value="home.html">
 </form>
 
-</div>
 
 </div>
 {% endblock %}

@@ -1,27 +1,52 @@
 {% extends 'week1/basehome.html'%}
 
 {% block content %}
+{% load staticfiles %}
 
-<div id="home">
-{% if profile.photo %}
-<p>Hi {{user.username}}</p>
-<img src="{{MEDIA_URL}}{{ profile.photo }}">
-{% endif %}
-<br>
-Name:{{user.username}}
-<br>
-Profile:{{profile.profile}}
-<br>
-Works at:{{profile.worksAt}}
-<br>
-City:{{profile.city}}
-<br>
-Education:{{profile.education}}
-<br>
-Skills:{{profile.skills}}
-<br>
 
-<a href="{% url 'week1:homeedit' %}">Edit</a>
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+	{% if profile.photo %}
+	<p>Hi {{user.username}}</p>
+	<img src="{{MEDIA_URL}}{{ profile.photo.url }}">
+
+	{% else %}
+	<p>Hi {{user.username}}</p>
+	<img src="{% static 'images/profileimage.png'%}" >
+
+	{% endif %}
+
+	<br>
+	Name:{{user.username}}
+	<br>
+	Profile:{{profile.profile}}
+	<br>
+	Works at:{{profile.worksAt}}
+	<br>
+	City:{{profile.city}}
+	<br>
+	Education:{{profile.education}}
+	<br>
+	Skills:{{profile.skills}}
+	<br>
+	<br>
+
+	<a href="{% url 'week1:homeedit' %}">&nbsp; Edit Your Profile &nbsp;</a>
+
+</div>
+
+<div id="home-sub">
+	Favorite Quotes:{{profile.fQoute}}
+	<br>
+	Favorite Filmmakers:{{profile.fFilmmaker}}
+	<br>
+	Favorite TV/Youtube:{{profile.fTVandYoutube}}
+	<br>
+	Favorite Millennial:{{profile.fMillennial}}
+	<br>
+	Favorite Books:{{profile.fBook}}
 
 </div>
 {% endblock %}

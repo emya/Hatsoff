@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+from django.contrib.auth.forms import PasswordResetForm
+
 class RegistrationForm(forms.Form):
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Username"), error_messages={'invalid': _("This value must contain only letters, numbers and underscores.") })
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"))
@@ -14,6 +16,13 @@ class RegistrationForm(forms.Form):
         except User.DoesNotExist:
             return self.cleaned_data['username']
         raise forms.ValidationError(_("The Username already exists, Please try another one"))
+
+    def clean_email(self):
+        try:
+            user = User.objects.get(email__iexact=self.cleaned_data['email'])
+        except User.DoesNotExist:
+            return self.cleaned_data['email']
+        raise forms.ValidationError(_("The email already exists, Please try another one"))
 
     def clean(self):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
@@ -35,3 +44,9 @@ class ProfileForm(forms.Form):
     fMillennial = forms.CharField(max_length=100, required=False)
     fBook = forms.CharField(max_length=100, required=False)
     showcase = forms.CharField(max_length=200, required=False)
+
+class ForgotPasswordForm(PasswordResetForm):
+    email = forms.EmailField(required=True, max_length=254)
+    class Meta:
+        model = User
+        fields = ("email")

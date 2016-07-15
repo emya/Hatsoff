@@ -14,23 +14,6 @@
 		    <a href="{% url 'week1:index' %}">DOWNLOAD</a>
             </div>
 
-
-	    <div id='header-right'>
-			<form action="" class="login" method="POST" >{% csrf_token %}
-				{% if message %}
-				    {% for m in message %}
-				       {{ m }}
-				    {% endfor %}
-				{% endif %}
-
-			    <input type='text' name='username' placeholder="Username">
-			    <input type="password" name="password" id="password" placeholder="Password">
-			<input type="submit" value="Log In" name="login" />
-                        <a href="{% url 'week1:reset' %}">Forgot password?</a>
-			</form>
-
-	    </div>
-
      </div>
 </div>
 
@@ -41,23 +24,9 @@
 	{% endblock %}
    </div>
 
-   <div id="body-right">
-	<h3>Sign up</h3>
-	<a href="{% url 'social:begin' 'facebook' %}"> Continue with FACEBOOK</a>
-
-        <h4>Sign up with email</h4>
-	<form action="" class="signuptable" method="POST">{% csrf_token %}
-		<table border="0" align="center" width="200">
-		    {{ form.as_table }}
-		</table>
-		<input type="submit" value="Sign up" align="right" name='signup'/>
-	</form>
-   </div>
-
 </div>
 
 <div id='footer-wrapper'>
-
     <div id='footer'>
 
 	<div id='footer-left'>

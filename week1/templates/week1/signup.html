@@ -1,0 +1,17 @@
+{% extends 'week1/base.html'%}
+
+{% block content %}
+<div id="signup">
+	<h3>Sign up</h3>
+	<a href="{% url 'social:begin' 'facebook' %}"> Continue with FACEBOOK</a>
+
+        <h4>Sign up with email</h4>
+	<form action="" class="signuptable" method="POST">{% csrf_token %}
+		<table border="0" align="center" width="200">
+		    {{ form.as_table }}
+		</table>
+		<input type="submit" value="Sign up" align="right" name='signup'/>
+	</form>
+</div>
+
+{% endblock %}

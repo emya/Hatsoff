@@ -16,7 +16,9 @@
 
 
 	    <div id='header-right'>
-			<form action="" class="login" method="POST" >{% csrf_token %}
+		    <a href="{% url 'week1:signup' %}">Sign Up</a>
+		    <a href="{% url 'week1:login' %}">Log In</a>
+			<!--form action="" class="login" method="POST" >{% csrf_token %}
 				{% if message %}
 				    {% for m in message %}
 				       {{ m }}
@@ -27,7 +29,7 @@
 			    <input type="password" name="password" id="password" placeholder="Password">
 			<input type="submit" value="Log In" name="login" />
                         <a href="{% url 'week1:reset' %}">Forgot password?</a>
-			</form>
+			</form-->
 
 	    </div>
 
@@ -36,9 +38,9 @@
 
 
 <div id="body">
-   <div id="body-left">
 	{% block content %}
 	{% endblock %}
+   <!--div id="body-left">
    </div>
 
    <div id="body-right">
@@ -52,7 +54,7 @@
 		</table>
 		<input type="submit" value="Sign up" align="right" name='signup'/>
 	</form>
-   </div>
+   </div-->
 
 </div>
 

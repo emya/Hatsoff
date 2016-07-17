@@ -2,6 +2,7 @@
    width: 1100px;
    margin: 0 auto;
    min-height: 100%;
+   padding: 20px;
 }
 
 #body #body-left {
@@ -55,13 +56,13 @@
 
 #header #header-menus {
    display: inline-block;
-   width: 600px;
+   width: 700px;
    text-align:center;
 }
 
 #header #header-right {
    display: inline-block;
-   width: 500px;
+   width: 400px;
 }
 
 #header #header-right img {
@@ -93,9 +94,9 @@
 }
 
 #header #header-right a{
-   font-size:12px;
    text-decoration: none;
    color: white;
+   padding: 0 10px;
 }
 
 #header #header-menus a {
@@ -148,22 +149,33 @@
    padding: 10px 20px;
 }
 
-#body-left #hometop #hometop-left {
-   display: inline-block;
-   width: 280px;
-   padding: 10px;
-   margin: 0 auto;
-   background-color: #CCCCCC;
-   border-radius: 20px;
+#hometop {
+   text-align: center;
 }
 
-#body-left #hometop #hometop-right {
+#hometop #hometop-left {
    display: inline-block;
    width: 280px;
    padding: 10px 25px;
    margin: 0 auto;
    background-color: #CCCCCC;
    border-radius: 20px;
+}
+
+#hometop #hometop-right {
+   display: inline-block;
+   width: 280px;
+   padding: 10px 25px;
+   margin: 0 auto;
+   background-color: #CCCCCC;
+   border-radius: 20px;
+}
+
+#body .paragraph {
+   text-align: center;
+}
+
+#body table {
 }
 
 #about {
@@ -195,8 +207,24 @@
 }
 */
 
+#signup {
+   text-align: center;
+}
+
+#login {
+   text-align: center;
+}
+
 #about .paragraph {
    padding-right: 350px
+}
+
+#welcome a {
+   background-color:#CC1771;
+   border-radius: 5px;
+   color: white;
+   text-decoration: none;
+   border:2px;
 }
 
 #home-friends {

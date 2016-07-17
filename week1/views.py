@@ -160,6 +160,41 @@ def signin(request):
     return render_to_response('week1/login.html', context_instance=RequestContext(request))
 
 @csrf_protect
+def signup(request):
+    messages = []
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                 username = form.cleaned_data['username'],
+                 password = form.cleaned_data['password1'],
+                 email = form.cleaned_data['email'],
+            )
+
+            name = request.POST.get('username')
+            email = request.POST.get('email')
+            passwd = request.POST.get('password1')
+
+            tomail = EmailMessage('Dear '+name, "Thank you for registering!", to=[email])
+            tomail.send()
+
+            newuser = authenticate(username=name, password=passwd)
+            if newuser is not None:
+                if newuser.is_active:
+                    login(request, newuser)
+            #return HttpResponseRedirect('/week1/home/')
+                    return render(request, 'week1/welcome.html')
+        else:
+            messages.append(form.errors)
+
+    else:
+        form = RegistrationForm()
+
+    variables = RequestContext(request, {'messages':messages, 'form':form})
+    return render_to_response('week1/signup.html', variables, )
+
+
+@csrf_protect
 def discover(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)

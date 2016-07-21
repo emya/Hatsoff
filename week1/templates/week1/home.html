@@ -9,19 +9,19 @@
 
 <div id="home-main">
 	{% if profile.photo %}
-	<p>Hi {{user.username}}</p>
-	<img src="{{MEDIA_URL}}{{ profile.photo.url }}">
+	    <p>Hi {{user.first_name}}</p>
+	    <img src="{{ profile.photo.url }}">
 
 	{% else %}
-	<p>Hi {{user.username}}</p>
-	<img src="{% static 'images/profileimage.png'%}" >
+	    <p>Hi {{user.first_name}}</p>
+	    <img src="{% static 'images/profileimage.png'%}" >
 
 	{% endif %}
 
 	<br>
-	Name:{{user.username}}
+	Name:{{user.first_name}} {{user.last_name}}
 	<br>
-	Profile:{{profile.profile}}
+	Profession:{{profile.profession}}
 	<br>
 	Works at:{{profile.worksAt}}
 	<br>
@@ -29,24 +29,43 @@
 	<br>
 	Education:{{profile.education}}
 	<br>
-	Skills:{{profile.skills}}
+	Birthdate:{{profile.birthdate}}
 	<br>
+	Language:{{profile.language}}
+	<br>
+	describe:{{profile.describe}}
+	<br>
+
+	{% if profile.showcase1 %}
+	    <img src="{{ profile.showcase1.url }}" class="showcase_img">
+	{% else %}
+	    <img src="{% static 'images/empty_showcase.png'%}" >
+	{% endif %}
+
+	<br>
+	describe:{{profile.describe1}}
+	<br>
+	Fun about You:{{profile.funaboutyou}}
+	<br>
+	Favorite Quotes:{{profile.fQoute}}
+	<br>
+	Favorite Film:{{profile.fFilm}}
+	<br>
+	Favorite TV:{{profile.fTV}}
+	<br>
+	Favorite Youtube:{{profile.fYoutube}}
+	<br>
+	Favorite Books:{{profile.fBook}}
+	<br>
+	Favorite Books:{{profile.fBook}}
+	<br>
+	Books I am reading now:{{profile.bookNow}}
+	<br>
+	TV I am watching now:{{profile.TVNow}}
 	<br>
 
 	<a href="{% url 'week1:homeedit' %}">&nbsp; Edit Your Profile &nbsp;</a>
 
 </div>
 
-<div id="home-sub">
-	Favorite Quotes:{{profile.fQoute}}
-	<br>
-	Favorite Filmmakers:{{profile.fFilmmaker}}
-	<br>
-	Favorite TV/Youtube:{{profile.fTVandYoutube}}
-	<br>
-	Favorite Millennial:{{profile.fMillennial}}
-	<br>
-	Favorite Books:{{profile.fBook}}
-
-</div>
 {% endblock %}

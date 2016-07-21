@@ -1,0 +1,18 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="step">
+
+<form action="" method="POST">{% csrf_token %}
+    <table border="0" align="center" width="200">
+	{{ form.as_table }}
+    </table>
+    <input type="submit" value="Next" align="right"/>
+</form>
+<a href="{% url 'week1:step5' %}">Skip</a>
+
+</div>
+
+{% endblock %}

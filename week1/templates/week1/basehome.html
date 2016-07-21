@@ -16,11 +16,11 @@
 
 	   <div id='header-right'>
 		{% if profile.photo %}
-		{{user.username}}
+		{{user.first_name}}
 		<img src="{{MEDIA_URL}}{{ profile.photo.url }}">
 
 		{% else %}
-		{{user.username}}
+		{{user.first_name}}
                 <img src="{% static 'images/profileimage.png'%}">
 		{% endif %}
 	    </div>

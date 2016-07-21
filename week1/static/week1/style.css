@@ -173,6 +173,7 @@
 
 #body .paragraph {
    text-align: center;
+   padding: 20px;
 }
 
 #body table {
@@ -193,6 +194,15 @@
    display: inline-block;
    width: 32%;
    background-color: #f3f3f3;
+}
+
+table #space {
+   border-spacing:0 5px;
+}
+
+tr.spaceUnder > td
+{
+  padding-bottom: 3em;
 }
 
 /*
@@ -234,12 +244,7 @@
 
 #home-main {
    display: inline-block;
-   width: 400px;
-}
-
-#home-sub {
-   display: inline-block;
-   width: 300px;
+   width: 600px;
 }
 
 #home-main a {
@@ -248,6 +253,10 @@
    color: white;
    text-decoration: none;
    border:2px;
+}
+
+#home-main img.showcase_img {
+   max-width: 400px;
 }
 
 #home-edit {

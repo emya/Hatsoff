@@ -1,7 +1,10 @@
 {% extends 'week1/base.html'%}
+{% load staticfiles %}
 
 {% block content %}
 <div id="hometop">
+    
+    <img src="{% static 'images/indextop_tmp.png'%}" align="center">
     <h3>Join a community of talent</h3>
     <div id="hometop-left">
 	<h3>Be Discovered</h3>
@@ -24,36 +27,13 @@
 
 <div class="paragraph">
     <h3>Showcase your work and what you're working on</h3>
+    <img src="{% static 'images/indexshowcase_tmp.png'%}" align="center">
 </div>
 
 <div class="paragraph">
     <h3>Build projects with the community</h3>
+    <img src="{% static 'images/indexcommunity_tmp.png'%}" align="center">
 </div>
 
-<div class="paragraph">
-<h3>Be discovered</h3>
-<p>
-Showcase your best work to the world,
-show what you are working on next
-&amp; have your fans help you with your 
-project and career.
-</p>
-</div>
-
-<div class="paragraph">
-<p>
-Could more people be doing what they love doing? We believe so. 
-</p>
-
-<p>
-Mission
-</p>
-
-<p>
-Create a community that empowers creators, entrepreneurs, and dreamers to innovate, do what they love, and succeed.
-
-We do not take a fee. 100% of funds and earned income goes directly to the creatives. 
-</p>
-</div>
 
 {% endblock %}

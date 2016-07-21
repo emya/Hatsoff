@@ -2,20 +2,26 @@
 
 {% block content %}
 <div id="home-edit">
-
-    <form action="" class="signuptable" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {{ form }}
-        Full Name: <input type='text' name='fullname' value='{{ profile.fullname }}'><br/>
+    {{ form.errors }}
+    <form action="" class="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        Display Name: <input type='text' name='displayname' value='{{ profile.displayname }}'><br/>
         Photo: <input type='file' name='photo' value='{{ profile.photo }}'><br/>
-        Profile: <input type='text' name='profile' value='{{ profile.profile }}'><br/>
+        Profession: <input type='text' name='profession' value='{{ profile.profession }}'><br/>
         Works at: <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
         City: <input type='text' name='city' value='{{ profile.city }}'><br/>
         Education: <input type='text' name='education' value='{{ profile.education }}'><br/>
-        Skills: <input type='text' name='skills' value='{{ profile.skills }}'><br/>
+
+	{% if profile.birthdate %}
+            Birthdate: <input type='text' name='birthdate' value='{{ profile.birthdate }}'><br/>
+	{% else %}
+            Birthdate: <input type='text' name='birthdate'><br/>
+	{% endif %}
+
+        Showcase: <input type='file' name='showcase1' value='{{ profile.showcase1 }}'><br/>
+        Describe: <input type='text' name='describe1' value='{{ profile.describe1 }}'><br/>
         <input type="submit" value="Update Profile" align="center" />
         <input type="hidden" name="next" value="home.html">
-</form>
-
+    </form>
 
 </div>
 {% endblock %}

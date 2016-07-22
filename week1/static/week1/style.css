@@ -3,6 +3,7 @@
    margin: 0 auto;
    min-height: 100%;
    padding: 20px;
+   font-family: sans-serif;
 }
 
 #body #body-left {
@@ -33,10 +34,10 @@
 #header-wrapper {
    padding; 50px 0 50px;
    width: 100%;
+   background-color: #AC4F7D;
 }
 
 #header {
-   background-color: #AC4F7D;
    /*border-bottom: 2px solid #808080;*/
    line-height: 100px;
    height: 100px;
@@ -153,9 +154,15 @@
    text-align: center;
 }
 
+#hometop p{
+   margin: 0 0 30px;
+   font-size: 16px;
+}
+
 #hometop #hometop-left {
    display: inline-block;
    width: 280px;
+   height: 190px;
    padding: 10px 25px;
    margin: 0 auto;
    background-color: #CCCCCC;
@@ -165,6 +172,7 @@
 #hometop #hometop-right {
    display: inline-block;
    width: 280px;
+   height: 190px;
    padding: 10px 25px;
    margin: 0 auto;
    background-color: #CCCCCC;

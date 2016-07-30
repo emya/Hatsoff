@@ -1,0 +1,26 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+<h3>Results for {{query}}</h3>
+
+{% if users %}
+    <ul style="list-style-type:none">
+    {% for u in users %}
+            <!--li><button onClick="hatsoff();"><img src="" width="20px"></button></li-->
+            <li>{{u.first_name}} {{u.last_name}} <a href="{% url 'week1:hatsoff' u.id %}"><img src="{% static 'week1/templogo.jpeg'%}" width="20px"></a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <h4>There are no results that match your search</h4>
+{% endif %}
+
+</div>
+
+{% endblock %}

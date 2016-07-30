@@ -1,0 +1,19 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+<h3>Your Hatsoff List</h3>
+
+{% if users %}
+   {% for u in users %}
+       {{u.first_name}} {{u.last_name}}
+   {% endfor %}
+{% endif %}
+</div>
+
+{% endblock %}

@@ -8,63 +8,53 @@
 </div>
 
 <div id="home-main">
+    <div id="home-firstcolumn">
+      
+	<div class="home-step">
+            <ul style="list-style-type:none">
+		<li>City:{{profile.city}}</li>
+		<li>Works at:{{profile.worksAt}}</li>
+		<li>Education:{{profile.education}}</li>
+		<li>Language:{{profile.language}}</li>
+		<li>skills:{{profile.skill1}}</li>
+            </ul>
+	</div>
+
+	<div class="home-step">
+            <ul style="list-style-type:none">
+		<li>Fun fact about you:{{profile.funaboutyou}}</li>
+		<li>Hobby:{{profile.hobby}}</li>
+		<li>Favorite quote:{{profile.fQuote}}</li>
+		<li>Favorite film:{{profile.fFilm}}</li>
+		<li>Favorite TV show:{{profile.fTV}}</li>
+		<li>Favorite youTube channel:{{profile.fYoutube}}</li>
+		<li>Favorite book:{{profile.fBook}}</li>
+            </ul>
+	</div>
+    </div>
+
+    <div id="home-secondcolumn">
+	<div class="home-step">
 	{% if profile.photo %}
-	    <p>Hi {{user.first_name}}</p>
 	    <img src="{{ profile.photo.url }}">
-
 	{% else %}
-	    <p>Hi {{user.first_name}}</p>
 	    <img src="{% static 'images/profileimage.png'%}" >
-
 	{% endif %}
+        </div>
+	<div class="home-step">
+            <ul style="list-style-type:none">
+	    {% if profile.showcase1 %}
+	        <li><img src="{{ profile.showcase1.url }}"></li>
+	    {% else %}
+	        <li><img src="{% static 'images/empty_showcase.png'%}" ></li>
+	    {% endif %}
+	    <li>Description of work:{{profile.describe1}}</li>
+            </ul>
+	</div>
+    </div>
 
-	<br>
-	Name:{{user.first_name}} {{user.last_name}}
-	<br>
-	Profession:{{profile.profession}}
-	<br>
-	Works at:{{profile.worksAt}}
-	<br>
-	City:{{profile.city}}
-	<br>
-	Education:{{profile.education}}
-	<br>
-	Birthdate:{{profile.birthdate}}
-	<br>
-	Language:{{profile.language}}
-	<br>
-	describe:{{profile.describe}}
-	<br>
-
-	{% if profile.showcase1 %}
-	    <img src="{{ profile.showcase1.url }}" class="showcase_img">
-	{% else %}
-	    <img src="{% static 'images/empty_showcase.png'%}" >
-	{% endif %}
-
-	<br>
-	describe:{{profile.describe1}}
-	<br>
-	Fun about You:{{profile.funaboutyou}}
-	<br>
-	Favorite Quotes:{{profile.fQoute}}
-	<br>
-	Favorite Film:{{profile.fFilm}}
-	<br>
-	Favorite TV:{{profile.fTV}}
-	<br>
-	Favorite Youtube:{{profile.fYoutube}}
-	<br>
-	Favorite Books:{{profile.fBook}}
-	<br>
-	Favorite Books:{{profile.fBook}}
-	<br>
-	Books I am reading now:{{profile.bookNow}}
-	<br>
-	TV I am watching now:{{profile.TVNow}}
-	<br>
-
-	<a href="{% url 'week1:homeedit' %}">&nbsp; Edit Your Profile &nbsp;</a>
+    <div id="home-thirdcolumn">
+    </div>
 
 </div>
 

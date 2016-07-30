@@ -36,3 +36,10 @@ class Profile(models.Model):
     TVNow = models.CharField(max_length=200, default='', blank=True)
     hobby = models.CharField(max_length=200, default='', blank=True)
     cities = models.CharField(max_length=200, default='', blank=True)
+
+class Hatsoff(models.Model):
+    user_one_id = models.IntegerField()
+    user_two_id = models.IntegerField()
+    actionuser = models.IntegerField()#1 or 2
+    status = models.IntegerField(range(0, 4))
+    #0:follow, 1:follow each other

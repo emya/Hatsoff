@@ -1,0 +1,115 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<!doctype html>
+<!--html>
+  <head>   
+  <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head-->
+<div id="usersWrap">
+    {% if users %}
+    <ul style="list-style-type:none">
+       {% for u in users %}
+          <li><a href="{% url 'week1:private_message' u.id %}">{{ u.first_name }} {{ u.last_name }}</a></li>
+       {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+<p>My ID:{{myid}}</p>
+<div id="users"></div>
+
+<!--div id="nickWrap">
+    <p>Enter a username</p>
+    <p id="nickError"></p>
+    <form id="setNick">
+	<input size="35" id="nickname"></input>
+	<input type="submit"></input>
+    </form>
+</div-->
+
+<div id="contentWrap">
+    <div id="messages"></div>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="{{NODEJS_SOCKET_URL}}/socket.io/socket.io.js"></script>
+    <script src="localhost:8889/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+	  /*var socket = io();*/
+          var socket = io.connect('http://localhost:8889');
+
+          /***new lines***/
+          socket.emit('join message', {uid:{{myid}}, uname:"{{user.first_name}}"});
+          /***to here***/
+
+	  $('form').submit(function(){
+	    socket.emit('chat message', $('#m').val(), function(data){
+	        /*$('#messages').append($('<li>').text(data));*/
+	        $('#messages').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+            });
+	    $('#m').val('');
+	    return false;
+	  });
+	  socket.on('new message', function(msg){
+	      $('#messages').append($('<li><span class="msg"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+	  });
+        
+          /***
+  	  $('#setNick').submit(function(e){
+            e.preventDefault();
+            socket.emit('new user', $('#nickname').val(), function(data){
+               if(data){
+                  $('#nickWrap').hide();
+		  $('#contentWrap').show();
+	       }else{
+	       }
+            });
+            $('#nickname').val('');            
+          });
+          **/
+	  socket.on('usernames', function(data){
+             console.log("username"+data);
+             var html = '<ul style="list-style-type:none">';
+    	     for (i=0; i < data.length; i++){
+		 var str_num = data[i].toString();
+		 var url_mask = "{% url 'week1:private_message' myid %}".replace({{myid}}, data[i]);
+		 html += ('<li><a href='+url_mask+'>'+str_num);
+                 /**
+                 if (str_num !== {{myid}}.toString()){
+			var url_mask = "{% url 'week1:private_message' myid %}".replace({{myid}}, data[i]);
+			html += ('<li><a href='+url_mask+'>'+str_num);
+		 }else{
+			html += ('<li><a href="">'+str_num+'</a>');
+                 }
+		 **/
+	     }
+             html += '</ul>';
+ 	     $('#users').html(html);
+             
+          });
+	  socket.on('whisper', function(data){
+	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+          });
+    </script>
+</div>
+
+{% endblock %}
+  <!--/body>
+</html-->

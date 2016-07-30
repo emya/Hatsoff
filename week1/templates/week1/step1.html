@@ -4,13 +4,19 @@
 {% load staticfiles %}
 
 <div id="step">
+     <div id="step-left">
+     <h3>Profile</h3>
+     <h3>Step 1 out of 7</h3> 
+     </div>
 
-<form action="" method="POST">{% csrf_token %}
-    <table border="0" align="center" width="200">
-	{{ form.as_table }}
-    </table>
-    <input type="submit" value="Next" align="right"/>
-</form>
+     <div id="step-right">
+	<form action="" method="POST">{% csrf_token %}
+	    <table border="0" align="center" width="200">
+		{{ form.as_table }}
+	    </table>
+	    <input type="submit" value="Next" align="right"/>
+	</form>
+     </div>
 
 </div>
 

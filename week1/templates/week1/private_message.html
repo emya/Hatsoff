@@ -1,0 +1,49 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="contentWrap">
+    <h3>Chat with {{chatuser.first_name}} {{chatuser.last_name}}</h3>
+    <ul style="list-style-type:none">
+        <div id="messages"></div>
+    </ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="{{NODEJS_SOCKET_URL}}/socket.io/socket.io.js"></script>
+    <script src="localhost:8889/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+	  /*var socket = io();*/
+          var socket = io.connect('http://localhost:8889');
+          socket.emit('join message', { uid:{{myid}}, uname:"{{user.first_name}}"});
+
+          $('#contentWrap').show();
+
+	  $('form').submit(function(){
+	    $('#messages').append($('<li>'+"{{user.first_name}}"+':'+$('#m').val()+'</li>'));
+	    socket.emit('private message', {msg:$('#m').val(), uname:"{{chatuser.first_name}}", uid:{{chatuser.id}} }, function(data){
+	        /*$('#messages').append($('<li>').text(data));*/
+	        $('#messages').append($('<li>'+data.uid+':'+data.msg+'</li>'));
+            });
+	    $('#m').val('');
+	    return false;
+	  });
+
+	  socket.on('new message', function(msg){
+	      $('#messages').append($('<li>'+data.nick+':'+data.msg+'</li>'));
+	  });
+
+	  socket.on('whisper', function(data){
+	      $('#messages').append($('<li>'+data.uname+':'+data.msg+'</li>'));
+          });
+    </script>
+    <div id="users"></div>
+</div>
+
+{% endblock %}
+  <!--/body>
+</html-->

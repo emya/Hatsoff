@@ -39,7 +39,7 @@
 }
 
 #header {
-   line-height: 100px;
+   /*line-height: 100px;*/
    height: 100px;
    width: 1100px;
    margin: 0 auto;
@@ -50,6 +50,7 @@
    display: inline-block;
    /*float: left;*/
    width: 50px;
+   line-height: 100px;
 }
 
 #header #logo img {
@@ -60,6 +61,7 @@
 #header #header-menus {
    display: inline-block;
    width: 800px;
+   line-height: 100px;
    /*
    float: left;
    min-width: 600px;
@@ -78,6 +80,17 @@
    padding-right: 20px;
 }
 
+#header #header-right #header-top {
+   height:15px;
+   vertical-align: top;
+   margin-bottom: 10px;
+}
+
+#header #header-right #header-down {
+   height:15px;
+   vertical-align: bottom;
+}
+
 #header #header-right img {
    top:40;
    width: 30px;
@@ -89,11 +102,19 @@
    border:0px;
 }
 
-#header #header-right a{
+#header #header-right a.blue{
    text-decoration: none;
    color: white;
    padding: 0 10px;
    background-color: #4a86e8;
+   border-radius: 5px;
+}
+
+#header #header-right a.pink{
+   text-decoration: none;
+   color: white;
+   padding: 0 10px;
+   background-color: #d5a6bd;
    border-radius: 5px;
 }
 
@@ -245,12 +266,12 @@ tr.spaceUnder > td
 
 #home-friends {
    display: inline-block;
-   width: 300px;
+   width: 250px;
 }
 
 #home-main {
    display: inline-block;
-   width: 600px;
+   width: 700px;
 }
 
 #home-main a {
@@ -263,6 +284,39 @@ tr.spaceUnder > td
 
 #home-main img.showcase_img {
    max-width: 400px;
+}
+
+#home-main #home-firstcolumn {
+   display: inline-block;
+   width: 250px;
+}
+
+#home-main #home-secondcolumn {
+   display: inline-block;
+   vertical-align: top;
+   width: 300px;
+}
+
+#home-main #home-secondcolumn img{
+   width: 260px;
+}
+
+#home-main #home-thirdcolumn {
+   display: inline-block;
+   vertical-align: top;
+   width: 100px;
+}
+
+#home-main .home-step {
+   background-color: white;
+   padding: 5px;
+   margin: 5px;
+   font-size: 14px;
+}
+
+#home-main .home-step ul{
+   padding:10px;
+   list-style-type:none;
 }
 
 #home-edit {
@@ -293,4 +347,33 @@ tr.spaceUnder > td
    padding: 20px;
    right: 30px;
    width: 35%;
+}
+
+#step #step-left {
+   display: inline-block;
+   vertical-align: top; 
+   padding-left:100px;
+   width: 200px;
+}
+
+#step #step-right {
+   display: inline-block;
+   width: 700px;
+}
+
+#body-home {
+   width: 1100px;
+   margin: 0 auto;
+   min-height: 100%;
+   padding: 20px;
+   font-family: sans-serif;
+   background-color: #e6e6e6;
+}
+
+#contentWrap {
+   display: none;
+}
+
+#contentWrap li {
+   /*list-style-type:none;*/
 }

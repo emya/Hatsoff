@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404 
+from django.shortcuts import render, get_object_or_404, redirect
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader, RequestContext
+from django.template import loader, RequestContext, Context
 from django.shortcuts import render_to_response
 
 from django.views.decorators.csrf import csrf_protect
@@ -14,8 +14,13 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.contrib.auth.views import password_reset, password_reset_confirm
 
+from django.core.exceptions import ObjectDoesNotExist
+
+from django.db.models import Q
+from itertools import chain
+
 from django.contrib.auth.forms import SetPasswordForm
-from .models import Profile
+from .models import Profile, Hatsoff
 from .forms import RegistrationForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7
 
 # Create your views here.
@@ -199,6 +204,12 @@ def signup(request):
 @login_required
 def home(request):
     print "userid", request.user.id
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        print "query", query
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
     if num_result == 0:
@@ -520,12 +531,6 @@ def reset(request):
 
     if request.method == 'POST':
         form = ForgotPasswordForm(request.POST)
-        print "form", form
-        print "is valid", form.is_valid()
-        print "is bound", form.is_bound
-        print "form errors", form.errors
-        print "email", request.POST.get("email")
-        print "post"
         if form.is_valid():
             validemail = form.cleaned_data["email"]
             num_result = User.objects.filter(email=validemail).count()
@@ -534,7 +539,6 @@ def reset(request):
                 message.append("The email is not registered.")
 
             else:
-                print "form is valid", validemail
                 form.save(from_email='e.ayada810004@gmail.com', email_template_name='week1/password_reset_email.html', request=request)
                 return render_to_response('week1/password_reset_email_sent.html')
 
@@ -546,38 +550,64 @@ def reset(request):
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/password_reset.html', variables, )
 
-    """
-    return password_reset(request, template_name='week1/password_reset.html',
-        email_template_name='week1/password_reset_email.html',
-        subject_template_name='week1/reset_subject.txt',
-        post_reset_redirect=reverse('week1:login'))
-    """
+@login_required
+def results_friends(request, query):
+    t = loader.get_template('week1/results_friends.html')
+    #temporary results
+    try:
+        foundusers = User.objects.filter(first_name=query).exclude(id=request.user.id)
+    except ObjectDoesNotExist:
+        foundusers = None
+    c = Context({'query':query, 'users':foundusers})
+    return HttpResponse(t.render(c))
 
+@login_required
+def hatsoff(request, user2):
+    user1 = request.user.id
+    if user1 < user2:
+        try:
+            hat = Hatsoff.objects.get(user_one_id=user1, user_two_id=user2)
+            if hat.actionuser == 2 and hat.status == 0:
+                hat.status = 1
+                hat.save()
 
-"""
-    print "username", request.user.username
-    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
-    if request.method == 'POST':
-        profilepicture = request.POST.get('profilepicture')
-        fullname = request.POST.get('fullname')
-        profile = request.POST.get('profile')
-        worksAt = request.POST.get('worksAt')
-        city = request.POST.get('city')
-        education = request.POST.get('education')
-        skills = request.POST.get('skills')
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser, profilepicture=profilepicture, fullname=fullname, profile=profile, worksAt=worksAt, city=city, education=education, skills=skills)
-            p.save()
-        else:
-            Profile.objects.filter(user=currentuser).update(profilepicture=profilepicture, fullname=fullname, profile=profile, worksAt=worksAt, city=city)
+        except ObjectDoesNotExist:
+            hat = Hatsoff.objects.create(user_one_id=user1, user_two_id=user2, actionuser=1, status=0)
+            hat.save()
+
     else:
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
+        try:
+            hat = Hatsoff.objects.get(user_one_id=user2, user_two_id=user1)
+            if hat.actionuser == 1 and hat.status == 0:
+                hat.status = 1
+                hat.save()
 
 
-    print "currentuser", currentuser.username
-    usersprofile = Profile.objects.get(user=currentuser)
-    return render(request, 'week1/homeedit.html', {'profile':usersprofile})
+        except ObjectDoesNotExist:
+            hat = Hatsoff.objects.create(user_one_id=user2, user_two_id=user1, actionuser=2, status=0)
+            hat.save()
 
-"""
+    users = None
+    hatlist1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=1, status=0) | Q(user_one_id=user1, status=1))
+    hatlist2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
+    hatlist = list(chain(hatlist1, hatlist2))
+    
+    users = User.objects.filter(id__in=hatlist)
+
+    variables = RequestContext(request, {'users':users})
+    return render_to_response('week1/hatsoff_list.html', variables, )
+
+def messages(request):
+    users = User.objects.exclude(id=request.user.id)
+    myid = request.user.id
+    variables = RequestContext(request, {'users':users, 'myid':myid})
+    return render_to_response('week1/message.html', variables, )
+
+def private_message(request, uid):
+    user = User.objects.get(id=uid)
+    print "user.id", user.id
+    print "user.name", user.first_name
+    myid = request.user.id
+    print "my.id", myid
+    variables = RequestContext(request, {'chatuser':user, 'myid':myid})
+    return render_to_response('week1/private_message.html', variables, )

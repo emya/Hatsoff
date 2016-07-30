@@ -1,5 +1,21 @@
 {% load staticfiles %}
+<html>
+<head>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"></script>
+<script language="JavaScript">
+    function hatsoff(url) {
+        window.alert("first!");
+        console.log("first!");
+        $.get(url, function (data) {
+            window.alert("counter updated!");
+        });
+    }
+</script>
+
+</head>
+<body>
 <link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
 
 <div id="header-wrapper">
@@ -9,25 +25,36 @@
            </div>
 
 	   <div id='header-menus'>
-	      <a href="{% url 'week1:about' %}">HOME</a>
+	      <a href="{% url 'week1:home' %}">HOME</a>
 	      <a href="{% url 'week1:index' %}">Notifications</a>
-	      <a href="{% url 'week1:index' %}">Message</a>
-	    </div>
+	      <a href="{% url 'week1:messages' %}">Messages</a>
+	   </div>
 
 	   <div id='header-right'>
-		{% if profile.photo %}
-		{{user.first_name}}
-		<img src="{{MEDIA_URL}}{{ profile.photo.url }}">
 
-		{% else %}
-		{{user.first_name}}
-                <img src="{% static 'images/profileimage.png'%}">
-		{% endif %}
-	    </div>
+		<div id='header-top'>
+		     <form method="GET" action="" >
+		     <input type="text" id="searchBox" name='search_query' placeholder="Find Friends">
+		     <input type="submit" class="btn" value="Search" >
+		     </form>
+		</div>
+
+		<div id='header-down'>
+			{% if profile.photo %}
+			{{user.first_name}}
+			<img src="{{MEDIA_URL}}{{ profile.photo.url }}">
+
+			{% else %}
+			{{user.first_name}}
+			<img src="{% static 'images/profileimage.png'%}">
+			{% endif %}
+		</div>
+	   </div>
+            
     </div>
 </div>
 
-<div id="body">
+<div id="body-home">
 {% block content %}
 {% endblock %}
 </div>
@@ -73,3 +100,5 @@
 
     </div>
 </div>
+</body>
+</html>

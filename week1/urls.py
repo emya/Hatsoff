@@ -22,4 +22,8 @@ urlpatterns = [
     url(r'^step5/$', views.step5, name='step5'),
     url(r'^step6/$', views.step6, name='step6'),
     url(r'^step7/$', views.step7, name='step7'),
+    url(r'^results/friends/(?P<query>\w+)/$', views.results_friends, name='resultsfriends'),
+    url(r'^hatsoff/(?P<user2>\d+)/$', views.hatsoff, name='hatsoff'),
+    url(r'^messages/$', views.messages, name='messages'),
+    url(r'^messages/(?P<uid>\d+)/$', views.private_message, name='private_message'),
 ]

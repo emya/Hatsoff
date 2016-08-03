@@ -26,4 +26,7 @@ urlpatterns = [
     url(r'^hatsoff/(?P<user2>\d+)/$', views.hatsoff, name='hatsoff'),
     url(r'^messages/$', views.messages, name='messages'),
     url(r'^messages/(?P<uid>\d+)/$', views.private_message, name='private_message'),
+    url(r'^profile/(?P<uid>\d+)/$', views.get_profile, name='get_profile'),
+    url(r'^community/$', views.community, name='community'),
+    url(r'^notification/$', views.notification, name='notification'),
 ]

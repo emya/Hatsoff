@@ -4,15 +4,6 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript"></script>
-<script language="JavaScript">
-    function hatsoff(url) {
-        window.alert("first!");
-        console.log("first!");
-        $.get(url, function (data) {
-            window.alert("counter updated!");
-        });
-    }
-</script>
 
 </head>
 <body>
@@ -25,8 +16,8 @@
            </div>
 
 	   <div id='header-menus'>
-	      <a href="{% url 'week1:home' %}">HOME</a>
-	      <a href="{% url 'week1:index' %}">Notifications</a>
+	      <a href="{% url 'week1:community' %}">Community</a>
+	      <a href="{% url 'week1:notification' %}">Notifications</a>
 	      <a href="{% url 'week1:messages' %}">Messages</a>
 	   </div>
 
@@ -41,11 +32,11 @@
 
 		<div id='header-down'>
 			{% if profile.photo %}
-			{{user.first_name}}
+			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
 			<img src="{{MEDIA_URL}}{{ profile.photo.url }}">
 
 			{% else %}
-			{{user.first_name}}
+			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
 			<img src="{% static 'images/profileimage.png'%}">
 			{% endif %}
 		</div>
@@ -62,8 +53,14 @@
 <div id='footer-wrapper'>
 
     <div id='footer'>
+	 <a href="{% url 'week1:about' %}">ABOUT US</a>
+	 <a href="{% url 'week1:about' %}">COMMUNITY</a>
+	 <a href="{% url 'week1:about' %}">TERMS</a>
+	 <a href="{% url 'week1:about' %}">FOLLOW US</a>
+	 <a href="{% url 'week1:about' %}">CAREER</a>
+	 <a href="{% url 'week1:about' %}">CONTACT US</a>
 
-	<div id='footer-left'>
+	<!--div id='footer-left'>
 		<ul style="list-style: none;" id="footer-menu">
 			<li>HATSOFF
 			<li><a href="">About Us</a>
@@ -96,7 +93,7 @@
 	</div>
 
 	<div id='footer-right'>
-	</div>
+	</div-->
 
     </div>
 </div>

@@ -40,29 +40,20 @@
 <div id="body">
 	{% block content %}
 	{% endblock %}
-   <!--div id="body-left">
-   </div>
-
-   <div id="body-right">
-	<h3>Sign up</h3>
-	<a href="{% url 'social:begin' 'facebook' %}"> Continue with FACEBOOK</a>
-
-        <h4>Sign up with email</h4>
-	<form action="" class="signuptable" method="POST">{% csrf_token %}
-		<table border="0" align="center" width="200">
-		    {{ form.as_table }}
-		</table>
-		<input type="submit" value="Sign up" align="right" name='signup'/>
-	</form>
-   </div-->
 
 </div>
 
 <div id='footer-wrapper'>
 
     <div id='footer'>
+	 <a href="{% url 'week1:about' %}">ABOUT US</a>
+	 <a href="{% url 'week1:about' %}">COMMUNITY</a>
+	 <a href="{% url 'week1:about' %}">TERMS</a>
+	 <a href="{% url 'week1:about' %}">FOLLOW US</a>
+	 <a href="{% url 'week1:about' %}">CAREER</a>
+	 <a href="{% url 'week1:about' %}">CONTACT US</a>
 
-	<div id='footer-left'>
+	<!--div id='footer-left'>
 		<ul style="list-style: none;" id="footer-menu">
 			<li>HATSOFF
 			<li><a href="">About Us</a>
@@ -95,7 +86,7 @@
 	</div>
 
 	<div id='footer-right'>
-	</div>
+	</div-->
 
     </div>
 </div>

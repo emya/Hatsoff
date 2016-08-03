@@ -1,7 +1,63 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io').listen(app.listen(8889));
+var mongoose = require('mongoose')
 var users = {};
+
+/** redis
+var redis = require('redis');
+var sub = redis.createClient();
+
+sub.on('connect', function(){
+  console.log('first channel connection');
+});
+
+  sub.del('framework', function(err, reply){
+     console.log(reply);
+  });
+
+  var d = new Date();
+  console.log('date:'+d); 
+
+  sub.set(d,{
+     'message':'Hello'}, function(err, reply){
+     console.log(reply);
+  });
+redis **/
+
+mongoose.connect('mongodb://localhost/communitypost', function(err){
+  if (err){
+ 	console.log(err);
+  } else{
+ 	console.log('connected to mongo');
+  }
+});
+
+var communitySchema = mongoose.Schema({
+  uid: Number,
+  content: String,
+  created: {type: Date, default:Date.now}
+});
+
+var CommunityPost = mongoose.model('CommunityPost', communitySchema);
+
+var commentSchema = mongoose.Schema({
+  to_uid: Number,
+  from_uid: Number,
+  content: String,
+  created: {type: Date, default:Date.now}
+});
+
+var CommentPost = mongoose.model('CommentPost', commentSchema);
+
+var notificationSchema = mongoose.Schema({
+  to_uid: Number,
+  action_uid: Number,
+  action_id: Number,
+  created: {type: Date, default:Date.now}
+});
+
+var NotificationPost = mongoose.model('NotificationPost', notificationSchema);
 
 app.get('/', function(req, res){
   /*res.sendFile(__dirname + '../recipe/templates/index.html');*/
@@ -10,6 +66,22 @@ app.get('/', function(req, res){
 
 app.get('/', function(req, res){
   res.sendFile('../week1/templates/week1/private_message.html');
+});
+
+app.get('/', function(req, res){
+  res.sendFile('../week1/templates/week1/userpage.html');
+});
+
+app.get('/', function(req, res){
+  res.sendFile('../week1/templates/week1/home.html');
+});
+
+app.get('/', function(req, res){
+  res.sendFile('../week1/templates/week1/community.html');
+});
+
+app.get('/', function(req, res){
+  res.sendFile('../week1/templates/week1/results_friends.html');
 });
 
 io.on('connection', function(socket){
@@ -22,9 +94,66 @@ io.on('connection', function(socket){
      socket.uid = data.uid;
      socket.uname = data.uname;
      users[socket.uid] = socket;
-     console.log('join message:'+data);
-     console.log('join message:'+typeof data);
+     console.log('join user:'+data.uid);
+     console.log('join users:'+users);
      updateUids();
+  });
+
+  socket.on('join community', function(data){
+    console.log('join community');
+    var query = CommunityPost.find({});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('sending comment updates'+docs);
+      socket.emit('update comment', docs);
+    }); 
+
+  });
+
+  socket.on('at home', function(data){
+    console.log('at home'+socket.uid);
+    var query = CommentPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('sending comments updates'+docs);
+      socket.emit('update comment', docs);
+    }); 
+  });
+
+  socket.on('see userpage', function(data){
+    console.log('at userpage'+socket.uid);
+    var query = CommentPost.find({'to_uid':data.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('sending comments updates to userpage'+docs);
+      socket.emit('update comment', docs);
+    }); 
+  });
+
+  socket.on('check notification', function(){
+    console.log('check notification');
+    var query = NotificationPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('sending notification'+docs);
+      socket.emit('update notification', docs);
+    }); 
+  });
+
+  socket.on('hatsoff', function(uid){
+    var newNotification = new NotificationPost({action_id:2, to_uid:uid, action_uid:socket.uid});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        if (uid in users){
+           users[uid].emit('new notification', {action_id:2, from_uid:socket.uid});
+        } else {
+        }
+      }
+    });
+    console.log('hatsoff to '+uid);
   });
 
   /**
@@ -76,7 +205,60 @@ io.on('connection', function(socket){
     }else{
         callback('Erorr! The user is not online');
     }
+  });
 
+  socket.on('community post', function(data, callback){
+    var d = new Date();
+    console.log('date:'+d); 
+    
+    var newPost = new CommunityPost({content:data.msg, uid:socket.uid});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved');
+        io.emit('new community post', {msg:data.msg, uid:socket.uid});
+      }
+    });
+  });
+
+  socket.on('post comment', function(data, callback){
+    console.log('post aomment');
+    var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_uid:socket.uid});
+
+    newComment.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:'+data.msg+' touid:'+data.to+' fromuid:'+data.from+' socket.uid:'+socket.uid);
+        io.emit('update comment', {msg:data.msg, from:socket.uid});
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:1, to_uid:data.to, action_uid:socket.uid});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('notification!');
+        if (data.to in users){
+           console.log('new notification! to '+data.to);
+           users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid});
+        } else {
+        }
+      }
+    });
+
+    /**
+    if (data.to in users){
+        users[data.to].emit('update comment', {msg:data.msg, uid:data.to, from:data.from});
+        console.log('post aomment!');
+    }else{
+        console.log('post aomment! But Error'+data.to+' : '+socket.uid);
+        callback('Erorr! The user is not online');
+    }
+    **/
   });
 
   socket.on('disconnect', function(){

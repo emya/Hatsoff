@@ -19,6 +19,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from itertools import chain
 
+from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm
 from .models import Profile, Hatsoff
 from .forms import RegistrationForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7
@@ -203,6 +204,7 @@ def signup(request):
 @csrf_protect
 @login_required
 def home(request):
+    nodejs_url = settings.NODEJS_SOCKET_URL
     print "userid", request.user.id
     query = request.GET.get('search_query', None)
     
@@ -217,7 +219,7 @@ def home(request):
         p.save()
 
     profile = Profile.objects.get(user=currentuser)
-    return render_to_response('week1/home.html', {'user':currentuser, 'profile': profile})
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'nodejs_url':nodejs_url})
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
@@ -552,14 +554,16 @@ def reset(request):
 
 @login_required
 def results_friends(request, query):
+    nodejs_url = settings.NODEJS_SOCKET_URL
     t = loader.get_template('week1/results_friends.html')
     #temporary results
     try:
         foundusers = User.objects.filter(first_name=query).exclude(id=request.user.id)
     except ObjectDoesNotExist:
         foundusers = None
-    c = Context({'query':query, 'users':foundusers})
-    return HttpResponse(t.render(c))
+    variables = RequestContext(request, {'query':query, 'users':foundusers, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/results_friends.html', variables, )
+    #return HttpResponse(t.render(c))
 
 @login_required
 def hatsoff(request, user2):
@@ -597,17 +601,41 @@ def hatsoff(request, user2):
     variables = RequestContext(request, {'users':users})
     return render_to_response('week1/hatsoff_list.html', variables, )
 
+@login_required
 def messages(request):
+    nodejs_url = settings.NODEJS_SOCKET_URL
     users = User.objects.exclude(id=request.user.id)
     myid = request.user.id
-    variables = RequestContext(request, {'users':users, 'myid':myid})
+    variables = RequestContext(request, {'users':users, 'myid':myid, 'nodejs_url':nodejs_url})
     return render_to_response('week1/message.html', variables, )
 
+@login_required
 def private_message(request, uid):
+    nodejs_url = settings.NODEJS_SOCKET_URL
     user = User.objects.get(id=uid)
     print "user.id", user.id
     print "user.name", user.first_name
     myid = request.user.id
     print "my.id", myid
-    variables = RequestContext(request, {'chatuser':user, 'myid':myid})
+    variables = RequestContext(request, {'chatuser':user, 'myid':myid, 'nodejs_url':nodejs_url})
     return render_to_response('week1/private_message.html', variables, )
+
+@login_required
+def get_profile(request, uid):
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    user = User.objects.get(id=uid)
+    profile = Profile.objects.get(user=user)
+    variables = RequestContext(request, {'profile':profile, 'uid':uid, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/userpage.html', variables, )
+
+@login_required
+def community(request):
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    variables = RequestContext(request, {'nodejs_url':nodejs_url})
+    return render_to_response('week1/community.html', variables, )
+
+@login_required
+def notification(request):
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    variables = RequestContext(request, {'nodejs_url':nodejs_url})
+    return render_to_response('week1/notification.html', variables, )

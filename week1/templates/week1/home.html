@@ -8,6 +8,8 @@
 </div>
 
 <div id="home-main">
+
+    
     <div id="home-firstcolumn">
       
 	<div class="home-step">
@@ -56,6 +58,26 @@
     <div id="home-thirdcolumn">
     </div>
 
+</div>
+
+<div id="home-comment">
+    <ul style="list-style-type:none">
+        <div id="commentHistory"></div>
+    </ul>
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+          var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+
+	  socket.on('update comment', function(docs){
+              for(var i = 0; i < docs.length; i++){
+	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_uid']+':'+docs[i]['content']+'</span><br/>'));
+              }
+          });
+    </script>
 </div>
 
 {% endblock %}

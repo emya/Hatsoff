@@ -1,0 +1,61 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="notificationWrap">
+    <div id="notifications">
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+	  /*var socket = io();*/
+          var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+
+          /***new lines***/
+          socket.emit('check notification');
+          /***to here***/
+
+	  socket.on('new notification', function(data){
+              if (data.action_id === 1){
+	         $('#notifications').prepend($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Posted a comment on your page.'+'</span><br/>'));
+              }
+              else if (data.action_id === 2){
+	         $('#notifications').prepend($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Hatsoffed to you.'+'</span><br/>'));
+              }
+	  });
+        
+	  socket.on('update notification', function(docs){
+              for(var i = 0; i < docs.length; i++){
+                 if (docs[i]['action_id'] === 1){
+	            $('#notifications').append($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Posted a comment on your page.'+'</span><br/>'));
+                 }
+                 else if (docs[i]['action_id'] === 2){
+	            $('#notifications').append($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Hatsoffed to you.'+'</span><br/>'));
+                 }
+              }
+	  });
+
+          /***
+  	  $('#setNick').submit(function(e){
+            e.preventDefault();
+            socket.emit('new user', $('#nickname').val(), function(data){
+               if(data){
+                  $('#nickWrap').hide();
+		  $('#contentWrap').show();
+	       }else{
+	       }
+            });
+            $('#nickname').val('');            
+          });
+          **/
+    </script>
+</div>
+
+{% endblock %}
+  <!--/body>
+</html-->

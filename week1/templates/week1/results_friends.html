@@ -8,13 +8,30 @@
 </div>
 
 <div id="home-main">
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+          var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+
+  	  //$('#hatsoff').onclick(function(){
+  	  function Hatsoff(){
+              //this = $(this);
+              var uid = $('#hatsoff').attr('uid');
+              socket.emit('hatsoff', uid, function(){
+                 console.log(uid);
+              });
+          };
+    </script>
+
 <h3>Results for {{query}}</h3>
 
 {% if users %}
     <ul style="list-style-type:none">
     {% for u in users %}
             <!--li><button onClick="hatsoff();"><img src="" width="20px"></button></li-->
-            <li>{{u.first_name}} {{u.last_name}} <a href="{% url 'week1:hatsoff' u.id %}"><img src="{% static 'week1/templogo.jpeg'%}" width="20px"></a></li>
+            <li><a href="{% url 'week1:get_profile' u.id %}">{{u.first_name}} {{u.last_name}}</a> <a href="{% url 'week1:hatsoff' u.id %}"><img src="{% static 'week1/templogo.jpeg'%}" width="20px"></a> <button id="hatsoff" uid="{{u.id}}" onclick="Hatsoff()">Hatsoff</button> </li>
     {% endfor %}
     </ul>
 {% else %}

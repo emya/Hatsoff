@@ -1,0 +1,100 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+    
+    <div id="home-firstcolumn">
+      
+	<div class="home-step">
+            <ul style="list-style-type:none">
+		<li>City:{{profile.city}}</li>
+		<li>Works at:{{profile.worksAt}}</li>
+		<li>Education:{{profile.education}}</li>
+		<li>Language:{{profile.language}}</li>
+		<li>skills:{{profile.skill1}}</li>
+            </ul>
+	</div>
+
+	<div class="home-step">
+            <ul style="list-style-type:none">
+		<li>Fun fact about you:{{profile.funaboutyou}}</li>
+		<li>Hobby:{{profile.hobby}}</li>
+		<li>Favorite quote:{{profile.fQuote}}</li>
+		<li>Favorite film:{{profile.fFilm}}</li>
+		<li>Favorite TV show:{{profile.fTV}}</li>
+		<li>Favorite youTube channel:{{profile.fYoutube}}</li>
+		<li>Favorite book:{{profile.fBook}}</li>
+            </ul>
+	</div>
+    </div>
+
+    <div id="home-secondcolumn">
+	<div class="home-step">
+	{% if profile.photo %}
+	    <img src="{{ profile.photo.url }}">
+	{% else %}
+	    <img src="{% static 'images/profileimage.png'%}" >
+	{% endif %}
+        </div>
+	<div class="home-step">
+            <ul style="list-style-type:none">
+	    {% if profile.showcase1 %}
+	        <li><img src="{{ profile.showcase1.url }}"></li>
+	    {% else %}
+	        <li><img src="{% static 'images/empty_showcase.png'%}" ></li>
+	    {% endif %}
+	    <li>Description of work:{{profile.describe1}}</li>
+            </ul>
+	</div>
+    </div>
+
+    <div id="home-thirdcolumn">
+    </div>
+
+</div>
+
+<div id="home-comment">
+    <ul style="list-style-type:none">
+        <div id="commentHistory"></div>
+    </ul>
+    <div id="home-comment">
+	 <form action="" id="postComment">
+	   <input id="comment" autocomplete="off" /><button>Send</button>
+	 </form>
+    </div>
+
+    <!--script src="/socket.io/socket.io.js"></script-->
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+          var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('see userpage', {uid:{{uid}}, uname:"{{user.first_name}}"});
+
+  	  $('#postComment').submit(function(){
+	    $('#commentHistory').append($('<li><span class="error"><br>'+"{{user.id}}"+':'+$('#comment').val()+'</span><br/>'));
+            socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}}, function(data){
+	        $('#commentHistory').append($('<li><span class="error"><br>'+data.from+':'+data.msg+'</span><br/>'));
+            });
+            $('#comment').val('');            
+            return false;
+          });
+
+	  socket.on('update comment', function(docs){
+              for(var i = 0; i < docs.length; i++){
+	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_uid']+':'+docs[i]['content']+'</span><br/>'));
+              }
+          });
+           
+    </script>
+
+</div>
+
+{% endblock %}

@@ -4,8 +4,9 @@
 {% load staticfiles %}
 
 <div id="notificationWrap">
-    <div id="notifications">
-    </div>
+    <ul style="list-style-type:none">
+        <div id="notifications"></ul>
+    </ul>
     <script src="/socket.io/socket.io.js"></script>
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
@@ -14,7 +15,7 @@
     <script>
 	  /*var socket = io();*/
           var socket = io.connect("{{nodejs_url}}");
-          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 
           /***new lines***/
           socket.emit('check notification');
@@ -22,20 +23,20 @@
 
 	  socket.on('new notification', function(data){
               if (data.action_id === 1){
-	         $('#notifications').prepend($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Posted a comment on your page.'+'</span><br/>'));
+	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
               }
               else if (data.action_id === 2){
-	         $('#notifications').prepend($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Hatsoffed to you.'+'</span><br/>'));
+	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp Hatsoffed to you.'+'</p></span><br/>'));
               }
 	  });
         
 	  socket.on('update notification', function(docs){
               for(var i = 0; i < docs.length; i++){
                  if (docs[i]['action_id'] === 1){
-	            $('#notifications').append($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Posted a comment on your page.'+'</span><br/>'));
+	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
                  }
                  else if (docs[i]['action_id'] === 2){
-	            $('#notifications').append($('<li><span class="error"><br>'+docs[i]['action_uid']+':'+'Hatsoffed to you.'+'</span><br/>'));
+	            $('#notifications').prepend($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Hatsoffed to you.'+'</p></span><br/>'));
                  }
               }
 	  });

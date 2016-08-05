@@ -9,11 +9,13 @@
 <div id="home-main">
 <h3>Your Hatsoff List</h3>
 
+<ul style="list-style-type:none">
 {% if users %}
    {% for u in users %}
-       {{u.first_name}} {{u.last_name}}
+       <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a></li>
    {% endfor %}
 {% endif %}
+</ul>
 </div>
 
 {% endblock %}

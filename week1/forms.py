@@ -103,3 +103,21 @@ class Step7(forms.Form):
     TVNow = forms.CharField(max_length=200, required=False)
     hobby = forms.CharField(max_length=200, required=False)
     cities = forms.CharField(max_length=200, required=False)
+
+class PersonalInfo(forms.Form):
+    city = forms.CharField(max_length=100, required=False)
+    worksAt = forms.CharField(max_length=100, required=False, label=_("Work At"))
+    education = forms.CharField(max_length=100, required=False)
+    language = forms.CharField(max_length=100, required=False)
+    skill1 = forms.CharField(max_length=200, required=False)
+    skill2 = forms.CharField(max_length=200, required=False)
+
+class Funfact(forms.Form):
+    funaboutyou = forms.CharField(max_length=200, required=False)
+    hobby = forms.CharField(max_length=200, required=False)
+    fQuote = forms.CharField(max_length=200, required=False)
+    fFilm = forms.CharField(max_length=200, required=False)
+    fTV = forms.CharField(max_length=200, required=False)
+    fYoutube= forms.CharField(max_length=200, required=False)
+    fBook= forms.CharField(max_length=200, required=False)
+

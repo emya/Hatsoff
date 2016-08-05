@@ -1,0 +1,18 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="home-edit">
+
+<form action="" class="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <table border="0" align="center" width="200">
+	{{ form.as_table }}
+    </table>
+        <input type="submit" value="Update" align="center" />
+        <input type="hidden" name="next" value="home.html">
+</form>
+
+</div>
+
+{% endblock %}

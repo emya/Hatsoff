@@ -56,7 +56,7 @@
           var socket = io.connect("{{nodejs_url}}");
 
           /***new lines***/
-          socket.emit('join message', {uid:{{myid}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           /***to here***/
 
 	  $('form').submit(function(){

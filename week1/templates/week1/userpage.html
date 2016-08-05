@@ -37,17 +37,17 @@
     <div id="home-secondcolumn">
 	<div class="home-step">
 	{% if profile.photo %}
-	    <img src="{{ profile.photo.url }}">
+	    <img src="{{ profile.photo.url }}" class="maincontent">
 	{% else %}
-	    <img src="{% static 'images/profileimage.png'%}" >
+	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
 	{% endif %}
         </div>
 	<div class="home-step">
             <ul style="list-style-type:none">
 	    {% if profile.showcase1 %}
-	        <li><img src="{{ profile.showcase1.url }}"></li>
+	        <li><img src="{{ profile.showcase1.url }}" class="maincontent"></li>
 	    {% else %}
-	        <li><img src="{% static 'images/empty_showcase.png'%}" ></li>
+	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
 	    {% endif %}
 	    <li>Description of work:{{profile.describe1}}</li>
             </ul>
@@ -59,15 +59,37 @@
 
 </div>
 
+<div id="whats-next">
+    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
+        <ul style="list-style-type:none">
+            <li>Description of work:</li>
+            <li>Your role:</li>
+            <li>Status of work:</li>
+            <li>Target finish date:</li>
+            <li>Comments:</li>
+        </ul>
+</div>
+
+<div id="thanks-hatsoff">
+    <p>Thanks - Hats off</p>
+    <div id="hatsoffusers">
+        {% if hatsusers %}
+             {% for h in hatsusers %}
+	        <img src="{{ h.photo.url }}" width="50px">
+             {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
 <div id="home-comment">
+    <h4> Comments </h4>
+    <form action="" id="postComment">
+       <input id="comment" autocomplete="off" /><button>Send</button>
+    </form>
+
     <ul style="list-style-type:none">
         <div id="commentHistory"></div>
     </ul>
-    <div id="home-comment">
-	 <form action="" id="postComment">
-	   <input id="comment" autocomplete="off" /><button>Send</button>
-	 </form>
-    </div>
 
     <!--script src="/socket.io/socket.io.js"></script-->
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
@@ -75,13 +97,13 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
           var socket = io.connect("{{nodejs_url}}");
-          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
-          socket.emit('see userpage', {uid:{{uid}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+
+          socket.emit('see userpage', {uid:{{user.id}}, to:{{uid}}, uname:"{{user.first_name}}"});
 
   	  $('#postComment').submit(function(){
-	    $('#commentHistory').append($('<li><span class="error"><br>'+"{{user.id}}"+':'+$('#comment').val()+'</span><br/>'));
+	        $('#commentHistory').prepend($('<li><span class="error"><br>'+"{{user.first_name}}"+':'+$('#comment').val()+'</span><br/>'));
             socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}}, function(data){
-	        $('#commentHistory').append($('<li><span class="error"><br>'+data.from+':'+data.msg+'</span><br/>'));
             });
             $('#comment').val('');            
             return false;
@@ -89,7 +111,7 @@
 
 	  socket.on('update comment', function(docs){
               for(var i = 0; i < docs.length; i++){
-	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_uid']+':'+docs[i]['content']+'</span><br/>'));
+	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+':'+docs[i]['content']+'</span><br/>'));
               }
           });
            

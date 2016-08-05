@@ -4,12 +4,13 @@
 {% load staticfiles %}
 
 <div id="community-main">
-    <ul style="list-style-type:none">
-        <div id="communityPost"></div>
-    </ul>
     <form action="">
       <input id="p" autocomplete="off" /><button>Post</button>
     </form>
+
+    <ul style="list-style-type:none">
+        <div id="communityPost"></div>
+    </ul>
 
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
@@ -20,32 +21,35 @@
           var socket = io.connect("{{nodejs_url}}");
 
           /***new lines***/
-          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
           /***to here***/
 
 	  $('form').submit(function(){
-	    socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}}, function(data){
-	        /*$('#messages').append($('<li>').text(data));*/
-	        $('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
-            });
-	    $('#p').val('');
-	    return false;
+            if ($('#p').val().length != 0){
+		socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}}, function(data){
+		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+		});
+		$('#p').val('');
+		return false;
+	    }
 	  });
 
 	  socket.on('new community post', function(data){
-	      $('#communityPost').append($('<li><span class="msg"><br>'+data.uid+':'+data.msg+'</span><br/>'));
+	      $('#communityPost').prepend($('<li><span class="msg"><br>'+'<h4>'+data.first_name+'&nbsp'+data.last_name+'</h4>'+'<p>'+data.msg+'</p></span><br/>'));
 	  });
         
 	  socket.on('update community post', function(docs){
               for(var i=0; i < docs.length; i++){
-	         $('#communityPost').append($('<li><span class="msg"><br>'+docs[i]['uid']+':'+docs[i]['content']+'</span><br/>'));
+	         $('#communityPost').append($('<li><span class="msg"><br>'+'<h4>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</h4>'+'<p>'+docs[i]['content']+'</p></span><br/>'));
 	      }
 	  });
         
+          /**
 	  socket.on('whisper', function(data){
 	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
           });
+          **/
     </script>
 </div>
 

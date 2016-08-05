@@ -1,0 +1,19 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+<div id="home-edit">
+    {{ form.errors }}
+    <form action="" class="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        Fun about you: <input type='text' name='funaboutyou' value='{{ profile.funaboutyou }}'><br/>
+        Hobby: <input type='text' name='hobby' value='{{ profile.hobby }}'><br/>
+        Favorite quote: <input type='text' name='fQuote' value='{{ profile.fQuote }}'><br/>
+        Favorite film: <input type='text' name='fFilm' value='{{ profile.fFilm }}'><br/>
+        Favorite TV show: <input type='text' name='fTV' value='{{ profile.fTV }}'><br/>
+        Favorite youTube channel: <input type='text' name='fYoutube' value='{{ profile.fYoutube }}'><br/>
+        Favorite book: <input type='text' name='fBook' value='{{ profile.fBook }}'><br/>
+        <input type="submit" value="Update" align="center" />
+        <input type="hidden" name="next" value="home.html">
+    </form>
+
+</div>
+{% endblock %}

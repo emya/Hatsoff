@@ -13,7 +13,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
           var socket = io.connect("{{nodejs_url}}");
-          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 
   	  //$('#hatsoff').onclick(function(){
   	  function Hatsoff(){
@@ -31,7 +31,7 @@
     <ul style="list-style-type:none">
     {% for u in users %}
             <!--li><button onClick="hatsoff();"><img src="" width="20px"></button></li-->
-            <li><a href="{% url 'week1:get_profile' u.id %}">{{u.first_name}} {{u.last_name}}</a> <a href="{% url 'week1:hatsoff' u.id %}"><img src="{% static 'week1/templogo.jpeg'%}" width="20px"></a> <button id="hatsoff" uid="{{u.id}}" onclick="Hatsoff()">Hatsoff</button> </li>
+            <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a> <a href="{% url 'week1:hatsoff' u.id%}"><button id="hatsoff" uid="{{u.id}}" onclick="Hatsoff()">Hatsoff</button></a> </li>
     {% endfor %}
     </ul>
 {% else %}

@@ -34,7 +34,7 @@ mongoose.connect('mongodb://localhost/communitypost', function(err){
 });
 
 var communitySchema = mongoose.Schema({
-  uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
   content: String,
   created: {type: Date, default:Date.now}
 });
@@ -43,7 +43,7 @@ var CommunityPost = mongoose.model('CommunityPost', communitySchema);
 
 var commentSchema = mongoose.Schema({
   to_uid: Number,
-  from_uid: Number,
+  from_user: {uid: Number, first_name: String, last_name: String},
   content: String,
   created: {type: Date, default:Date.now}
 });
@@ -52,7 +52,7 @@ var CommentPost = mongoose.model('CommentPost', commentSchema);
 
 var notificationSchema = mongoose.Schema({
   to_uid: Number,
-  action_uid: Number,
+  action_user: {uid: Number, first_name: String, last_name: String},
   action_id: Number,
   created: {type: Date, default:Date.now}
 });
@@ -91,8 +91,15 @@ io.on('connection', function(socket){
 io.on('connection', function(socket){
 
   socket.on('join message', function(data){
+     /** temporary
+     CommunityPost.find({}).remove().exec();
+     CommentPost.find({}).remove().exec();
+     NotificationPost.find({}).remove().exec();
+     **/
+
      socket.uid = data.uid;
-     socket.uname = data.uname;
+     socket.firstname = data.firstname;
+     socket.lastname = data.lastname;
      users[socket.uid] = socket;
      console.log('join user:'+data.uid);
      console.log('join users:'+users);
@@ -105,7 +112,7 @@ io.on('connection', function(socket){
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       console.log('sending comment updates'+docs);
-      socket.emit('update comment', docs);
+      socket.emit('update community post', docs);
     }); 
 
   });
@@ -122,7 +129,7 @@ io.on('connection', function(socket){
 
   socket.on('see userpage', function(data){
     console.log('at userpage'+socket.uid);
-    var query = CommentPost.find({'to_uid':data.uid});
+    var query = CommentPost.find({'to_uid':data.to});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       console.log('sending comments updates to userpage'+docs);
@@ -141,14 +148,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('hatsoff', function(uid){
-    var newNotification = new NotificationPost({action_id:2, to_uid:uid, action_uid:socket.uid});
+    var newNotification = new NotificationPost({action_id:2, to_uid:uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
       if (err) {
         console.log(err);
       } else{
         if (uid in users){
-           users[uid].emit('new notification', {action_id:2, from_uid:socket.uid});
+           users[uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         } else {
         }
       }
@@ -211,31 +218,31 @@ io.on('connection', function(socket){
     var d = new Date();
     console.log('date:'+d); 
     
-    var newPost = new CommunityPost({content:data.msg, uid:socket.uid});
+    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
     newPost.save(function(err){
       if (err) {
         console.log(err);
       } else{
         console.log('saved');
-        io.emit('new community post', {msg:data.msg, uid:socket.uid});
+        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
       }
     });
   });
 
   socket.on('post comment', function(data, callback){
     console.log('post aomment');
-    var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_uid:socket.uid});
+    var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newComment.save(function(err){
       if (err) {
         console.log(err);
       } else{
         console.log('saved:'+data.msg+' touid:'+data.to+' fromuid:'+data.from+' socket.uid:'+socket.uid);
-        io.emit('update comment', {msg:data.msg, from:socket.uid});
+        io.emit('update comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
       }
     });
 
-    var newNotification = new NotificationPost({action_id:1, to_uid:data.to, action_uid:socket.uid});
+    var newNotification = new NotificationPost({action_id:1, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
       if (err) {
@@ -244,7 +251,7 @@ io.on('connection', function(socket){
         console.log('notification!');
         if (data.to in users){
            console.log('new notification! to '+data.to);
-           users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid});
+           users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         } else {
         }
       }

@@ -13,6 +13,7 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
+	    <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
             <ul style="list-style-type:none">
 		<li>City:{{profile.city}}</li>
 		<li>Works at:{{profile.worksAt}}</li>
@@ -23,6 +24,7 @@
 	</div>
 
 	<div class="home-step">
+	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
             <ul style="list-style-type:none">
 		<li>Fun fact about you:{{profile.funaboutyou}}</li>
 		<li>Hobby:{{profile.hobby}}</li>
@@ -37,18 +39,20 @@
 
     <div id="home-secondcolumn">
 	<div class="home-step">
+	<img src="{% static 'images/edit.png'%}" align="right">
 	{% if profile.photo %}
-	    <img src="{{ profile.photo.url }}">
+	    <img src="{{ profile.photo.url }}" class="maincontent">
 	{% else %}
-	    <img src="{% static 'images/profileimage.png'%}" >
+	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
 	{% endif %}
         </div>
 	<div class="home-step">
+	    <img src="{% static 'images/edit.png'%}" align="right">
             <ul style="list-style-type:none">
 	    {% if profile.showcase1 %}
-	        <li><img src="{{ profile.showcase1.url }}"></li>
+	        <li><img src="{{ profile.showcase1.url }}" class="maincontent"></li>
 	    {% else %}
-	        <li><img src="{% static 'images/empty_showcase.png'%}" ></li>
+	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
 	    {% endif %}
 	    <li>Description of work:{{profile.describe1}}</li>
             </ul>
@@ -60,7 +64,30 @@
 
 </div>
 
+<div id="whats-next">
+    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
+        <ul style="list-style-type:none">
+            <li>Description of work:</li>
+            <li>Your role:</li>
+            <li>Status of work:</li>
+            <li>Target finish date:</li>
+            <li>Comments:</li>
+        </ul>
+</div>
+
+<div id="thanks-hatsoff">
+    <p>Thanks - Hats off</p>
+    <div id="hatsoffusers">
+        {% if hatsusers %}
+             {% for h in hatsusers %}
+	        <img src="{{ h.photo.url }}" width="50px">
+             {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
 <div id="home-comment">
+    <h4> Comments </h4>
     <ul style="list-style-type:none">
         <div id="commentHistory"></div>
     </ul>
@@ -69,12 +96,12 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
           var socket = io.connect("{{nodejs_url}}");
-          socket.emit('join message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
 	  socket.on('update comment', function(docs){
               for(var i = 0; i < docs.length; i++){
-	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_uid']+':'+docs[i]['content']+'</span><br/>'));
+	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+':'+docs[i]['content']+'</span><br/>'));
               }
           });
     </script>

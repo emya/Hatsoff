@@ -22,7 +22,7 @@ from itertools import chain
 from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm
 from .models import Profile, Hatsoff
-from .forms import RegistrationForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7
+from .forms import RegistrationForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, Funfact
 
 # Create your views here.
 @csrf_protect
@@ -206,6 +206,7 @@ def signup(request):
 def home(request):
     nodejs_url = settings.NODEJS_SOCKET_URL
     print "userid", request.user.id
+    uid = request.user.id
     query = request.GET.get('search_query', None)
     
     if query != None:
@@ -218,8 +219,18 @@ def home(request):
         p = Profile.objects.create(user=currentuser)
         p.save()
 
+    hatlist1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=2, status=0) | Q(user_one_id=uid, status=1))
+    hatlist2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=1, status=0) | Q(user_two_id=uid, status=1))
+    hatlist = list(chain(hatlist1, hatlist2))
+
+    users = User.objects.filter(id__in=hatlist)
+    print "users:", type(users), users
+    userlist = list(users)
+
+    hatsusers = Profile.objects.filter(user__in=userlist)
+
     profile = Profile.objects.get(user=currentuser)
-    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'nodejs_url':nodejs_url})
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
@@ -291,7 +302,6 @@ def step2(request):
         form = Step2()
 
     variables = RequestContext(request, {'form':form})
-
     return render_to_response('week1/step2.html', variables, )
 
 @csrf_protect
@@ -521,6 +531,124 @@ def home_edit(request):
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit.html', {'profile':usersprofile, 'user':currentuser, 'form':form})
 
+@csrf_protect
+@login_required
+def home_edit_personalinfo(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if request.method == "POST":
+        form = PersonalInfo(request.POST)
+
+        if form.is_valid():
+            city = form.cleaned_data["city"]
+            worksAt = form.cleaned_data["worksAt"]
+            education = form.cleaned_data["education"]
+            language = form.cleaned_data["language"]
+            skill1 = form.cleaned_data["skill1"]
+            skill2 = form.cleaned_data["skill2"]
+
+            if num_result == 0:
+                p = Profile.objects.create(user=currentuser, worksAt=worksAt, city=city, education=education, language=language, skill1=skill1, skill2=skill2)
+                p.save()
+
+            else:
+                p = Profile.objects.get(user=currentuser)
+                p.worksAt = worksAt
+                p.city = city
+                p.education = education
+                p.language = language 
+                p.skill1 = skill1 
+                p.skill2 = skill2 
+                p.save()
+
+            profile = Profile.objects.get(user=currentuser)
+            return HttpResponseRedirect('/week1/home/')
+
+    else:
+        form = PersonalInfo()
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+            p.save()
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit_personalinfo.html', {'profile':usersprofile, 'form':form})
+
+
+@csrf_protect
+@login_required
+def home_edit_funfact(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if request.method == "POST":
+        form = Funfact(request.POST)
+
+        if form.is_valid():
+            funaboutyou = form.cleaned_data["funaboutyou"]
+            hobby = form.cleaned_data["hobby"]
+            fQuote = form.cleaned_data["fQuote"]
+            fFilm = form.cleaned_data["fFilm"]
+            fTV = form.cleaned_data["fTV"]
+            fYoutube = form.cleaned_data["fYoutube"]
+            fBook = form.cleaned_data["fBook"]
+
+            if num_result == 0:
+                p = Profile.objects.create(user=currentuser, funaboutyou=funaboutyou, hobby=hobby, fQuote=fQuote, fFilmn=fFilm, fTV=fTV, fYoutube=fYoutube, fBook=fBook)
+                p.save()
+
+            else:
+                p = Profile.objects.get(user=currentuser)
+                p.funaboutyou = funaboutyou
+                p.hobby = hobby
+                p.fQuote = fQuote
+                p.fFilm = fFilm
+                p.fTV = fTV
+                p.fYoutube = fYoutube
+                p.fBook = fBook
+                p.save()
+
+            profile = Profile.objects.get(user=currentuser)
+            return HttpResponseRedirect('/week1/home/')
+
+    else:
+        form = Funfact()
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+            p.save()
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit_funfact.html', {'profile':usersprofile, 'form':form})
+
+@csrf_protect
+@login_required
+def home_edit_photo(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+
+    if request.method == 'POST':
+        form = Step2(request.FILES)
+        if form.is_valid():
+            photo = request.FILES["photo"]
+
+            if num_result == 0:
+                p = Profile.objects.create(user=currentuser, photo=photo)
+                p.save()
+            else:
+                p = Profile.objects.get(user=currentuser)
+                p.photo = photo
+                p.save()
+
+            profile = Profile.objects.get(user=currentuser)
+            return HttpResponseRedirect('/week1/home/')
+
+    else:
+        form = Step2()
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+            p.save()
+
+    variables = RequestContext(request, {'form':form})
+    return render(request, 'week1/homeedit_photo.html', {'profile':usersprofile, 'form':form})
+
 def reset_confirm(request, uidb64=None, token=None):
     if uidb64 != None and token != None:
         print "uidb", uidb64
@@ -625,7 +753,18 @@ def get_profile(request, uid):
     nodejs_url = settings.NODEJS_SOCKET_URL
     user = User.objects.get(id=uid)
     profile = Profile.objects.get(user=user)
-    variables = RequestContext(request, {'profile':profile, 'uid':uid, 'nodejs_url':nodejs_url})
+
+    hatlist1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=2, status=0) | Q(user_one_id=uid, status=1))
+    hatlist2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=1, status=0) | Q(user_two_id=uid, status=1))
+    hatlist = list(chain(hatlist1, hatlist2))
+
+    users = User.objects.filter(id__in=hatlist)
+    print "users:", type(users), users
+    userlist = list(users)
+
+    hatsusers = Profile.objects.filter(user__in=userlist)
+
+    variables = RequestContext(request, {'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 'nodejs_url':nodejs_url})
     return render_to_response('week1/userpage.html', variables, )
 
 @login_required

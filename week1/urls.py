@@ -29,4 +29,7 @@ urlpatterns = [
     url(r'^profile/(?P<uid>\d+)/$', views.get_profile, name='get_profile'),
     url(r'^community/$', views.community, name='community'),
     url(r'^notification/$', views.notification, name='notification'),
+    url(r'^edit/personalinfomation/$', views.home_edit_personalinfo, name='edit_personalinfo'),
+    url(r'^edit/funfact/$', views.home_edit_funfact, name='edit_funfact'),
+    url(r'^edit/photo/$', views.home_edit_photo, name='edit_photo'),
 ]

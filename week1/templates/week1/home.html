@@ -80,7 +80,11 @@
     <div id="hatsoffusers">
         {% if hatsusers %}
              {% for h in hatsusers %}
-	        <img src="{{ h.photo.url }}" width="50px">
+                {% if h.photo %}
+	           <img src="{{ h.photo.url }}" width="50px">
+                {% else %}
+	           <img src="{% static 'images/profileimage.png'%}" width="50px">
+                {% endif %}
              {% endfor %}
         {% endif %}
     </div>
@@ -99,9 +103,13 @@
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
+	  socket.on('new comment', function(data){
+	         $('#commentHistory').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</p></span><br/>'));
+          });
+
 	  socket.on('update comment', function(docs){
               for(var i = 0; i < docs.length; i++){
-	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+':'+docs[i]['content']+'</span><br/>'));
+	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
               }
           });
     </script>

@@ -239,6 +239,12 @@ io.on('connection', function(socket){
       } else{
         console.log('saved:'+data.msg+' touid:'+data.to+' fromuid:'+data.from+' socket.uid:'+socket.uid);
         io.emit('update comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+
+        if (data.to in users){
+           users[data.to].emit('new comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        } else {
+        }
+
       }
     });
 

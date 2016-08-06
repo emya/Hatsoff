@@ -75,7 +75,11 @@
     <div id="hatsoffusers">
         {% if hatsusers %}
              {% for h in hatsusers %}
-	        <img src="{{ h.photo.url }}" width="50px">
+                {% if h.photo %}
+	           <img src="{{ h.photo.url }}" width="50px">
+                {% else %}
+	           <img src="{% static 'images/profileimage.png'%}" width="50px">
+                {% endif %}
              {% endfor %}
         {% endif %}
     </div>

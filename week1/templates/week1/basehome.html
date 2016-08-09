@@ -33,11 +33,11 @@
 		<div id='header-down'>
 			{% if profile.photo %}
 			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
-			<img src="{{ profile.photo.url }}">
+			<img src="{{ profile.photo.url }}" >
 
 			{% else %}
 			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
-			<img src="{% static 'images/profileimage.png'%}">
+			<img src="{% static 'images/profileimage.png'%}" >
 			{% endif %}
 		</div>
 	   </div>
@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div id="body-home">
+<div id="body">
 {% block content %}
 {% endblock %}
 </div>

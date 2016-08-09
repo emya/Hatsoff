@@ -2,7 +2,7 @@
    width: 1100px;
    margin: 0 auto;
    min-height: 100%;
-   padding: 20px;
+   /*padding: 20px;*/
    font-family: sans-serif;
 }
 
@@ -98,7 +98,8 @@
 
 #header #header-right img {
    top:40;
-   width: 30px;
+   width: 25px;
+   height: 25px;
 }
 
 #header #header-right input[type=submit]{
@@ -399,11 +400,13 @@ tr.spaceUnder > td
 }
 
 #body-home {
+  /**
    width: 1100px;
    margin: 0 auto;
    min-height: 100%;
    padding: 20px;
    font-family: sans-serif;
+   **/
    background-color: #f7f7f7;
 }
 

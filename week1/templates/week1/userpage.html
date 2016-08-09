@@ -13,43 +13,43 @@
       
 	<div class="home-step">
             <ul style="list-style-type:none">
-		<li>City:{{profile.city}}</li>
-		<li>Works at:{{profile.worksAt}}</li>
-		<li>Education:{{profile.education}}</li>
-		<li>Language:{{profile.language}}</li>
-		<li>skills:{{profile.skill1}}</li>
+		<li>City:{{target_profile.city}}</li>
+		<li>Works at:{{target_profile.worksAt}}</li>
+		<li>Education:{{target_profile.education}}</li>
+		<li>Language:{{target_profile.language}}</li>
+		<li>skills:{{target_profile.skill1}}</li>
             </ul>
 	</div>
 
 	<div class="home-step">
             <ul style="list-style-type:none">
-		<li>Fun fact about you:{{profile.funaboutyou}}</li>
-		<li>Hobby:{{profile.hobby}}</li>
-		<li>Favorite quote:{{profile.fQuote}}</li>
-		<li>Favorite film:{{profile.fFilm}}</li>
-		<li>Favorite TV show:{{profile.fTV}}</li>
-		<li>Favorite youTube channel:{{profile.fYoutube}}</li>
-		<li>Favorite book:{{profile.fBook}}</li>
+		<li>Fun fact about you:{{target_profile.funaboutyou}}</li>
+		<li>Hobby:{{target_profile.hobby}}</li>
+		<li>Favorite quote:{{target_profile.fQuote}}</li>
+		<li>Favorite film:{{target_profile.fFilm}}</li>
+		<li>Favorite TV show:{{target_profile.fTV}}</li>
+		<li>Favorite youTube channel:{{target_profile.fYoutube}}</li>
+		<li>Favorite book:{{target_profile.fBook}}</li>
             </ul>
 	</div>
     </div>
 
     <div id="home-secondcolumn">
 	<div class="home-step">
-	{% if profile.photo %}
-	    <img src="{{ profile.photo.url }}" class="maincontent">
+	{% if target_profile.photo %}
+	    <img src="{{ target_profile.photo.url }}" class="maincontent">
 	{% else %}
 	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
 	{% endif %}
         </div>
 	<div class="home-step">
             <ul style="list-style-type:none">
-	    {% if profile.showcase1 %}
-	        <li><img src="{{ profile.showcase1.url }}" class="maincontent"></li>
+	    {% if target_profile.showcase1 %}
+	        <li><img src="{{ target_profile.showcase1.url }}" class="maincontent"></li>
 	    {% else %}
 	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
 	    {% endif %}
-	    <li>Description of work:{{profile.describe1}}</li>
+	    <li>Description of work:{{target_profile.describe1}}</li>
             </ul>
 	</div>
     </div>

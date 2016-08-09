@@ -534,6 +534,11 @@ def home_edit(request):
 @csrf_protect
 @login_required
 def home_edit_personalinfo(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
     if request.method == "POST":
@@ -577,6 +582,11 @@ def home_edit_personalinfo(request):
 @csrf_protect
 @login_required
 def home_edit_funfact(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
     if request.method == "POST":
@@ -621,6 +631,11 @@ def home_edit_funfact(request):
 @csrf_protect
 @login_required
 def home_edit_photo(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
 
@@ -682,6 +697,11 @@ def reset(request):
 
 @login_required
 def results_friends(request, query):
+    newquery = request.GET.get('search_query', None)
+    
+    if newquery != None:
+        return HttpResponseRedirect('/week1/results/friends/'+newquery, {'query': newquery})
+
     nodejs_url = settings.NODEJS_SOCKET_URL
     t = loader.get_template('week1/results_friends.html')
     #temporary results
@@ -689,12 +709,21 @@ def results_friends(request, query):
         foundusers = User.objects.filter(first_name=query).exclude(id=request.user.id)
     except ObjectDoesNotExist:
         foundusers = None
-    variables = RequestContext(request, {'query':query, 'users':foundusers, 'nodejs_url':nodejs_url})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'query':query, 'users':foundusers, 'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 
 @login_required
 def hatsoff(request, user2):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     user1 = request.user.id
     if user1 < user2:
         try:
@@ -726,7 +755,10 @@ def hatsoff(request, user2):
     
     users = User.objects.filter(id__in=hatlist)
 
-    variables = RequestContext(request, {'users':users})
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'users':users, 'profile':profile})
     return render_to_response('week1/hatsoff_list.html', variables, )
 
 @login_required
@@ -750,9 +782,14 @@ def private_message(request, uid):
 
 @login_required
 def get_profile(request, uid):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     nodejs_url = settings.NODEJS_SOCKET_URL
     user = User.objects.get(id=uid)
-    profile = Profile.objects.get(user=user)
+    target_profile = Profile.objects.get(user=user)
 
     hatlist1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=2, status=0) | Q(user_one_id=uid, status=1))
     hatlist2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=1, status=0) | Q(user_two_id=uid, status=1))
@@ -764,17 +801,38 @@ def get_profile(request, uid):
 
     hatsusers = Profile.objects.filter(user__in=userlist)
 
-    variables = RequestContext(request, {'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 'nodejs_url':nodejs_url})
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 'nodejs_url':nodejs_url})
     return render_to_response('week1/userpage.html', variables, )
 
 @login_required
 def community(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     nodejs_url = settings.NODEJS_SOCKET_URL
-    variables = RequestContext(request, {'nodejs_url':nodejs_url})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/community.html', variables, )
 
 @login_required
 def notification(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
     nodejs_url = settings.NODEJS_SOCKET_URL
-    variables = RequestContext(request, {'nodejs_url':nodejs_url})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/notification.html', variables, )

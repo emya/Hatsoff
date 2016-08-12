@@ -52,38 +52,32 @@
 	    <li>Description of work:{{target_profile.describe1}}</li>
             </ul>
 	</div>
-    </div>
 
-    <div id="home-thirdcolumn">
-    </div>
+	<div id="whats-next">
+	    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
+		<ul style="list-style-type:none">
+		    <li>Description of work:</li>
+		    <li>Your role:</li>
+		    <li>Status of work:</li>
+		    <li>Target finish date:</li>
+		    <li>Comments:</li>
+		</ul>
+	</div>
 
-</div>
-
-<div id="whats-next">
-    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
-        <ul style="list-style-type:none">
-            <li>Description of work:</li>
-            <li>Your role:</li>
-            <li>Status of work:</li>
-            <li>Target finish date:</li>
-            <li>Comments:</li>
-        </ul>
-</div>
-
-<div id="thanks-hatsoff">
-    <p>Thanks - Hats off</p>
-    <div id="hatsoffusers">
-        {% if hatsusers %}
-             {% for h in hatsusers %}
-                {% if h.photo %}
-	           <img src="{{ h.photo.url }}" width="50px">
-                {% else %}
-	           <img src="{% static 'images/profileimage.png'%}" width="50px">
-                {% endif %}
-             {% endfor %}
-        {% endif %}
-    </div>
-</div>
+	<div id="thanks-hatsoff">
+	    <p>Thanks - Hats off</p>
+	    <div id="hatsoffusers">
+		{% if hatsusers %}
+		     {% for h in hatsusers %}
+			{% if h.photo %}
+			   <img src="{{ h.photo.url }}" width="50px">
+			{% else %}
+			   <img src="{% static 'images/profileimage.png'%}" width="50px">
+			{% endif %}
+		     {% endfor %}
+		{% endif %}
+	    </div>
+	</div>
 
 <div id="home-comment">
     <h4> Comments </h4>
@@ -120,6 +114,13 @@
           });
            
     </script>
+    </div>
+
+    <div id="home-thirdcolumn">
+    </div>
+
+</div>
+
 
 </div>
 

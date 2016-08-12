@@ -96,10 +96,11 @@
    vertical-align: bottom;
 }
 
-#header #header-right img {
-   top:40;
+img.profile_img {
+   /*top:40;*/
    width: 25px;
    height: 25px;
+   padding-right: 20px;
 }
 
 #header #header-right input[type=submit]{
@@ -275,12 +276,20 @@ tr.spaceUnder > td
 
 #home-friends {
    display: inline-block;
-   width: 250px;
+   width: 200px;
+   padding: 20px;
+   vertical-align: top;
+   text-align: center;
 }
 
 #home-main {
    display: inline-block;
-   width: 700px;
+   width: 750px;
+   padding: 20px;
+}
+
+#home-main textarea#p {
+   border-radius: 10px;
 }
 
 #home-main a.pinkback {
@@ -307,11 +316,11 @@ tr.spaceUnder > td
 #home-main #home-secondcolumn {
    display: inline-block;
    vertical-align: top;
-   width: 300px;
+   width: 350px;
 }
 
 #home-main #home-secondcolumn img.maincontent {
-   width: 260px;
+   width: 300px;
 }
 
 #home-main #home-thirdcolumn {
@@ -342,9 +351,11 @@ tr.spaceUnder > td
 }
 
 #whats-next {
+   padding-top: 20px;
+   /**
    width: 500px;
    margin: 0 auto;
-   padding: 20px;
+   **/
 }
 
 #whats-next img.whatsnext{

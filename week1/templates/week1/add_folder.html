@@ -1,0 +1,21 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+<h3>Your Folder</h3>
+
+<ul style="list-style-type:none">
+{% if users %}
+   {% for u in users %}
+       <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a></li>
+   {% endfor %}
+{% endif %}
+</ul>
+</div>
+
+{% endblock %}

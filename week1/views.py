@@ -21,7 +21,7 @@ from itertools import chain
 
 from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm
-from .models import Profile, Hatsoff
+from .models import Profile, Hatsoff, FavoriteFolder
 from .forms import RegistrationForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, Funfact
 
 # Create your views here.
@@ -213,7 +213,7 @@ def home(request):
         print "query", query
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
-    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    currentuser = User.objects.get(id=uid, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
     if num_result == 0:
         p = Profile.objects.create(user=currentuser)
@@ -229,8 +229,19 @@ def home(request):
 
     hatsusers = Profile.objects.filter(user__in=userlist)
 
+    folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=1, status=0) | Q(user_one_id=uid, status=1))
+    folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=2, status=0) | Q(user_two_id=uid, status=1))
+    folderlist = list(chain(folderlist1, folderlist2))
+
+    users = User.objects.filter(id__in=folderlist)
+    userlist = list(users)
+
+    folderusers = Profile.objects.filter(user__in=userlist)
+    
+    print "folderusers", folderusers, folderusers.count()
+
     profile = Profile.objects.get(user=currentuser)
-    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'folderusers':folderusers, 'nodejs_url':nodejs_url})
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
@@ -762,6 +773,43 @@ def hatsoff(request, user2):
     return render_to_response('week1/hatsoff_list.html', variables, )
 
 @login_required
+def hatsoff_list(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    user1 = request.user.id
+
+    giveusers = None
+    givehat1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=1, status=0) | Q(user_one_id=user1, status=1))
+    givehat2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
+    givehat = list(chain(givehat1, givehat2))
+    
+    giveusers = User.objects.filter(id__in=givehat)
+
+    receiveusers = None
+    receivehat1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=2, status=0) | Q(user_one_id=user1, status=1))
+    receivehat2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=1, status=0) | Q(user_two_id=user1, status=1))
+    receivehat = list(chain(receivehat1, receivehat2))
+
+    receiveusers = User.objects.filter(id__in=receivehat)
+
+    folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=1, status=0) | Q(user_one_id=user1, status=1))
+    folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
+    folderlist = list(chain(folderlist1, folderlist2))
+
+    fusers = User.objects.filter(id__in=folderlist)
+    userlist = list(fusers)
+    folderusers = Profile.objects.filter(user__in=userlist)
+
+    currentuser = User.objects.get(id=user1, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'giveusers':giveusers, 'receiveusers':receiveusers, 'folderusers':folderusers, 'profile':profile})
+    return render_to_response('week1/hatsoff_list.html', variables, )
+
+@login_required
 def messages(request):
     nodejs_url = settings.NODEJS_SOCKET_URL
     users = User.objects.exclude(id=request.user.id)
@@ -815,11 +863,37 @@ def community(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
 
-    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    allusers = list(User.objects.all())
+
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    uid = request.user.id
+    folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=1, status=0) | Q(user_one_id=uid, status=1))
+    folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=2, status=0) | Q(user_two_id=uid, status=1))
+    folderlist = list(chain(folderlist1, folderlist2))
+
+    fusers = User.objects.filter(id__in=folderlist)
+    userlist = list(fusers)
+    folderusers = Profile.objects.filter(user__in=userlist)
+
+    currentuser = User.objects.get(id=uid, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'userphoto':userphoto, 'users':users, 'folderusers':folderusers})
     return render_to_response('week1/community.html', variables, )
 
 @login_required
@@ -836,3 +910,71 @@ def notification(request):
 
     variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/notification.html', variables, )
+
+@login_required
+def folder(request):
+    uid = request.user.id
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    nodejs_url = settings.NODEJS_SOCKET_URL
+
+    currentuser = User.objects.get(id=uid, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    folder1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=2, status=0) | Q(user_one_id=uid, status=1))
+    folder2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=1, status=0) | Q(user_two_id=uid, status=1))
+    folderlist = list(chain(folder1, folder2))
+    folder = User.objects.filter(id__in=folderlist)
+
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'folder':folder})
+    return render_to_response('week1/folder.html', variables, )
+
+@login_required
+def add_folder(request, user2):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    user1 = request.user.id
+    if user1 < user2:
+        try:
+            folder = FavoriteFolder.objects.get(user_one_id=user1, user_two_id=user2)
+            if folder.actionuser == 2 and folder.status == 0:
+                folder.status = 1
+                folder.save()
+
+        except ObjectDoesNotExist:
+            folder = FavoriteFolder.objects.create(user_one_id=user1, user_two_id=user2, actionuser=1, status=0)
+            folder.save()
+
+    else:
+        try:
+            folder = FavoriteFolder.objects.get(user_one_id=user2, user_two_id=user1)
+            if folder.actionuser == 1 and folder.status == 0:
+                folder.status = 1
+                folder.save()
+
+
+        except ObjectDoesNotExist:
+            folder = FavoriteFolder.objects.create(user_one_id=user2, user_two_id=user1, actionuser=2, status=0)
+            folder.save()
+
+    users = None
+    folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=1, status=0) | Q(user_one_id=user1, status=1))
+    folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
+    folderlist = list(chain(folderlist1, folderlist2))
+
+    print "folderlist", folderlist
+    
+    users = User.objects.filter(id__in=folderlist)
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'users':users, 'profile':profile})
+    return render_to_response('week1/add_folder.html', variables, )
+

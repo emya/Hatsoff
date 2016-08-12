@@ -19,6 +19,7 @@
 	      <a href="{% url 'week1:community' %}">Community</a>
 	      <a href="{% url 'week1:notification' %}">Notifications</a>
 	      <a href="{% url 'week1:messages' %}">Messages</a>
+	      <a href="{% url 'week1:hatsoff_list' %}">Hatsoff</a>
 	   </div>
 
 	   <div id='header-right'>
@@ -33,11 +34,11 @@
 		<div id='header-down'>
 			{% if profile.photo %}
 			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
-			<img src="{{ profile.photo.url }}" >
+			<img src="{{ profile.photo.url }}" class="profile_img">
 
 			{% else %}
 			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
-			<img src="{% static 'images/profileimage.png'%}" >
+			<img src="{% static 'images/profileimage.png'%}" class="profile_img">
 			{% endif %}
 		</div>
 	   </div>

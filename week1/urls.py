@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^step7/$', views.step7, name='step7'),
     url(r'^results/friends/(?P<query>\w+)/$', views.results_friends, name='resultsfriends'),
     url(r'^hatsoff/(?P<user2>\d+)/$', views.hatsoff, name='hatsoff'),
+    url(r'^hatsoff/list/$', views.hatsoff_list, name='hatsoff_list'),
     url(r'^messages/$', views.messages, name='messages'),
     url(r'^messages/(?P<uid>\d+)/$', views.private_message, name='private_message'),
     url(r'^profile/(?P<uid>\d+)/$', views.get_profile, name='get_profile'),
@@ -32,4 +33,6 @@ urlpatterns = [
     url(r'^edit/personalinfomation/$', views.home_edit_personalinfo, name='edit_personalinfo'),
     url(r'^edit/funfact/$', views.home_edit_funfact, name='edit_funfact'),
     url(r'^edit/photo/$', views.home_edit_photo, name='edit_photo'),
+    url(r'^folder/$', views.folder, name='folder'),
+    url(r'^folder/list/(?P<user2>\d+)/$', views.add_folder, name='add_folder'),
 ]

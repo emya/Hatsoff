@@ -6,6 +6,18 @@
 <div id="body-home">
 
 <div id="home-friends">
+<h4>Folder</h4>
+<ul style="list-style-type:none">
+{% if folderusers %}
+   {% for u in folderusers %}
+        {% if u.photo %}
+	   <li><img src="{{ u.photo.url }}" width="50px"></li>
+        {% else %}
+	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
+        {% endif %}
+   {% endfor %}
+{% endif %}
+</ul>
 </div>
 
 <div id="home-main">
@@ -58,63 +70,63 @@
 	    <li>Description of work:{{profile.describe1}}</li>
             </ul>
 	</div>
+
+	<div id="whats-next">
+	    <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+		<ul style="list-style-type:none">
+		    <li>Description of work:</li>
+		    <li>Your role:</li>
+		    <li>Status of work:</li>
+		    <li>Target finish date:</li>
+		    <li>Comments:</li>
+		</ul>
+	</div>
+
+	<div id="thanks-hatsoff">
+	    <p>Thanks - Hats off</p>
+	    <div id="hatsoffusers">
+		{% if hatsusers %}
+		     {% for h in hatsusers %}
+			{% if h.photo %}
+			   <img src="{{ h.photo.url }}" width="50px">
+			{% else %}
+			   <img src="{% static 'images/profileimage.png'%}" width="50px">
+			{% endif %}
+		     {% endfor %}
+		{% endif %}
+	    </div>
+	</div>
+
+	<div id="home-comment">
+	    <h4> Comments </h4>
+	    <ul style="list-style-type:none">
+		<div id="commentHistory"></div>
+	    </ul>
+	    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+	    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	    <script>
+		  var socket = io.connect("{{nodejs_url}}");
+		  socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+		  socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+
+		  socket.on('new comment', function(data){
+			 $('#commentHistory').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</p></span><br/>'));
+		  });
+
+		  socket.on('update comment', function(docs){
+		      for(var i = 0; i < docs.length; i++){
+			 $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+		      }
+		  });
+	    </script>
+	</div>
+
     </div>
 
     <div id="home-thirdcolumn">
     </div>
 
-</div>
-
-<div id="whats-next">
-    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
-        <ul style="list-style-type:none">
-            <li>Description of work:</li>
-            <li>Your role:</li>
-            <li>Status of work:</li>
-            <li>Target finish date:</li>
-            <li>Comments:</li>
-        </ul>
-</div>
-
-<div id="thanks-hatsoff">
-    <p>Thanks - Hats off</p>
-    <div id="hatsoffusers">
-        {% if hatsusers %}
-             {% for h in hatsusers %}
-                {% if h.photo %}
-	           <img src="{{ h.photo.url }}" width="50px">
-                {% else %}
-	           <img src="{% static 'images/profileimage.png'%}" width="50px">
-                {% endif %}
-             {% endfor %}
-        {% endif %}
-    </div>
-</div>
-
-<div id="home-comment">
-    <h4> Comments </h4>
-    <ul style="list-style-type:none">
-        <div id="commentHistory"></div>
-    </ul>
-    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-          var socket = io.connect("{{nodejs_url}}");
-          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-          socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
-
-	  socket.on('new comment', function(data){
-	         $('#commentHistory').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</p></span><br/>'));
-          });
-
-	  socket.on('update comment', function(docs){
-              for(var i = 0; i < docs.length; i++){
-	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-              }
-          });
-    </script>
-</div>
 
 </div>
 {% endblock %}

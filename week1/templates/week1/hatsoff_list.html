@@ -4,14 +4,38 @@
 {% load staticfiles %}
 
 <div id="home-friends">
+<h4>Folder</h4>
+<ul style="list-style-type:none">
+{% if folderusers %}
+   {% for u in folderusers %}
+        {% if u.photo %}
+	   <li><img src="{{ u.photo.url }}" width="50px"></li>
+        {% else %}
+	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
+        {% endif %}
+   {% endfor %}
+{% endif %}
+</ul>
 </div>
 
 <div id="home-main">
-<h3>Your Hatsoff List</h3>
+<h3>Hatsoff List</h3>
+<p>You gave</p>
 
 <ul style="list-style-type:none">
-{% if users %}
-   {% for u in users %}
+{% if giveusers %}
+   {% for u in giveusers %}
+       <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a></li>
+   {% endfor %}
+{% endif %}
+</ul>
+
+<h3>Hatsoff List</h3>
+<p>You received</p>
+
+<ul style="list-style-type:none">
+{% if receiveusers %}
+   {% for u in receiveusers %}
        <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a></li>
    {% endfor %}
 {% endif %}

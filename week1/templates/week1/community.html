@@ -3,9 +3,29 @@
 {% block content %}
 {% load staticfiles %}
 
-<div id="community-main">
+<div id="body-home">
+
+<div id="home-friends">
+
+<h4>Folder</h4>
+<ul style="list-style-type:none">
+{% if folderusers %}
+   {% for u in folderusers %}
+        {% if u.photo %}
+	   <li><img src="{{ u.photo.url }}" width="50px"></li>
+        {% else %}
+	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
+        {% endif %}
+   {% endfor %}
+{% endif %}
+</ul>
+</div>
+
+<div id="home-main">
+
+    <h4>Do you have project updates or questions to the community?</h4>
     <form action="">
-      <input id="p" autocomplete="off" /><button>Post</button>
+      <textarea id="p" autocomplete="off" placeholder="Enter text, website or video URL" rows="5" cols="70"></textarea><button>Post</button>
     </form>
 
     <ul style="list-style-type:none">
@@ -36,12 +56,37 @@
 	  });
 
 	  socket.on('new community post', function(data){
-	      $('#communityPost').prepend($('<li><span class="msg"><br>'+'<h4>'+data.first_name+'&nbsp'+data.last_name+'</h4>'+'<p>'+data.msg+'</p></span><br/>'));
+              var uid = data.uid;
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              var n  = users.indexOf(uid);
+	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+              if ( n != -1) {
+	          $('#communityPost').prepend($('<hr>'));
+	          $('#communityPost').prepend($('<li><span class="msg"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'&nbsp <a href="'+url_mask+'">folder</a><p>'+data.msg+'</p></span><br/>'));
+
+              }else{
+	          //$('#communityPost').prepend($('<li><span class="msg"><br>'+'<h4>'+data.first_name+'&nbsp'+data.last_name+'</h4>'+'<p>'+data.msg+'</p></span><br/>'));
+	          $('#communityPost').prepend($('<hr>'));
+
+	          $('#communityPost').prepend($('<li><span class="msg"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'&nbsp <a href="'+url_mask+'">folder</a><p>'+data.msg+'</p></span><br/>'));
+              }
 	  });
         
 	  socket.on('update community post', function(docs){
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               for(var i=0; i < docs.length; i++){
-	         $('#communityPost').append($('<li><span class="msg"><br>'+'<h4>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</h4>'+'<p>'+docs[i]['content']+'</p></span><br/>'));
+                 var uid = docs[i]['user']['uid'];
+                 var n  = users.indexOf(uid);
+	         var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+                 if ( n != -1) {
+	            $('#communityPost').append($('<li><span class="msg"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a><p>'+docs[i]['content']+'</p></span><br/>'));
+	            $('#communityPost').append($('<hr>'));
+                 } else{
+	            $('#communityPost').append($('<li><span class="msg"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a><p>'+docs[i]['content']+'</p></span><br/>'));
+	            $('#communityPost').append($('<hr>'));
+                 }
 	      }
 	  });
         
@@ -51,6 +96,8 @@
           });
           **/
     </script>
+</div>
+
 </div>
 
 {% endblock %}

@@ -43,3 +43,10 @@ class Hatsoff(models.Model):
     actionuser = models.IntegerField()#1 or 2
     status = models.IntegerField(range(0, 4))
     #0:follow, 1:follow each other
+
+class FavoriteFolder(models.Model):
+    user_one_id = models.IntegerField()
+    user_two_id = models.IntegerField()
+    actionuser = models.IntegerField()#1 or 2
+    status = models.IntegerField(range(0, 4))
+    #0:add favorite, 1:add favorite each other

@@ -9,9 +9,11 @@
     <table border="0" align="center" width="200">
 	{{ form.as_table }}
     </table>
-    <input type="submit" value="Next" align="right"/>
+    <div class="submit-wrapper">
+        <input type="submit" value="Next Step" class="step-submit"/>
+        <a href="{% url 'week1:step7' %}">Skip</a>
+    </div>
 </form>
-<a href="{% url 'week1:step7' %}">Skip</a>
 
 </div>
 

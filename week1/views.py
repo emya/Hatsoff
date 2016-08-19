@@ -786,14 +786,16 @@ def hatsoff_list(request):
     givehat2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
     givehat = list(chain(givehat1, givehat2))
     
-    giveusers = User.objects.filter(id__in=givehat)
+    users = User.objects.filter(id__in=givehat)
+    giveusers = Profile.objects.filter(user__in=users)
 
     receiveusers = None
     receivehat1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=2, status=0) | Q(user_one_id=user1, status=1))
     receivehat2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=1, status=0) | Q(user_two_id=user1, status=1))
     receivehat = list(chain(receivehat1, receivehat2))
 
-    receiveusers = User.objects.filter(id__in=receivehat)
+    users = User.objects.filter(id__in=receivehat)
+    receiveusers = Profile.objects.filter(user__in=users)
 
     folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=1, status=0) | Q(user_one_id=user1, status=1))
     folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
@@ -812,9 +814,24 @@ def hatsoff_list(request):
 @login_required
 def messages(request):
     nodejs_url = settings.NODEJS_SOCKET_URL
-    users = User.objects.exclude(id=request.user.id)
     myid = request.user.id
-    variables = RequestContext(request, {'users':users, 'myid':myid, 'nodejs_url':nodejs_url})
+
+    allusers = list(User.objects.all())
+
+    users = []
+    userphoto = []
+    for u in allusers:
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    media_url = settings.MEDIA_URL
+    variables = RequestContext(request, {'users':users, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
     return render_to_response('week1/message.html', variables, )
 
 @login_required

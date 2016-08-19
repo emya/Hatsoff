@@ -3,7 +3,7 @@
    margin: 0 auto;
    min-height: 100%;
    /*padding: 20px;*/
-   font-family: sans-serif;
+   font-family: Cabin;
 }
 
 #body #body-left {
@@ -103,6 +103,11 @@ img.profile_img {
    padding-right: 20px;
 }
 
+img.icons_img {
+   width: 45px;
+   height: 45px;
+}
+
 #header #header-right input[type=submit]{
    color: white;
    background-color:#7D0541;
@@ -193,9 +198,10 @@ img.profile_img {
    width: 300px;
    height: 190px;
    padding: 10px 25px;
-   margin: 0 auto;
-   background-color: #CCCCCC;
+   margin: 0 10px;
+   background-color: #efefef;
    border-radius: 20px;
+   vertical-align: top;
 }
 
 #hometop #hometop-right {
@@ -203,9 +209,11 @@ img.profile_img {
    width: 300px;
    height: 190px;
    padding: 10px 25px;
-   margin: 0 auto;
-   background-color: #CCCCCC;
+   /*margin: 0 auto;*/
+   margin: 0 10px;
+   background-color: #efefef;
    border-radius: 20px;
+   vertical-align: top;
 }
 
 #body .paragraph {
@@ -262,6 +270,40 @@ tr.spaceUnder > td
    text-align: center;
 }
 
+#login .login-form input[type=email]{
+   width: 200px;
+   height: 27px;
+   border-radius: 5px;
+   padding-bottom: 5px;
+}
+
+#login .login-form input[type=password]{
+   width: 200px;
+   height: 27px;
+   border-radius: 5px;
+   padding-bottom: 5px;
+}
+
+#login .login-form input[type=submit]{
+   width: 200px;
+   height: 27px;
+   border-radius: 5px;
+   padding-bottom: 5px;
+   color: white;
+   background-color: #cd0b71;
+   border:0px;
+}
+
+#login .login-form a{
+   text-decoration: none;
+   color: #4a86e8;
+}
+
+#login .login-wrapper {
+   padding-top: 10px;
+   text-align: center;
+}
+
 #about .paragraph {
    padding-right: 350px
 }
@@ -286,6 +328,37 @@ tr.spaceUnder > td
    display: inline-block;
    width: 750px;
    padding: 20px;
+}
+
+#home-main p.post-content {
+   background-color: white;
+   text-align: center;
+   width: 500px;
+   display: inline-block;
+   padding: 20px;
+}
+
+#home-main-center {
+   width: 550px;
+   text-align: center;
+}
+
+#home-main .post-wrapper{
+   background-color: #d9ead3;
+   text-align: center;
+   padding: 5px;
+}
+
+#home-main #hats-gave{
+   display: inline-block;
+   width: 300px;
+   vertical-align: top;
+}
+
+#home-main #hats-received{
+   display: inline-block;
+   width: 300px;
+   vertical-align: top;
 }
 
 #home-main textarea#p {
@@ -319,7 +392,7 @@ tr.spaceUnder > td
    width: 350px;
 }
 
-#home-main #home-secondcolumn img.maincontent {
+#body img.maincontent {
    width: 300px;
 }
 
@@ -327,6 +400,11 @@ tr.spaceUnder > td
    display: inline-block;
    vertical-align: top;
    width: 100px;
+}
+
+#home-main #home-thirdcolumn .home-bottom {
+   position: fixed;
+   bottom: 0;
 }
 
 #home-main .home-step {
@@ -359,7 +437,7 @@ tr.spaceUnder > td
 }
 
 #whats-next img.whatsnext{
-   width: 350px;
+   width: 300px;
 }
 
 #thanks-hatsoff {
@@ -407,7 +485,42 @@ tr.spaceUnder > td
 
 #step #step-right {
    display: inline-block;
-   width: 700px;
+   width: 600px;
+}
+
+#step .step-submit {
+   /**display: block;
+   float: right;**/
+   width: 100px;
+   color: white;
+   background-color: #d5a6bd;
+   border-radius: 5px;
+   border: 0px;
+}
+
+#step .step-form {
+   padding-top: 20px;
+   width: 600px;
+}
+
+#step .step-table {
+   padding-bottom: 1em;
+   border-spacing: 10px;
+}
+
+#step .submit-wrapper {
+   text-align: center;
+}
+
+#step .submit-wrapper a {
+   text-decoration: none;
+   color: #4a86e8;
+}
+
+#step .step-form input[type=text]{
+   width: 300px;
+   border-radius: 5px;
+   padding-bottom: 5px;
 }
 
 #body-home {

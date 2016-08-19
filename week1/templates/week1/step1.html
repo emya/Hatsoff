@@ -10,11 +10,13 @@
      </div>
 
      <div id="step-right">
-	<form action="" method="POST">{% csrf_token %}
-	    <table border="0" align="center" width="200">
+	<form action="" method="POST" class="step-form">{% csrf_token %}
+	    <table border="0" align="center" class="step-table">
 		{{ form.as_table }}
 	    </table>
-	    <input type="submit" value="Next" align="right"/>
+            <div class="submit-wrapper">
+	        <input type="submit" value="Next Step" class="step-submit"/>
+            </div>
 	</form>
      </div>
 

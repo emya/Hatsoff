@@ -59,7 +59,7 @@ class ForgotPasswordForm(PasswordResetForm):
         fields = ("email")
 
 class Step1(forms.Form):
-    displayname = forms.CharField(max_length=100, required=False)
+    displayname = forms.CharField(max_length=100, required=False, label=_("Display Name"))
     profession = forms.CharField(max_length=100, required=True)
     city = forms.CharField(max_length=100, required=False)
     worksAt = forms.CharField(max_length=100, required=False, label=_("Work At"))

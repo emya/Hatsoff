@@ -3,7 +3,6 @@
 {% block content %}
 {% load staticfiles %}
 
-<div id="body-home">
 
 <div id="home-friends">
 
@@ -22,13 +21,14 @@
 </div>
 
 <div id="home-main">
+    <div class="post-wrapper">
+	<h4>Do you have project updates or questions to the community?</h4>
+	<form action="">
+	  <textarea id="p" autocomplete="off" placeholder=" Enter text, website or video URL" rows="5" cols="70"></textarea><button>Post</button>
+	</form>
+    </div>
 
-    <h4>Do you have project updates or questions to the community?</h4>
-    <form action="">
-      <textarea id="p" autocomplete="off" placeholder="Enter text, website or video URL" rows="5" cols="70"></textarea><button>Post</button>
-    </form>
-
-    <ul style="list-style-type:none">
+    <ul style="list-style-type:none; padding-left:0px;">
         <div id="communityPost"></div>
     </ul>
 
@@ -62,14 +62,20 @@
               var n  = users.indexOf(uid);
 	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
               if ( n != -1) {
-	          $('#communityPost').prepend($('<hr>'));
-	          $('#communityPost').prepend($('<li><span class="msg"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'&nbsp <a href="'+url_mask+'">folder</a><p>'+data.msg+'</p></span><br/>'));
+                    if (uid == {{user.id}}){
+	               //$('#communityPost').prepend($('<hr>'));
+	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</br><p class="post-content">'+data.msg+'</p></div><br/>'));
+                    } else{
+	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+data.msg+'</p></div><br/>'));
+                    }
 
               }else{
-	          //$('#communityPost').prepend($('<li><span class="msg"><br>'+'<h4>'+data.first_name+'&nbsp'+data.last_name+'</h4>'+'<p>'+data.msg+'</p></span><br/>'));
-	          $('#communityPost').prepend($('<hr>'));
-
-	          $('#communityPost').prepend($('<li><span class="msg"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'&nbsp <a href="'+url_mask+'">folder</a><p>'+data.msg+'</p></span><br/>'));
+	          //$('#communityPost').prepend($('<hr>'));
+                    if (uid == {{user.id}}){
+	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</br><p class="post-content">'+data.msg+'</p></div><br/>'));
+                    } else {
+	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+data.msg+'</p></div><br/>'));
+                    }
               }
 	  });
         
@@ -81,11 +87,19 @@
                  var n  = users.indexOf(uid);
 	         var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
                  if ( n != -1) {
-	            $('#communityPost').append($('<li><span class="msg"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a><p>'+docs[i]['content']+'</p></span><br/>'));
-	            $('#communityPost').append($('<hr>'));
+                    if (uid == {{user.id}}){
+	                $('#communityPost').append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="post-content">'+docs[i]['content']+'</p></div><br/>'));
+                    } else{
+	                $('#communityPost').append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></div><br/>'));
+                    }
+	            //$('#communityPost').append($('<hr>'));
                  } else{
-	            $('#communityPost').append($('<li><span class="msg"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a><p>'+docs[i]['content']+'</p></span><br/>'));
-	            $('#communityPost').append($('<hr>'));
+                    if (uid == {{user.id}}){
+	                $('#communityPost').append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="post-content">'+docs[i]['content']+'</p></div><br/>'));
+                    } else{
+	                $('#communityPost').append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></div><br/>'));
+    	  	    }
+	            //$('#communityPost').append($('<hr>'));
                  }
 	      }
 	  });
@@ -98,6 +112,5 @@
     </script>
 </div>
 
-</div>
 
 {% endblock %}

@@ -9,9 +9,9 @@
 {% if folderusers %}
    {% for u in folderusers %}
         {% if u.photo %}
-	   <li><img src="{{ u.photo.url }}" width="50px"></li>
+	   <li><img src="{{ u.photo.url }}" width="50px">{{u.user.first_name}}&nbsp{{u.user.last_name}}</li>
         {% else %}
-	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
+	   <li><img src="{% static 'images/profileimage.png'%}" width="50px">{{u.user.first_name}}&nbsp{{u.user.last_name}}</li>
         {% endif %}
    {% endfor %}
 {% endif %}
@@ -19,27 +19,41 @@
 </div>
 
 <div id="home-main">
-<h3>Hatsoff List</h3>
-<p>You gave</p>
 
-<ul style="list-style-type:none">
-{% if giveusers %}
-   {% for u in giveusers %}
-       <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a></li>
-   {% endfor %}
-{% endif %}
-</ul>
+<div id="hats-gave">
+	<h3>Hatsoff List</h3>
+	<p>You gave</p>
 
-<h3>Hatsoff List</h3>
-<p>You received</p>
+	<ul style="list-style-type:none; padding-left:0px;">
+	{% if giveusers %}
+	   {% for u in giveusers %}
+	       {% if u.photo %}
+	       <li><a href="{% url 'week1:get_profile' u.user.id %}" class="link-userpage"><img src="{{ u.photo.url }}" class="profile_img">{{u.user.first_name}} &nbsp {{u.user.last_name}}</a></li>
+               {% else %}
+	       <li><a href="{% url 'week1:get_profile' u.user.id %}" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">{{u.user.first_name}} &nbsp {{u.user.last_name}}</a></li>
+               {% endif %}
+	   {% endfor %}
+	{% endif %}
+	</ul>
+</div>
 
-<ul style="list-style-type:none">
-{% if receiveusers %}
-   {% for u in receiveusers %}
-       <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a></li>
-   {% endfor %}
-{% endif %}
-</ul>
+<div id="hats-received">
+	<h3>Hatsoff List</h3>
+	<p>You received</p>
+
+	<ul style="list-style-type:none; padding-left:0px;">
+	{% if receiveusers %}
+	   {% for u in receiveusers %}
+	       {% if u.photo %}
+	       <li><a href="{% url 'week1:get_profile' u.user.id %}" class="link-userpage"><img src="{{ u.photo.url }}" class="profile_img"></a></li>
+               {% else %}
+	       <li><a href="{% url 'week1:get_profile' u.user.id %}" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a></li>
+               {% endif %}
+	   {% endfor %}
+	{% endif %}
+	</ul>
+</div>
+
 </div>
 
 {% endblock %}

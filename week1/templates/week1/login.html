@@ -3,19 +3,22 @@
 {% block content %}
 <div id="login">
 
-<form action="" class="logintable" method="POST">{% csrf_token %}
+<h3>Log in</h3>
+<form action="" class="login-form" method="POST">{% csrf_token %}
     <table border="0">
-        <label for="email"> Email </label>
-        <input type="email" name="email" id="email">
+        <!--label for="email"> Email </label-->
+        <input type="email" name="email" id="email" placeholder=" Email" class="sign-text">
     <br>
     <br>
-        <label for="password"> Password </label>
-        <input type="password" name="password" id="password">
+        <!--label for="password"> Password </label-->
+        <input type="password" name="password" id="password" placeholder=" Password">
     </table>
-    <input type="submit" value="Log In" />
+    <a href="{% url 'week1:reset' %}">Forgot password?</a>
+    <div class="login-wrapper">
+       <input type="submit" value="Log me in" class="login-submit"/>
+    </div>
     <input type="hidden" name="next" value="/home/" />
 <form>
-<a href="{% url 'week1:reset' %}">Forgot password?</a>
 
 
 </div>

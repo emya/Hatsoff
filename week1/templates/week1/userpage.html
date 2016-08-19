@@ -42,7 +42,27 @@
 	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
 	{% endif %}
         </div>
+    </div>
+
+    <div id="home-thirdcolumn">
+       <ul style="list-style-type:none">
+	 <li><a href=""><img src="{% static 'images/hat.png'%}" class="icons-img"></a></li>
+	 <li><img src="{% static 'images/chat.png'%}" class="icons-img"></li>
+	 <li><img src="{% static 'images/pitch.png'%}" class="icons-img"></li>
+       </ul>
+
+       <div class="home-bottom">
+	    <ul style="list-style-type:none">
+	      <li><a href=""><img src="{% static 'images/contribute.png'%}" class="icons-img"></a></li>
+	      <li><img src="{% static 'images/recommend.png'%}" class="icons-img"></li>
+	      <li><img src="{% static 'images/help.png'%}" class="icons-img"></li>
+	    </ul>
+       </div>
+    </div>
+
+<div id="home-main-center">
 	<div class="home-step">
+            <h4>Previous Works</h4>
             <ul style="list-style-type:none">
 	    {% if target_profile.showcase1 %}
 	        <li><img src="{{ target_profile.showcase1.url }}" class="maincontent"></li>
@@ -54,6 +74,7 @@
 	</div>
 
 	<div id="whats-next">
+            <h4>What’s Next</h4>
 	    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
 		<ul style="list-style-type:none">
 		    <li>Description of work:</li>
@@ -65,7 +86,7 @@
 	</div>
 
 	<div id="thanks-hatsoff">
-	    <p>Thanks - Hats off</p>
+	    <h4>Thanks - Hats off</h4>
 	    <div id="hatsoffusers">
 		{% if hatsusers %}
 		     {% for h in hatsusers %}
@@ -116,8 +137,6 @@
     </script>
     </div>
 
-    <div id="home-thirdcolumn">
-    </div>
 
 </div>
 

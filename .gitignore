@@ -1,2 +1,3 @@
 # exclude everything except hatoff/settings.py
 hatsoff/settings.py
+hatsoff/db.sqlite3

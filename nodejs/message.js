@@ -3,6 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io').listen(app.listen(8889));
 var mongoose = require('mongoose')
 var users = {};
+var chatusers = {};
 
 /** redis
 var redis = require('redis');
@@ -106,6 +107,15 @@ io.on('connection', function(socket){
      updateUids();
   });
 
+  socket.on('join chat', function(data){
+     socket.uid = data.uid;
+     socket.firstname = data.firstname;
+     socket.lastname = data.lastname;
+     chatusers[socket.uid] = socket;
+     console.log('join chatusers:'+chatusers[19].firstname);
+     updatechatUids();
+  });
+
   socket.on('join community', function(data){
     console.log('join community');
     var query = CommunityPost.find({});
@@ -182,6 +192,10 @@ io.on('connection', function(socket){
     io.emit('usernames', Object.keys(users));
   }
   
+  function updatechatUids(){
+    io.emit('chatusers', Object.keys(chatusers));
+  }
+
   socket.on('chat message', function(data, callback){
     var msg = data.trim();
     if (msg.substr(0,3) === '/w '){
@@ -278,6 +292,9 @@ io.on('connection', function(socket){
     if (!socket.uid) return ;
     delete users[socket.uid];
     updateUids();
+
+    delete chatusers[socket.uid];
+    updatechatUids();
 
     console.log('user disconnected');
   });

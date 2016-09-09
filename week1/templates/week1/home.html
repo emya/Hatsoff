@@ -52,12 +52,12 @@
 
     <div id="home-secondcolumn">
 	<div class="home-step">
-	<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-	{% if profile.photo %}
-	    <img src="{{ profile.photo.url }}" class="maincontent">
-	{% else %}
-	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
-	{% endif %}
+		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+		{% if profile.photo %}
+		    <img src="{{ profile.photo.url }}" class="maincontent">
+		{% else %}
+		    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
+		{% endif %}
         </div>
     </div>
 
@@ -92,7 +92,7 @@
 	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 	    {% endif %}
 
-            <ul style="list-style-type:none; align:left">
+            <ul style="list-style-type:none">
 	    {% if showcase %}
 	        <li>Description of work:{{showcase.describe}}</li>
 	        <li>Your role:{{showcase.role}}</li>

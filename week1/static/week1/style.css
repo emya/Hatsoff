@@ -421,6 +421,7 @@ tr.spaceUnder > td
 
 #home-edit {
    padding: 50px;
+   text-align: center;
 }
 
 #home-comment {
@@ -473,7 +474,15 @@ tr.spaceUnder > td
 }
 
 #welcome {
-   padding: 70px;
+   padding: 50px 200px;
+}
+
+#welcome a {
+   width: 100px;
+   color: white;
+   background-color: #d5a6bd;
+   border-radius: 5px;
+   border: 0px;
 }
 
 #step #step-left {
@@ -485,10 +494,28 @@ tr.spaceUnder > td
 
 #step #step-right {
    display: inline-block;
+   vertical-align: top;
    width: 600px;
 }
 
-#step .step-submit {
+#step #step-right textarea {
+   border-radius: 8px;
+   border-color: #cccccc;
+}
+
+#step #step-right-left {
+   display: inline-block;
+   vertical-align: top;
+   width: 350px;
+}
+
+#step #step-right-right {
+   display: inline-block;
+   vertical-align: top;
+   width: 200px;
+}
+
+.step-submit {
    /**display: block;
    float: right;**/
    width: 100px;
@@ -498,29 +525,34 @@ tr.spaceUnder > td
    border: 0px;
 }
 
-#step .step-form {
-   padding-top: 20px;
+.step-form {
    width: 600px;
 }
 
-#step .step-table {
+.step-table {
    padding-bottom: 1em;
    border-spacing: 10px;
 }
 
-#step .submit-wrapper {
+.submit-wrapper {
    text-align: center;
 }
 
-#step .submit-wrapper a {
+.submit-wrapper a {
    text-decoration: none;
    color: #4a86e8;
 }
 
-#step .step-form input[type=text]{
+.submit-wrapper input[type=submit] {
+   padding: 10px;
+   margin: 10px;
+}
+
+.step-form input[type=text]{
    width: 300px;
    border-radius: 5px;
    padding-bottom: 5px;
+   margin-bottom: 5px;
 }
 
 #body-home {

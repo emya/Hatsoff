@@ -22,9 +22,8 @@ class Profile(models.Model):
     skill7 = models.CharField(max_length=200, default='', blank=True)
     skill8 = models.CharField(max_length=200, default='', blank=True)
     skill9 = models.CharField(max_length=200, default='', blank=True)
-    skill10 = models.CharField(max_length=200,default='', blank=True)
-    showcase1 = models.ImageField(upload_to='photoimg/', null=True, blank=True)
-    describe1 = models.CharField(max_length=200, default='', blank=True)
+    skill10 = models.CharField(max_length=200, default='', blank=True)
+    weburl = models.CharField(max_length=200, default='', blank=True)
     funaboutyou = models.CharField(max_length=200, default='', blank=True)
     fQuote = models.CharField(max_length=200, default='', blank=True)
     fFilm = models.CharField(max_length=200, default='', blank=True)
@@ -36,6 +35,26 @@ class Profile(models.Model):
     TVNow = models.CharField(max_length=200, default='', blank=True)
     hobby = models.CharField(max_length=200, default='', blank=True)
     cities = models.CharField(max_length=200, default='', blank=True)
+
+class Showcase(models.Model):
+    user = models.ForeignKey(User)
+    title = models.CharField(max_length=200, default='', blank=True)
+    number = models.IntegerField()#1 to 10
+    image = models.ImageField(upload_to='showcaseimg/', null=True, blank=True)
+    describe = models.CharField(max_length=500, default='', blank=True)
+    role = models.CharField(max_length=300, default='', blank=True)
+    completion = models.IntegerField(null=True, blank=True)#year of completion
+    
+class UpcomingWork(models.Model):
+    user = models.ForeignKey(User)
+    title = models.CharField(max_length=200, default='', blank=True)
+    number = models.IntegerField()#1 to 10
+    image = models.ImageField(upload_to='showcaseimg/', null=True, blank=True)
+    describe = models.CharField(max_length=500, default='', blank=True)
+    role = models.CharField(max_length=300, default='', blank=True)
+    status = models.CharField(max_length=300, default='', blank=True)
+    targetdate = models.DateTimeField(max_length=300, null=True, blank=True)#year of completion
+    comment = models.CharField(max_length=300, default='', blank=True)
 
 class Hatsoff(models.Model):
     user_one_id = models.IntegerField()

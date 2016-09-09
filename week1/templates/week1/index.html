@@ -1,4 +1,4 @@
-{% extends 'week1/base.html'%}
+{% extends request.user.is_authenticated|yesno:"week1/basehome.html,week1/base.html" %}
 {% load staticfiles %}
 
 {% block content %}

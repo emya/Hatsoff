@@ -4,16 +4,26 @@
 {% load staticfiles %}
 
 <div id="step">
+     <div id="step-left">
+     <h3>Step 6 out of 7</h3> 
+     </div>
 
-<form action="" method="POST">{% csrf_token %}
-    <table border="0" align="center" width="200">
-	{{ form.as_table }}
-    </table>
-    <div class="submit-wrapper">
-        <input type="submit" value="Next Step" class="step-submit"/>
-        <a href="{% url 'week1:step7' %}">Skip</a>
-    </div>
-</form>
+     <div id="step-right">
+        <h3>What are you working on now?</h3>
+	<form action="" method="POST" class="step-form"  enctype="multipart/form-data">{% csrf_token %}
+            <br>Title</br> <input type='text' name='title' ><br/>
+            <br>Photo</br> <input type='file' name='img' ><br/>
+            <br>Describe your work</br><input type='text' name='describe'><br/>
+            <br>Your role</br><input type='text' name='role'><br/>
+            <br>Status of work (for eg: entering post-production phase)</br><input type='text' name='status'><br/>
+            <br>Target finish date</br><input type='date' name='targetdate' min="2016-10-01"><br/>
+            <br>Comment</br><input type='text' name='comment'><br/>
+	    <div class="submit-wrapper">
+		<input type="submit" value="Next Step" class="step-submit"/>
+		<a href="{% url 'week1:step7' %}">Skip</a>
+	    </div>
+	</form>
+     </div>
 
 </div>
 

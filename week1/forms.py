@@ -66,14 +66,12 @@ class Step1(forms.Form):
     education = forms.CharField(max_length=100, required=False)
     birthdate = forms.DateField(required=False)
     language = forms.CharField(max_length=100, required=False)
-
-class Step2(forms.Form):
     photo = forms.ImageField(required=False)
 
-class Step3(forms.Form):
+class Step2(forms.Form):
     describe = forms.CharField(max_length=500, required=False)
 
-class Step4(forms.Form):
+class Step3(forms.Form):
     skill1 = forms.CharField(max_length=200, required=False)
     skill2 = forms.CharField(max_length=200, required=False)
     skill3 = forms.CharField(max_length=200, required=False)
@@ -85,23 +83,36 @@ class Step4(forms.Form):
     skill9 = forms.CharField(max_length=200, required=False)
     skill10 = forms.CharField(max_length=200, required=False)
 
+class Step4(forms.Form):
+    weburl = forms.CharField(max_length=200, required=False)
+
 class Step5(forms.Form):
-    showcase1 = forms.ImageField(required=False)
-    describe1 = forms.CharField(max_length=200, required=False)
+    title = forms.CharField(max_length=200, required=False)
+    image = forms.ImageField(required=False)
+    describe = forms.CharField(max_length=500, required=False)
+    role = forms.CharField(max_length=300, required=False)
+    completion = forms.IntegerField(required=False)
 
 class Step6(forms.Form):
+    title = forms.CharField(max_length=200, required=False)
+    image = forms.ImageField(required=False)
+    describe = forms.CharField(max_length=500, required=False)
+    role = forms.CharField(max_length=300, required=False)
+    status = forms.CharField(max_length=300, required=False)
+    targetdate = forms.DateField(required=False)
+    comment = forms.CharField(max_length=300, required=False)
+
+class Step7(forms.Form):
     funaboutyou = forms.CharField(max_length=200, required=False)
+    hobby = forms.CharField(max_length=200, required=False)
     fQuote = forms.CharField(max_length=200, required=False)
     fFilm = forms.CharField(max_length=200, required=False)
     fTV = forms.CharField(max_length=200, required=False)
     fYoutube= forms.CharField(max_length=200, required=False)
-    fBook= forms.CharField(max_length=200, required=False)
-
-class Step7(forms.Form):
+    fBook = forms.CharField(max_length=200, required=False)
     bookNow = forms.CharField(max_length=200, required=False)
     filmNow = forms.CharField(max_length=200, required=False)
     TVNow = forms.CharField(max_length=200, required=False)
-    hobby = forms.CharField(max_length=200, required=False)
     cities = forms.CharField(max_length=200, required=False)
 
 class PersonalInfo(forms.Form):
@@ -121,3 +132,5 @@ class Funfact(forms.Form):
     fYoutube= forms.CharField(max_length=200, required=False)
     fBook= forms.CharField(max_length=200, required=False)
 
+class PersonalPhoto(forms.Form):
+    photo = forms.ImageField(required=False)

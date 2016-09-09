@@ -64,25 +64,44 @@
 	<div class="home-step">
             <h4>Previous Works</h4>
             <ul style="list-style-type:none">
-	    {% if target_profile.showcase1 %}
-	        <li><img src="{{ target_profile.showcase1.url }}" class="maincontent"></li>
+	    {% if showcase %}
+	        {% if showcase.image %}
+	            <li><img src="{{ showcase.image.url }}" class="maincontent"></li>
+	        {% else %}
+	            <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+	        {% endif %}
 	    {% else %}
 	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
 	    {% endif %}
-	    <li>Description of work:{{target_profile.describe1}}</li>
+	    {% if showcase %}
+	        <li>Description of work:{{showcase.describe}}</li>
+	        <li>Your role:{{showcase.role}}</li>
+	        <li>Year of completion:{{showcase.role}}</li>
+	    {% endif %}
             </ul>
 	</div>
 
 	<div id="whats-next">
             <h4>What’s Next</h4>
-	    <img src="{% static 'images/empty_showcase.png'%}" class="whatsnext">
-		<ul style="list-style-type:none">
-		    <li>Description of work:</li>
-		    <li>Your role:</li>
-		    <li>Status of work:</li>
-		    <li>Target finish date:</li>
-		    <li>Comments:</li>
-		</ul>
+            <ul style="list-style-type:none">
+	    {% if upcoming %}
+	        {% if upcoming.image %}
+	            <li><img src="{{ upcoming.image.url }}" class="maincontent"></li>
+	        {% else %}
+	            <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+	        {% endif %}
+	    {% else %}
+	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+	    {% endif %}
+
+	    {% if upcoming %}
+	        <li>Description of your upcoming work:{{upcoming.describe}}</li>
+	        <li>Your role:{{upcoming.role}}</li>
+	        <li>Status:{{upcoming.status}}</li>
+	        <li>Target finish date:{{upcoming.targetdate}}</li>
+	        <li>Comment:{{upcoming.comment}}</li>
+	    {% endif %}
+	    </ul>
 	</div>
 
 	<div id="thanks-hatsoff">

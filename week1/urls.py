@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from django.contrib.auth.views import password_reset
+from django.contrib.auth.views import password_reset, password_reset_done
 
 from . import views
 
@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^edit/personalinfomation/$', views.home_edit_personalinfo, name='edit_personalinfo'),
     url(r'^edit/funfact/$', views.home_edit_funfact, name='edit_funfact'),
     url(r'^edit/photo/$', views.home_edit_photo, name='edit_photo'),
+    url(r'^edit/previousworks/$', views.home_edit_previouswork, name='edit_previouswork'),
     url(r'^folder/$', views.folder, name='folder'),
     url(r'^folder/list/(?P<user2>\d+)/$', views.add_folder, name='add_folder'),
 ]

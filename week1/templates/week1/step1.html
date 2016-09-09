@@ -1,19 +1,30 @@
-{% extends 'week1/basehome.html'%}
+{% extends 'week1/base.html'%}
 
 {% block content %}
 {% load staticfiles %}
 
 <div id="step">
      <div id="step-left">
-     <h3>Profile</h3>
      <h3>Step 1 out of 7</h3> 
      </div>
 
      <div id="step-right">
-	<form action="" method="POST" class="step-form">{% csrf_token %}
-	    <table border="0" align="center" class="step-table">
-		{{ form.as_table }}
-	    </table>
+        <h3>Profile</h3>
+	<form action="" method="POST" class="step-form" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.errors }}
+	    <!--table border="0" align="center" class="step-table"--!>
+            <div id="step-right-left">
+                <br>Display Name</br> <input type='text' name='displayname' value='{{ user.first_name }} {{user.last_name}}'><br/>
+                <br>Profession <span style="color:red">*</span></br> <input type='text' name='profession' ><br/>
+                <br>City</br> <input type='text' name='city' ><br/>
+                <br>Education</br> <input type='text' name='education'><br/>
+                <br>Birthdate</br> <input type='text' name='birthdate'><br/>
+                <br>Language</br><input type='text' name='language'><br/>
+            </div>
+            <div id="step-right-right">
+                <br>Photo</br> <input type='file' name='photo' ><br/>
+            </div>
+	    <!--/table-->
             <div class="submit-wrapper">
 	        <input type="submit" value="Next Step" class="step-submit"/>
             </div>

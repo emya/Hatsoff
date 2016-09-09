@@ -4,16 +4,20 @@
 {% load staticfiles %}
 
 <div id="step">
+     <div id="step-left">
+     <h3>Step 4 out of 7</h3> 
+     </div>
 
-<form action="" method="POST">{% csrf_token %}
-    <table border="0" align="center" width="200">
-	{{ form.as_table }}
-    </table>
-    <div class="submit-wrapper">
-        <input type="submit" value="Next Step" class="step-submit"/>
-        <a href="{% url 'week1:step5' %}">Skip</a>
-    </div>
-</form>
+     <div id="step-right">
+        <h3>Profile</h3>
+	<form action="" method="POST" class="step-form">{% csrf_token %}
+            <br>Website url</br> <input type='text' name='weburl' ><br/>
+	    <div class="submit-wrapper">
+		<input type="submit" value="Next Step" class="step-submit"/>
+		<a href="{% url 'week1:step5' %}">Skip</a>
+	    </div>
+	</form>
+     </div>
 
 </div>
 

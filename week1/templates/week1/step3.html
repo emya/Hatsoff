@@ -4,16 +4,30 @@
 {% load staticfiles %}
 
 <div id="step">
+     <div id="step-left">
+     <h3>Step 3 out of 7</h3> 
+     </div>
 
-<form action="" method="POST">{% csrf_token %}
-    <table border="0" align="center" width="200">
-	{{ form.as_table }}
-    </table>
-    <div class="submit-wrapper">
-        <input type="submit" value="Next Step" class="step-submit"/>
-        <a href="{% url 'week1:step4' %}">Skip</a>
-    </div>
-</form>
+     <div id="step-right">
+        <h3>Profile</h3>
+	<form action="" method="POST" class="step-form">{% csrf_token %}
+            <br>List your skills (for eg: design, programming)</br> 
+            1&nbsp;<input type='text' name='skill1' ><br/>
+            2&nbsp;<input type='text' name='skill2' ><br/>
+            3&nbsp;<input type='text' name='skill3' ><br/>
+            4&nbsp;<input type='text' name='skill4' ><br/>
+            5&nbsp;<input type='text' name='skill5' ><br/>
+            6&nbsp;<input type='text' name='skill6' ><br/>
+            7&nbsp;<input type='text' name='skill7' ><br/>
+            8&nbsp;<input type='text' name='skill8' ><br/>
+            9&nbsp;<input type='text' name='skill9' ><br/>
+            10<input type='text' name='skill10' ><br/>
+	    <div class="submit-wrapper">
+		<input type="submit" value="Next Step" class="step-submit"/>
+		<a href="{% url 'week1:step4' %}">Skip</a>
+	    </div>
+	</form>
+     </div>
 
 </div>
 

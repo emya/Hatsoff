@@ -4,14 +4,24 @@
 {% load staticfiles %}
 
 <div id="step">
+     <div id="step-left">
+     <h3>Step 5 out of 7</h3> 
+     </div>
 
-<form action="" class="" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    <table border="0" align="center" width="200">
-	{{ form.as_table }}
-    </table>
-    <input type="submit" value="Next" align="right"/>
-</form>
-<a href="{% url 'week1:step6' %}">Skip</a>
+     <div id="step-right">
+        <h3>Showcase your work</h3>
+	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <br>Title</br> <input type='text' name='title' ><br/>
+            <br>Photo</br> <input type='file' name='img' ><br/>
+            <br>Describe your work</br><input type='text' name='describe'><br/>
+            <br>Your role</br><input type='text' name='role'><br/>
+            <br>Year of completion</br><input type='number' name='completion' min="1970" max="2016"><br/>
+	    <div class="submit-wrapper">
+	        <input type="submit" value="Next Step" class="step-submit"/>
+	        <a href="{% url 'week1:step6' %}">Skip</a>
+            </div>
+	</form>
+     </div>
 
 </div>
 

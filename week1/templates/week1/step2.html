@@ -1,19 +1,23 @@
-{% extends 'week1/basehome.html'%}
+{% extends 'week1/base.html'%}
 
 {% block content %}
 {% load staticfiles %}
 
 <div id="step">
+     <div id="step-left">
+     <h3>Step 2 out of 7</h3> 
+     </div>
 
-<form action="" class="" method="POST" enctype="multipart/form-data">{% csrf_token %}
-    <table border="0" align="center" class="step-table">
-	{{ form.as_table }}
-    </table>
-    <div class="submit-wrapper">
-        <input type="submit" value="Next Step" class="step-submit"/>
-        <a href="{% url 'week1:step3' %}">Skip</a>
-    </div>
-</form>
+     <div id="step-right">
+        <h3>Profile</h3>
+	<form action="" method="POST" class="step-form">{% csrf_token %}
+            <br>Describe yourself</br> <textarea rows="5" cols="70" align="center" name='describe'></textarea><br/>
+	    <div class="submit-wrapper">
+		<input type="submit" value="Next Step" class="step-submit"/>
+		<a href="{% url 'week1:step3' %}">Skip</a>
+	    </div>
+	</form>
+     </div>
 
 </div>
 

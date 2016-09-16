@@ -1,4 +1,4 @@
-{% extends 'week1/basehome.html'%}
+{% extends 'week1/base_simple.html'%}
 
 {% block content %}
 {% load staticfiles %}
@@ -12,6 +12,31 @@
         <h3>Profile</h3>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
             <br>List your skills (for eg: design, programming)</br> 
+            <select name="skill1">
+                <option selected disabled>Choose here</option>
+                <option value="sengineer">Software Engineer</option>
+                <option value="scientist">Scientist</option>
+                <option value="researcher">Researcher</option>
+                <option value="gdesigner">Graphic Designer</option>
+            </select>
+            </br>
+            <select name="skill2">
+                <option selected disabled>Choose here</option>
+                <option value="sengineer">Software Engineer</option>
+                <option value="scientist">Scientist</option>
+                <option value="researcher">Researcher</option>
+                <option value="gdesigner">Graphic Designer</option>
+            </select>
+            </br>
+            <select name="skill3">
+                <option selected disabled>Choose here</option>
+                <option value="sengineer">Software Engineer</option>
+                <option value="scientist">Scientist</option>
+                <option value="researcher">Researcher</option>
+                <option value="gdesigner">Graphic Designer</option>
+            </select>
+            </br>
+            <!--
             1&nbsp;<input type='text' name='skill1' ><br/>
             2&nbsp;<input type='text' name='skill2' ><br/>
             3&nbsp;<input type='text' name='skill3' ><br/>
@@ -22,6 +47,7 @@
             8&nbsp;<input type='text' name='skill8' ><br/>
             9&nbsp;<input type='text' name='skill9' ><br/>
             10<input type='text' name='skill10' ><br/>
+            -->
 	    <div class="submit-wrapper">
 		<input type="submit" value="Next Step" class="step-submit"/>
 		<a href="{% url 'week1:step4' %}">Skip</a>

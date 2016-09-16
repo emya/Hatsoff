@@ -33,7 +33,9 @@ urlpatterns = [
     url(r'^edit/personalinfomation/$', views.home_edit_personalinfo, name='edit_personalinfo'),
     url(r'^edit/funfact/$', views.home_edit_funfact, name='edit_funfact'),
     url(r'^edit/photo/$', views.home_edit_photo, name='edit_photo'),
-    url(r'^edit/previousworks/$', views.home_edit_previouswork, name='edit_previouswork'),
+    url(r'^edit/previouswork/$', views.home_edit_newpreviouswork, name='edit_newpreviouswork'),
+    url(r'^edit/previousworks/(?P<num>\d+)/$', views.home_edit_previouswork, name='edit_previouswork'),
+    url(r'^edit/upcomingwork/$', views.home_edit_upcoming, name='edit_upcoming'),
     url(r'^folder/$', views.folder, name='folder'),
     url(r'^folder/list/(?P<user2>\d+)/$', views.add_folder, name='add_folder'),
 ]

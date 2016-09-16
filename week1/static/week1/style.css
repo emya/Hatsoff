@@ -338,6 +338,14 @@ tr.spaceUnder > td
    padding: 20px;
 }
 
+#home-main p.comment-content {
+   background-color: white;
+   text-align: center;
+   width: 400px;
+   display: inline-block;
+   padding: 20px;
+}
+
 #home-main-center {
    width: 550px;
    text-align: center;
@@ -417,6 +425,33 @@ tr.spaceUnder > td
 #home-main .home-step ul{
    padding:10px;
    list-style-type:none;
+   text-align:left;
+}
+
+#home-main .home-step .description-wrapper{
+   margin: 0 50px;
+}
+
+#home-main .home-step #upcomingComment{
+   display: none;
+}
+
+#home-main .home-step #upcoming_hide{
+   display: none;
+   text-align: center;
+}
+
+#home-main .home-step #upcoming_show{
+   text-align: center;
+}
+
+#home-main .home-step button.circle {
+   height: 15px;
+   width: 15px;
+   border-radius: 50px;
+   border: 1px solid #000;
+   background-color: black;
+   opacity: 0.5;
 }
 
 #home-edit {
@@ -529,6 +564,12 @@ tr.spaceUnder > td
    width: 600px;
 }
 
+.step-form select {
+   height: 50px;
+   width: 300px;
+   margin-bottom: 10px;
+}
+
 .step-table {
    padding-bottom: 1em;
    border-spacing: 10px;
@@ -573,4 +614,8 @@ tr.spaceUnder > td
 
 #community-main #communityPost {
    text-align: left;
+}
+
+#users a {
+   text-decoration: none;
 }

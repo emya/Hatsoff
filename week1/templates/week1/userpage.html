@@ -14,7 +14,7 @@
 	<div class="home-step">
             <ul style="list-style-type:none">
 		<li>City:{{target_profile.city}}</li>
-		<li>Works at:{{target_profile.worksAt}}</li>
+		<li>Independent:{{target_profile.worksAt}}</li>
 		<li>Education:{{target_profile.education}}</li>
 		<li>Language:{{target_profile.language}}</li>
 		<li>skills:{{target_profile.skill1}}</li>
@@ -62,47 +62,185 @@
 
 <div id="home-main-center">
 	<div class="home-step">
-            <h4>Previous Works</h4>
-            <ul style="list-style-type:none">
-	    {% if showcase %}
-	        {% if showcase.image %}
-	            <li><img src="{{ showcase.image.url }}" class="maincontent"></li>
-	        {% else %}
-	            <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
-	        {% endif %}
+            <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+            <script>
+		function changeContent(number, length){
+                    console.log('Click!' );
+
+                    for (var i = 0; i < length; i++){
+		        $('#'+i).show().siblings('div').hide();
+		    }
+		    $('#'+number).show().siblings('div').hide();
+		};
+            </script>
+
+            <h4>Portfolio</h4>
+	    {% if showcases %}
+                {% for showcase in showcases %}
+                    {% if forloop.counter == 1 %}
+                        <div id="{{ forloop.counter }}">
+                    {% else %}
+                        <div id="{{ forloop.counter }}" style="display:none;">
+                    {% endif %}
+
+		    {% if showcase.image %}
+			    <img src="{{ showcase.image.url }}" class="maincontent">
+		    {% else %}
+			    <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+		    {% endif %}
+                        <div class="description-wrapper">
+			    <!--ul style="list-style-type:none; text-align:left"-->
+			    <ul>
+				<li>Description of work:{{showcase.describe}}</li>
+				<li>Your role:{{showcase.role}}</li>
+				<li>Year of completion:{{showcase.completion}}</li>
+			    </ul>
+                        </div>
+                    </div>
+		{% endfor %}
 	    {% else %}
-	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+	        <a href="{% url 'week1:edit_newpreviouswork' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 	    {% endif %}
-	    {% if showcase %}
-	        <li>Description of work:{{showcase.describe}}</li>
-	        <li>Your role:{{showcase.role}}</li>
-	        <li>Year of completion:{{showcase.role}}</li>
+
+	    {% if showcases|length > 1 %}
+                {% for showcase in showcases %}
+                    <button onclick="changeContent({{ forloop.counter }}, {{showcases|length}})" class="circle"></button>
+	        {% endfor %}
 	    {% endif %}
-            </ul>
+
 	</div>
 
-	<div id="whats-next">
+	<div class="home-step">
+            <script>
+		function show_upcoming(){
+                    console.log('show more!');
+		    $('#upcomingComment').show();
+		    $('#upcoming_hide').show();
+		    $('#upcoming_show').hide();
+		};
+
+		function hide_upcoming(){
+                    console.log('hide more!');
+		    $('#upcomingComment').hide();
+		    $('#upcoming_hide').hide();
+		    $('#upcoming_show').show();
+		};
+            </script>
+
             <h4>What’s Next</h4>
-            <ul style="list-style-type:none">
 	    {% if upcoming %}
 	        {% if upcoming.image %}
-	            <li><img src="{{ upcoming.image.url }}" class="maincontent"></li>
+	            <img src="{{ upcoming.image.url }}" class="maincontent">
 	        {% else %}
-	            <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
 	        {% endif %}
 	    {% else %}
-	        <li><img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 	    {% endif %}
 
 	    {% if upcoming %}
+            <div class="description-wrapper">
+              <ul style="list-style-type:none">
 	        <li>Description of your upcoming work:{{upcoming.describe}}</li>
 	        <li>Your role:{{upcoming.role}}</li>
 	        <li>Status:{{upcoming.status}}</li>
 	        <li>Target finish date:{{upcoming.targetdate}}</li>
 	        <li>Comment:{{upcoming.comment}}</li>
-	    {% endif %}
+	      </ul>
+            </div>
+	    <div class="post-wrapper">
+		<form action="" id="upcoming_form">
+		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="70"></textarea><button>Post</button>
+		</form>
+	    </div>
+	    <ul style="list-style-type:none; padding-left:0px;">
+                <div id="upcoming_show">
+                   <button onclick="show_upcoming()">Show Comments</button>
+                </div>
+                <div id="upcoming_hide">
+                   <button onclick="hide_upcoming()">Hide Comments</button>
+                </div>
+		<div id="upcomingComment"></div>
 	    </ul>
+	    {% endif %}
 	</div>
+
+	<script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	      var socket = io.connect("{{nodejs_url}}");
+	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+	      socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
+
+	      socket.on('new comment', function(data){
+	    	 $('#commentHistory').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</p></span><br/>'));
+	      });
+
+	      socket.on('update comment', function(docs){
+	          for(var i = 0; i < docs.length; i++){
+	    	 $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+	          }
+	      });
+
+	      $('#upcoming_form').submit(function(){
+                    console.log('form submit');
+		    socket.emit('upcoming comment', {msg:$('#c_upcoming').val(), to:{{t_user.id}}, uid:{{user.id}}});
+		    $('#c_upcoming').val('');
+		    return false;
+	      });
+
+	      socket.on('new upcoming comment', function(data){
+                    console.log('new upcoming comment on userpage');
+		    var uid = data.from_uid;
+		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    var n  = users.indexOf(uid);
+		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+                    if (data.to == {{t_user.id}}){
+			    if ( n != -1) {
+				  if (uid == {{user.id}}){
+				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+				  } else{
+				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+				  }
+
+			    }else{
+				  if (uid == {{user.id}}){
+				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+				  } else {
+				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+				  }
+			    }
+                    }
+	      });
+
+	      socket.on('update upcoming comment', function(docs){
+		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    for(var i=0; i < docs.length; i++){
+		       var uid = docs[i]['user']['uid'];
+		       var n  = users.indexOf(uid);
+		       var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		       if ( n != -1) {
+		          if (uid == {{user.id}}){
+		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+		          } else{
+		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+		          }
+		       } else{
+		          if (uid == {{user.id}}){
+		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+		          } else{
+		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+		          }
+		       }
+		    }
+	      });
+
+	</script>
+
 
 	<div id="thanks-hatsoff">
 	    <h4>Thanks - Hats off</h4>

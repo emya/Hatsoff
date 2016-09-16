@@ -1,4 +1,4 @@
-{% extends 'week1/base.html'%}
+{% extends 'week1/base_simple.html'%}
 
 {% block content %}
 {% load staticfiles %}
@@ -17,8 +17,9 @@
                 <br>Display Name</br> <input type='text' name='displayname' value='{{ user.first_name }} {{user.last_name}}'><br/>
                 <br>Profession <span style="color:red">*</span></br> <input type='text' name='profession' ><br/>
                 <br>City</br> <input type='text' name='city' ><br/>
+                <br>Independent/company name</br> <input type='text' name='worksAt' ><br/>
                 <br>Education</br> <input type='text' name='education'><br/>
-                <br>Birthdate</br> <input type='text' name='birthdate'><br/>
+                <br>Birth date</br> <input type='text' name='birthdate'><br/>
                 <br>Language</br><input type='text' name='language'><br/>
             </div>
             <div id="step-right-right">

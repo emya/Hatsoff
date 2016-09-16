@@ -8,18 +8,25 @@
      </div>
 
      <div id="step-right">
-        <h3>Edit your previous work</h3>
+        {% if showcase %}
+        <h3>Update your previous work</h3>
 	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <br>Title</br> <input type='text' name='title' ><br/>
+            <br>Title</br> <input type='text' name='title' value='{{showcase.title}}'><br/>
+            {% if showcase.image %}
+            <br>Photo</br> <input type='file' name='img' value='{{showcase.image.url}}'><br/>
+            {% else %}
             <br>Photo</br> <input type='file' name='img' ><br/>
-            <br>Describe your work</br><input type='text' name='describe'><br/>
-            <br>Your role</br><input type='text' name='role'><br/>
-            <br>Year of completion</br><input type='number' name='completion' min="1970" max="2016"><br/>
+            {% endif %}
+            <br>Describe your work</br><input type='text' name='describe' value='{{showcase.describe}}'><br/>
+            <br>Your role</br><input type='text' name='role' value='{{showcase.role}}'><br/>
+            <br>Year of completion</br><input type='number' name='completion' min="1970" max="2016" value='{{showcase.completion}}'><br/>
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>
                 <input type="hidden" name="next" value="home.html">
+		<a href="{% url 'week1:edit_newpreviouswork' %}">Add a new work</a>
             </div>
 	</form>
+        {% endif %}
      </div>
 
 </div>

@@ -17,7 +17,9 @@
 
 <div id="onlineusersWrap">
     <h4>Online users</h4>
-    <div id="users"></div>
+    <ul style="list-style-type:none;">
+       <div id="users"></div>
+    </ul>
     <div id="messages"></div>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -64,21 +66,23 @@
           **/
 	  socket.on('chatusers', function(data){
              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+             var usernames = [{% for u in usernames %} "{{ u }}" ,{% endfor %}];
              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
              var html = '<ul style="list-style-type:none">';
     	     for (i=0; i < data.length; i++){
-		 var uid = data[i];
+		 var uid = parseInt(data[i]);
                  var n  = users.indexOf(uid);
+                 console.log(users, n, uid)
 		 var url_mask = "{% url 'week1:private_message' user.id %}".replace({{user.id}}, uid);
                  if (n != -1){
-		     html += ('<li><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+users[n].first_name+'<a href='+url_mask+'>Start a chat</a>');
-                 }else{
-		     html += ('<li><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+users[n]+'<a href='+url_mask+'>Start a chat</a>');
+                     if (photos[n] != 'None'){
+		         $('#users').append($('<li><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+usernames[n]+'&nbsp <a href="'+url_mask+'"><span>Start a chat</span></a></li>'));
+		     }else{
+		         $('#users').append($('<li><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+usernames[n]+'&nbsp <span><a href="'+url_mask+'">Start a chat</a></span>'));
+		     }
                  }
                  console.log("username"+uid);
 	     }
-             html += '</ul>';
- 	     $('#users').html(html);
              
           });
 	  socket.on('whisper', function(data){

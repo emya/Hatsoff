@@ -1,0 +1,50 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="step">
+     <div id="step-left">
+     </div>
+
+     <div id="step-right">
+     {% if upcoming %}
+        <h3>Update your upcoming work</h3>
+	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <br>Title</br> <input type='text' name='title' value='{{upcoming.title}}'><br/>
+            {% if upcoming.image %}
+            <br>Photo</br> <input type='file' name='img' value='{{upcoming.image.url}}'><br/>
+            {% else %}
+            <br>Photo</br> <input type='file' name='img' ><br/>
+            {% endif %}
+            <br>Describe your work</br><input type='text' name='describe' value='{{upcoming.describe}}'><br/>
+            <br>Your role</br><input type='text' name='role' value='{{upcoming.role}}'><br/>
+            <br>Status of work (for eg: entering post-production phase)</br><input type='text' name='status' value='{{upcoming.role}}'><br/>
+            <br>Target finish date</br><input type='date' name='targetdate' min="2016-10-01" value='{{upcoming.targetdate}}'><br/>
+            <br>Comment</br><input type='text' name='comment' value='{{upcoming.comment}}'><br/>
+	    <div class="submit-wrapper">
+	        <input type="submit" value="Update" class="step-submit"/>
+                <input type="hidden" name="next" value="home.html">
+            </div>
+	</form>
+     {% else %}
+        <h3>Edit your upcoming work</h3>
+	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <br>Title</br> <input type='text' name='title' ><br/>
+            <br>Photo</br> <input type='file' name='img' ><br/>
+            <br>Describe your work</br><input type='text' name='describe'><br/>
+            <br>Your role</br><input type='text' name='role'><br/>
+            <br>Status of work (for eg: entering post-production phase)</br><input type='text' name='status'><br/>
+            <br>Target finish date</br><input type='date' name='targetdate' min="2016-10-01"><br/>
+            <br>Comment</br><input type='text' name='comment'><br/>
+	    <div class="submit-wrapper">
+	        <input type="submit" value="Update" class="step-submit"/>
+                <input type="hidden" name="next" value="home.html">
+            </div>
+	</form>
+     {% endif %}
+     </div>
+
+</div>
+
+{% endblock %}

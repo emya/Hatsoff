@@ -60,6 +60,15 @@ var notificationSchema = mongoose.Schema({
 
 var NotificationPost = mongoose.model('NotificationPost', notificationSchema);
 
+var upcomingSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  content: String,
+  created: {type: Date, default:Date.now}
+});
+
+var UpcomingPost = mongoose.model('UpcomingPost', upcomingSchema);
+
 app.get('/', function(req, res){
   /*res.sendFile(__dirname + '../recipe/templates/index.html');*/
   res.sendFile('../week1/templates/week1/message.html');
@@ -103,7 +112,10 @@ io.on('connection', function(socket){
      socket.lastname = data.lastname;
      users[socket.uid] = socket;
      console.log('join user:'+data.uid);
-     console.log('join users:'+users);
+     console.log('join first:'+data.firstname);
+     console.log('join users[data.uid]:'+users[data.uid]);
+     console.log('join users[data.uid]:'+users[data.uid]["firstname"]);
+     console.log('join users keys:'+Object.keys(users[data.uid]));
      updateUids();
   });
 
@@ -112,7 +124,7 @@ io.on('connection', function(socket){
      socket.firstname = data.firstname;
      socket.lastname = data.lastname;
      chatusers[socket.uid] = socket;
-     console.log('join chatusers:'+chatusers[19].firstname);
+     console.log('join chatusers:'+chatusers[socket.uid].firstname);
      updatechatUids();
   });
 
@@ -121,7 +133,7 @@ io.on('connection', function(socket){
     var query = CommunityPost.find({});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('sending comment updates'+docs);
+      console.log('join community'+docs);
       socket.emit('update community post', docs);
     }); 
 
@@ -132,10 +144,35 @@ io.on('connection', function(socket){
     var query = CommentPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('sending comments updates'+docs);
+      console.log('at home'+docs);
       socket.emit('update comment', docs);
     }); 
+
+    var query2 = UpcomingPost.find({'to_uid':socket.uid});
+    query2.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('upcoming comment at home'+docs);
+      socket.emit('update upcoming comment', docs);
+    }); 
   });
+ 
+  socket.on('at userpage', function(data){
+    console.log('at userpage'+socket.uid);
+    var query = CommentPost.find({'to_uid':data.to_uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at home'+docs);
+      socket.emit('update comment', docs);
+    }); 
+
+    var query2 = UpcomingPost.find({'to_uid':data.to_uid});
+    query2.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('upcoming comment at home'+docs);
+      socket.emit('update upcoming comment', docs);
+    }); 
+  });
+
 
   socket.on('see userpage', function(data){
     console.log('at userpage'+socket.uid);
@@ -194,6 +231,7 @@ io.on('connection', function(socket){
   
   function updatechatUids(){
     io.emit('chatusers', Object.keys(chatusers));
+    console.log(Object.keys(chatusers));
   }
 
   socket.on('chat message', function(data, callback){
@@ -221,7 +259,8 @@ io.on('connection', function(socket){
 
   socket.on('private message', function(data, callback){
     if (data.uid in users){
-        users[data.uid].emit('whisper', {msg:data.msg, uid:socket.uid, uname:socket.uname});
+        users[data.uid].emit('whisper', {msg:data.msg, uid:socket.uid, uname:socket.firstname});
+        console.log(socket.uid, socket.firstname);
         console.log('private message!');
     }else{
         callback('Erorr! The user is not online');
@@ -276,6 +315,31 @@ io.on('connection', function(socket){
         }
       }
     });
+  });
+
+  socket.on('upcoming comment', function(data, callback){
+    console.log('upcoming comment');
+    var d = new Date();
+    console.log('date:'+d); 
+    
+    var newPost = new UpcomingPost({content:data.msg, to_uid:data.to, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved');
+        if (users[data.to]) {
+            users[data.to].emit('new upcoming comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+       
+        if (data.uid) {
+            console.log('data.uid'+data.uid);
+            users[data.uid].emit('new upcoming comment', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+
+    });
+  });
 
     /**
     if (data.to in users){
@@ -286,7 +350,6 @@ io.on('connection', function(socket){
         callback('Erorr! The user is not online');
     }
     **/
-  });
 
   socket.on('disconnect', function(){
     if (!socket.uid) return ;

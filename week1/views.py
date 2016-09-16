@@ -234,8 +234,21 @@ def home(request):
     folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=2, status=0) | Q(user_two_id=uid, status=1))
     folderlist = list(chain(folderlist1, folderlist2))
 
-    users = User.objects.filter(id__in=folderlist)
-    userlist = list(users)
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
 
     folderusers = Profile.objects.filter(user__in=userlist)
     profile = Profile.objects.get(user=currentuser)
@@ -243,16 +256,17 @@ def home(request):
     print "folderusers", folderusers, folderusers.count()
 
     try:
-        showcase = Showcase.objects.get(user=currentuser, number=1)
+        showcases = Showcase.objects.filter(user=currentuser)
     except Showcase.DoesNotExist:
-        showcase = None
+        showcases = None
 
     try:
         upcomingwork = UpcomingWork.objects.get(user=currentuser, number=1)
     except UpcomingWork.DoesNotExist:
         upcomingwork = None
 
-    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'folderusers':folderusers, 'showcase':showcase, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url})
+
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'folderusers':folderusers, 'users':users, 'userphoto':userphoto, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url})
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
@@ -341,6 +355,7 @@ def step3(request):
             skill1 = form.cleaned_data["skill1"]
             skill2 = form.cleaned_data["skill2"]
             skill3 = form.cleaned_data["skill3"]
+            """
             skill4 = form.cleaned_data["skill4"]
             skill5 = form.cleaned_data["skill5"]
             skill6 = form.cleaned_data["skill6"]
@@ -348,18 +363,12 @@ def step3(request):
             skill8 = form.cleaned_data["skill8"]
             skill9 = form.cleaned_data["skill9"]
             skill10 = form.cleaned_data["skill10"]
+            """
 
             Profile.objects.filter(user=currentuser).update(
                 skill1=skill1, 
                 skill2=skill2, 
-                skill3=skill3, 
-                skill4=skill4, 
-                skill5=skill5, 
-                skill6=skill6, 
-                skill7=skill7, 
-                skill8=skill8, 
-                skill9=skill9, 
-                skill10=skill10 
+                skill3=skill3 
             )
 
             nextform = Step4()
@@ -709,7 +718,58 @@ def home_edit_photo(request):
 
 @csrf_protect
 @login_required
-def home_edit_previouswork(request):
+def home_edit_previouswork(request, num):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    if request.method == 'POST':
+        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+        form = Step5(request.POST, request.FILES)
+        if form.is_valid():
+            print 'valid'
+            title = form.cleaned_data["title"]
+            describe = form.cleaned_data["describe"]
+            role = form.cleaned_data["role"]
+            completion = form.cleaned_data["completion"]
+            s = Showcase.objects.filter(user=currentuser, number=num)
+            if len(request.FILES) != 0:
+                print 'length is not zero'
+                image = request.FILES["img"]
+                s.title=title
+                s.image=image
+                s.describe=describe
+                s.role=role
+                s.completion=completion
+                s.save()
+            else:
+                print 'length is zero'
+                s.title=title
+                s.describe=describe
+                s.role=role
+                s.completion=completion
+                s.save()
+
+            return HttpResponseRedirect('/week1/home/')
+
+        else:
+            messages = []
+            messages.append(form.errors)
+            variables = RequestContext(request, {'messages':messages, 'form':form})
+
+    else:
+        form = Step5()
+
+    showcase = Showcase.objects.get(user=currentuser, number=num)
+
+    variables = RequestContext(request, {'form':form, 'showcase':showcase})
+    return render_to_response('week1/homeedit_previouswork.html', variables, )
+
+@csrf_protect
+@login_required
+def home_edit_newpreviouswork(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
@@ -747,7 +807,55 @@ def home_edit_previouswork(request):
         form = Step5()
 
     variables = RequestContext(request, {'form':form})
-    return render_to_response('week1/homeedit_previouswork.html', variables, )
+    return render_to_response('week1/homeedit_newpreviouswork.html', variables, )
+
+def home_edit_upcoming(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+
+    if request.method == 'POST':
+        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+        form = Step6(request.POST, request.FILES)
+        if form.is_valid():
+            print 'valid'
+            title = form.cleaned_data["title"]
+            describe = form.cleaned_data["describe"]
+            role = form.cleaned_data["role"]
+            status = form.cleaned_data["status"]
+            targetdate = form.cleaned_data["targetdate"]
+            comment = form.cleaned_data["comment"]
+
+            num_show = UpcomingWork.objects.filter(user=currentuser).count()
+            if len(request.FILES) != 0:
+                print 'length is zero'
+                image = request.FILES["img"]
+                u = UpcomingWork.objects.create(user=currentuser, number=num_show+1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment)
+                u.save()
+            else:
+                print 'length is not zero'
+                u = UpcomingWork.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment)
+                u.save()
+
+            return HttpResponseRedirect('/week1/home/')
+
+        else:
+            messages = []
+            messages.append(form.errors)
+            variables = RequestContext(request, {'messages':messages, 'form':form})
+
+    else:
+        form = Step6()
+        try:
+            upcoming = UpcomingWork.objects.get(user=currentuser, number=1)
+        except UpcomingWork.DoesNotExist:
+            upcoming = None
+
+    variables = RequestContext(request, { 'form':form, 'upcoming':upcoming })
+    return render_to_response('week1/homeedit_upcoming.html', variables, )
 
 def reset_confirm(request, uidb64=None, token=None):
     if uidb64 != None and token != None:
@@ -895,9 +1003,10 @@ def messages(request):
     nodejs_url = settings.NODEJS_SOCKET_URL
     myid = request.user.id
 
-    allusers = list(User.objects.all())
+    allusers = list(User.objects.all().exclude(id=myid))
 
     users = []
+    usernames = []
     userphoto = []
     for u in allusers:
         try:
@@ -907,10 +1016,12 @@ def messages(request):
 
         if prof != None:
             users.append(u.id)
+            #usernames.append([u.first_name, u.last_name])
+            usernames.append(u.first_name)
             userphoto.append(str(prof))
 
     media_url = settings.MEDIA_URL
-    variables = RequestContext(request, {'users':users, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
+    variables = RequestContext(request, {'users':users, 'usernames':usernames, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
     return render_to_response('week1/message.html', variables, )
 
 @login_required
@@ -949,16 +1060,16 @@ def get_profile(request, uid):
     profile = Profile.objects.get(user=currentuser)
 
     try:
-        showcase = Showcase.objects.get(user=user, number=1)
+        showcases = Showcase.objects.filter(user=user)
     except Showcase.DoesNotExist:
-        showcase = None
+        showcases = None
 
     try:
         upcomingwork = UpcomingWork.objects.get(user=user, number=1)
     except UpcomingWork.DoesNotExist:
         upcomingwork = None
 
-    variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 'showcase':showcase, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url})
+    variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 't_user':user, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url})
     return render_to_response('week1/userpage.html', variables, )
 
 @login_required

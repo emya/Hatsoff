@@ -4,13 +4,19 @@
 {% load staticfiles %}
 
 <div id="folderWrap">
-    {% if folder %}
-       <ul style="list-style-type:none">
-       {% for f in folder %}
-            <li><a href="{% url 'week1:get_profile' f.id %}" class="link-userpage">{{f.first_name}} {{f.last_name}}</a> </li>
-       </ul>
-       {% endfor %}
-    {% endif %}
+  <div id="folder-left">
+    <h4>Folder</h4>
+      <ul style="list-style-type:none">
+	{% if folderusers %}
+	   {% for u in folderusers %}
+		{% if u.photo %}
+		   <li><img src="{{ u.photo.url }}" width="50px"><br>{{u.user.first_name}}&nbsp{{u.user.last_name}}</br></li>
+		{% else %}
+		   <li><img src="{% static 'images/profileimage.png'%}" width="50px"><br>{{u.user.first_name}}&nbsp{{u.user.last_name}}</br></li>
+		{% endif %}
+	   {% endfor %}
+	{% endif %}
+      </ul>
     <script src="/socket.io/socket.io.js"></script>
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
@@ -21,27 +27,14 @@
           var socket = io.connect("{{nodejs_url}}");
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 
-	  socket.on('new notification', function(data){
-              if (data.action_id === 1){
-	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
-              }
-              else if (data.action_id === 2){
-	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp Hatsoffed to you.'+'</p></span><br/>'));
-              }
-	  });
-        
-	  socket.on('update notification', function(docs){
-              for(var i = 0; i < docs.length; i++){
-                 if (docs[i]['action_id'] === 1){
-	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
-                 }
-                 else if (docs[i]['action_id'] === 2){
-	            $('#notifications').prepend($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Hatsoffed to you.'+'</p></span><br/>'));
-                 }
-              }
-	  });
-
     </script>
+  </div>
+  <div id="folder-center">
+    <h4>Skill Share</h4>
+    <h4>Introductions</h4>
+    <h4>Job Pitches</h4>
+    <h4>Donations</h4>
+  </div>
 </div>
 
 {% endblock %}

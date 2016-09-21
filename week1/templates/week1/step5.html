@@ -17,7 +17,11 @@
             <br>Your role</br><input type='text' name='role'><br/>
             <br>Year of completion</br><input type='number' name='completion' min="1970" max="2016"><br/>
 	    <div class="submit-wrapper">
-	        <input type="submit" value="Next Step" class="step-submit"/>
+               {% if num_show and num_show == 10 %}
+	           <input type="submit" value="Next Step" name="next" class="step-submit"/>
+               {% else %}
+	           <input type="submit" value="Showcase more work" name="more_case" class="step-submit-more"><input type="submit" value="Next Step" name="next" class="step-submit"/>
+               {% endif %}
 	        <a href="{% url 'week1:step6' %}">Skip</a>
             </div>
 	</form>

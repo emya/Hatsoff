@@ -1,16 +1,40 @@
 {% extends 'week1/base.html'%}
 
 {% block content %}
-<div id="signup">
+<div id="login">
 	<h3>Sign up</h3>
 	<a href="{% url 'social:begin' 'facebook' %}"> Continue with FACEBOOK</a>
 
         <h4>Sign up with email</h4>
-	<form action="" class="signuptable" method="POST">{% csrf_token %}
-		<table border="0" align="center" width="200">
-		    {{ form.as_table }}
+	<form action="" class="login-form" method="POST">{% csrf_token %}
+	    {% if form.non_field_errors  %}
+	    <ul style="list-style-type:none">
+	       {% for error in form.non_field_errors %}
+		  <li>{{error}}</li>
+	       {% endfor %}
+	    </ul>
+	    {% endif %}
+
+		<table border="0" align="center" width="300">
+                    <input type="email" name="username" placeholder=" Email" class="sign-text">
+                    <br>
+                    <br>
+                    <input type="text" name="first_name" placeholder=" First Name" class="sign-text">
+                    <br>
+                    <br>
+                    <input type="text" name="last_name" placeholder=" Last Name" class="sign-text">
+                    <br>
+                    <br>
+                    <input type="password" name="password1" placeholder="Password: more than 7 letters including 2 numbers at least">
+                    <br>
+                    <br>
+                    <input type="password" name="password2" placeholder=" Comfirm Password">
+                    <br>
+                    <br>
 		</table>
-		<input type="submit" value="Sign up" align="right" name='signup'/>
+                <div class="login-wrapper">
+		   <input type="submit" value="Sign up" class='login-submit'/>
+                </div>
 	</form>
 </div>
 

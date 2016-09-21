@@ -22,6 +22,27 @@
             <br>Status of work (for eg: entering post-production phase)</br><input type='text' name='status' value='{{upcoming.role}}'><br/>
             <br>Target finish date</br><input type='date' name='targetdate' min="2016-10-01" value='{{upcoming.targetdate}}'><br/>
             <br>Comment</br><input type='text' name='comment' value='{{upcoming.comment}}'><br/>
+            <br>Looking to get help from the community?</br>
+                {% if upcoming.get_help == 1 %}
+                <input type="radio" name="get_help" value="1" checked>Yes please!</br>
+                {% else %}
+                <input type="radio" name="get_help" value="1">Yes please!</br>
+                {% endif %}
+                {% if upcoming.get_help == 2 %}
+                <input type="radio" name="get_help" value="2" checked>Open to collaboration!</br>
+                {% else %}
+                <input type="radio" name="get_help" value="2">Open to collaboration!</br>
+                {% endif %}
+                {% if upcoming.get_help == 3 %}
+                <input type="radio" name="get_help" value="3" checked>I'm ok thanks!</br>
+                {% else %}
+                <input type="radio" name="get_help" value="3">I'm ok thanks!</br>
+                {% endif %}
+            <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
+            <br>Collaborators</br><input type='text' name='collaborators' value='{{upcoming.collaborators}}'><br/>
+            <br>Do you need to raise funds? If so how much and for what?</br><input type='text' name='fund' value='{{upcoming.fund}}'><br/>
+            <br>Comments</br><input type='text' name='comment_help'><br/>
+
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>
                 <input type="hidden" name="next" value="home.html">
@@ -37,6 +58,14 @@
             <br>Status of work (for eg: entering post-production phase)</br><input type='text' name='status'><br/>
             <br>Target finish date</br><input type='date' name='targetdate' min="2016-10-01"><br/>
             <br>Comment</br><input type='text' name='comment'><br/>
+            <br>Looking to get help from the community?</br>
+                <input type="radio" name="get_help" value="1">Yes please!</br>
+                <input type="radio" name="get_help" value="2">Open to collaboration!</br>
+                <input type="radio" name="get_help" value="3">I'm ok thanks!</br>
+            <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
+            <br>Collaborators</br><input type='text' name='collaborators'><br/>
+            <br>Do you need to raise funds? If so how much and for what?</br><input type='text' name='fund'><br/>
+            <br>Comments</br><input type='text' name='comment_help'><br/>
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>
                 <input type="hidden" name="next" value="home.html">

@@ -69,6 +69,16 @@ var upcomingSchema = mongoose.Schema({
 
 var UpcomingPost = mongoose.model('UpcomingPost', upcomingSchema);
 
+var portfolioSchema = mongoose.Schema({
+  to_uid: Number,
+  p_id: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  content: String,
+  created: {type: Date, default:Date.now}
+});
+
+var PortfolioPost = mongoose.model('PortfolioPost', portfolioSchema);
+
 app.get('/', function(req, res){
   /*res.sendFile(__dirname + '../recipe/templates/index.html');*/
   res.sendFile('../week1/templates/week1/message.html');
@@ -102,6 +112,8 @@ io.on('connection', function(socket){
 
   socket.on('join message', function(data){
      /** temporary
+     PortfolioPost.find({}).remove().exec();
+     PortfolioPost.find({p_id:2}).remove().exec();
      CommunityPost.find({}).remove().exec();
      CommentPost.find({}).remove().exec();
      NotificationPost.find({}).remove().exec();
@@ -154,6 +166,13 @@ io.on('connection', function(socket){
       console.log('upcoming comment at home'+docs);
       socket.emit('update upcoming comment', docs);
     }); 
+
+    var query3 = PortfolioPost.find({'to_uid':socket.uid});
+    query3.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('portfolio comment at home'+docs);
+      socket.emit('update portfolio comment', docs);
+    }); 
   });
  
   socket.on('at userpage', function(data){
@@ -171,8 +190,34 @@ io.on('connection', function(socket){
       console.log('upcoming comment at home'+docs);
       socket.emit('update upcoming comment', docs);
     }); 
+
+    var query3 = PortfolioPost.find({'to_uid':data.to_uid});
+    query3.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('portfolio comment at userpage'+docs);
+      socket.emit('update portfolio comment', docs);
+    }); 
   });
 
+  socket.on('change portfolio', function(data){
+    console.log('change portfolio'+socket.uid);
+    if (data.to_uid){
+	var query = PortfolioPost.find({'to_uid':data.to_uid, 'p_id':data.p_id});
+	query.sort('-created').limit(30).exec(function(err, docs){
+	  if (err) throw err;
+	  console.log('portfolio comment at userpage'+docs);
+	  console.log('socket.uid'+socket.uid);
+	  socket.emit('update portfolio comment', docs);
+	}); 
+    }else{
+	var query = PortfolioPost.find({'to_uid':socket.uid, 'p_id':data.p_id});
+	query.sort('-created').limit(30).exec(function(err, docs){
+	  if (err) throw err;
+	  console.log('portfolio comment at home'+docs);
+	  socket.emit('update portfolio comment', docs);
+	}); 
+    }
+  });
 
   socket.on('see userpage', function(data){
     console.log('at userpage'+socket.uid);
@@ -334,7 +379,33 @@ io.on('connection', function(socket){
        
         if (data.uid) {
             console.log('data.uid'+data.uid);
-            users[data.uid].emit('new upcoming comment', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+            console.log('users'+users[data.uid]);
+            users[data.uid].emit('new upcoming comment on userpage', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+
+    });
+  });
+
+  socket.on('portfolio comment', function(data, callback){
+    console.log('portfolio comment');
+    var d = new Date();
+    console.log('date:'+d); 
+    
+    var newPost = new PortfolioPost({content:data.msg, to_uid:data.to, p_id:data.p_id, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:'+data.msg);
+        if (users[data.to]) {
+            users[data.to].emit('new portfolio comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+       
+        if (data.uid) {
+            console.log('data.uid'+data.uid);
+            console.log('users'+users[data.uid]);
+            users[data.uid].emit('new portfolio comment', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         }
       }
 

@@ -5,9 +5,17 @@
 
 <h3>Log in</h3>
 <form action="" class="login-form" method="POST">{% csrf_token %}
+    {% if form.non_field_errors  %}
+    <ul style="list-style-type:none">
+       {% for error in form.non_field_errors %}
+          <li>{{error}}</li>
+       {% endfor %}
+    </ul>
+    {% endif %}
+
     <table border="0">
         <!--label for="email"> Email </label-->
-        <input type="email" name="email" id="email" placeholder=" Email" class="sign-text">
+        <input type="email" name="username" id="username" placeholder=" Email" class="sign-text">
     <br>
     <br>
         <!--label for="password"> Password </label-->

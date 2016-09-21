@@ -55,6 +55,10 @@ class UpcomingWork(models.Model):
     status = models.CharField(max_length=300, default='', blank=True)
     targetdate = models.DateTimeField(max_length=300, null=True, blank=True)#year of completion
     comment = models.CharField(max_length=300, default='', blank=True)
+    get_help = models.IntegerField(null=True)#1: yes 2:Open to collaboration 3:no thanks
+    collaborators = models.CharField(max_length=300, default='', blank=True)
+    fund = models.CharField(max_length=200, default='', blank=True)
+    comment_help = models.CharField(max_length=300, default='', blank=True)
 
 class Hatsoff(models.Model):
     user_one_id = models.IntegerField()

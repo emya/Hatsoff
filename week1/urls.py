@@ -9,6 +9,7 @@ urlpatterns = [
     #url(r'^discover/$', views.discover, name='discover'),
     #url(r'^discover/success/$', views.signup_success, name='signup_success'),
     url(r'^login/$', views.signin, name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout', kwargs={'next_page': '/week1/'}),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^home/$', views.home, name='home'),
     url(r'^edit/$', views.home_edit, name='homeedit'),

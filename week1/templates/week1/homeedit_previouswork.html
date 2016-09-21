@@ -21,9 +21,13 @@
             <br>Your role</br><input type='text' name='role' value='{{showcase.role}}'><br/>
             <br>Year of completion</br><input type='number' name='completion' min="1970" max="2016" value='{{showcase.completion}}'><br/>
 	    <div class="submit-wrapper">
-	        <input type="submit" value="Update" class="step-submit"/>
-                <input type="hidden" name="next" value="home.html">
-		<a href="{% url 'week1:edit_newpreviouswork' %}">Add a new work</a>
+               {% if num_show and num_show == 10 %}
+	           <input type="submit" value="Update" name="next" class="step-submit"/>
+                   <input type="hidden" name="next" value="home.html">
+               {% else %}
+	           <input type="submit" value="Save and Add more" name="more_case" class="step-submit-more"><input type="submit" value="Update" name="next" class="step-submit"/>
+               {% endif %}
+	        <a href="{% url 'week1:home' %}">Back to Home</a>
             </div>
 	</form>
         {% endif %}

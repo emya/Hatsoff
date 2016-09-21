@@ -34,7 +34,7 @@
 #header-wrapper {
    padding; 50px 0 50px;
    width: 100%;
-   background-color: #AC4F7D;
+   background-color: #ac4f7d;
    border-bottom: 3px solid #4a86e8;
 }
 
@@ -55,12 +55,19 @@
    display: inline-block;
    /*float: left;*/
    width: 50px;
-   line-height: 100px;
+   /*line-height: 100px;*/
+}
+
+#header img.user_header {
+   height: 35px;
+   width: 35px;
+   vertical-align: middle;/*temporary*/
 }
 
 #header #logo img {
-   top:30;
-   left:30;
+   vertical-align: middle;
+   height: 90px;
+   width: 130px;
 }
 
 #header #header-menus {
@@ -271,21 +278,28 @@ tr.spaceUnder > td
 }
 
 #login .login-form input[type=email]{
-   width: 200px;
+   width: 300px;
    height: 27px;
    border-radius: 5px;
    padding-bottom: 5px;
 }
 
 #login .login-form input[type=password]{
-   width: 200px;
+   width: 300px;
+   height: 27px;
+   border-radius: 5px;
+   padding-bottom: 5px;
+}
+
+#login .login-form input[type=text]{
+   width: 300px;
    height: 27px;
    border-radius: 5px;
    padding-bottom: 5px;
 }
 
 #login .login-form input[type=submit]{
-   width: 200px;
+   width: 300px;
    height: 27px;
    border-radius: 5px;
    padding-bottom: 5px;
@@ -369,7 +383,7 @@ tr.spaceUnder > td
    vertical-align: top;
 }
 
-#home-main textarea#p {
+#home-main textarea {
    border-radius: 10px;
 }
 
@@ -442,6 +456,20 @@ tr.spaceUnder > td
 }
 
 #home-main .home-step #upcoming_show{
+   text-align: center;
+}
+
+#home-main .home-step #portfolioComment_1{
+   display: none;
+}
+
+#home-main .home-step #portfolio_hide{
+   display: none;
+   text-align: center;
+}
+
+#home-main .home-step #portfolio_show{
+   display: block;
    text-align: center;
 }
 
@@ -560,6 +588,16 @@ tr.spaceUnder > td
    border: 0px;
 }
 
+.step-submit-more {
+   /**display: block;
+   float: right;**/
+   width: 150px;
+   color: white;
+   background-color: #9fc5e8;
+   border-radius: 5px;
+   border: 0px;
+}
+
 .step-form {
    width: 600px;
 }
@@ -590,7 +628,7 @@ tr.spaceUnder > td
 }
 
 .step-form input[type=text]{
-   width: 300px;
+   width: 400px;
    border-radius: 5px;
    padding-bottom: 5px;
    margin-bottom: 5px;
@@ -618,4 +656,18 @@ tr.spaceUnder > td
 
 #users a {
    text-decoration: none;
+}
+
+#folderWrap #folder-left{
+   display: inline-block;
+   width: 200px;
+   vertical-align: top;
+   padding: 50px;
+}
+
+#folderWrap #folder-center{
+   display: inline-block;
+   width: 500px;
+   vertical-align: top;
+   padding: 50px;
 }

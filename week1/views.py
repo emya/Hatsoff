@@ -23,7 +23,7 @@ from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
 from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork
-from .forms import RegistrationForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, PersonalPhoto, Funfact
+from .forms import RegistrationForm, LoginForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, PersonalPhoto, Funfact
 
 # Create your views here.
 @csrf_protect
@@ -153,7 +153,17 @@ def about(request):
     return render_to_response('week1/about.html', variables, )
 
 def signin(request):
+    form = LoginForm(request.POST or None)
+    if request.POST and form.is_valid():
+        user = form.login(request)
+        if user:
+            login(request, user)
+            return HttpResponseRedirect('/week1/home/')
+    return render_to_response('week1/login.html', context_instance=RequestContext(request, {'form':form}))
+
+    """
     logout(request)
+    messages = []
     email = password = ""
     if request.method == 'POST':
         username = request.POST["email"]
@@ -164,7 +174,10 @@ def signin(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/week1/home/')
-    return render_to_response('week1/login.html', context_instance=RequestContext(request))
+        else:
+            messages.append(form.errors)
+    return render_to_response('week1/login.html', context_instance=RequestContext(request, {'messages':messages}))
+    """
 
 @csrf_protect
 def signup(request):
@@ -355,9 +368,9 @@ def step3(request):
             skill1 = form.cleaned_data["skill1"]
             skill2 = form.cleaned_data["skill2"]
             skill3 = form.cleaned_data["skill3"]
-            """
             skill4 = form.cleaned_data["skill4"]
             skill5 = form.cleaned_data["skill5"]
+            """
             skill6 = form.cleaned_data["skill6"]
             skill7 = form.cleaned_data["skill7"]
             skill8 = form.cleaned_data["skill8"]
@@ -368,7 +381,9 @@ def step3(request):
             Profile.objects.filter(user=currentuser).update(
                 skill1=skill1, 
                 skill2=skill2, 
-                skill3=skill3 
+                skill3=skill3,
+                skill4=skill4,
+                skill5=skill5
             )
 
             nextform = Step4()
@@ -433,9 +448,13 @@ def step5(request):
                 s = Showcase.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, completion=completion)
                 s.save()
 
-            nextform = Step6()
-            return HttpResponseRedirect('/week1/step6/', {'form': nextform})
-            #return render_to_response('week1/step6.html', {'form':nextform})
+            if 'next' in request.POST:
+                nextform = Step6()
+                return HttpResponseRedirect('/week1/step6/', {'form': nextform})
+                #return render_to_response('week1/step6.html', {'form':nextform})
+            elif 'more_case' in request.POST:
+                nextform = Step5()
+                return HttpResponseRedirect('/week1/step5/', {'form': nextform, 'num_show':num_show+1})
 
         else:
             messages = []
@@ -461,15 +480,49 @@ def step6(request):
             status = form.cleaned_data["status"]
             targetdate = form.cleaned_data["targetdate"]
             comment = form.cleaned_data["comment"]
+            get_help = form.cleaned_data["get_help"]
+            if get_help == (1 or 2):
+                collaborators = form.cleaned_data["collaborators"]
+                comment_help = form.cleaned_data["comment_help"]
+            else:
+                collaborators = ""
+                comment_help = ""
             num_show = UpcomingWork.objects.filter(user=currentuser).count()
             if len(request.FILES) != 0:
                 image = request.FILES["img"]
-                u = UpcomingWork.objects.create(user=currentuser, number=num_show+1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment)
-                u.save()
-            else:
-                u = UpcomingWork.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment)
-                u.save()
+                try:
+                    u = UpcomingWork.objects.get(user=currentuser, number=1)
+                    u.title = title
+                    u.image = image
+                    u.describe = describe
+                    u.role = role
+                    u.status = status
+                    u.targetdate = targetdate
+                    u.comment = comment
+                    u.get_help = get_help
+                    u.collaborators = collaborators
+                    u.comment_help = comment_help
+                    u.save()
+                except UpcomingWork.DoesNotExist:
+                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
+                    u.save()
 
+            else:
+                try:
+                    u = UpcomingWork.objects.get(user=currentuser, number=1)
+                    u.title = title
+                    u.describe = describe
+                    u.role = role
+                    u.status = status
+                    u.targetdate = targetdate
+                    u.comment = comment
+                    u.get_help = get_help
+                    u.collaborators = collaborators
+                    u.comment_help = comment_help
+                    u.save()
+                except UpcomingWork.DoesNotExist:
+                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
+                    u.save()
 
             nextform = Step7()
             return HttpResponseRedirect('/week1/step7/', {'form': nextform})
@@ -725,6 +778,7 @@ def home_edit_previouswork(request, num):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
         currentuser = User.objects.get(id=request.user.id, username=request.user.username)
         form = Step5(request.POST, request.FILES)
@@ -734,7 +788,7 @@ def home_edit_previouswork(request, num):
             describe = form.cleaned_data["describe"]
             role = form.cleaned_data["role"]
             completion = form.cleaned_data["completion"]
-            s = Showcase.objects.filter(user=currentuser, number=num)
+            s = Showcase.objects.get(user=currentuser, number=num)
             if len(request.FILES) != 0:
                 print 'length is not zero'
                 image = request.FILES["img"]
@@ -752,7 +806,13 @@ def home_edit_previouswork(request, num):
                 s.completion=completion
                 s.save()
 
-            return HttpResponseRedirect('/week1/home/')
+            if 'next' in request.POST:
+                return HttpResponseRedirect('/week1/home/')
+            elif 'more_case' in request.POST:
+                form = Step5()
+                variables = RequestContext(request, {'form':form, 'num_show':num_show+1})
+                return HttpResponseRedirect('/week1/edit/previouswork/', variables)
+                #return render_to_response('/week1/edit/previouswork/', variables, )
 
         else:
             messages = []
@@ -764,7 +824,7 @@ def home_edit_previouswork(request, num):
 
     showcase = Showcase.objects.get(user=currentuser, number=num)
 
-    variables = RequestContext(request, {'form':form, 'showcase':showcase})
+    variables = RequestContext(request, {'form':form, 'showcase':showcase, 'num_show':num_show})
     return render_to_response('week1/homeedit_previouswork.html', variables, )
 
 @csrf_protect
@@ -776,6 +836,7 @@ def home_edit_newpreviouswork(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
         currentuser = User.objects.get(id=request.user.id, username=request.user.username)
         form = Step5(request.POST, request.FILES)
@@ -785,7 +846,6 @@ def home_edit_newpreviouswork(request):
             describe = form.cleaned_data["describe"]
             role = form.cleaned_data["role"]
             completion = form.cleaned_data["completion"]
-            num_show = Showcase.objects.filter(user=currentuser).count()
             if len(request.FILES) != 0:
                 print 'length is zero'
                 image = request.FILES["img"]
@@ -796,17 +856,22 @@ def home_edit_newpreviouswork(request):
                 s = Showcase.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, completion=completion)
                 s.save()
 
-            return HttpResponseRedirect('/week1/home/')
+            if 'next' in request.POST:
+                return HttpResponseRedirect('/week1/home/')
+            elif 'more_case' in request.POST:
+                form = Step5()
+                variables = RequestContext(request, {'form':form, 'num_show':num_show+1})
+                return HttpResponseRedirect('/week1/edit/previouswork/', variables)
 
         else:
             messages = []
             messages.append(form.errors)
-            variables = RequestContext(request, {'messages':messages, 'form':form})
+            variables = RequestContext(request, {'messages':messages, 'form':form, 'num_show':num_show})
 
     else:
         form = Step5()
 
-    variables = RequestContext(request, {'form':form})
+    variables = RequestContext(request, {'form':form, 'num_show':num_show})
     return render_to_response('week1/homeedit_newpreviouswork.html', variables, )
 
 def home_edit_upcoming(request):
@@ -828,17 +893,52 @@ def home_edit_upcoming(request):
             status = form.cleaned_data["status"]
             targetdate = form.cleaned_data["targetdate"]
             comment = form.cleaned_data["comment"]
+            get_help = form.cleaned_data["get_help"]
+            if get_help == (1 or 2):
+                collaborators = form.cleaned_data["collaborators"]
+                comment_help = form.cleaned_data["comment_help"]
+            else:
+                collaborators = ""
+                comment_help = ""
 
             num_show = UpcomingWork.objects.filter(user=currentuser).count()
             if len(request.FILES) != 0:
                 print 'length is zero'
                 image = request.FILES["img"]
-                u = UpcomingWork.objects.create(user=currentuser, number=num_show+1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment)
-                u.save()
+                try:
+                    u = UpcomingWork.objects.get(user=currentuser, number=1)
+                    u.title = title
+                    u.image = image
+                    u.describe = describe
+                    u.role = role
+                    u.status = status
+                    u.targetdate = targetdate
+                    u.comment = comment
+                    u.get_help = get_help
+                    u.collaborators = collaborators
+                    u.comment_help = comment_help
+                    u.save()
+                except UpcomingWork.DoesNotExist:
+                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
+                    u.save()
+
             else:
                 print 'length is not zero'
-                u = UpcomingWork.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment)
-                u.save()
+                try:
+                    u = UpcomingWork.objects.get(user=currentuser, number=1)
+                    u.title = title
+                    u.describe = describe
+                    u.role = role
+                    u.status = status
+                    u.targetdate = targetdate
+                    u.comment = comment
+                    u.get_help = get_help
+                    u.collaborators = collaborators
+                    u.comment_help = comment_help
+                    u.save()
+                except UpcomingWork.DoesNotExist:
+                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
+                    u.save()
 
             return HttpResponseRedirect('/week1/home/')
 
@@ -1144,9 +1244,12 @@ def folder(request):
     folder1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=2, status=0) | Q(user_one_id=uid, status=1))
     folder2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=uid, actionuser=1, status=0) | Q(user_two_id=uid, status=1))
     folderlist = list(chain(folder1, folder2))
-    folder = User.objects.filter(id__in=folderlist)
+    fusers = User.objects.filter(id__in=folderlist)
+    userlist = list(fusers)
+    folderusers = Profile.objects.filter(user__in=userlist)
 
-    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'folder':folder})
+
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'folderusers':folderusers})
     return render_to_response('week1/folder.html', variables, )
 
 @login_required

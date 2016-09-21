@@ -84,21 +84,13 @@
 	<div class="home-step">
             <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
             <script>
-		function changeContent(number, length){
-                    console.log('Click!' );
-
-                    for (var i = 0; i < length; i++){
-		        $('#'+i).show().siblings('div').hide();
-		    }
-		    $('#'+number).show().siblings('div').hide();
-		};
             </script>
 
             <h4>Portfolio</h4>
 	    {% if showcases %}
                 {% for showcase in showcases %}
                     {% if forloop.counter == 1 %}
-                        <div id="{{ forloop.counter }}">
+                    <div id="{{ forloop.counter }}">
 	                <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
                     {% else %}
                         <div id="{{ forloop.counter }}" style="display:none;">
@@ -118,6 +110,21 @@
 				<li>Year of completion:{{showcase.completion}}</li>
 			    </ul>
                         </div>
+			<div class="post-wrapper">
+			    <form action="" id="portfolio_form">
+			      <textarea id="c_portfolio_{{forloop.counter}}" placeholder=" Comment" rows="3" cols="60"></textarea>
+                              <!--input type="submit" value="Post"--><button onclick="submitPForm({{forloop.counter}})">Post</button>
+			    </form>
+			</div>
+			<ul style="list-style-type:none; padding-left:0px;">
+			    <div id="portfolio_show">
+			       <button onclick="show_portfolio({{forloop.counter}}, {{showcases|length}})">Show Comments</button>
+			    </div>
+			    <div id="portfolio_hide">
+			       <button onclick="hide_portfolio({{forloop.counter}})">Hide Comments</button>
+			    </div>
+			    <div id="portfolioComment_{{forloop.counter}}"></div>
+			</ul>
                     </div>
 		{% endfor %}
 	    {% else %}
@@ -173,7 +180,7 @@
 	    </div>
 	    <div class="post-wrapper">
 		<form action="" id="upcoming_form">
-		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="70"></textarea><button>Post</button>
+		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="60"></textarea><button>Post</button>
 		</form>
 	    </div>
 	    <ul style="list-style-type:none; padding-left:0px;">
@@ -195,14 +202,120 @@
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+              var p_id = 1
+    	      function changeContent(number, length){
+                    console.log('Click!'+number);
+	            socket.emit('change portfolio', {uid:{{user.id}}, p_id:number});
 
+                    for (var i = 0; i < length; i++){
+		        $('#'+i).show().siblings('div').hide();
+		    }
+		    $('#'+number).show().siblings('div').hide();
+                    p_id = number
+	      };
+
+	      function show_portfolio(number, length){
+                    console.log('show more!');
+                    for (var i = 0; i < length; i++){
+		        $('#portfolioComment_'+i).hide();
+		    }
+		    $('#portfolioComment_'+number).show();
+		    $('#portfolio_hide').show();
+		    $('#portfolio_show').hide();
+	      };
+
+	      function hide_portfolio(number){
+                    console.log('hide more!');
+		    $('#portfolioComment_'+number).hide();
+		    $('#portfolio_hide').hide();
+		    $('#portfolio_show').show();
+	      };
+
+              /**
 	      socket.on('new comment', function(data){
 	    	 $('#commentHistory').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</p></span><br/>'));
 	      });
+              **/
 
-	      socket.on('update comment', function(docs){
+              // For portfolio
+              function submitPForm(number){
+                    console.log('form submit portfolio');
+                    var post_val = $('#c_portfolio_'+number).val();
+                    
+                    if (post_val.length != 0){
+                        console.log('if:'+p_id+':'+post_val);
+		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number});
+                    }
+		    $('#c_portfolio_'+number).val('');
+		    return false;
+              }
+              /**
+	      $('#portfolio_form').submit(function(e){
+                    e.preventDefault();
+                    console.log('form submit portfolio');
+                    
+                    if ($('#c_portfolio').val().length != 0){
+                        console.log('if:'+p_id+$('#c_portfolio').val());
+		        socket.emit('portfolio comment', {msg:$('#c_portfolio').val(), to:{{user.id}}, p_id:p_id});
+                    }
+		    $('#c_portfolio').val('');
+		    return false;
+              });
+              **/
+
+	      socket.on('new portfolio comment', function(data){
+                    console.log('new portfolio comment on home');
+		    var uid = data.from_uid;
+                    console.log(p_id);
+		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    var n  = users.indexOf(uid);
+		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		    if ( n != -1) {
+		          if (uid == {{user.id}}){
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		          } else{
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		          }
+
+		    }else{
+		          if (uid == {{user.id}}){
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		          } else {
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		          }
+		    }
+	      });
+
+	      socket.on('update portfolio comment', function(docs){
+                  console.log('socket on portfolio comment');
+		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	          for(var i = 0; i < docs.length; i++){
-	    	 $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+                      if (docs[i]['p_id'] == p_id) {
+                          console.log('If!');
+		          var uid = docs[i]['user']['uid']
+			  var n  = users.indexOf(uid);
+                          var data = docs[i]
+			  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			  if ( n != -1) {
+			        if (uid == {{user.id}}){
+			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+			        } else{
+			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+			        }
+
+			  }else{
+			        if (uid == {{user.id}}){
+			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+			        } else {
+			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+			        }
+			  }
+
+                      } else{
+                          console.log('Else!');
+                      }
 	          }
 	      });
 
@@ -214,6 +327,7 @@
 	      });
 
 	      socket.on('new upcoming comment', function(data){
+                    console.log('new upcoming comment on home');
 		    var uid = data.from_uid;
                     console.log(uid);
 		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];

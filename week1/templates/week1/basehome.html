@@ -12,14 +12,15 @@
 <div id="header-wrapper">
     <div id='header'>
            <div id="logo">
-              <img src="{% static 'week1/templogo.jpeg'%}" width="50px">
+              <img src="{% static 'images/matchHat.png'%}" >
            </div>
 
 	   <div id='header-menus'>
-	      <a href="{% url 'week1:community' %}">Community</a>
-	      <a href="{% url 'week1:notification' %}">Notifications</a>
-	      <a href="{% url 'week1:messages' %}">Messages</a>
-	      <a href="{% url 'week1:hatsoff_list' %}">Hatsoff</a>
+	      <a href="{% url 'week1:community' %}"><img src="{% static 'images/community_header.png'%}" class="user_header">Community</a>
+	      <a href="{% url 'week1:folder' %}"><img src="{% static 'images/folder_header.png'%}" class="user_header"></a>
+	      <a href="{% url 'week1:messages' %}"><img src="{% static 'images/message_header.png' %}" class="user_header"></a>
+	      <a href="{% url 'week1:notification' %}"><img src="{% static 'images/notification_header.png'%}" class="user_header"></a>
+	      <!--a href="{% url 'week1:hatsoff_list' %}">Hatsoff</a-->
 	   </div>
 
 	   <div id='header-right'>
@@ -40,6 +41,7 @@
 			<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
 			<img src="{% static 'images/profileimage.png'%}" class="profile_img">
 			{% endif %}
+			<a href="{% url 'week1:logout' %}">Log out</a>
 		</div>
 	   </div>
             

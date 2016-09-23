@@ -2,6 +2,12 @@
 
 {% block content %}
 <div id="login">
+        <script>
+        function popFunction(){
+	    var popup = document.getElementById('passwordPop');
+            popup.classList.toggle('show');
+	}
+        </script>
 	<h3>Sign up</h3>
 	<a href="{% url 'social:begin' 'facebook' %}"> Continue with FACEBOOK</a>
 
@@ -25,10 +31,13 @@
                     <input type="text" name="last_name" placeholder=" Last Name" class="sign-text">
                     <br>
                     <br>
-                    <input type="password" name="password1" placeholder="Password: more than 7 letters including 2 numbers at least">
+                    <div class="popup" onclick="popFunction()">
+                    <input type="password" name="password1" placeholder=" Password">
+                    <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+                    </div>
                     <br>
                     <br>
-                    <input type="password" name="password2" placeholder=" Comfirm Password">
+                    <input type="password" name="password2" placeholder=" Confirm Password">
                     <br>
                     <br>
 		</table>

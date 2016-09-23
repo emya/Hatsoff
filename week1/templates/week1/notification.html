@@ -38,6 +38,9 @@
                  else if (docs[i]['action_id'] === 2){
 	            $('#notifications').prepend($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a Hatsoff.'+'</p></span><br/>'));
                  }
+                 else if (docs[i]['action_id'] === 3){
+	            $('#notifications').prepend($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
+                 }
               }
 	  });
 

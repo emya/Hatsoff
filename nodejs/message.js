@@ -34,9 +34,17 @@ mongoose.connect('mongodb://localhost/communitypost', function(err){
   }
 });
 
+var replySchema = mongoose.Schema({
+  user: {uid: Number, first_name: String, last_name: String},
+  content: String,
+  created: {type: Date, default:Date.now}
+});
+
+
 var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
+  replys: [replySchema],
   created: {type: Date, default:Date.now}
 });
 
@@ -51,6 +59,7 @@ var commentSchema = mongoose.Schema({
 
 var CommentPost = mongoose.model('CommentPost', commentSchema);
 
+// action id  1:comment, 2:hatsoff, 3:shareskill
 var notificationSchema = mongoose.Schema({
   to_uid: Number,
   action_user: {uid: Number, first_name: String, last_name: String},
@@ -78,6 +87,15 @@ var portfolioSchema = mongoose.Schema({
 });
 
 var PortfolioPost = mongoose.model('PortfolioPost', portfolioSchema);
+
+var shareskillSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  community_id: String,
+  created: {type: Date, default:Date.now}
+});
+
+var ShareSkillPost = mongoose.model('ShareSkillPost', shareskillSchema);
 
 app.get('/', function(req, res){
   /*res.sendFile(__dirname + '../recipe/templates/index.html');*/
@@ -150,6 +168,17 @@ io.on('connection', function(socket){
     }); 
 
   });
+
+  socket.on('at folder', function(data){
+    console.log('at home'+socket.uid);
+    var query = ShareSkillPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at folder'+docs);
+      socket.emit('update shareskill', docs);
+    }); 
+  });
+
 
   socket.on('at home', function(data){
     console.log('at home'+socket.uid);
@@ -317,12 +346,57 @@ io.on('connection', function(socket){
     console.log('date:'+d); 
     
     var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    newPost.save(function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:'+post.id);
+        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id});
+      }
+    });
+  });
+
+  socket.on('reply community', function(data, callback){
+    var d = new Date();
+    console.log('date:'+d); 
+    
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+        post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
+        post.save(function (err) {
+          if (!err) {
+            console.log('Success!');
+            io.emit('new reply community', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
+          }
+        });
+      }
+    });
+    
+  });
+
+  socket.on('share skill', function(data, callback){
+    var d = new Date();
+    console.log('date:'+d); 
+    console.log('share skill by:'+socket.uid); 
+    
+    var newPost = new ShareSkillPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, community_id:data.c_id});
     newPost.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved');
-        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
+        console.log('saved:');
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:3, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:');
       }
     });
   });
@@ -336,11 +410,10 @@ io.on('connection', function(socket){
         console.log(err);
       } else{
         console.log('saved:'+data.msg+' touid:'+data.to+' fromuid:'+data.from+' socket.uid:'+socket.uid);
-        io.emit('update comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        socket.emit('new comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
 
-        if (data.to in users){
+        if (data.to in users && data.to != socket.uid){
            users[data.to].emit('new comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
-        } else {
         }
 
       }

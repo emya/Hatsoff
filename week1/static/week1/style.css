@@ -1,3 +1,8 @@
+a {
+   text-decoration: none;
+   color: black;
+}
+
 #body {
    width: 1100px;
    margin: 0 auto;
@@ -277,6 +282,46 @@ tr.spaceUnder > td
    text-align: center;
 }
 
+#login .popup {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+#login .popup .popuptext {
+   visibility: hidden;
+   width: 300px;
+   background-color: #d5a6bd;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 8px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -80px;
+}
+
+#login .popup .popuptext::after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #d5a6bd transparent transparent transparent;
+}
+
+#login .popup .show {
+   visibility: visible;
+}
+
 #login .login-form input[type=email]{
    width: 300px;
    height: 27px;
@@ -371,6 +416,20 @@ tr.spaceUnder > td
    padding: 5px;
 }
 
+#home-main .reply-wrapper{
+   background-color: #DCDCDC;
+   width: 450px;
+   display: inline-block;
+}
+
+#home-main p.reply-content {
+   background-color: white;
+   text-align: center;
+   width: 400px;
+   display: inline-block;
+   padding: 20px;
+}
+
 #home-main #hats-gave{
    display: inline-block;
    width: 300px;
@@ -436,6 +495,12 @@ tr.spaceUnder > td
    font-size: 14px;
 }
 
+#home-main .home-step-out {
+   padding: 5px;
+   /*margin: 5px;*/
+   font-size: 14px;
+}
+
 #home-main .home-step ul{
    padding:10px;
    list-style-type:none;
@@ -489,7 +554,14 @@ tr.spaceUnder > td
 
 #home-comment {
    padding: 50px;
+}
+
+#home-comment #commentpost-wrapper{
    text-align: center;
+}
+
+#home-comment #comments-wrapper{
+   text-align: left;
 }
 
 #whats-next {
@@ -569,13 +641,13 @@ tr.spaceUnder > td
 #step #step-right-left {
    display: inline-block;
    vertical-align: top;
-   width: 350px;
+   width: 450px;
 }
 
 #step #step-right-right {
    display: inline-block;
    vertical-align: top;
-   width: 200px;
+   width: 100px;
 }
 
 .step-submit {
@@ -654,6 +726,13 @@ tr.spaceUnder > td
    text-align: left;
 }
 
+#home-main button.shareskillButton{
+   border-radius: 5px;
+   border: 0px;
+   background-color: #cfe2f3;
+   color: black;
+}
+
 #users a {
    text-decoration: none;
 }
@@ -671,3 +750,93 @@ tr.spaceUnder > td
    vertical-align: top;
    padding: 50px;
 }
+
+#folderWrap a{
+   text-decoration: none;
+   color: black;
+}
+
+#folderWrap .folder-content{
+   min-height: 150px;
+}
+
+.popupShareSkill {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.popupShareSkill .popuptextShareSkill {
+   visibility: hidden;
+   width: 200px;
+   background-color: #d5a6bd;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 8px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -80px;
+}
+
+.popupShareSkill .popuptextShareSkill::after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #d5a6bd transparent transparent transparent;
+}
+
+.popupShareSkill .show {
+   visibility: visible;
+}
+
+.popupThankyou {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.popupThankyou .popuptextThankyou {
+   visibility: hidden;
+   width: 200px;
+   background-color: #d5a6bd;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 8px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -80px;
+}
+
+.popupThankyou .popuptextThankyou::after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #d5a6bd transparent transparent transparent;
+}
+
+.popupThankyou .show {
+   visibility: visible;
+}
+

@@ -93,6 +93,9 @@ class ProfileForm(forms.Form):
     hobby = forms.CharField(max_length=200, required=False)
     cities = forms.CharField(max_length=200, required=False)
 
+class ProfessionForm(forms.Form):
+    profession = forms.CharField(max_length=200, required=True)
+
 class ForgotPasswordForm(PasswordResetForm):
     email = forms.EmailField(required=True, max_length=254)
     class Meta:
@@ -167,6 +170,7 @@ class PersonalInfo(forms.Form):
     language = forms.CharField(max_length=100, required=False)
     skill1 = forms.CharField(max_length=200, required=False)
     skill2 = forms.CharField(max_length=200, required=False)
+    skill3 = forms.CharField(max_length=200, required=False)
 
 class Funfact(forms.Form):
     funaboutyou = forms.CharField(max_length=200, required=False)

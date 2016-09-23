@@ -1,19 +1,31 @@
 {% extends 'week1/basehome.html'%}
 
 {% block content %}
-<div id="home-edit">
-    {{ form.errors }}
-    <form action="" class="" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        City: <input type='text' name='city' value='{{ profile.city }}'><br/>
-        Works at: <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
-        Education: <input type='text' name='education' value='{{ profile.education }}'><br/>
-        Language: <input type='text' name='language' value='{{ profile.language }}'><br/>
 
-        Skills: <input type='text' name='skill1' value='{{ profile.skill1 }}'><br/>
+<div id="step">
+     <div id="step-left">
+     </div>
+
+     <div id="step-right">
+        <h3>Update your information</h3>
+    {{ form.errors }}
+    <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <br>City</br> <input type='text' name='city' value='{{ profile.city }}'><br/>
+       <br>Independent/company name</br> <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
+       <br>Education</br> <input type='text' name='education' value='{{ profile.education }}'><br/>
+       <br>Language</br> <input type='text' name='language' value='{{ profile.language }}'><br/>
+
+       <br>Skills</br> 
+                <input type='text' name='skill1' value='{{ profile.skill1 }}'><br/>
                 <input type='text' name='skill2' value='{{ profile.skill2 }}'><br/>
-        <input type="submit" value="Update" align="center" />
-        <input type="hidden" name="next" value="home.html">
+                <input type='text' name='skill3' value='{{ profile.skill3 }}'><br/>
+        <div class="submit-wrapper">
+		<input type="submit" value="Update" class="step-submit" />
+		<input type="hidden" name="next" value="home.html">
+		<a href="{% url 'week1:home' %}">Back to Home</a>
+        </div>
     </form>
+    </div>
 
 </div>
 {% endblock %}

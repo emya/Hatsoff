@@ -23,7 +23,7 @@ from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
 from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork
-from .forms import RegistrationForm, LoginForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, PersonalPhoto, Funfact
+from .forms import RegistrationForm, LoginForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, PersonalPhoto, Funfact, ProfessionForm
 
 # Create your views here.
 @csrf_protect
@@ -218,6 +218,7 @@ def signup(request):
 @csrf_protect
 @login_required
 def home(request):
+    media_url = settings.MEDIA_URL
     nodejs_url = settings.NODEJS_SOCKET_URL
     print "userid", request.user.id
     uid = request.user.id
@@ -279,7 +280,7 @@ def home(request):
         upcomingwork = None
 
 
-    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'folderusers':folderusers, 'users':users, 'userphoto':userphoto, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'folderusers':folderusers, 'users':users, 'userphoto':userphoto, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
 
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
@@ -655,9 +656,10 @@ def home_edit_personalinfo(request):
             language = form.cleaned_data["language"]
             skill1 = form.cleaned_data["skill1"]
             skill2 = form.cleaned_data["skill2"]
+            skill3 = form.cleaned_data["skill3"]
 
             if num_result == 0:
-                p = Profile.objects.create(user=currentuser, worksAt=worksAt, city=city, education=education, language=language, skill1=skill1, skill2=skill2)
+                p = Profile.objects.create(user=currentuser, worksAt=worksAt, city=city, education=education, language=language, skill1=skill1, skill2=skill2, skill3=skill3)
                 p.save()
 
             else:
@@ -668,6 +670,7 @@ def home_edit_personalinfo(request):
                 p.language = language 
                 p.skill1 = skill1 
                 p.skill2 = skill2 
+                p.skill3 = skill3 
                 p.save()
 
             profile = Profile.objects.get(user=currentuser)
@@ -682,6 +685,79 @@ def home_edit_personalinfo(request):
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_personalinfo.html', {'profile':usersprofile, 'form':form})
 
+@csrf_protect
+@login_required
+def home_edit_url(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if request.method == "POST":
+        form = Step4(request.POST)
+
+        if form.is_valid():
+            weburl = form.cleaned_data["weburl"]
+
+            if num_result == 0:
+                p = Profile.objects.create(user=currentuser, weburl=weburl)
+                p.save()
+
+            else:
+                p = Profile.objects.get(user=currentuser)
+                p.weburl = weburl
+                p.save()
+
+            profile = Profile.objects.get(user=currentuser)
+            return HttpResponseRedirect('/week1/home/')
+
+    else:
+        form = Step4()
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+            p.save()
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit_url.html', {'profile':usersprofile, 'form':form})
+
+@csrf_protect
+@login_required
+def home_edit_profession(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if request.method == "POST":
+        form = ProfessionForm(request.POST)
+
+        if form.is_valid():
+            profession = form.cleaned_data["profession"]
+
+            if num_result == 0:
+                p = Profile.objects.create(user=currentuser, profession=profession)
+                p.save()
+
+            else:
+                p = Profile.objects.get(user=currentuser)
+                p.profession = profession 
+                p.save()
+
+            profile = Profile.objects.get(user=currentuser)
+            return HttpResponseRedirect('/week1/home/')
+
+    else:
+        form = ProfessionForm()
+        if num_result == 0:
+            p = Profile.objects.create(user=currentuser)
+            p.save()
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit_profession.html', {'profile':usersprofile, 'form':form})
 
 @csrf_protect
 @login_required
@@ -1143,6 +1219,7 @@ def get_profile(request, uid):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
     user = User.objects.get(id=uid)
     target_profile = Profile.objects.get(user=user)
 
@@ -1169,7 +1246,22 @@ def get_profile(request, uid):
     except UpcomingWork.DoesNotExist:
         upcomingwork = None
 
-    variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 't_user':user, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url})
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 't_user':user, 'showcases':showcases, 'upcoming':upcomingwork, 'userphoto':userphoto, 'users':users, 'nodejs_url':nodejs_url, 'media_url':media_url})
     return render_to_response('week1/userpage.html', variables, )
 
 @login_required
@@ -1237,6 +1329,7 @@ def folder(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
 
     currentuser = User.objects.get(id=uid, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
@@ -1248,8 +1341,23 @@ def folder(request):
     userlist = list(fusers)
     folderusers = Profile.objects.filter(user__in=userlist)
 
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
 
-    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'folderusers':folderusers})
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'folderusers':folderusers, 'users':users, 'userphoto':userphoto})
     return render_to_response('week1/folder.html', variables, )
 
 @login_required

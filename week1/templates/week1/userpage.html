@@ -14,12 +14,15 @@
 	<div class="home-step">
             <ul style="list-style-type:none">
 		<li>City:{{target_profile.city}}</li>
-		<li>Independent:{{target_profile.worksAt}}</li>
+		<li>Work at/as:{{target_profile.worksAt}}</li>
 		<li>Education:{{target_profile.education}}</li>
 		<li>Language:{{target_profile.language}}</li>
-		<li>skills:{{target_profile.skill1}}</li>
+		<li>Skills:{{target_profile.skill1}}</li>
             </ul>
 	</div>
+	<div class="home-step-out">
+            URL:{{ target_profile.weburl }}
+        </div>
 
 	<div class="home-step">
             <ul style="list-style-type:none">
@@ -41,6 +44,9 @@
 	{% else %}
 	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
 	{% endif %}
+        </div>
+	<div class="home-step-out">
+            <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}, {{target_profile.profession}}</h3>
         </div>
     </div>
 
@@ -152,10 +158,17 @@
 	        <li>Target finish date:{{upcoming.targetdate}}</li>
 	        <li>Comment:{{upcoming.comment}}</li>
 	      </ul>
+              <ul>
+	        <li><h4>Looking for</h4>
+                    <br>{{upcoming.collaborators}}</br></li>
+	        <li>Funding:{{upcoming.fund}}</li>
+	        <li>Comment:{{upcoming.comment_help}}</li>
+	      </ul>
             </div>
 	    <div class="post-wrapper">
 		<form action="" id="upcoming_form">
-		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="60"></textarea><button>Post</button>
+		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="60"></textarea>
+                  <button onclick="submitUForm()">Post</button>
 		</form>
 	    </div>
 	    <ul style="list-style-type:none; padding-left:0px;">
@@ -241,11 +254,6 @@
                     }
 		    $('#portfolio_block').style.display = 'block';
                     ***/
-
-                    /***
-		    $('#portfolio_hide').hide();
-		    $('#portfolio_show').show();
-                    ***/
 	      };
 
               // For portfolio
@@ -269,18 +277,19 @@
 		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
 		          }
 		    }
 	      });
@@ -292,24 +301,27 @@
 	          for(var i = 0; i < docs.length; i++){
                       if (docs[i]['p_id'] == p_id) {
                           console.log('If!');
-		          var uid = docs[i]['user']['uid'];
-			  var n  = users.indexOf(uid);
-                          var data = docs[i];
-			  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-			  if ( n != -1) {
-			        if (uid == {{user.id}}){
-			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
-			        } else{
-			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
-			        }
+		          if (docs[i]['user']['uid']){
+				var uid = docs[i]['user']['uid'];
+				var n  = users.indexOf(uid);
+				var data = docs[i];
+				var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+				if ( n != -1) {
+				      if (uid == {{user.id}}){
+				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				      } else{
+				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				      }
 
-			  }else{
-			        if (uid == {{user.id}}){
-			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
-			        } else {
-			           $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
-			        }
-			  }
+				}else{
+				      if (uid == {{user.id}}){
+				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				      } else {
+				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				      }
+				}
+                          }
 
                       } else{
                           console.log('Else!');
@@ -318,84 +330,88 @@
 	      });
 
 
-	      socket.on('update comment', function(docs){
-	        for(var i = 0; i < docs.length; i++){
-	    	 $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-	          }
-	      });
-
-	      $('#upcoming_form').submit(function(){
+	      //$('#upcoming_form').submit(function(){
+              function submitUForm(){
                     console.log('form submit');
                     var com = $('#c_upcoming').val();
-		    socket.emit('upcoming comment', {msg:com, to:{{t_user.id}}, uid:{{user.id}}});
-		    $('#c_upcoming').val('');
-	    	    $('#commentHistory').prepend($('<li><span class="error"><br><p>'+{{ user.first_name}}+'&nbsp'+{{user.last_name}}+':'+com+'</p></span><br/>'));
-		    return false;
-	      });
-
-              /***
-	      socket.on('new upcoming comment on userpage', function(data){
-                    console.log('new upcoming comment on userpage');
-		    var uid = data.from_uid;
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-		    var n  = users.indexOf(uid);
-		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-                    if (data.to == {{t_user.id}}){
-			    if ( n != -1) {
-				  if (uid == {{user.id}}){
-				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
-				  } else{
-				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
-				  }
-
-			    }else{
-				  if (uid == {{user.id}}){
-				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
-				  } else {
-				     $('#upcomingComment').prepend($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
-				  }
-			    }
+                    if (com.length != 0){
+		        socket.emit('upcoming comment', {msg:com, to:{{t_user.id}}, uid:{{user.id}}});
                     }
-	      });
-              ***/
+		    $('#c_upcoming').val('');
+		    return false;
+	      }
 
 	      socket.on('update upcoming comment', function(docs){
 		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    for(var i=0; i < docs.length; i++){
-		       var uid = docs[i]['user']['uid'];
-		       var n  = users.indexOf(uid);
-		       var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		       if ( n != -1) {
-		          if (uid == {{user.id}}){
-		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
-		          } else{
-		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
-		          }
-		       } else{
-		          if (uid == {{user.id}}){
-		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
-		          } else{
-		      	$('#upcomingComment').append($('<li><div class="post-wrapper"><br><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
-		          }
+		       if (docs[i]['user']['uid']){
+			    var uid = docs[i]['user']['uid'];
+			    var n  = users.indexOf(uid);
+			    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+			    if ( n != -1) {
+			       if (uid == {{user.id}}){
+			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			       } else{
+			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			       }
+			    } else{
+			       if (uid == {{user.id}}){
+			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			       } else{
+			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			       }
+			    }
 		       }
 		    }
 	      });
  
-  	  $('#postComment').submit(function(){
-	        $('#commentHistory').prepend($('<li><span class="error"><br>'+"{{user.first_name}}"+':'+$('#comment').val()+'</span><br/>'));
-            socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}}, function(data){
-            });
-            $('#comment').val('');            
-            return false;
-          });
+          /***
+          ***/
+
+          function submitCForm(){
+                console.log('post comment');
+                if ($('#comment').val().length != 0){
+                    socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}});
+                }
+                $('#comment').val('');            
+                return false;
+          }
+
 
 	  socket.on('update comment', function(docs){
-              for(var i = 0; i < docs.length; i++){
-	         $('#commentHistory').append($('<li><span class="error"><br>'+docs[i]['from_user']['first_name']+':'+docs[i]['content']+'</span><br/>'));
-              }
-          });
+	    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+            var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	    for(var i = 0; i < docs.length; i++){
+		if (docs[i]['from_user']['uid']){
+			var uid = docs[i]['from_user']['uid'];
+			var n  = users.indexOf(uid);
+			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+			if ( n != -1) {
+			    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+			}else{
+			    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+
+			}
+                }
+	      }
+	  });
+
+	  socket.on('new comment', function(data){
+                console.log('new comment on userpage');
+	        var uid = data.from;
+                console.log(p_id);
+	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	        var n  = users.indexOf(uid);
+		var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+	        if ( n != -1) {
+	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
+	        }else{
+	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
+	        }
+	  });
 
 	</script>
 
@@ -416,14 +432,19 @@
 	</div>
 
 <div id="home-comment">
+    <div id="commentpost-wrapper">
     <h4> Comments </h4>
-    <form action="" id="postComment">
-       <input id="comment" autocomplete="off" /><button>Send</button>
-    </form>
+	 <form action="" id="postComment">
+	    <textarea id="comment" autocomplete="off" placeholder=" Comment for {{t_user.first_name}}" rows="3" cols="60"></textarea>
+            <button onclick="submitCForm()">Post</button>
+	 </form>
+    </div>
 
-    <ul style="list-style-type:none">
-        <div id="commentHistory"></div>
-    </ul>
+    <div id="comments-wrapper">
+	 <ul style="list-style-type:none; padding-left: 0;">
+	     <div id="commentHistory"></div>
+	 </ul>
+    </div>
 
     </div>
 

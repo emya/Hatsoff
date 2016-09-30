@@ -47,6 +47,7 @@
         </div>
 	<div class="home-step-out">
             <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}, {{target_profile.profession}}</h3>
+            <p>{{target_profile.describe}}</p>
         </div>
     </div>
 
@@ -59,6 +60,9 @@
 
        <div class="home-bottom">
 	    <ul style="list-style-type:none">
+              <li><div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
+              <li><div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div></li>
+              <li><div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li>
 	      <li><a href=""><img src="{% static 'images/contribute.png'%}" class="icons-img"></a></li>
 	      <li><img src="{% static 'images/recommend.png'%}" class="icons-img"></li>
 	      <li><img src="{% static 'images/help.png'%}" class="icons-img"></li>
@@ -91,6 +95,8 @@
 				<li>Year of completion:{{showcase.completion}}</li>
 			    </ul>
                         </div>
+		    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+		    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
 			<div class="post-wrapper">
 			    <form action="" id="portfolio_form">
 			      <textarea id="c_portfolio_{{forloop.counter}}" placeholder=" Comment" rows="3" cols="60"></textarea>
@@ -165,6 +171,8 @@
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>
             </div>
+            <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+            <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
 	    <div class="post-wrapper">
 		<form action="" id="upcoming_form">
 		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="60"></textarea>
@@ -190,6 +198,94 @@
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
+
+	      function likeFunction(c_type, c_id){
+		 console.log('uid on like:'+c_type+':'+c_id);
+		 popLike();
+                 if (c_type == 2){
+		    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+		    console.log('like upcoming');
+                 }else if (c_type == 3){
+		    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+		    console.log('like portfolio');
+                 }
+		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	      }
+
+	      function popLike(){
+		 var popup = document.getElementById('likePop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function popShare(){
+		 var popup = document.getElementById('sharePop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function shareFunction(c_type, c_id){
+		 console.log('uid on share:'+c_type+':'+c_id);
+		 popShared();
+                 if (c_type == 2){
+		    socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+                 }else if (c_type == 3){
+		    socket.emit('share portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+                 }
+		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	      }
+
+	      function popShared(){
+		 var popup = document.getElementById('sharedPop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function popThanks(){
+		 var popup = document.getElementById('thanksPop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function thanksFunction(){
+		 console.log('thanks!');
+		 popGave();
+		 socket.emit('give thanks', {to_uid:{{t_user.id}}, uid:{{user.id}}});
+		 console.log('thanks!');
+	      }
+
+	      function popGave(){
+		 var popup = document.getElementById('gavePop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function popHatsoff(){
+		 var popup = document.getElementById('hatsoffPop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function hatsoffFunction(){
+		 console.log('hatsoff!');
+		 popGavehatsoff();
+		 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}});
+	      }
+
+	      function popGavehatsoff(){
+		 var popup = document.getElementById('gavehatsoffPop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function popFollow(){
+		 var popup = document.getElementById('followPop');
+		 popup.classList.toggle('show');
+	      }
+
+	      function followFunction(){
+		 console.log('follow!');
+		 popFollowed();
+		 //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
+	      }
+
+	      function popFollowed(){
+		 var popup = document.getElementById('followedPop');
+		 popup.classList.toggle('show');
+	      }
 
               var p_id = 1
     	      function changeContent(number, length){

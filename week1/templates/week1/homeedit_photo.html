@@ -6,11 +6,12 @@
 <div id="home-edit">
 
 <form action="" class="" method="POST" class="step-form" enctype="multipart/form-data">{% csrf_token %}
-        <br>Profile Photo</br> <input type='file' name='photo' ><br/>
+        <br>{{form.photo.label_tag}}</br> {{form.photo}}<br/>
 
          <div class="submit-wrapper">
 		<input type="submit" value="Update" class="step-submit" />
 		<input type="hidden" name="next" value="home.html">
+	        <a href="{% url 'week1:home' %}">Back to Home</a>
          </div>
 </form>
 

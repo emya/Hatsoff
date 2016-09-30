@@ -10,7 +10,8 @@ class Profile(models.Model):
     worksAt = models.CharField(max_length=100, default='', blank=True)
     city = models.CharField(max_length=100, default='', blank=True)
     education = models.CharField(max_length=200, default='', blank=True)
-    birthdate = models.DateTimeField(max_length=100, null=True, blank=True)
+    birthyear = models.DateTimeField(null=True, blank=True)
+    birthdate = models.DateTimeField(null=True, blank=True)
     language = models.CharField(max_length=100, default='', blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
     skill1 = models.CharField(max_length=200, default='', blank=True)
@@ -23,7 +24,7 @@ class Profile(models.Model):
     skill8 = models.CharField(max_length=200, default='', blank=True)
     skill9 = models.CharField(max_length=200, default='', blank=True)
     skill10 = models.CharField(max_length=200, default='', blank=True)
-    weburl = models.CharField(max_length=200, default='', blank=True)
+    weburl = models.URLField(max_length=200, default='', blank=True)
     funaboutyou = models.CharField(max_length=200, default='', blank=True)
     fQuote = models.CharField(max_length=200, default='', blank=True)
     fFilm = models.CharField(max_length=200, default='', blank=True)
@@ -39,7 +40,7 @@ class Profile(models.Model):
 class Showcase(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=200, default='', blank=True)
-    number = models.IntegerField()#1 to 10
+    number = models.IntegerField(null=True)#1 to 10
     image = models.ImageField(upload_to='showcaseimg/', null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
     role = models.CharField(max_length=300, default='', blank=True)
@@ -55,7 +56,7 @@ class UpcomingWork(models.Model):
     status = models.CharField(max_length=300, default='', blank=True)
     targetdate = models.DateTimeField(max_length=300, null=True, blank=True)#year of completion
     comment = models.CharField(max_length=300, default='', blank=True)
-    get_help = models.IntegerField(null=True)#1: yes 2:Open to collaboration 3:no thanks
+    get_help = models.IntegerField(null=True, blank=True)#1: yes 2:Open to collaboration 3:no thanks
     collaborators = models.CharField(max_length=300, default='', blank=True)
     fund = models.CharField(max_length=200, default='', blank=True)
     comment_help = models.CharField(max_length=300, default='', blank=True)

@@ -1,0 +1,215 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<div id="home-friends">
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+    <h4></h4>
+
+    <ul style="list-style-type:none; padding-left:0px;">
+        <div id="historyActivity"></div>
+    </ul>
+
+    <h4>Share</h4>
+    <ul style="list-style-type:none; padding-left:0px;">
+        <div id="shareActivity"></div>
+    </ul>
+
+    <h4>Share your skill</h4>
+    <ul style="list-style-type:none; padding-left:0px;">
+        <div id="shareskillActivity"></div>
+    </ul>
+
+    <h4>Like</h4>
+    <ul style="list-style-type:none; padding-left:0px;">
+        <div id="likeActivity"></div>
+    </ul>
+
+    <h4>Community Post</h4>
+    <ul style="list-style-type:none; padding-left:0px;">
+        <div id="communityActivity"></div>
+    </ul>
+
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+	  /*var socket = io();*/
+          var socket = io.connect("{{nodejs_url}}");
+
+          /***new lines***/
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('at history', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          /***to here***/
+
+	  socket.on('update comment history', function(docs){
+              console.log('comment history:'+docs);
+              comment = docs;
+          });
+
+	  socket.on('update community post history', function(docs){
+              community = docs;
+              console.log('user.id'+{{user.id}});
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              for(var i=0; i < docs.length; i++){
+		var uid = {{user.id}};
+                var c_id = docs[i]['_id'];
+		var n  = users.indexOf(uid);
+		var url_mask = "{% url 'week1:add_folder' user.id %}";
+		var url_link = "{% url 'week1:get_profile' user.id %}";
+		if ( n != -1) {
+		       $('#communityActivity').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br></div><br/>'));
+		} else{
+		       $('#communityActivity').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br></div><br/>'));
+		}
+                 }
+	  });
+
+	  socket.on('update like history', function(docs){
+              community = docs;
+              console.log('user.id'+{{user.id}});
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              for(var i=0; i < docs.length; i++){
+                if (docs[i]['content_type']){
+		    var c_type = docs[i]['content_type'];
+                    if (docs[i]['to_uid']){
+			var uid = docs[i]['to_uid'];
+			var n  = users.indexOf(uid);
+			var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        if (c_type == 1){
+				if ( n != -1) {
+				   $('#likeActivity').append($('<li><div class="post-wrapper"><br> You liked a community post by <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				   //$('#likeActivity').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br></div><br/>'));
+				} else{
+				   $('#likeActivity').append($('<li><div class="post-wrapper"><br> You liked a community post by <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				   //$('#likeActivity').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br></div><br/>'));
+				}
+                        }else if(c_type == 2){
+				if ( n != -1) {
+				   $('#likeActivity').append($('<li><div class="post-wrapper"><br> You liked an upcoming project on <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				} else{
+				   $('#likeActivity').append($('<li><div class="post-wrapper"><br> You liked an upcoming project on <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				}
+
+                        }else if(c_type == 3){
+				if ( n != -1) {
+				   $('#likeActivity').append($('<li><div class="post-wrapper"><br> You liked a portfolio on <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				} else{
+				   $('#likeActivity').append($('<li><div class="post-wrapper"><br> You liked a portfolio on <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				}
+
+                        }
+                    }
+                }
+              }
+	  });
+
+	  socket.on('update share history', function(docs){
+              community = docs;
+              console.log('user.id'+{{user.id}});
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              for(var i=0; i < docs.length; i++){
+                if (docs[i]['content_type']){
+		    var c_type = docs[i]['content_type'];
+                    if (docs[i]['to_uid']){
+			var uid = docs[i]['to_uid'];
+			var n  = users.indexOf(uid);
+			var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        if (c_type == 1){
+				if ( n != -1) {
+				   $('#shareActivity').append($('<li><div class="post-wrapper"><br> You shared a community post by <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				   //$('#likeActivity').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br></div><br/>'));
+				} else{
+				   $('#shareActivity').append($('<li><div class="post-wrapper"><br> You shared a community post by <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				   //$('#likeActivity').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br></div><br/>'));
+				}
+                        }else if(c_type == 2){
+				if ( n != -1) {
+				   $('#shareActivity').append($('<li><div class="post-wrapper"><br> You shared an upcoming project on <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				} else{
+				   $('#shareActivity').append($('<li><div class="post-wrapper"><br> You shared an upcoming project on <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				}
+                        }else if(c_type == 3){
+				if ( n != -1) {
+				   $('#shareActivity').append($('<li><div class="post-wrapper"><br> You shared a portfolio on <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				} else{
+				   $('#shareActivity').append($('<li><div class="post-wrapper"><br> You shared a portfolio on <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br></br></div><br/>'));
+				}
+                        }
+
+
+                    }
+                }
+              }
+	  });
+
+	  socket.on('update shareskill history', function(docs){
+              community = docs;
+              console.log('user.id'+{{user.id}});
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              for(var i=0; i < docs.length; i++){
+                 if (docs[i]['to_uid']){
+		     var uid = docs[i]['to_uid'];
+		     var n  = users.indexOf(uid);
+		     var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		     var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		     if ( n != -1) {
+		       $('#shareskillActivity').append($('<li><div class="post-wrapper"><br> You showed your interest in sharing with <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br></br></div><br/>'));
+		     } else{
+		       $('#shareskillActivity').append($('<li><div class="post-wrapper"><br> You showed your interest in sharing with <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br></br></div><br/>'));
+		     }
+                 }
+              }
+	  });
+
+
+	  socket.on('new history', function(data){
+              var uid = data.to_uid;
+              var c_id = data.content_id;
+              var c_type = data.content_type;
+              var a_id = data.action_id;
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	      var n  = users.indexOf(uid);
+	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+	      if ( n != -1) {
+                  if(a_id == 4){
+                     $('#likeActivity').prepend($('<li><div class="post-wrapper"><br>You liked a post of <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+comment[i_comment]['from_user']['first_name']+'&nbsp'+comment[i_comment]['from_user']['last_name']+'</a> at '+t_comment+'</br></div><br/>'));
+                  }
+                  else if(a_id == 5){
+                     $('#shareActivity').prepend($('<li><div class="post-wrapper"><br>You shared a post of <a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+comment[i_comment]['from_user']['first_name']+'&nbsp'+comment[i_comment]['from_user']['last_name']+'</a> at '+t_comment+'</br></div><br/>'));
+                  }
+	      } else{
+                  if(a_id == 4){
+                  $('#likeActivity').prepend($('<li><div class="post-wrapper"><br>You liked a post of <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+comment[i_comment]['from_user']['first_name']+'&nbsp'+comment[i_comment]['from_user']['last_name']+'</a> at '+t_comment+'</br></div><br/>'));
+                  }
+                  else if(a_id == 5){
+                  $('#shareActivity').prepend($('<li><div class="post-wrapper"><br>You liked a post of <a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+comment[i_comment]['from_user']['first_name']+'&nbsp'+comment[i_comment]['from_user']['last_name']+'</a> at '+t_comment+'</br></div><br/>'));
+                  }
+	      }
+
+	  });
+
+          /**
+	  socket.on('whisper', function(data){
+	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+          });
+          **/
+    </script>
+</div>
+
+
+{% endblock %}

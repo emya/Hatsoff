@@ -44,6 +44,21 @@
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
           /***to here***/
+          function popShare(){
+	    var popup = document.getElementById('sharePop');
+            popup.classList.toggle('show');
+	  }
+
+          function shareFunction(uid, c_id){
+            console.log('uid on share:'+uid+':'+c_id);
+            popShared();
+	    socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
+
+          function popShared(){
+	    var popup = document.getElementById('sharedPop');
+            popup.classList.toggle('show');
+	  }
 
           function popShareSkill(){
 	    var popup = document.getElementById('shareskillPop');
@@ -58,6 +73,17 @@
 
           function popThankyou(){
 	    var popup = document.getElementById('thankyouPop');
+            popup.classList.toggle('show');
+	  }
+
+          function likeFunction(uid, c_id){
+            console.log('uid on like:'+uid+':'+c_id);
+            popLike();
+	    socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
+
+          function popLike(){
+	    var popup = document.getElementById('likePop');
             popup.classList.toggle('show');
 	  }
 
@@ -117,6 +143,7 @@
 	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
+              var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
               //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
               if ( n != -1) {
@@ -147,19 +174,21 @@
 			var n  = users.indexOf(uid);
 			var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                        var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
+                        var like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+                        var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
+                        var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
                         var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
 			if ( n != -1) {
 			   if (uid == {{user.id}}){
 			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+reply+'</div><br/>'));
 			   } else{
-			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+shareskill+'</br>'+reply+'</div><br/>'));
+			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+'</br>'+reply+'</div><br/>'));
 			   }
 			} else{
 			   if (uid == {{user.id}}){
 			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+reply+'</div><br/>'));
 			   } else{
-			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+shareskill+'</br>'+reply+'</div><br/>'));
+			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+'</br>'+reply+'</div><br/>'));
 			   }
 			}
                         if (docs[i]['replys']) {

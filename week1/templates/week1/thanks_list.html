@@ -1,0 +1,94 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="home-friends">
+<!--h4>Folder</h4>
+<ul style="list-style-type:none">
+{% if folderusers %}
+   {% for u in folderusers %}
+        {% if u.photo %}
+	   <li><img src="{{ u.photo.url }}" width="50px">{{u.user.first_name}}&nbsp{{u.user.last_name}}</li>
+        {% else %}
+	   <li><img src="{% static 'images/profileimage.png'%}" width="50px">{{u.user.first_name}}&nbsp{{u.user.last_name}}</li>
+        {% endif %}
+   {% endfor %}
+{% endif %}
+</ul-->
+</div>
+
+<div id="home-main">
+
+<h3>Thanks List</h3>
+<div id="hats-gave">
+	<p>You gave <span id="gaveNum"></span></p>
+
+	<ul style="list-style-type:none; padding-left:0px;">
+           <div id="thanksGave">
+           </div>
+	</ul>
+</div>
+
+<div id="hats-received">
+	<p>You received <span id="receivedNum"></span></p>
+
+	<ul style="list-style-type:none; padding-left:0px;">
+           <div id="thanksReceived">
+           </div>
+	</ul>
+</div>
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+	  /*var socket = io();*/
+          var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('at thanks', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+
+	  socket.on('update thanksgave', function(docs){
+              console.log('thanks gave');
+              for(var i=0; i < docs.length; i++){
+                 if (docs[i]['to_uid']) {
+	       	     var uid = docs[i]['to_uid'];
+		     var n  = users.indexOf(uid);
+		     var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		     var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		     if ( n != -1) {
+			 $('#thanksGave').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br>'));
+                     }else{
+			 $('#thanksGave').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
+                     }
+                 }
+              }
+              document.getElementById("gaveNum").innerHTML = docs.length;
+
+          });
+
+	  socket.on('update thanksreceived', function(docs){
+              console.log('thanks received');
+              for(var i=0; i < docs.length; i++){
+                 if (docs[i]['user']['uid']) {
+	       	     var uid = docs[i]['user']['uid'];
+		     var n  = users.indexOf(uid);
+		     var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		     var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		     if ( n != -1) {
+			 $('#thanksReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br>'));
+                     }else{
+			 $('#thanksReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
+                     }
+
+                 }
+              }
+              document.getElementById("receivedNum").innerHTML = docs.length;
+          });
+
+    </script>
+</div>
+
+{% endblock %}

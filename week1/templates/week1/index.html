@@ -37,5 +37,37 @@
     <img src="{% static 'images/indexcommunity_tmp.png'%}" align="center" width="500px">
 </div>
 
+<!--div id="logindiv">
+<form action="" class="login-form" name="login" method="POST">{% csrf_token %}
+    {% if form.non_field_errors  %}
+    <ul style="list-style-type:none">
+       {% for error in form.non_field_errors %}
+          <li>{{error}}</li>
+       {% endfor %}
+    </ul>
+    {% endif %}
+
+    <table border="0">
+        <input type="email" name="username" id="username" placeholder=" Email" class="sign-text">
+    <br>
+    <br>
+        <input type="password" name="password" id="password" placeholder=" Password">
+    </table>
+    <a href="{% url 'week1:reset' %}">Forgot password?</a>
+    <div class="login-wrapper">
+       <input type="submit" value="Log me in" class="login-submit"/>
+    </div>
+    <input type="hidden" name="next" value="/home/" />
+<form>
+</div-->
+ 
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    function loginFunction(){
+      var popup = document.getElementById('logindiv');
+      popup.classList.toggle('show');
+      //$("#logindiv").css("display", "block");
+    }
+</script>
 
 {% endblock %}

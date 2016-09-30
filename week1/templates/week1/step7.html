@@ -6,22 +6,25 @@
 <div id="step">
      <div id="step-left">
      <h3>Step 7 out of 7</h3> 
+     <div id="step-notification">
+      <p>There are 7 steps in your profile creation. You can edit or add information later.</p>
+     </div>
      </div>
 
      <div id="step-right">
             <h3>Fun Facts</h3>
 	    <form action="" method="POST" class="step-form">{% csrf_token %}
-                <br>Fun fact about you (eg. I can hold my breath for 1 minute)</br> <input type='text' name='funaboutyou'><br/>
-                <br>Hobby</br> <input type='text' name='hobby'><br/>
-                <br>Favorite quote(s)</br> <input type='text' name='fQuote'><br/>
-                <br>Favorite film(s)</br> <input type='text' name='fFilm'><br/>
-                <br>Favorite TV show(s)</br> <input type='text' name='fTV'><br/>
-                <br>Favorite Youtube channel(s)/video</br> <input type='text' name='fYoutube'><br/>
-                <br>Favorite book(s)</br> <input type='text' name='fBook'><br/>
-                <br>Book you are reading now</br> <input type='text' name='bookNow'><br/>
-                <br>Film you are watching now</br> <input type='text' name='filmNow'><br/>
-                <br>TV series you are watching now</br> <input type='text' name='TVNow'><br/>
-                <br>Lived in other cities? if so where?</br> <input type='text' name='cities'><br/>
+                <br>{{form.funaboutyou.label_tag}}</br> {{form.funaboutyou}}<br/>
+                <br>{{form.hobby.label_tag}}</br> {{form.hobby}}<br/>
+                <br>{{form.fQuote.label_tag}}</br> {{form.fQuote}}<br/>
+                <br>{{form.fFilm.label_tag}}</br> {{form.fFilm}}<br/>
+                <br>{{form.fTV.label_tag}}</br> {{form.fTV}}<br/>
+                <br>{{form.fYoutube.label_tag}}</br> {{form.fYoutube}}<br/>
+                <br>{{form.fBook.label_tag}}</br> {{form.fBook}}<br/>
+                <br>{{form.bookNow.label_tag}}</br> {{form.bookNow}}<br/>
+                <br>{{form.filmNow.label_tag}}</br> {{form.filmNow}}<br/>
+                <br>{{form.TVNow.label_tag}}</br> {{form.TVNow}}<br/>
+                <br>{{form.cities.label_tag}}</br> {{form.cities}}<br/>
 
 	    <div class="submit-wrapper">
 		<input type="submit" value="Complete" class="step-submit"/>

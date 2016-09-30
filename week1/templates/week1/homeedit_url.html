@@ -10,7 +10,7 @@
      <div id="step-right">
         <h3>Update your URL</h3>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
-            <br>Website url</br> <input type='text' name='weburl' ><br/>
+            <br>{{form.weburl.label_tag}}</br> {{form.weburl}}<br/>
 	    <div class="submit-wrapper">
 		<input type="submit" value="Update" class="step-submit"/>
                 <input type="hidden" name="next" value="home.html">

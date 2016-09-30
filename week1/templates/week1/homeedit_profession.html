@@ -11,7 +11,8 @@
         <h3>Update your profession</h3>
         {{ form.errors }}
 	<form action="" method="POST" class="step-form">{% csrf_token %}
-            <br>Profession</br> <input type='text' name='profession' value="{{profile.profession}}" ><br/>
+            <br>{{form.profession.label_tag}}</br> {{form.profession}}<br/>
+            <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
 	    <div class="submit-wrapper">
 		<input type="submit" value="Update" class="step-submit"/>
 		<input type="hidden" name="next" value="home.html">

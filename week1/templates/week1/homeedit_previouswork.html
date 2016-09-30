@@ -8,18 +8,13 @@
      </div>
 
      <div id="step-right">
-        {% if showcase %}
         <h3>Update your previous work</h3>
 	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <br>Title</br> <input type='text' name='title' value='{{showcase.title}}'><br/>
-            {% if showcase.image %}
-            <br>Photo</br> <input type='file' name='img' value='{{showcase.image.url}}'><br/>
-            {% else %}
-            <br>Photo</br> <input type='file' name='img' ><br/>
-            {% endif %}
-            <br>Describe your work</br><input type='text' name='describe' value='{{showcase.describe}}'><br/>
-            <br>Your role</br><input type='text' name='role' value='{{showcase.role}}'><br/>
-            <br>Year of completion</br><input type='number' name='completion' min="1970" max="2016" value='{{showcase.completion}}'><br/>
+            <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
+            <br>{{form.image.label_tag}}</br> {{form.image}}<br/>
+            <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
+            <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
+            <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
 	    <div class="submit-wrapper">
                {% if num_show and num_show == 10 %}
 	           <input type="submit" value="Update" name="next" class="step-submit"/>
@@ -30,7 +25,6 @@
 	        <a href="{% url 'week1:home' %}">Back to Home</a>
             </div>
 	</form>
-        {% endif %}
      </div>
 
 </div>

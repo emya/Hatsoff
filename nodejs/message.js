@@ -59,11 +59,13 @@ var commentSchema = mongoose.Schema({
 
 var CommentPost = mongoose.model('CommentPost', commentSchema);
 
-// action id  1:comment, 2:hatsoff, 3:shareskill
+// action id  1:comment, 2:hatsoff, 3:shareskill, 4:like, 5:share, 6:thanks
 var notificationSchema = mongoose.Schema({
   to_uid: Number,
   action_user: {uid: Number, first_name: String, last_name: String},
   action_id: Number,
+  content_type: Number,
+  content_id: String,
   created: {type: Date, default:Date.now}
 });
 
@@ -96,6 +98,56 @@ var shareskillSchema = mongoose.Schema({
 });
 
 var ShareSkillPost = mongoose.model('ShareSkillPost', shareskillSchema);
+
+var likeSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  content_type: Number,
+  content_id: String,
+  created: {type: Date, default:Date.now}
+});
+// content_type 1:community post 2:upcoming work 3:portfolio
+
+var LikePost = mongoose.model('LikePost', likeSchema);
+
+var ShareSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  content_type: Number,
+  content_id: String,
+  created: {type: Date, default:Date.now}
+});
+// content_type 1:community post
+
+var SharePost = mongoose.model('SharePost', ShareSchema);
+
+var thanksSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  created: {type: Date, default:Date.now}
+});
+// content_type 1:community post
+
+var ThanksPost = mongoose.model('ThanksPost', thanksSchema);
+
+var followSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  created: {type: Date, default:Date.now}
+});
+// content_type 1:community post
+
+var FollowPost = mongoose.model('FollowPost', followSchema);
+
+var hatsoffSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  created: {type: Date, default:Date.now}
+});
+// content_type 1:community post
+
+var HatsoffPost = mongoose.model('HatsoffPost', hatsoffSchema);
+
 
 app.get('/', function(req, res){
   /*res.sendFile(__dirname + '../recipe/templates/index.html');*/
@@ -179,6 +231,117 @@ io.on('connection', function(socket){
     }); 
   });
 
+  socket.on('at hatsoff', function(data){
+    console.log('at thanks'+socket.uid);
+    var query = HatsoffPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at hatsoffreceived'+docs);
+      socket.emit('update hatsoffreceived', docs);
+    }); 
+
+    var query1 = HatsoffPost.find({'user.uid':socket.uid});
+    query1.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at hatsoffgave'+docs);
+      socket.emit('update hatsoffgave', docs);
+    }); 
+  });
+
+
+  socket.on('at thanks', function(data){
+    console.log('at thanks'+socket.uid);
+    var query = ThanksPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at thanksreceived'+docs);
+      socket.emit('update thanksreceived', docs);
+    }); 
+
+    var query1 = ThanksPost.find({'user.uid':socket.uid});
+    query1.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at thanksgave'+docs);
+      socket.emit('update thanksgave', docs);
+    }); 
+  });
+
+  socket.on('at follow', function(data){
+    console.log('at follow'+socket.uid);
+    var query = FollowPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at followreceived'+docs);
+      socket.emit('update followreceived', docs);
+    }); 
+
+    var query1 = FollowPost.find({'user.uid':socket.uid});
+    query1.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      console.log('at folowgave'+docs);
+      socket.emit('update followgave', docs);
+    }); 
+  });
+
+  socket.on('at history', function(data){
+    console.log('at history'+socket.uid);
+
+    var query = CommunityPost.find({'user.uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, communitydocs){
+      if (err) throw err;
+      //console.log('community history'+communitydocs);
+      socket.emit('update community post history', communitydocs);
+    }); 
+
+    var query1 = LikePost.find({'user.uid':socket.uid});
+    query1.sort('-created').limit(30).exec(function(err, likedocs){
+      if (err) throw err;
+      socket.emit('update like history', likedocs);
+    }); 
+
+    var query2 = SharePost.find({'user.uid':socket.uid});
+    query2.sort('-created').limit(30).exec(function(err, sharedocs){
+      if (err) throw err;
+      console.log('share history'+sharedocs);
+      socket.emit('update share history', sharedocs);
+    }); 
+
+    var query3 = ShareSkillPost.find({'user.uid':socket.uid});
+    query3.sort('-created').limit(30).exec(function(err, skilldocs){
+      if (err) throw err;
+      console.log('shareskill history'+skilldocs);
+      socket.emit('update shareskill history', skilldocs);
+    }); 
+
+      //socket.emit('update community post history', docs);
+    var query1 = CommentPost.find({'from_user.uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, commentdocs){
+      if (err) throw err;
+      //socket.emit('update comment history', docs);
+    }); 
+
+
+    var query2 = UpcomingPost.find({'user.uid':socket.uid});
+    var upcomingdocs;
+    query2.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      //console.log('upcoming comment at history'+docs);
+      upcomingdocs = docs;
+      //socket.emit('update upcoming comment history', docs);
+    }); 
+
+    var query3 = PortfolioPost.find({'user.uid':socket.uid});
+    var portfoliodocs;
+    query3.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      //console.log('portfolio comment at history'+docs);
+      portfoliodocs = docs;
+      //socket.emit('update portfolio comment history', docs);
+    }); 
+
+
+
+  });
 
   socket.on('at home', function(data){
     console.log('at home'+socket.uid);
@@ -209,21 +372,21 @@ io.on('connection', function(socket){
     var query = CommentPost.find({'to_uid':data.to_uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at home'+docs);
+      console.log('at home');
       socket.emit('update comment', docs);
     }); 
 
     var query2 = UpcomingPost.find({'to_uid':data.to_uid});
     query2.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('upcoming comment at home'+docs);
+      console.log('upcoming comment at home');
       socket.emit('update upcoming comment', docs);
     }); 
 
     var query3 = PortfolioPost.find({'to_uid':data.to_uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('portfolio comment at userpage'+docs);
+      console.log('portfolio comment at userpage');
       socket.emit('update portfolio comment', docs);
     }); 
   });
@@ -401,6 +564,246 @@ io.on('connection', function(socket){
     });
   });
 
+
+  socket.on('give thanks', function(data, callback){
+    var d = new Date();
+    console.log('give thanks'+socket.uid); 
+    
+    var newPost = new ThanksPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:6});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:6, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:6, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        //console.log('saved:');
+      }
+    });
+  });
+
+  socket.on('give hatsoff', function(data, callback){
+    var d = new Date();
+    console.log('give hatsoff'+socket.uid); 
+    
+    var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:2, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        //console.log('saved:');
+      }
+    });
+  });
+
+
+  socket.on('like community', function(data, callback){
+
+    var d = new Date();
+    console.log('like community:'+socket.uid); 
+    
+    var newPost = new LikePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:1, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:');
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:4});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:4, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:4, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved notification:');
+      }
+    });
+  });
+
+  socket.on('like upcoming', function(data, callback){
+
+    var d = new Date();
+    console.log('like upcoming:'+socket.uid); 
+    
+    var newPost = new LikePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:');
+        socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:4});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:4, content_type:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:4, content_type:2, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved notification:');
+      }
+    });
+  });
+
+
+  socket.on('like portfolio', function(data, callback){
+
+    var d = new Date();
+    console.log('like portfolio:'+socket.uid); 
+    
+    var newPost = new LikePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:');
+        socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:4});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:4, content_type:3, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:4, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved notification:');
+      }
+    });
+  });
+
+
+
+  socket.on('share post', function(data, callback){
+
+    var d = new Date();
+    console.log('share community:'+socket.uid); 
+    
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:1, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved share community:');
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:5});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:5, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved notification:');
+      }
+    });
+  });
+
+
+  socket.on('share upcoming', function(data, callback){
+
+    var d = new Date();
+    console.log('share upcoming:'+socket.uid); 
+    
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved share community:');
+        socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:5});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:5, content_type:2, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved notification:');
+      }
+    });
+  });
+
+
+  socket.on('share portfolio', function(data, callback){
+
+    var d = new Date();
+    console.log('share portfolio:'+socket.uid); 
+    
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved share community:');
+        socket.emit('new history', {to_uid:data.to_uid, content_type:3, content_id:data.c_id, action_id:5});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved notification:');
+      }
+    });
+  });
+
+
   socket.on('post comment', function(data, callback){
     console.log('post aomment');
     var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -483,6 +886,16 @@ io.on('connection', function(socket){
       }
 
     });
+  });
+
+  socket.on('subscribe', function(room){
+    console.log('join room:'+room);
+    socket.join(room);
+  });
+
+  socket.on('unsubscribe', function(room){
+    console.log('leaving room:'+room);
+    socket.leave(room);
   });
 
     /**

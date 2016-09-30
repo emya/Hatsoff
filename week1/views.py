@@ -23,7 +23,7 @@ from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
 from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork
-from .forms import RegistrationForm, LoginForm, ProfileForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, PersonalPhoto, Funfact, ProfessionForm
+from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
 
 # Create your views here.
 @csrf_protect
@@ -266,6 +266,7 @@ def home(request):
 
     folderusers = Profile.objects.filter(user__in=userlist)
     profile = Profile.objects.get(user=currentuser)
+    request.COOKIES['profile_photo'] = profile.photo
     
     print "folderusers", folderusers, folderusers.count()
 
@@ -292,10 +293,23 @@ def welcome(request):
 @csrf_protect
 @login_required
 def step1(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+
+    if num_result == 0:
+        p = Profile.objects.create(user=currentuser)
+        p.save()
+
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step1(request.POST, request.FILES)
+        form = Step1(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
+            step = form.save()
+            #step = form.save(commit=False)
+
+            nextform = Step2(label_suffix="", instance=instance)
+            return HttpResponseRedirect('/week1/step2/', {'form': nextform})
+            """
             displayname = form.cleaned_data["displayname"]
             profession = form.cleaned_data["profession"]
             city = form.cleaned_data["city"]
@@ -319,6 +333,7 @@ def step1(request):
             nextform = Step2()
             return HttpResponseRedirect('/week1/step2/', {'form': nextform})
             #return render_to_response('week1/step2.html', {'form':nextform})
+            """
 
         else:
             messages = []
@@ -326,7 +341,7 @@ def step1(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step1()
+        form = Step1(label_suffix="", instance=instance)
 
     variables = RequestContext(request, {'form':form})
 
@@ -335,15 +350,14 @@ def step1(request):
 @csrf_protect
 @login_required
 def step2(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step2(request.POST)
+        form = Step2(request.POST, instance=instance, label_suffix="")
         if form.is_valid():
-            describe = form.cleaned_data["describe"]
+            step = form.save()
 
-            Profile.objects.filter(user=currentuser).update(describe=describe)
-
-            nextform = Step3()
+            nextform = Step3(label_suffix="", instance=instance)
             return HttpResponseRedirect('/week1/step3/', {'form': nextform})
             #return render_to_response('week1/step4.html', {'form':nextform})
 
@@ -353,7 +367,7 @@ def step2(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step2()
+        form = Step2(label_suffix="", instance=instance)
 
     variables = RequestContext(request, {'form':form})
 
@@ -362,22 +376,23 @@ def step2(request):
 @csrf_protect
 @login_required
 def step3(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step3(request.POST)
+        form = Step3(request.POST, label_suffix="", instance=instance)
         if form.is_valid():
+            step = form.save()
+            """
             skill1 = form.cleaned_data["skill1"]
             skill2 = form.cleaned_data["skill2"]
             skill3 = form.cleaned_data["skill3"]
             skill4 = form.cleaned_data["skill4"]
             skill5 = form.cleaned_data["skill5"]
-            """
             skill6 = form.cleaned_data["skill6"]
             skill7 = form.cleaned_data["skill7"]
             skill8 = form.cleaned_data["skill8"]
             skill9 = form.cleaned_data["skill9"]
             skill10 = form.cleaned_data["skill10"]
-            """
 
             Profile.objects.filter(user=currentuser).update(
                 skill1=skill1, 
@@ -386,8 +401,9 @@ def step3(request):
                 skill4=skill4,
                 skill5=skill5
             )
+            """
 
-            nextform = Step4()
+            nextform = Step4(label_suffix="", instance=instance)
             return HttpResponseRedirect('/week1/step4/', {'form': nextform})
             #return render_to_response('week1/step5.html', {'form':nextform})
 
@@ -397,7 +413,7 @@ def step3(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step3()
+        form = Step3(label_suffix="", instance=instance)
 
     variables = RequestContext(request, {'form':form})
 
@@ -406,15 +422,14 @@ def step3(request):
 @csrf_protect
 @login_required
 def step4(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step4(request.POST)
+        form = Step4(request.POST, label_suffix="", instance=instance)
         if form.is_valid():
-            weburl = form.cleaned_data["weburl"]
+            form.save()
 
-            Profile.objects.filter(user=currentuser).update(weburl=weburl)
-
-            nextform = Step5()
+            nextform = Step5(label_suffix="")
             return HttpResponseRedirect('/week1/step5/', {'form': nextform})
 
         else:
@@ -423,7 +438,7 @@ def step4(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step4()
+        form = Step4(label_suffix="", instance=instance)
 
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step4.html', variables, )
@@ -432,29 +447,23 @@ def step4(request):
 @csrf_protect
 @login_required
 def step5(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step5(request.POST, request.FILES)
+        form = Step5(request.POST, request.FILES, label_suffix="")
         if form.is_valid():
-            title = form.cleaned_data["title"]
-            describe = form.cleaned_data["describe"]
-            role = form.cleaned_data["role"]
-            completion = form.cleaned_data["completion"]
             num_show = Showcase.objects.filter(user=currentuser).count()
-            if len(request.FILES) != 0:
-                image = request.FILES["img"]
-                s = Showcase.objects.create(user=currentuser, number=num_show+1, title=title, image=image, describe=describe, role=role, completion=completion)
-                s.save()
-            else:
-                s = Showcase.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, completion=completion)
-                s.save()
+
+            show = form.save(commit=False)
+            show.user = currentuser
+            show.number = num_show+1
+            show.save()
 
             if 'next' in request.POST:
-                nextform = Step6()
+                nextform = Step6(label_suffix="")
                 return HttpResponseRedirect('/week1/step6/', {'form': nextform})
                 #return render_to_response('week1/step6.html', {'form':nextform})
             elif 'more_case' in request.POST:
-                nextform = Step5()
+                nextform = Step5(label_suffix="")
                 return HttpResponseRedirect('/week1/step5/', {'form': nextform, 'num_show':num_show+1})
 
         else:
@@ -463,7 +472,7 @@ def step5(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step5()
+        form = Step5(label_suffix="")
 
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step5.html', variables, )
@@ -471,61 +480,23 @@ def step5(request):
 @csrf_protect
 @login_required
 def step6(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step6(request.POST, request.FILES)
+        form = Step6(request.POST, request.FILES, label_suffix="")
         if form.is_valid():
-            title = form.cleaned_data["title"]
-            describe = form.cleaned_data["describe"]
-            role = form.cleaned_data["role"]
-            status = form.cleaned_data["status"]
-            targetdate = form.cleaned_data["targetdate"]
-            comment = form.cleaned_data["comment"]
+            work = form.save(commit=False)
             get_help = form.cleaned_data["get_help"]
-            if get_help == (1 or 2):
-                collaborators = form.cleaned_data["collaborators"]
-                comment_help = form.cleaned_data["comment_help"]
+            if get_help == 1 or get_help == 2:
+                work.collaborators = form.cleaned_data["collaborators"]
+                work.comment_help = form.cleaned_data["comment_help"]
             else:
-                collaborators = ""
-                comment_help = ""
-            num_show = UpcomingWork.objects.filter(user=currentuser).count()
-            if len(request.FILES) != 0:
-                image = request.FILES["img"]
-                try:
-                    u = UpcomingWork.objects.get(user=currentuser, number=1)
-                    u.title = title
-                    u.image = image
-                    u.describe = describe
-                    u.role = role
-                    u.status = status
-                    u.targetdate = targetdate
-                    u.comment = comment
-                    u.get_help = get_help
-                    u.collaborators = collaborators
-                    u.comment_help = comment_help
-                    u.save()
-                except UpcomingWork.DoesNotExist:
-                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
-                    u.save()
-
-            else:
-                try:
-                    u = UpcomingWork.objects.get(user=currentuser, number=1)
-                    u.title = title
-                    u.describe = describe
-                    u.role = role
-                    u.status = status
-                    u.targetdate = targetdate
-                    u.comment = comment
-                    u.get_help = get_help
-                    u.collaborators = collaborators
-                    u.comment_help = comment_help
-                    u.save()
-                except UpcomingWork.DoesNotExist:
-                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
-                    u.save()
-
-            nextform = Step7()
+                work.collaborators = ""
+                work.comment_help = ""
+            #num_show = UpcomingWork.objects.filter(user=currentuser).count()
+            work.number = 1
+            work.save()
+            
+            nextform = Step7(label_suffix="")
             return HttpResponseRedirect('/week1/step7/', {'form': nextform})
             #return render_to_response('week1/step6.html', {'form':nextform})
 
@@ -535,7 +506,7 @@ def step6(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step6()
+        form = Step6(label_suffix="")
 
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step6.html', variables, )
@@ -543,35 +514,12 @@ def step6(request):
 @csrf_protect
 @login_required
 def step7(request):
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step7(request.POST)
+        form = Step7(request.POST, instance=instance, label_suffix="")
         if form.is_valid():
-            funaboutyou = form.cleaned_data["funaboutyou"]
-            hobby = form.cleaned_data["funaboutyou"]
-            fQuote = form.cleaned_data["fQuote"]
-            fFilm = form.cleaned_data["fFilm"]
-            fTV = form.cleaned_data["fTV"]
-            fYoutube= form.cleaned_data["fYoutube"]
-            fBook = form.cleaned_data["fBook"]
-            bookNow = form.cleaned_data["bookNow"]
-            filmNow = form.cleaned_data["filmNow"]
-            TVNow = form.cleaned_data["TVNow"]
-            cities = form.cleaned_data["cities"]
-
-            p = Profile.objects.get(user=currentuser)
-            p.funaboutyou=funaboutyou
-            p.fQuote = fQuote
-            p.fFilm = fFilm
-            p.fTV = fTV
-            p.fYoutube = fYoutube
-            p.fBook = fBook
-            p.bookNow=bookNow
-            p.filmNow=filmNow
-            p.TVNow = TVNow
-            p.hobby = hobby
-            p.cities = cities 
-            p.save() 
+            form.save()
 
             return HttpResponseRedirect('/week1/home/', {'user': currentuser, 'profile':p})
 
@@ -581,60 +529,11 @@ def step7(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step7()
+        form = Step7(instance=instance, label_suffix="")
 
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step7.html', variables, )
 
-
-@csrf_protect
-@login_required
-def home_edit(request):
-    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
-    if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            print "invalid"
-            displayname = form.cleaned_data["displayname"]
-            #photo = form.cleaned_data["photo"]
-            photo = request.FILES["photo"]
-            profession = form.cleaned_data["profession"]
-            worksAt = form.cleaned_data["worksAt"]
-            city = form.cleaned_data["city"]
-            education = form.cleaned_data["education"]
-            birthdate = form.cleaned_data["birthdate"]
-
-            if num_result == 0:
-                p = Profile.objects.create(user=currentuser, photo=photo, displayname=displayname, profession=profession, worksAt=worksAt, city=city, education=education, birthdate=birthdate)
-                p.save()
-
-            else:
-                print "update"
-                p = Profile.objects.get(user=currentuser)
-                p.photo = photo
-                p.displayname = displayname
-                p.profession = profession
-                p.worksAt = worksAt
-                p.city = city
-                p.education = education
-                p.birthdate = birthdate
-                p.save()
-
-            profile = Profile.objects.get(user=currentuser)
-            return HttpResponseRedirect('/week1/home/')
-            #return render_to_response('week1/home.html', {'user':currentuser, 'profile': profile})
-
-    else:
-        print "form invalid"
-        form = ProfileForm()
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
-            p.save()
-
-    usersprofile = Profile.objects.get(user=currentuser)
-    return render(request, 'week1/homeedit.html', {'profile':usersprofile, 'user':currentuser, 'form':form})
 
 @csrf_protect
 @login_required
@@ -645,42 +544,18 @@ def home_edit_personalinfo(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == "POST":
-        form = PersonalInfo(request.POST)
+        form = PersonalInfo(request.POST, instance=instance, label_suffix="")
 
         if form.is_valid():
-            city = form.cleaned_data["city"]
-            worksAt = form.cleaned_data["worksAt"]
-            education = form.cleaned_data["education"]
-            language = form.cleaned_data["language"]
-            skill1 = form.cleaned_data["skill1"]
-            skill2 = form.cleaned_data["skill2"]
-            skill3 = form.cleaned_data["skill3"]
-
-            if num_result == 0:
-                p = Profile.objects.create(user=currentuser, worksAt=worksAt, city=city, education=education, language=language, skill1=skill1, skill2=skill2, skill3=skill3)
-                p.save()
-
-            else:
-                p = Profile.objects.get(user=currentuser)
-                p.worksAt = worksAt
-                p.city = city
-                p.education = education
-                p.language = language 
-                p.skill1 = skill1 
-                p.skill2 = skill2 
-                p.skill3 = skill3 
-                p.save()
+            form.save()
 
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
 
     else:
-        form = PersonalInfo()
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
-            p.save()
+        form = PersonalInfo(instance=instance, label_suffix="")
 
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_personalinfo.html', {'profile':usersprofile, 'form':form})
@@ -694,30 +569,17 @@ def home_edit_url(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == "POST":
-        form = Step4(request.POST)
+        form = Step4(request.POST, instance=instance, label_suffix="")
 
         if form.is_valid():
-            weburl = form.cleaned_data["weburl"]
+            form.save()
 
-            if num_result == 0:
-                p = Profile.objects.create(user=currentuser, weburl=weburl)
-                p.save()
-
-            else:
-                p = Profile.objects.get(user=currentuser)
-                p.weburl = weburl
-                p.save()
-
-            profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
 
     else:
-        form = Step4()
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
-            p.save()
+        form = Step4(instance=instance, label_suffix="")
 
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_url.html', {'profile':usersprofile, 'form':form})
@@ -731,30 +593,18 @@ def home_edit_profession(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
+    instance = get_object_or_404(Profile, user=currentuser)
     if request.method == "POST":
-        form = ProfessionForm(request.POST)
+        form = ProfessionForm(request.POST, instance=instance, label_suffix="")
 
         if form.is_valid():
-            profession = form.cleaned_data["profession"]
-
-            if num_result == 0:
-                p = Profile.objects.create(user=currentuser, profession=profession)
-                p.save()
-
-            else:
-                p = Profile.objects.get(user=currentuser)
-                p.profession = profession 
-                p.save()
+            form.save()
 
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
 
     else:
-        form = ProfessionForm()
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
-            p.save()
+        form = ProfessionForm(instance=instance, label_suffix="")
 
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_profession.html', {'profile':usersprofile, 'form':form})
@@ -768,42 +618,17 @@ def home_edit_funfact(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
-    if request.method == "POST":
-        form = Funfact(request.POST)
+    instance = get_object_or_404(Profile, user=currentuser)
+    if request.method == 'POST':
+        form = Step7(request.POST, instance=instance, label_suffix="")
 
         if form.is_valid():
-            funaboutyou = form.cleaned_data["funaboutyou"]
-            hobby = form.cleaned_data["hobby"]
-            fQuote = form.cleaned_data["fQuote"]
-            fFilm = form.cleaned_data["fFilm"]
-            fTV = form.cleaned_data["fTV"]
-            fYoutube = form.cleaned_data["fYoutube"]
-            fBook = form.cleaned_data["fBook"]
-
-            if num_result == 0:
-                p = Profile.objects.create(user=currentuser, funaboutyou=funaboutyou, hobby=hobby, fQuote=fQuote, fFilmn=fFilm, fTV=fTV, fYoutube=fYoutube, fBook=fBook)
-                p.save()
-
-            else:
-                p = Profile.objects.get(user=currentuser)
-                p.funaboutyou = funaboutyou
-                p.hobby = hobby
-                p.fQuote = fQuote
-                p.fFilm = fFilm
-                p.fTV = fTV
-                p.fYoutube = fYoutube
-                p.fBook = fBook
-                p.save()
-
+            form.save()
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
 
     else:
-        form = Funfact()
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
-            p.save()
+        form = Step7(instance=instance, label_suffix="")
 
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_funfact.html', {'profile':usersprofile, 'form':form})
@@ -817,29 +642,18 @@ def home_edit_photo(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = Profile.objects.filter(user=currentuser).count()
+    instance = get_object_or_404(Profile, user=currentuser)
 
     if request.method == 'POST':
-        form = PersonalPhoto(request.FILES)
+        form = Step1(request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
-            photo = request.FILES["photo"]
-
-            if num_result == 0:
-                p = Profile.objects.create(user=currentuser, photo=photo)
-                p.save()
-            else:
-                p = Profile.objects.get(user=currentuser)
-                p.photo = photo
-                p.save()
+            form.save()
 
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
 
     else:
-        form = PersonalPhoto()
-        if num_result == 0:
-            p = Profile.objects.create(user=currentuser)
-            p.save()
+        form = Step1(instance=instance, label_suffix="")
 
     profile = Profile.objects.get(user=currentuser)
     variables = RequestContext(request, {'form':form})
@@ -854,38 +668,19 @@ def home_edit_previouswork(request, num):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    instance = get_object_or_404(Showcase, user=currentuser, number=num)
     num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step5(request.POST, request.FILES)
+        form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
-            print 'valid'
-            title = form.cleaned_data["title"]
-            describe = form.cleaned_data["describe"]
-            role = form.cleaned_data["role"]
-            completion = form.cleaned_data["completion"]
-            s = Showcase.objects.get(user=currentuser, number=num)
-            if len(request.FILES) != 0:
-                print 'length is not zero'
-                image = request.FILES["img"]
-                s.title=title
-                s.image=image
-                s.describe=describe
-                s.role=role
-                s.completion=completion
-                s.save()
-            else:
-                print 'length is zero'
-                s.title=title
-                s.describe=describe
-                s.role=role
-                s.completion=completion
-                s.save()
+            work = form.save(commit=False)
+            work.number = num
+            work.save()
 
             if 'next' in request.POST:
                 return HttpResponseRedirect('/week1/home/')
             elif 'more_case' in request.POST:
-                form = Step5()
+                form = Step5(label_suffix="")
                 variables = RequestContext(request, {'form':form, 'num_show':num_show+1})
                 return HttpResponseRedirect('/week1/edit/previouswork/', variables)
                 #return render_to_response('/week1/edit/previouswork/', variables, )
@@ -896,7 +691,7 @@ def home_edit_previouswork(request, num):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step5()
+        form = Step5(instance=instance, label_suffix="")
 
     showcase = Showcase.objects.get(user=currentuser, number=num)
 
@@ -914,28 +709,18 @@ def home_edit_newpreviouswork(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step5(request.POST, request.FILES)
+        form = Step5(request.POST, request.FILES, label_suffix="")
         if form.is_valid():
             print 'valid'
-            title = form.cleaned_data["title"]
-            describe = form.cleaned_data["describe"]
-            role = form.cleaned_data["role"]
-            completion = form.cleaned_data["completion"]
-            if len(request.FILES) != 0:
-                print 'length is zero'
-                image = request.FILES["img"]
-                s = Showcase.objects.create(user=currentuser, number=num_show+1, title=title, image=image, describe=describe, role=role, completion=completion)
-                s.save()
-            else:
-                print 'length is not zero'
-                s = Showcase.objects.create(user=currentuser, number=num_show+1, title=title, describe=describe, role=role, completion=completion)
-                s.save()
+            work = form.save(commit=False)
+            work.user = currentuser
+            work.number = num_show+1
+            work.save()
 
             if 'next' in request.POST:
                 return HttpResponseRedirect('/week1/home/')
             elif 'more_case' in request.POST:
-                form = Step5()
+                form = Step5(label_suffix="")
                 variables = RequestContext(request, {'form':form, 'num_show':num_show+1})
                 return HttpResponseRedirect('/week1/edit/previouswork/', variables)
 
@@ -945,7 +730,7 @@ def home_edit_newpreviouswork(request):
             variables = RequestContext(request, {'messages':messages, 'form':form, 'num_show':num_show})
 
     else:
-        form = Step5()
+        form = Step5(label_suffix="")
 
     variables = RequestContext(request, {'form':form, 'num_show':num_show})
     return render_to_response('week1/homeedit_newpreviouswork.html', variables, )
@@ -957,80 +742,47 @@ def home_edit_upcoming(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = UpcomingWork.objects.filter(user=currentuser).count()
+    print "num_result", num_result
+
+    if num_result == 0:
+        u = UpcomingWork.objects.create(user=currentuser, number=1)
+        u.save()
+
+    instance = get_object_or_404(UpcomingWork, user=currentuser, number=1)
 
     if request.method == 'POST':
-        currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-        form = Step6(request.POST, request.FILES)
+        form = Step6(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
-            print 'valid'
-            title = form.cleaned_data["title"]
-            describe = form.cleaned_data["describe"]
-            role = form.cleaned_data["role"]
-            status = form.cleaned_data["status"]
-            targetdate = form.cleaned_data["targetdate"]
-            comment = form.cleaned_data["comment"]
+            work = form.save(commit=False)
+            work.number = 1
             get_help = form.cleaned_data["get_help"]
-            if get_help == (1 or 2):
-                collaborators = form.cleaned_data["collaborators"]
-                comment_help = form.cleaned_data["comment_help"]
+            if get_help == 1 or get_help == 2:
+                work.collaborators = form.cleaned_data["collaborators"]
+                work.comment_help = form.cleaned_data["comment_help"]
             else:
-                collaborators = ""
-                comment_help = ""
-
-            num_show = UpcomingWork.objects.filter(user=currentuser).count()
-            if len(request.FILES) != 0:
-                print 'length is zero'
-                image = request.FILES["img"]
-                try:
-                    u = UpcomingWork.objects.get(user=currentuser, number=1)
-                    u.title = title
-                    u.image = image
-                    u.describe = describe
-                    u.role = role
-                    u.status = status
-                    u.targetdate = targetdate
-                    u.comment = comment
-                    u.get_help = get_help
-                    u.collaborators = collaborators
-                    u.comment_help = comment_help
-                    u.save()
-                except UpcomingWork.DoesNotExist:
-                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, image=image, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
-                    u.save()
-
-            else:
-                print 'length is not zero'
-                try:
-                    u = UpcomingWork.objects.get(user=currentuser, number=1)
-                    u.title = title
-                    u.describe = describe
-                    u.role = role
-                    u.status = status
-                    u.targetdate = targetdate
-                    u.comment = comment
-                    u.get_help = get_help
-                    u.collaborators = collaborators
-                    u.comment_help = comment_help
-                    u.save()
-                except UpcomingWork.DoesNotExist:
-                    u = UpcomingWork.objects.create(user=currentuser, number=1, title=title, describe=describe, role=role, status=status, targetdate=targetdate, comment=comment, get_help=get_help, collaborators=collaborators, comment_help=comment_help)
-                    u.save()
+                work.collaborators = ""
+                work.comment_help = ""
+            work.save()
 
             return HttpResponseRedirect('/week1/home/')
 
         else:
             messages = []
             messages.append(form.errors)
+            print "mwssages", messages
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step6()
+        form = Step6(instance=instance, label_suffix="")
+        """
         try:
             upcoming = UpcomingWork.objects.get(user=currentuser, number=1)
         except UpcomingWork.DoesNotExist:
             upcoming = None
+        """
 
-    variables = RequestContext(request, { 'form':form, 'upcoming':upcoming })
+    variables = RequestContext(request, { 'form':form })
     return render_to_response('week1/homeedit_upcoming.html', variables, )
 
 def reset_confirm(request, uidb64=None, token=None):
@@ -1098,6 +850,7 @@ def hatsoff(request, user2):
     if query != None:
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
+    """
     user1 = request.user.id
     if user1 < user2:
         try:
@@ -1128,12 +881,95 @@ def hatsoff(request, user2):
     hatlist = list(chain(hatlist1, hatlist2))
     
     users = User.objects.filter(id__in=hatlist)
+    """
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'users':users, 'profile':profile})
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    media_url = settings.MEDIA_URL
+    nodejs_url = settings.NODEJS_SOCKET_URL
+
+    variables = RequestContext(request, {'profile':profile, 'user':currentuser, 'users':users, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
+
     return render_to_response('week1/hatsoff_list.html', variables, )
+
+@login_required
+def thanks_list(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    media_url = settings.MEDIA_URL
+    nodejs_url = settings.NODEJS_SOCKET_URL
+
+    variables = RequestContext(request, {'profile':profile, 'user':currentuser, 'users':users, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/thanks_list.html', variables, )
+
+@login_required
+def follow_list(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    media_url = settings.MEDIA_URL
+    nodejs_url = settings.NODEJS_SOCKET_URL
+
+    variables = RequestContext(request, {'profile':profile, 'user':currentuser, 'users':users, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
+    return render_to_response('week1/follow_list.html', variables, )
+
 
 @login_required
 def hatsoff_list(request):
@@ -1405,4 +1241,38 @@ def add_folder(request, user2):
 
     variables = RequestContext(request, {'users':users, 'profile':profile})
     return render_to_response('week1/add_folder.html', variables, )
+
+@csrf_protect
+@login_required
+def historyboard(request):
+    media_url = settings.MEDIA_URL
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    uid = request.user.id
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=uid, username=request.user.username)
+    num_result = Profile.objects.filter(user=currentuser).count()
+    if num_result == 0:
+        p = Profile.objects.create(user=currentuser)
+        p.save()
+
+    allusers = list(User.objects.all())
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    return render_to_response('week1/historyboard.html', {'user':currentuser, 'users':users, 'userphoto':userphoto, 'nodejs_url':nodejs_url, 'media_url':media_url})
 

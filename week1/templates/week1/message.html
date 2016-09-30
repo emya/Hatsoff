@@ -30,18 +30,21 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-	  /*var socket = io();*/
           var socket = io.connect("{{nodejs_url}}");
 
-          /***new lines***/
+          socket.on('temp message', function (data) {
+             console.log(data);
+          });
+      
+          socket.emit('subscribe', 'roomOne');
+
+/***
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 
           socket.emit('join chat', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-          /***to here***/
 
 	  $('form').submit(function(){
 	    socket.emit('chat message', $('#m').val(), function(data){
-	        /*$('#messages').append($('<li>').text(data));*/
 	        $('#messages').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
             });
 	    $('#m').val('');
@@ -51,19 +54,6 @@
 	      $('#messages').append($('<li><span class="msg"><br>'+data.nick+':'+data.msg+'</span><br/>'));
 	  });
         
-          /***
-  	  $('#setNick').submit(function(e){
-            e.preventDefault();
-            socket.emit('new user', $('#nickname').val(), function(data){
-               if(data){
-                  $('#nickWrap').hide();
-		  $('#contentWrap').show();
-	       }else{
-	       }
-            });
-            $('#nickname').val('');            
-          });
-          **/
 	  socket.on('chatusers', function(data){
              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
              var usernames = [{% for u in usernames %} "{{ u }}" ,{% endfor %}];
@@ -88,6 +78,7 @@
 	  socket.on('whisper', function(data){
 	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
           });
+***/
     </script>
 </div>
 

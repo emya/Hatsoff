@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout', kwargs={'next_page': '/week1/'}),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^home/$', views.home, name='home'),
-    url(r'^edit/$', views.home_edit, name='homeedit'),
+    #url(r'^edit/$', views.home_edit, name='homeedit'),
     url(r'^reset/$', views.reset, name='reset'),
     url(r'^reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', views.reset_confirm, name='reset_confirm'),
     url(r'^welcome/$', views.welcome, name='welcome'),#temporary
@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^results/friends/(?P<query>\w+)/$', views.results_friends, name='resultsfriends'),
     url(r'^hatsoff/(?P<user2>\d+)/$', views.hatsoff, name='hatsoff'),
     url(r'^hatsoff/list/$', views.hatsoff_list, name='hatsoff_list'),
+    url(r'^thanks/list/$', views.thanks_list, name='thanks_list'),
+    url(r'^follow/list/$', views.follow_list, name='follow_list'),
     url(r'^messages/$', views.messages, name='messages'),
     url(r'^messages/(?P<uid>\d+)/$', views.private_message, name='private_message'),
     url(r'^profile/(?P<uid>\d+)/$', views.get_profile, name='get_profile'),
@@ -41,4 +43,5 @@ urlpatterns = [
     url(r'^edit/upcomingwork/$', views.home_edit_upcoming, name='edit_upcoming'),
     url(r'^folder/$', views.folder, name='folder'),
     url(r'^folder/list/(?P<user2>\d+)/$', views.add_folder, name='add_folder'),
+    url(r'^messageboard/$', views.historyboard, name='historyboard'),
 ]

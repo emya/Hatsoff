@@ -6,42 +6,22 @@
 <div id="step">
      <div id="step-left">
      <h3>Step 3 out of 7</h3> 
+     <div id="step-notification">
+      <p>There are 7 steps in your profile creation. You can edit or add information later.</p>
+     </div>
      </div>
 
      <div id="step-right">
         <h3>Profile</h3>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
             <br>List your skills (for eg: design, programming)</br> 
-            <!--select name="skill1">
-                <option selected disabled>Choose here</option>
-                <option value="sengineer">Software Engineer</option>
-                <option value="scientist">Scientist</option>
-                <option value="researcher">Researcher</option>
-                <option value="gdesigner">Graphic Designer</option>
-            </select>
             </br>
-            <select name="skill2">
-                <option selected disabled>Choose here</option>
-                <option value="sengineer">Software Engineer</option>
-                <option value="scientist">Scientist</option>
-                <option value="researcher">Researcher</option>
-                <option value="gdesigner">Graphic Designer</option>
-            </select>
-            </br>
-            <select name="skill3">
-                <option selected disabled>Choose here</option>
-                <option value="sengineer">Software Engineer</option>
-                <option value="scientist">Scientist</option>
-                <option value="researcher">Researcher</option>
-                <option value="gdesigner">Graphic Designer</option>
-            </select-->
-            </br>
-            1&nbsp;<input type='text' name='skill1' ><br/>
-            2&nbsp;<input type='text' name='skill2' ><br/>
-            3&nbsp;<input type='text' name='skill3' ><br/>
+            1&nbsp;{{form.skill1}}<br/>
+            2&nbsp;{{form.skill2}}<br/>
+            3&nbsp;{{form.skill3}}<br/>
+            <!--
             4&nbsp;<input type='text' name='skill4' ><br/>
             5&nbsp;<input type='text' name='skill5' ><br/>
-            <!--
             6&nbsp;<input type='text' name='skill6' ><br/>
             7&nbsp;<input type='text' name='skill7' ><br/>
             8&nbsp;<input type='text' name='skill8' ><br/>

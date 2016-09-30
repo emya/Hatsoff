@@ -8,48 +8,44 @@
      </div>
 
      <div id="step-right">
-     {% if upcoming %}
-        <h3>Update your upcoming work</h3>
+        <h3>Update your form work</h3>
 	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <br>Title</br> <input type='text' name='title' value='{{upcoming.title}}'><br/>
-            {% if upcoming.image %}
-            <br>Photo</br> <input type='file' name='img' value='{{upcoming.image.url}}'><br/>
-            {% else %}
-            <br>Photo</br> <input type='file' name='img' ><br/>
-            {% endif %}
-            <br>Describe your work</br><input type='text' name='describe' value='{{upcoming.describe}}'><br/>
-            <br>Your role</br><input type='text' name='role' value='{{upcoming.role}}'><br/>
-            <br>Status of work (for eg: entering post-production phase)</br><input type='text' name='status' value='{{upcoming.role}}'><br/>
-            <br>Target finish date</br><input type='date' name='targetdate' min="2016-10-01" value='{{upcoming.targetdate}}'><br/>
-            <br>Comment</br><input type='text' name='comment' value='{{upcoming.comment}}'><br/>
+            <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
+            <br>{{form.image.label_tag}}</br> {{form.image}}<br/>
+            <br>{{form.describe.label_tag}}</br>{{form.describe}}<br/>
+            <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
+            <br>{{form.status.label_tag}}</br>{{form.status}}<br/>
+            <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01" ><br/>
+            <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
             <br>Looking to get help from the community?</br>
-                {% if upcoming.get_help == 1 %}
+                {% if form.get_help == 1 %}
                 <input type="radio" name="get_help" value="1" checked>Yes please!</br>
                 {% else %}
                 <input type="radio" name="get_help" value="1">Yes please!</br>
                 {% endif %}
-                {% if upcoming.get_help == 2 %}
+                {% if form.get_help == 2 %}
                 <input type="radio" name="get_help" value="2" checked>Open to collaboration!</br>
                 {% else %}
                 <input type="radio" name="get_help" value="2">Open to collaboration!</br>
                 {% endif %}
-                {% if upcoming.get_help == 3 %}
+                {% if form.get_help == 3 %}
                 <input type="radio" name="get_help" value="3" checked>I'm ok thanks!</br>
                 {% else %}
                 <input type="radio" name="get_help" value="3">I'm ok thanks!</br>
                 {% endif %}
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
-            <br>Collaborators</br><input type='text' name='collaborators' value='{{upcoming.collaborators}}'><br/>
-            <br>Do you need to raise funds? If so how much and for what?</br><input type='text' name='fund' value='{{upcoming.fund}}'><br/>
+            <br>Collaborators</br><input type='text' name='collaborators' value='{{form.collaborators}}'><br/>
+            <br>Do you need to raise funds? If so how much and for what?</br><input type='text' name='fund' value='{{form.fund}}'><br/>
             <br>Comments</br><input type='text' name='comment_help'><br/>
 
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>
                 <input type="hidden" name="next" value="home.html">
+	        <a href="{% url 'week1:home' %}">Back to Home</a>
             </div>
 	</form>
-     {% else %}
-        <h3>Edit your upcoming work</h3>
+        <!--
+        <h3>Edit your form work</h3>
 	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
             <br>Title</br> <input type='text' name='title' ><br/>
             <br>Photo</br> <input type='file' name='img' ><br/>
@@ -69,9 +65,10 @@
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>
                 <input type="hidden" name="next" value="home.html">
+	        <a href="{% url 'week1:home' %}">Back to Home</a>
             </div>
 	</form>
-     {% endif %}
+        -->
      </div>
 
 </div>

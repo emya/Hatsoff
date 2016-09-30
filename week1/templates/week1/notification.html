@@ -28,6 +28,15 @@
               else if (data.action_id === 2){
 	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp gave you a Hatsoff.'+'</p></span><br/>'));
               }
+              else if (data.action_id === 4){
+	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp liked your community post.'+'</p></span><br/>'));
+              }
+              else if (data.action_id === 5){
+	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp shared your community post.'+'</p></span><br/>'));
+              }
+              else if (data.action_id === 6){
+	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp gave you a thanks.'+'</p></span><br/>'));
+              }
 	  });
         
 	  socket.on('update notification', function(docs){
@@ -36,10 +45,19 @@
 	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
                  }
                  else if (docs[i]['action_id'] === 2){
-	            $('#notifications').prepend($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a Hatsoff.'+'</p></span><br/>'));
+	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a Hatsoff.'+'</p></span><br/>'));
                  }
                  else if (docs[i]['action_id'] === 3){
-	            $('#notifications').prepend($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
+	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
+                 }
+                 else if (docs[i]['action_id'] === 4){
+	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp liked your community post.'+'</p></span><br/>'));
+                 }
+                 else if (docs[i]['action_id'] === 5){
+	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared your community post.'+'</p></span><br/>'));
+                 }
+                 else if (docs[i]['action_id'] === 6){
+	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a thanks.'+'</p></span><br/>'));
                  }
               }
 	  });

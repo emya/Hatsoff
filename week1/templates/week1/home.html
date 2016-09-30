@@ -66,14 +66,15 @@
 	<div class="home-step-out">
 	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
             <h3>{{user.first_name}}&nbsp{{user.last_name}}, {{profile.profession}}</h3>
+           <p>{{profile.describe}}</p>
         </div>
     </div>
 
     <div id="home-thirdcolumn">
        <ul style="list-style-type:none">
 	 <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"></a></li>
-         <li>Thanks</li>
-         <li>Followers</li>
+         <li><a href="{% url 'week1:thanks_list'%}">Thanks</a></li>
+         <li><a href="{% url 'week1:follow_list'%}">Follow</a></li>
 	 <li><a href="{% url 'week1:messages' %}"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
 	 <li><a href=""><img src="{% static 'images/pitch.png'%}" class="icons-img"></a></li>
        </ul>
@@ -183,8 +184,8 @@
 	        <li>Comment:{{upcoming.comment}}</li>
 	      </ul>
               <ul>
-	        <li><h4>Looking for</h4>
-                    <br>{{upcoming.collaborators}}</br></li>
+	        <li><span style="font-weight: bold;">Looking for</span>
+                    <br>&nbsp{{upcoming.collaborators}}</br></li>
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>

@@ -10,10 +10,10 @@
         <h3>Update your information</h3>
     {{ form.errors }}
     <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <br>City</br> <input type='text' name='city' value='{{ profile.city }}'><br/>
-       <br>Independent/company name</br> <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
-       <br>Education</br> <input type='text' name='education' value='{{ profile.education }}'><br/>
-       <br>Language</br> <input type='text' name='language' value='{{ profile.language }}'><br/>
+       <br>{{form.city.label_tag}}</br> <input type='text' name='city' value='{{ profile.city }}'><br/>
+       <br>{{form.worksAt.label_tag}}</br> <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
+       <br>{{form.education.label_tag}}</br> <input type='text' name='education' value='{{ profile.education }}'><br/>
+       <br>{{form.language.label_tag}}</br> <input type='text' name='language' value='{{ profile.language }}'><br/>
 
        <br>Skills</br> 
                 <input type='text' name='skill1' value='{{ profile.skill1 }}'><br/>

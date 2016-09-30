@@ -5,12 +5,15 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import authenticate
 
+from django.forms import extras
+from .models import Profile, Showcase, UpcomingWork
+
 class RegistrationForm(forms.Form):
-    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"))
-    first_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("First Name"), error_messages={'invalid': _("This value must contain only letters.") })
-    last_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Last Name"), error_messages={'invalid': _("This value must contain only letters.") })
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password again"))
+    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"), label_suffix="")
+    first_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("First Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
+    last_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Last Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"), label_suffix="")
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password again"), label_suffix="")
 
     def clean(self):
         MIN_LENGTH = 8
@@ -30,26 +33,6 @@ class RegistrationForm(forms.Form):
                     raise forms.ValidationError(_("The two passwords did not match."))
             return self.cleaned_data
         raise forms.ValidationError(_("The email already exists, Please log in with the email or try another one"))
-        """
-        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
-            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-                raise forms.ValidationError(_("The two passwords did not match."))
-        return self.cleaned_data
-        """
-    """ 
-    def clean_username(self):
-        try:
-            user = User.objects.get(username__iexact=self.cleaned_data['username'])
-        except User.DoesNotExist:
-            return self.cleaned_data['username']
-        raise forms.ValidationError(_("The Username already exists, Please try another one"))
-    def clean_username(self):
-        try:
-            user = User.objects.get(username=self.cleaned_data['username'])
-        except User.DoesNotExist:
-            return self.cleaned_data['username']
-        raise forms.ValidationError(_("The email already exists, Please try another one"))
-    """
 
 class LoginForm(forms.Form):
     username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"))
@@ -73,28 +56,132 @@ class LoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         return user
 
-class ProfileForm(forms.Form):
-    photo = forms.FileField(required=False)
-    displayname = forms.CharField(max_length=100, required=False)
-    profession = forms.CharField(max_length=200, required=True)
-    worksAt = forms.CharField(max_length=100, required=False)
-    city = forms.CharField(max_length=100, required=False)
-    education = forms.CharField(max_length=200, required=False)
-    birthdate = forms.DateField(required=False)
-    language = forms.CharField(max_length=200, required=False)
-    fQuote = forms.CharField(max_length=200, required=False)
-    fFilm = forms.CharField(max_length=100, required=False)
-    fTV = forms.CharField(max_length=100, required=False)
-    fYoutube = forms.CharField(max_length=100, required=False)
-    fBook = forms.CharField(max_length=100, required=False)
-    bookNow = forms.CharField(max_length=200, required=False)
-    filmNow = forms.CharField(max_length=200, required=False)
-    TVNow = forms.CharField(max_length=200, required=False)
-    hobby = forms.CharField(max_length=200, required=False)
-    cities = forms.CharField(max_length=200, required=False)
+class Step1(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('photo', 'profession', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fTV', 'fYoutube', 'fBook', 'bookNow', 'filmNow', 'TVNow', 'hobby', 'cities')
+        labels = {
+            'profession': _('Profession'),
+            'worksAt': _('Independent/Company name'),
+            'city': _('City'),
+            'education': _('Education'),
+            'birthdate': _('Birthdate'),
+            'photo': _('Add profile photo'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
 
-class ProfessionForm(forms.Form):
-    profession = forms.CharField(max_length=200, required=True)
+class Step2(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('describe',)
+        widgets = {
+            'describe': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
+        }
+        labels = {
+            'describe': _('Describe yourself'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class Step3(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('skill1', 'skill2', 'skill3')
+        widgets = {
+        }
+        labels = {
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class Step4(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('weburl',)
+        widgets = {
+        }
+        labels = {
+            'weburl': _('Web URL'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class Step5(forms.ModelForm):
+    class Meta:
+        model = Showcase
+        fields = ('title', 'image', 'describe', 'role', 'completion')
+        widgets = {
+        }
+        labels = {
+            'title': _('Title'),
+            'image': _('Photo'),
+            'describe': _('Descibe your work'),
+            'role': _('Your Role'),
+            'completion': _('Year of completion'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class Step6(forms.ModelForm):
+    class Meta:
+        model = UpcomingWork
+        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help')
+        widgets = {
+        }
+        labels = {
+            'title': _('Title'),
+            'image': _('Photo'),
+            'describe': _('Descibe your work'),
+            'role': _('Your Role'),
+            'status': _('Status of work (for eg: entering post-production phase)'),
+            'targetdate': _('Target finish date'),
+            'comment': _('Comment'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class Step7(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('funaboutyou', 'fQuote', 'fFilm', 'fTV', 'fYoutube', 'fBook', 'bookNow', 'filmNow', 'TVNow', 'hobby', 'cities')
+        labels = {
+            'funaboutyou': _('Fun fact about you (eg. I can hold my breath for 1 minute)'),
+            'hobby': _('Hobby'),
+            'fQuote': _('Favorite quote(s)'),
+            'fFilm': _('Favorite film(s)'),
+            'fTV': _('Favorite TV show(s)'),
+            'fYoutube': _('Favorite Youtube channel(s)/video'),
+            'fBook': _('Favorite book(s)'),
+            'bookNow': _('Book you are reading now'),
+            'filmNow': _('Film you are watching now'),
+            'TVNow': _('TV series you are watching now'),
+            'cities': _('Lived in other cities? if so where?'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class ProfessionForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('profession', 'describe',)
+        widgets = {
+            'describe': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
+        }
+        labels = {
+            'describe': _('Describe yourself'),
+            'profession': _('Profession'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
 
 class ForgotPasswordForm(PasswordResetForm):
     email = forms.EmailField(required=True, max_length=254)
@@ -102,76 +189,21 @@ class ForgotPasswordForm(PasswordResetForm):
         model = User
         fields = ("email")
 
-class Step1(forms.Form):
-    displayname = forms.CharField(max_length=100, required=False, label=_("Display Name"))
-    profession = forms.CharField(max_length=100, required=True)
-    city = forms.CharField(max_length=100, required=False)
-    worksAt = forms.CharField(max_length=100, required=False, label=_("Work At"))
-    education = forms.CharField(max_length=100, required=False)
-    birthdate = forms.DateField(required=False)
-    language = forms.CharField(max_length=100, required=False)
-    photo = forms.ImageField(required=False)
+class PersonalInfo(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('worksAt', 'city', 'education', 'language', 'skill1', 'skill2', 'skill3')
+        labels = {
+            'worksAt': _('Independent/Company name'),
+            'city': _('City'),
+            'education': _('Education'),
+            'language': _('Language'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
 
-class Step2(forms.Form):
-    describe = forms.CharField(max_length=500, required=False)
-
-class Step3(forms.Form):
-    skill1 = forms.CharField(max_length=200, required=False)
-    skill2 = forms.CharField(max_length=200, required=False)
-    skill3 = forms.CharField(max_length=200, required=False)
-    skill4 = forms.CharField(max_length=200, required=False)
-    skill5 = forms.CharField(max_length=200, required=False)
-    skill6 = forms.CharField(max_length=200, required=False)
-    skill7 = forms.CharField(max_length=200, required=False)
-    skill8 = forms.CharField(max_length=200, required=False)
-    skill9 = forms.CharField(max_length=200, required=False)
-    skill10 = forms.CharField(max_length=200, required=False)
-
-class Step4(forms.Form):
-    weburl = forms.CharField(max_length=200, required=False)
-
-class Step5(forms.Form):
-    title = forms.CharField(max_length=200, required=False)
-    image = forms.ImageField(required=False)
-    describe = forms.CharField(max_length=500, required=False)
-    role = forms.CharField(max_length=300, required=False)
-    completion = forms.IntegerField(required=False)
-
-class Step6(forms.Form):
-    title = forms.CharField(max_length=200, required=False)
-    image = forms.ImageField(required=False)
-    describe = forms.CharField(max_length=500, required=False)
-    role = forms.CharField(max_length=300, required=False)
-    status = forms.CharField(max_length=300, required=False)
-    targetdate = forms.DateField(required=False)
-    comment = forms.CharField(max_length=300, required=False)
-    get_help = forms.IntegerField(required=False)
-    collaborators = forms.CharField(max_length=300, required=False)
-    fund = forms.CharField(max_length=200, required=False)
-    comment_help = forms.CharField(max_length=300, required=False)
-
-class Step7(forms.Form):
-    funaboutyou = forms.CharField(max_length=200, required=False)
-    hobby = forms.CharField(max_length=200, required=False)
-    fQuote = forms.CharField(max_length=200, required=False)
-    fFilm = forms.CharField(max_length=200, required=False)
-    fTV = forms.CharField(max_length=200, required=False)
-    fYoutube= forms.CharField(max_length=200, required=False)
-    fBook = forms.CharField(max_length=200, required=False)
-    bookNow = forms.CharField(max_length=200, required=False)
-    filmNow = forms.CharField(max_length=200, required=False)
-    TVNow = forms.CharField(max_length=200, required=False)
-    cities = forms.CharField(max_length=200, required=False)
-
-class PersonalInfo(forms.Form):
-    city = forms.CharField(max_length=100, required=False)
-    worksAt = forms.CharField(max_length=100, required=False, label=_("Work At"))
-    education = forms.CharField(max_length=100, required=False)
-    language = forms.CharField(max_length=100, required=False)
-    skill1 = forms.CharField(max_length=200, required=False)
-    skill2 = forms.CharField(max_length=200, required=False)
-    skill3 = forms.CharField(max_length=200, required=False)
-
+"""
 class Funfact(forms.Form):
     funaboutyou = forms.CharField(max_length=200, required=False)
     hobby = forms.CharField(max_length=200, required=False)
@@ -183,3 +215,4 @@ class Funfact(forms.Form):
 
 class PersonalPhoto(forms.Form):
     photo = forms.ImageField(required=False)
+"""

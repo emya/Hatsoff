@@ -232,7 +232,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('at hatsoff', function(data){
-    console.log('at thanks'+socket.uid);
+    console.log('at hatsoff'+socket.uid);
     var query = HatsoffPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -348,23 +348,36 @@ io.on('connection', function(socket){
     var query = CommentPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at home'+docs);
       socket.emit('update comment', docs);
     }); 
 
     var query2 = UpcomingPost.find({'to_uid':socket.uid});
     query2.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('upcoming comment at home'+docs);
       socket.emit('update upcoming comment', docs);
     }); 
 
     var query3 = PortfolioPost.find({'to_uid':socket.uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('portfolio comment at home'+docs);
       socket.emit('update portfolio comment', docs);
     }); 
+
+    ThanksPost.find({'to_uid':socket.uid}).count(function(err, count){
+      if (err) throw err;
+      socket.emit('number thanks', count);
+    }); 
+
+    HatsoffPost.find({'to_uid':socket.uid}).count(function(err, count){
+      if (err) throw err;
+      socket.emit('number hatsoff', count);
+    }); 
+
+    FollowPost.find({'to_uid':socket.uid}).count(function(err, count){
+      if (err) throw err;
+      socket.emit('number follow', count);
+    }); 
+
   });
  
   socket.on('at userpage', function(data){
@@ -389,6 +402,23 @@ io.on('connection', function(socket){
       console.log('portfolio comment at userpage');
       socket.emit('update portfolio comment', docs);
     }); 
+
+    ThanksPost.find({'to_uid':data.to_uid}).count(function(err, count){
+      if (err) throw err;
+      socket.emit('number user thanks', count);
+    }); 
+
+    HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
+      if (err) throw err;
+      socket.emit('number user hatsoff', count);
+    }); 
+
+    FollowPost.find({'to_uid':data.to_uid}).count(function(err, count){
+      if (err) throw err;
+      socket.emit('number user follow', count);
+    }); 
+
+
   });
 
   socket.on('change portfolio', function(data){

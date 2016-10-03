@@ -72,9 +72,9 @@
 
     <div id="home-thirdcolumn">
        <ul style="list-style-type:none">
-	 <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"></a></li>
-         <li><a href="{% url 'week1:thanks_list'%}">Thanks</a></li>
-         <li><a href="{% url 'week1:follow_list'%}">Follow</a></li>
+	 <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
+         <li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li>
+         <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
 	 <li><a href="{% url 'week1:messages' %}"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
 	 <li><a href=""><img src="{% static 'images/pitch.png'%}" class="icons-img"></a></li>
        </ul>
@@ -215,6 +215,18 @@
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+
+	      socket.on('number thanks', function(count){
+                  document.getElementById("thanksNum").innerHTML = count;
+              });
+
+	      socket.on('number hatsoff', function(count){
+                  document.getElementById("hatsoffNum").innerHTML = count;
+              });
+
+	      socket.on('number follow', function(count){
+                  document.getElementById("followNum").innerHTML = count;
+              });
 
               var p_id = 1
     	      function changeContent(number, length){
@@ -467,6 +479,9 @@
 
 
 	</script>
+	<div id="message-board">
+        </div>
+
 
 	<div id="thanks-hatsoff">
 	    <h4>Thanks - Hats off</h4>

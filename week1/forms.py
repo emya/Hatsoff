@@ -80,7 +80,7 @@ class Step2(forms.ModelForm):
             'describe': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
         }
         labels = {
-            'describe': _('Describe yourself'),
+            'describe': _('Describe yourself (your career, your interests) (2-3 lines)'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -203,6 +203,16 @@ class PersonalInfo(forms.ModelForm):
         cleaned_data = self.cleaned_data
         return cleaned_data
 
+class PersonalPhoto(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('photo',)
+        labels = {
+            'photo': _('Add profile photo'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
 """
 class Funfact(forms.Form):
     funaboutyou = forms.CharField(max_length=200, required=False)

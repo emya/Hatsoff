@@ -76,6 +76,39 @@
             popup.classList.toggle('show');
 	  }
 
+          function hatsoffFunction(uid){
+            console.log('uid on hatsoff:'+uid);
+            popHatsoff();
+	    socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popHatsoff(){
+	    var popup = document.getElementById('hatsoffPop');
+            popup.classList.toggle('show');
+	  }
+
+          function thanksFunction(uid){
+            console.log('uid on thanks:'+uid);
+            popThanks();
+	    socket.emit('give thanks', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popThanks(){
+	    var popup = document.getElementById('thanksPop');
+            popup.classList.toggle('show');
+	  }
+
+          function followFunction(uid){
+            console.log('uid on follow:'+uid);
+            popFollow();
+	    socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popFollow(){
+	    var popup = document.getElementById('followPop');
+            popup.classList.toggle('show');
+	  }
+
           function likeFunction(uid, c_id){
             console.log('uid on like:'+uid+':'+c_id);
             popLike();
@@ -142,8 +175,11 @@
               var n  = users.indexOf(uid);
 	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Gave a Hatsoff!</br></span></div>';
               var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
               var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+              var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
+              var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
               //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
               if ( n != -1) {
@@ -151,7 +187,7 @@
 	               //$('#communityPost').prepend($('<hr>'));
 	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a></br><p class="post-content">'+data.msg+'</p></br>'+reply+'</div><br/>'));
                     } else{
-	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+data.msg+'</p></br>'+shareskill+'</br>'+reply+'</div><br/>'));
+	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+data.msg+'</p></br>'+like+shareskill+hatsoff+thanks+follow+'</br>'+reply+'</div><br/>'));
                     }
 
               }else{
@@ -159,7 +195,7 @@
                     if (uid == {{user.id}}){
 	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a></br><p class="post-content">'+data.msg+'</p></br>'+reply+'</div><br/>'));
                     } else {
-	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+data.msg+'</p></br>'+shareskill+'</br>'+reply+'</div><br/>'));
+	               $('#communityPost').prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+data.msg+'</p></br>'+like+shareskill+hatsoff+thanks+follow+'</br>'+reply+'</div><br/>'));
                     }
               }
 	  });
@@ -174,6 +210,9 @@
 			var n  = users.indexOf(uid);
 			var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Gave a Hatsoff!</br></span></div>';
+                        var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
+                        var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
                         var like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
                         var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
                         var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
@@ -182,13 +221,13 @@
 			   if (uid == {{user.id}}){
 			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+reply+'</div><br/>'));
 			   } else{
-			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+'</br>'+reply+'</div><br/>'));
+			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+hatsoff+thanks+follow+'</br>'+reply+'</div><br/>'));
 			   }
 			} else{
 			   if (uid == {{user.id}}){
 			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+reply+'</div><br/>'));
 			   } else{
-			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+'</br>'+reply+'</div><br/>'));
+			       $('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+hatsoff+thanks+follow+'</br>'+reply+'</div><br/>'));
 			   }
 			}
                         if (docs[i]['replys']) {

@@ -53,14 +53,16 @@
 
     <div id="home-thirdcolumn">
        <ul style="list-style-type:none">
-	 <li><a href=""><img src="{% static 'images/hat.png'%}" class="icons-img"></a></li>
+	 <li><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></li>
+         <li>Thanks &nbsp<span id="thanksNum"></span></li>
+         <li>Follow &nbsp<span id="followNum"></span></li>
 	 <li><img src="{% static 'images/chat.png'%}" class="icons-img"></li>
 	 <li><img src="{% static 'images/pitch.png'%}" class="icons-img"></li>
        </ul>
 
        <div class="home-bottom">
 	    <ul style="list-style-type:none">
-              <li><div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
+            </br>  <li><div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
               <li><div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div></li>
               <li><div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li>
 	      <li><a href=""><img src="{% static 'images/contribute.png'%}" class="icons-img"></a></li>
@@ -198,6 +200,19 @@
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
+
+	      socket.on('number user thanks', function(count){
+                  document.getElementById("thanksNum").innerHTML = count;
+              });
+
+	      socket.on('number user hatsoff', function(count){
+                  document.getElementById("hatsoffNum").innerHTML = count;
+              });
+
+	      socket.on('number user follow', function(count){
+                  document.getElementById("followNum").innerHTML = count;
+              });
+
 
 	      function likeFunction(c_type, c_id){
 		 console.log('uid on like:'+c_type+':'+c_id);

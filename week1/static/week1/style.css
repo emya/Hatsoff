@@ -103,6 +103,15 @@ a {
    margin-bottom: 10px;
 }
 
+#header #header-right #header-top input[type=text]{
+   width: 100px;
+}
+
+#header #header-right #header-top input[type=submit]{
+   width: 60px;
+   padding: 5px;
+}
+
 #header #header-right #header-down {
    height:15px;
    vertical-align: bottom;
@@ -112,7 +121,7 @@ img.profile_img {
    /*top:40;*/
    width: 25px;
    height: 25px;
-   padding-right: 20px;
+   /*padding-right: 20px;*/
 }
 
 img.icons_img {
@@ -623,19 +632,20 @@ tr.spaceUnder > td
 #step #step-left {
    display: inline-block;
    vertical-align: top; 
-   padding-left:100px;
+   /*padding-left:100px;*/
    width: 250px;
 }
 
 #step #step-notification {
    background-color: #d5a6bd;
    padding: 10px;
-   width: 200px;
+   width: 150px;
 }
 
 #step #step-right {
    display: inline-block;
    vertical-align: top;
+   padding-left:10px;
    width: 600px;
 }
 
@@ -706,6 +716,13 @@ tr.spaceUnder > td
 }
 
 .step-form input[type=text]{
+   width: 400px;
+   border-radius: 5px;
+   padding-bottom: 5px;
+   margin-bottom: 5px;
+}
+
+.step-form input[type=url]{
    width: 400px;
    border-radius: 5px;
    padding-bottom: 5px;

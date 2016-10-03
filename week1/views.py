@@ -23,7 +23,7 @@ from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
 from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork
-from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
+from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
 
 # Create your views here.
 @csrf_protect
@@ -481,10 +481,20 @@ def step5(request):
 @login_required
 def step6(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    num_result = UpcomingWork.objects.filter(user=currentuser, number=1).count()
+    print "num_result", num_result
+
+    if num_result == 0:
+        u = UpcomingWork.objects.create(user=currentuser, number=1)
+        u.save()
+
+    instance = get_object_or_404(UpcomingWork, user=currentuser, number=1)
+
     if request.method == 'POST':
-        form = Step6(request.POST, request.FILES, label_suffix="")
+        form = Step6(request.POST, request.FILES, label_suffix="", instance=instance)
         if form.is_valid():
             work = form.save(commit=False)
+            work.user = currentuser
             get_help = form.cleaned_data["get_help"]
             if get_help == 1 or get_help == 2:
                 work.collaborators = form.cleaned_data["collaborators"]
@@ -521,7 +531,7 @@ def step7(request):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/week1/home/', {'user': currentuser, 'profile':p})
+            return HttpResponseRedirect('/week1/home/')
 
         else:
             messages = []
@@ -645,15 +655,17 @@ def home_edit_photo(request):
     instance = get_object_or_404(Profile, user=currentuser)
 
     if request.method == 'POST':
-        form = Step1(request.FILES, instance=instance, label_suffix="")
+        form = PersonalPhoto(request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             form.save()
 
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
+        else:
+            print "error", form.errors
 
     else:
-        form = Step1(instance=instance, label_suffix="")
+        form = PersonalPhoto(instance=instance, label_suffix="")
 
     profile = Profile.objects.get(user=currentuser)
     variables = RequestContext(request, {'form':form})
@@ -742,7 +754,7 @@ def home_edit_upcoming(request):
         return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    num_result = UpcomingWork.objects.filter(user=currentuser).count()
+    num_result = UpcomingWork.objects.filter(user=currentuser, number=1).count()
     print "num_result", num_result
 
     if num_result == 0:
@@ -844,7 +856,7 @@ def results_friends(request, query):
     #return HttpResponse(t.render(c))
 
 @login_required
-def hatsoff(request, user2):
+def hatsoff_list(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
@@ -971,6 +983,7 @@ def follow_list(request):
     return render_to_response('week1/follow_list.html', variables, )
 
 
+"""
 @login_required
 def hatsoff_list(request):
     query = request.GET.get('search_query', None)
@@ -1009,6 +1022,7 @@ def hatsoff_list(request):
 
     variables = RequestContext(request, {'giveusers':giveusers, 'receiveusers':receiveusers, 'folderusers':folderusers, 'profile':profile})
     return render_to_response('week1/hatsoff_list.html', variables, )
+"""
 
 @login_required
 def messages(request):

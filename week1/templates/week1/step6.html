@@ -20,15 +20,15 @@
             <br>{{form.role.label_tag}}</br> {{form.role}}<br/>
             <br>{{form.status.label_tag}}</br> {{form.status}}<br/>
             <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/>
-            <br>{{form.comment.label_tag}}nt</br>{{form.comment}}<br/>
+            <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
             <br>Looking to get help from the community?</br>
                 <input type="radio" name="get_help" value="1">Yes please!</br>
                 <input type="radio" name="get_help" value="2">Open to collaboration!</br>
                 <input type="radio" name="get_help" value="3">I'm ok thanks!</br>
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
-            <br>Collaborators</br><input type='text' name='collaborators'><br/>
-            <br>Do you need to raise funds? If so how much and for what?</br><input type='text' name='fund'><br/>
-            <br>Comments</br><input type='text' name='comment_help'><br/>
+            <br>{{form.collaborators.label_tag}}</br>{{form.collaborators}}<br/>
+            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
 	    <div class="submit-wrapper">
 		<input type="submit" value="Next Step" class="step-submit"/>
 		<a href="{% url 'week1:step7' %}">Skip</a>

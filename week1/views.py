@@ -29,8 +29,10 @@ from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhot
 @csrf_protect
 def index(request):
     if request.method == 'POST':
+        print "post"
         if 'login' in request.POST:
-            form = RegistrationForm()
+            print "login"
+            form = LoginForm(request.POST)
             username = request.POST["username"]
             password = request.POST["password"]
 
@@ -46,45 +48,49 @@ def index(request):
                 message = []
                 message.append("The username or password is incorrect.")
                 print "message", message
-                variables = RequestContext(request, {'message':message, 'form':form})
+                variables = RequestContext(request, {'message':message, 'form':form, 'p_type':0})
 
                 #template = loader.get_template('week1/discover.html')
                 return render_to_response('week1/index.html', variables, )
         
 
         elif 'signup' in request.POST:
+            print "signup"
             form = RegistrationForm(request.POST)
             if form.is_valid():
                 user = User.objects.create_user(
                      username = form.cleaned_data['username'],
+                     first_name = form.cleaned_data['first_name'],
+                     last_name = form.cleaned_data['last_name'],
                      password = form.cleaned_data['password1'],
-                     email = form.cleaned_data['email'],
                 )
 
-                name = request.POST.get('username')
-                email = request.POST.get('email')
+                email = request.POST.get('username')
+                firstname = request.POST.get('first_name')
+                lastname = request.POST.get('last_name')
                 passwd = request.POST.get('password1')
 
-                #tomail = EmailMessage('Dear '+name, "Thank you for registering!", to=[email], fail_silently=False)
-                tomail = EmailMessage('Dear '+name, "Thank you for registering!", to=[email])
+                tomail = EmailMessage('Dear '+firstname, "Thank you for registering!", to=[email])
                 tomail.send()
 
-                newuser = authenticate(username=name, password=passwd)
+                newuser = authenticate(username=email, password=passwd)
                 if newuser is not None:
                     if newuser.is_active:
                         login(request, newuser)
+                        return render(request, 'week1/welcome.html')
                 #return HttpResponseRedirect('/week1/home/')
-                        return render(request, 'week1/index.html')
             else:
                 messages = []
                 messages.append(form.errors)
-                variables = RequestContext(request, {'messages':messages, 'form':form})
+                variables = RequestContext(request, {'messages':messages, 'form':form, 'p_type':1})
 
                 return render_to_response('week1/index.html', variables, )
+    """
     else:
         form = RegistrationForm()
+    """
 
-    variables = RequestContext(request, {'form':form})
+    variables = RequestContext(request, {})
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/index.html', variables, )
@@ -92,8 +98,10 @@ def index(request):
 @csrf_protect
 def about(request):
     if request.method == 'POST':
+        print "post"
         if 'login' in request.POST:
-            form = RegistrationForm()
+            print "login"
+            form = LoginForm(request.POST)
             username = request.POST["username"]
             password = request.POST["password"]
 
@@ -109,45 +117,45 @@ def about(request):
                 message = []
                 message.append("The username or password is incorrect.")
                 print "message", message
-                variables = RequestContext(request, {'message':message, 'form':form})
+                variables = RequestContext(request, {'message':message, 'form':form, 'p_type':0})
 
                 #template = loader.get_template('week1/discover.html')
-                return render_to_response('week1/index.html', variables, )
+                return render_to_response('week1/about.html', variables, )
         
 
         elif 'signup' in request.POST:
+            print "signup"
             form = RegistrationForm(request.POST)
             if form.is_valid():
                 user = User.objects.create_user(
                      username = form.cleaned_data['username'],
+                     first_name = form.cleaned_data['first_name'],
+                     last_name = form.cleaned_data['last_name'],
                      password = form.cleaned_data['password1'],
-                     email = form.cleaned_data['email'],
                 )
 
-                name = request.POST.get('username')
-                email = request.POST.get('email')
+                email = request.POST.get('username')
+                firstname = request.POST.get('first_name')
+                lastname = request.POST.get('last_name')
                 passwd = request.POST.get('password1')
 
-                #tomail = EmailMessage('Dear '+name, "Thank you for registering!", to=[email], fail_silently=False)
-                tomail = EmailMessage('Dear '+name, "Thank you for registering!", to=[email])
+                tomail = EmailMessage('Dear '+firstname, "Thank you for registering!", to=[email])
                 tomail.send()
 
-                newuser = authenticate(username=name, password=passwd)
+                newuser = authenticate(username=email, password=passwd)
                 if newuser is not None:
                     if newuser.is_active:
                         login(request, newuser)
+                        return render(request, 'week1/welcome.html')
                 #return HttpResponseRedirect('/week1/home/')
-                        return render(request, 'week1/index.html')
             else:
                 messages = []
                 messages.append(form.errors)
-                variables = RequestContext(request, {'messages':messages, 'form':form})
+                variables = RequestContext(request, {'messages':messages, 'form':form, 'p_type':1})
 
-                return render_to_response('week1/index.html', variables, )
-    else:
-        form = RegistrationForm()
+                return render_to_response('week1/about.html', variables, )
 
-    variables = RequestContext(request, {'form':form})
+    variables = RequestContext(request, {})
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/about.html', variables, )
@@ -498,9 +506,11 @@ def step6(request):
             get_help = form.cleaned_data["get_help"]
             if get_help == 1 or get_help == 2:
                 work.collaborators = form.cleaned_data["collaborators"]
+                work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
             else:
                 work.collaborators = ""
+                work.fund = ""
                 work.comment_help = ""
             #num_show = UpcomingWork.objects.filter(user=currentuser).count()
             work.number = 1
@@ -769,11 +779,14 @@ def home_edit_upcoming(request):
             work = form.save(commit=False)
             work.number = 1
             get_help = form.cleaned_data["get_help"]
+            print "get_help", get_help, type(get_help)
             if get_help == 1 or get_help == 2:
                 work.collaborators = form.cleaned_data["collaborators"]
+                work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
             else:
                 work.collaborators = ""
+                work.fund = ""
                 work.comment_help = ""
             work.save()
 

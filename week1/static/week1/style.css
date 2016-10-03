@@ -97,6 +97,10 @@ a {
    padding-right: 20px;
 }
 
+#header #header-right .loginModal {
+   color: white;
+}
+
 #header #header-right #header-top {
    height:15px;
    vertical-align: top;
@@ -217,7 +221,7 @@ img.icons_img {
 #hometop #hometop-left {
    display: inline-block;
    width: 300px;
-   height: 190px;
+   /*height: 190px;*/
    padding: 10px 25px;
    margin: 0 10px;
    background-color: #efefef;
@@ -228,7 +232,7 @@ img.icons_img {
 #hometop #hometop-right {
    display: inline-block;
    width: 300px;
-   height: 190px;
+   /*height: 190px;*/
    padding: 10px 25px;
    /*margin: 0 auto;*/
    margin: 0 10px;
@@ -272,16 +276,42 @@ tr.spaceUnder > td
 }
 
 /*
-#about #sidemenu{
-   position: fixed;
-   right: 20px;
-   top: 100px;
+popup login form
+*/
+.nav-tabs {
+    margin-bottom: 15px;
+}
+.sign-with {
+    margin-top: 55px;
+    padding: 20px;
 }
 
-#about #sidemenu li {
-   margin: 10px 0;
+.signupLabel {
+    color:#CC1771;
+    font-weight: bold;
 }
-*/
+
+/**
+div#OR {
+    height: 30px;
+    width: 30px;
+    border: 1px solid #C2C2C2;
+    border-radius: 50%;
+    font-weight: bold;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    float: right;
+    position: absolute;
+    right: -16px;
+    top: 40%;
+    z-index: 1;
+    background: #DFDFDF;
+}
+**/
+/**
+to here
+**/
 
 #signup {
    text-align: center;
@@ -291,7 +321,7 @@ tr.spaceUnder > td
    text-align: center;
 }
 
-#login .popup {
+.popup {
    position: relative;
    display: inline-block;
    cursor: pointer;
@@ -301,7 +331,7 @@ tr.spaceUnder > td
    user-select: none;
 }
 
-#login .popup .popuptext {
+.popup .popuptext {
    visibility: hidden;
    width: 300px;
    background-color: #d5a6bd;
@@ -316,7 +346,7 @@ tr.spaceUnder > td
    margin-left: -80px;
 }
 
-#login .popup .popuptext::after {
+.popup .popuptext::after {
    content: "";
    position: absolute;
    top: 100%;
@@ -327,32 +357,32 @@ tr.spaceUnder > td
    border-color: #d5a6bd transparent transparent transparent;
 }
 
-#login .popup .show {
+.popup .show {
    visibility: visible;
 }
 
-#login .login-form input[type=email]{
+.login-form input[type=email]{
    width: 300px;
    height: 27px;
    border-radius: 5px;
    padding-bottom: 5px;
 }
 
-#login .login-form input[type=password]{
+.login-form input[type=password]{
    width: 300px;
    height: 27px;
    border-radius: 5px;
    padding-bottom: 5px;
 }
 
-#login .login-form input[type=text]{
+.login-form input[type=text]{
    width: 300px;
    height: 27px;
    border-radius: 5px;
    padding-bottom: 5px;
 }
 
-#login .login-form input[type=submit]{
+.login-form input[type=submit]{
    width: 300px;
    height: 27px;
    border-radius: 5px;
@@ -362,12 +392,12 @@ tr.spaceUnder > td
    border:0px;
 }
 
-#login .login-form a{
+.login-form a{
    text-decoration: none;
    color: #4a86e8;
 }
 
-#login .login-wrapper {
+.login-wrapper {
    padding-top: 10px;
    text-align: center;
 }

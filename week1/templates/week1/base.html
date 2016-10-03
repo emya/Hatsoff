@@ -17,20 +17,10 @@
 
 
 	    <div id='header-right'>
-		    <a href="{% url 'week1:signup' %}" class="blue">&nbsp;Sign Up&nbsp;</a>
-		    <a href="{% url 'week1:login' %}" class="pink">&nbsp;Log In&nbsp;</a>
-			<!--form action="" class="login" method="POST" >{% csrf_token %}
-				{% if message %}
-				    {% for m in message %}
-				       {{ m }}
-				    {% endfor %}
-				{% endif %}
-
-			    <input type='text' name='username' placeholder="Username">
-			    <input type="password" name="password" id="password" placeholder="Password">
-			<input type="submit" value="Log In" name="login" />
-                        <a href="{% url 'week1:reset' %}">Forgot password?</a>
-			</form-->
+		    <!--a href="{% url 'week1:signup' %}" class="blue">&nbsp;Sign Up&nbsp;</a>
+		    <a href="{% url 'week1:login' %}" class="pink">&nbsp;Log In&nbsp;</a-->
+                    <!--div class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login/SignUp</div-->
+                    <div class="loginModal" data-toggle="modal" data-target="#myModal">Login/SignUp</div>
 
 	    </div>
 

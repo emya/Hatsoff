@@ -73,61 +73,150 @@
     </div>
 
 <div id="home-main-center">
-	<div class="home-step">
 
-            <h4>Portfolio</h4>
-	    {% if showcases %}
-                {% for showcase in showcases %}
-                    {% if forloop.counter == 1 %}
-                        <div id="{{ forloop.counter }}">
+<div class="portfolio-container">
+    <div class="row">
+        <h3>Portfolio</h3>
+        <div class="col-md-12" data-wow-delay="0.6s">
+            <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
+                <!-- Carousel Slides / Quotes -->
+                <div class="carousel-inner text-center">
+
+                    <!-- Quote 1 -->
+		    {% if showcases %}
+			{% for showcase in showcases %}
+			    {% if forloop.counter == 1 %}
+			    <div class="item active">
+				<blockquote>
+				    <div class="row">
+					<div class="col-sm-8 col-sm-offset-2">
+					    {% if showcase.image %}
+						<img src="{{ showcase.image.url }}" class="maincontent">
+					    {% else %}
+						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+					    {% endif %}
+					    <ul style="list-style-type:none; padding-left:0px;">
+						<li>Title:{{showcase.title}}</li>
+						<li>Description of work:{{showcase.describe}}</li>
+						<li>Your role:{{showcase.role}}</li>
+						<li>Year of completion:{{showcase.completion}}</li>
+					    </ul>
+                                            <hr class="divider"/>
+
+                                            <ul class="nav nav-tabs">
+						<li class="active"><a href="#leaveComment" data-toggle="tab">Leave Comment</a></li>
+						<li><a href="#showComment" data-toggle="tab">Show Comment</a></li>
+                                            </ul>
+                                            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+                                              <div class="tab-pane active" id="leaveComment">
+						<div class="well well-ss">
+						  <form class="form-horizontal" action="" id="portfolio_form">
+						      <fieldset>
+						        <!-- Post body -->
+						        <div class="form-group">
+						          <div class="col-md-9">
+						    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:370px;"></textarea>
+						          </div>
+						        </div>
+    
+						        <!-- Form actions -->
+						        <div class="form-group">
+						          <div class="col-md-12 text-right">
+						    	      <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
+						          </div>
+						        </div>
+						      </fieldset>
+						  </form>
+						</div>
+					      </div>
+
+                                              <div class="tab-pane" id="showComment">
+					        <ul style="list-style-type:none; padding-left:0px;">
+			                            <div id="portfolioComment_{{forloop.counter}}"></div>
+                                                </ul>
+                                              </div>
+                                           </div>
+
+
+					</div>
+				    </div>
+				</blockquote>
+			    </div>
+                            {% else %}
+			    <div class="item">
+			    <blockquote>
+			    <div class="row">
+					<div class="col-sm-8 col-sm-offset-2">
+	                                   <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+					    {% if showcase.image %}
+						<img src="{{ showcase.image.url }}" class="maincontent">
+					    {% else %}
+						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+					    {% endif %}
+					    <ul style="list-style-type:none; padding-left:0px;">
+						<li>Title:{{showcase.title}}</li>
+						<li>Description of work:{{showcase.describe}}</li>
+						<li>Your role:{{showcase.role}}</li>
+						<li>Year of completion:{{showcase.completion}}</li>
+					    </ul>
+                                            <hr class="divider"/>
+                                            
+                                            <ul class="nav nav-tabs">
+						<li class="active"><a href="#leaveComment_{{forloop.counter}}" data-toggle="tab">Leave Comment</a></li>
+						<li><a href="#showComment_{{forloop.counter}}" data-toggle="tab">Show Comment</a></li>
+                                            </ul>
+
+                                            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+                                              <div class="tab-pane active" id="leaveComment_{{forloop.counter}}">
+						<div class="well well-ss">
+						  <form class="form-horizontal" action="" id="portfolio_form">
+						      <fieldset>
+						        <!-- Post body -->
+						        <div class="form-group">
+						          <div class="col-md-9">
+						    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:370px;"></textarea>
+						          </div>
+						        </div>
+    
+						        <!-- Form actions -->
+						        <div class="form-group">
+						          <div class="col-md-12 text-right">
+						    	     <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
+						          </div>
+						        </div>
+						      </fieldset>
+						  </form>
+						</div>
+					      </div>
+
+                                              <div class="tab-pane" id="showComment_{{forloop.counter}}">
+					        <ul style="list-style-type:none; padding-left:0px;">
+			                            <div id="portfolioComment_{{forloop.counter}}"></div>
+                                                </ul>
+                                              </div>
+                                           </div>
+
+
+					</div>
+				    </div>
+				</blockquote>
+			    </div>
+                            {% endif %}
+                        {% endfor %}
                     {% else %}
-                        <div id="{{ forloop.counter }}" style="display:none;">
+	            <a href="{% url 'week1:edit_newpreviouswork' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                     {% endif %}
+                </div>
 
-		    {% if showcase.image %}
-			    <img src="{{ showcase.image.url }}" class="maincontent">
-		    {% else %}
-			    <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-		    {% endif %}
-                        <div class="description-wrapper">
-			    <!--ul style="list-style-type:none; text-align:left"-->
-			    <ul>
-				<li>Description of work:{{showcase.describe}}</li>
-				<li>Your role:{{showcase.role}}</li>
-				<li>Year of completion:{{showcase.completion}}</li>
-			    </ul>
-                        </div>
-		    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-		    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
-			<div class="post-wrapper">
-			    <form action="" id="portfolio_form">
-			      <textarea id="c_portfolio_{{forloop.counter}}" placeholder=" Comment" rows="3" cols="60"></textarea>
-                              <button onclick="submitPForm({{forloop.counter}})">Post</button>
-			    </form>
-			</div>
-			<ul style="list-style-type:none; padding-left:0px;">
-			    <div id="portfolio_show">
-			       <button onclick="show_portfolio({{forloop.counter}}, {{showcases|length}})">Show Comments</button>
-			    </div>
-			    <div id="portfolio_hide">
-			       <button onclick="hide_portfolio({{forloop.counter}})">Hide Comments</button>
-			    </div>
-			    <div id="portfolioComment_{{forloop.counter}}"></div>
-			</ul>
-                    </div>
-		{% endfor %}
-	    {% else %}
-	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	    {% endif %}
+                <!-- Carousel Buttons Next/Prev -->
+                <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+            </div>
+        </div>
+   </div>
+</div>
 
-	    {% if showcases|length > 1 %}
-                {% for showcase in showcases %}
-                    <!--button onclick="changeContent({{ forloop.counter }}, {{showcases|length}})" class="circle"></button-->
-                    <button onclick="changeContent({{ forloop.counter }}, {{showcases|length}})"><image src="{% static 'images/grey-circle.png'%}" width="25px"></button>
-	        {% endfor %}
-	    {% endif %}
-
-	</div>
 
 	<div class="home-step">
             <script>
@@ -146,7 +235,7 @@
 		};
             </script>
 
-            <h4>What’s Next</h4>
+            <h3>What’s Next</h3>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
 	            <img src="{{ upcoming.image.url }}" class="maincontent">
@@ -175,7 +264,45 @@
             </div>
             <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
             <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
-	    <div class="post-wrapper">
+
+            <hr class="divider"/>
+             
+            <ul class="nav nav-tabs">
+	        <li class="active"><a href="#leaveComment_upcoming" data-toggle="tab">Leave Comment</a></li>
+	        <li><a href="#showComment_upcoming" data-toggle="tab">Show Comment</a></li>
+            </ul>
+
+            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+              <div class="tab-pane active" id="leaveComment_upcoming">
+	        <div class="well well-ssm">
+	          <form class="form-horizontal" action="" id="upcoming_form">
+	              <fieldset>
+	                <!-- Post body -->
+	                <div class="form-group">
+	                  <div class="col-md-9">
+	                    <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+	                  </div>
+	                </div>
+    
+	                <!-- Form actions -->
+	                <div class="form-group">
+	                  <div class="col-md-12 text-right">
+	             	    <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
+	                  </div>
+	                </div>
+	              </fieldset>
+	          </form>
+	        </div>
+	      </div>
+
+              <div class="tab-pane" id="showComment_upcoming">
+	        <ul style="list-style-type:none; padding-left:30px;">
+	          <div id="upcomingComment"></div>
+                </ul>
+              </div>
+           </div>
+
+	    <!--div class="post-wrapper">
 		<form action="" id="upcoming_form">
 		  <textarea id="c_upcoming" autocomplete="off" placeholder=" Comment" rows="3" cols="60"></textarea>
                   <button onclick="submitUForm()">Post</button>
@@ -189,13 +316,14 @@
                    <button onclick="hide_upcoming()">Hide Comments</button>
                 </div>
 		<div id="upcomingComment"></div>
-	    </ul>
+	    </ul-->
 	    {% endif %}
 	</div>
 
 	<script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script>
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
@@ -383,6 +511,7 @@
 	      socket.on('new portfolio comment', function(data){
                     console.log('new portfolio comment on home');
 		    var uid = data.from_uid;
+                    var p_id = data.p_id;
                     console.log(p_id);
 		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
@@ -391,16 +520,16 @@
 		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).prepend($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data.msg+'</p></div><br/>'));
+		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
@@ -410,7 +539,8 @@
 		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	          for(var i = 0; i < docs.length; i++){
-                      if (docs[i]['p_id'] == p_id) {
+                      if (docs[i]['p_id']) {
+                          var p_id = docs[i]['p_id'];
                           console.log('If!');
 		          if (docs[i]['user']['uid']){
 				var uid = docs[i]['user']['uid'];
@@ -420,16 +550,16 @@
 				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 				if ( n != -1) {
 				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      } else{
-				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      }
 
 				}else{
 				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      } else {
-				         $('#portfolioComment_'+p_id).append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+data['content']+'</p></div><br/>'));
+				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      }
 				}
                           }
@@ -463,15 +593,15 @@
 			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 			    if ( n != -1) {
 			       if (uid == {{user.id}}){
-			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       } else{
-			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       }
 			    } else{
 			       if (uid == {{user.id}}){
-			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p">'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       } else{
-			     $('#upcomingComment').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p class="comment-content">'+docs[i]['content']+'</p></div><br/>'));
+			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       }
 			    }
 		       }
@@ -524,6 +654,51 @@
 	        }
 	  });
 
+
+	  socket.on('update user timeline history', function(data){
+                console.log('update user timeline history');
+                var share = data.share;
+                var community = data.community;
+                var len_share = share.length;
+                var len_community = community.length;
+	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+                var i_share = 0;
+                var i_community = 0;
+
+                while (i_share < len_share || i_community < len_community){
+                    if (i_share < len_share && i_community < len_community){
+                       var t_share = share[i_share]["created"];
+                       var t_community = community[i_community]["created"];
+                       if (t_share > t_community){
+			  var uid = share[i_share]['to_uid'];
+			  var n  = users.indexOf(uid);
+			  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+			  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"></div></div></div></li>'));
+
+                          i_share += 1;
+                       }else{
+			  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div></div></li>'));
+
+                          i_community += 1;
+                       }
+
+                    }else if(i_share < len_share){
+                       var t_share = share[i_share]["created"];
+		       var n  = users.indexOf(uid);
+		       var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"></div></div></div></li>'));
+                       i_share += 1;
+
+                    }else if(i_community < len_community){
+		       $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div></div></li>'));
+                       i_community += 1;
+
+                    }
+
+                }
+	  });
+
 	</script>
 
 
@@ -556,10 +731,12 @@
 	     <div id="commentHistory"></div>
 	 </ul>
     </div>
-
     </div>
+</div>
 
-
+<div class="timeline-container">
+    <ul class="timeline">
+    </ul>
 </div>
 
 

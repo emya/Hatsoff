@@ -378,6 +378,16 @@ io.on('connection', function(socket){
       socket.emit('number follow', count);
     }); 
 
+    var query_cp = CommunityPost.find({'user.uid':socket.uid});
+    query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
+      if (err) throw err;
+      var query_sh = SharePost.find({'user.uid':socket.uid});
+      query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
+         if (err) throw err;
+         socket.emit('update timeline history', {share:sharedocs, community:communitydocs});
+      }); 
+    }); 
+
   });
  
   socket.on('at userpage', function(data){
@@ -418,6 +428,15 @@ io.on('connection', function(socket){
       socket.emit('number user follow', count);
     }); 
 
+    var query_cp = CommunityPost.find({'user.uid':data.to_uid});
+    query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
+      if (err) throw err;
+      var query_sh = SharePost.find({'user.uid':data.to_uid});
+      query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
+         if (err) throw err;
+         socket.emit('update user timeline history', {share:sharedocs, community:communitydocs});
+      }); 
+    }); 
 
   });
 
@@ -905,13 +924,13 @@ io.on('connection', function(socket){
       } else{
         console.log('saved:'+data.msg);
         if (users[data.to]) {
-            users[data.to].emit('new portfolio comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+            users[data.to].emit('new portfolio comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname, p_id:data.p_id});
         }
        
         if (data.uid) {
             console.log('data.uid'+data.uid);
             console.log('users'+users[data.uid]);
-            users[data.uid].emit('new portfolio comment', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+            users[data.uid].emit('new portfolio comment', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname, p_id:data.p_id});
         }
       }
 

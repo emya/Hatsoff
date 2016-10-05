@@ -2,3 +2,4 @@
 hatsoff/settings.py
 hatsoff/db.sqlite3
 week1/*2.py
+db.sqlite3

@@ -55,30 +55,29 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
                             {% if p_type %}
-                                {% if p_typ == 0 %}
-				    <li class="active"><a href="#Login" data-toggle="tab">Login</a></li-->
+                                {% if p_type == 0 %}
+				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
 				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
                                 {% else %}
-				    <li><a href="#Login" data-toggle="tab">Login</a></li-->
+				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li>
 				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
                                 {% endif %}
                             {% else %}
-                            <li class="active"><a href="#Login" data-toggle="tab">Login</a></li-->
+                            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
                             <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
                             {% endif %}
                         </ul>
                         <!-- Tab panes -->
-                        <div class="tab-content">
+                        <div class="tab-content" style="text-align:center;">
                             {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane active" id="Login">
+                                {% if p_type == 0 %}
+                                    <div class="tab-pane active" id="LoginTop">
                                 {% else %}
-                                    <div class="tab-pane" id="Login">
+                                    <div class="tab-pane" id="LoginTop">
                                 {% endif %}
                             {% else %}
-                               <div class="tab-pane active" id="Login">
+                               <div class="tab-pane active" id="LoginTop">
                             {% endif %}
-
                                 <!--form role="form" class="form-horizontal"-->
                                 <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
 				    {% if form.non_field_errors  %}
@@ -88,26 +87,25 @@
 				       {% endfor %}
 				    </ul>
 				    {% endif %}
-                                <div class="form-group">
-				  <br>
-				  <br>
-                                  <input type="email" name="username" id="username" placeholder=" Email" class="sign-text">
-				  <br>
-				  <br>
-			          <input type="password" name="password" id="password" placeholder=" Password">
-                                </div>
+				    <div class="form-group">
+					  <br>
+					  <input type="email" name="username" placeholder=" Email" class="sign-text">
+					  <br>
+					  <br>
+					  <input type="password" name="password" placeholder=" Password">
+				    </div>
 
-                                <div class="row">
-				<a href="{% url 'week1:reset' %}">Forgot password?</a>
-				<div class="login-wrapper">
-				   <input type="submit" value="Log me in" name="login" class="login-submit"/>
-				</div>
-				<input type="hidden" name="next" value="/home/" />
-                                </div>
+				    <div class="row">
+					<a href="{% url 'week1:reset' %}">Forgot password?</a>
+					<div class="login-wrapper">
+					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
+					</div>
+					<input type="hidden" name="next" value="/home/" />
+				    </div>
                                 </form>
                             </div>
                             {% if p_type %}
-                                {% if p_typ == 0 %}
+                                {% if p_type == 0 %}
                                     <div class="tab-pane" id="Signup">
                                 {% else %}
                                     <div class="tab-pane active" id="Signup">
@@ -126,7 +124,6 @@
 				    </ul>
 				    {% endif %}
                                 <div class="form-group">
-				  <br>
 				  <br>
 				  <input type="email" name="username" placeholder=" Email" class="sign-text">
 				  <br>

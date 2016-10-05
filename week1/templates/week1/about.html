@@ -85,27 +85,27 @@
                         <ul class="nav nav-tabs">
                             {% if p_type %}
                                 {% if p_typ == 0 %}
-				    <li class="active"><a href="#Login" data-toggle="tab">Login</a></li-->
+				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
 				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
                                 {% else %}
-				    <li><a href="#Login" data-toggle="tab">Login</a></li-->
+				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
 				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
                                 {% endif %}
                             {% else %}
-                            <li class="active"><a href="#Login" data-toggle="tab">Login</a></li-->
+                            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
                             <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
                             {% endif %}
                         </ul>
                         <!-- Tab panes -->
-                        <div class="tab-content">
+                        <div class="tab-content" style="text-align:center;">
                             {% if p_type %}
                                 {% if p_typ == 0 %}
-                                    <div class="tab-pane active" id="Login">
+                                    <div class="tab-pane active" id="LoginTop">
                                 {% else %}
-                                    <div class="tab-pane" id="Login">
+                                    <div class="tab-pane" id="LoginTop">
                                 {% endif %}
                             {% else %}
-                               <div class="tab-pane active" id="Login">
+                               <div class="tab-pane active" id="LoginTop">
                             {% endif %}
 
                                 <!--form role="form" class="form-horizontal"-->

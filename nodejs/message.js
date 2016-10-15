@@ -1132,17 +1132,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('send message', function(data){
-    console.log('send message to '+data.room_id+' : '+typeof(data.room_id));
-    //io.sockets.in(data.room_id).emit('room message', data);
-
-    MessageRelation.find({_id:'580073aa599af5de0adfe02b'}).exec(function(err, messages){
-        if(err){
-          console.log("cant find");
-          console.log(err);
-        }else{
-          console.log("all result!"+messages);
-        }
-    });
+    io.sockets.in(data.room_id).emit('room message', data);
 
     MessageRelation.findById(data.room_id, function(err, post){
       if (err) {

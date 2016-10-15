@@ -55,6 +55,30 @@
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('at chat message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
+
+          function acceptMessageFunction(uid, msg, room_id){
+            console.log("accept");
+            socket.emit('accept first message', { to_uid:uid, uid:{{user.id}}, msg:msg, room_id:room_id });
+            var elem = document.getElementById('first-message-'+uid);
+            elem.parentNode.removeChild(elem);
+          }
+
+          function blockMessageFunction(uid){
+            console.log("block");
+            socket.emit('block first message', { to_uid:uid, uid:{{user.id}} });
+            var elem = document.getElementById('first-message-'+uid);
+            elem.parentNode.removeChild(elem);
+          }
+
+          function sendMessageFunction(room_id){
+            //var room_id = '580073aa599af5de0adfe02b';
+            console.log("test!");
+            console.log('send message to room:'+room_id);
+            var message = $('#message_in_'+room_id).val();
+            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
+          }
+
+
           socket.on('chat message', function (data) {
              console.log(data);
   	         $('#'+data.room).append($('<li><span class="error"><br>'+data.message+'</span><br/>'));
@@ -129,7 +153,7 @@
                  var div = document.createElement("div");
                  div.setAttribute('id', 'message-room-'+room_id);
                  elem.appendChild(div);
-                 var message_form = '<div><form><input type="text" id="message_in_'+room_id+'"><button onclick="sendMessageFunction(\'room_id\')">Send</button></form></div>';
+                 var message_form = "<div><form><input type='text' id='message_in_"+room_id+"'><button onclick='sendMessageFunction(\""+room_id+"\")'>Send</button></form></div>";
 
                  for(var j=0; j < mdocs.length; j++){
                      if ( mdocs[j]['uid'] == uid ) {
@@ -146,30 +170,9 @@
 
           socket.on('room message', function (data) {
              console.log("room message");
-             $('#message-room-'+data.room_id).prepend($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>'));
+             $('#message-room-'+data.room_id).append($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>'));
           });
 
-
-          function acceptMessageFunction(uid, msg, room_id){
-            console.log("accept");
-            socket.emit('accept first message', { to_uid:uid, uid:{{user.id}}, msg:msg, room_id:room_id });
-            var elem = document.getElementById('first-message-'+uid);
-            elem.parentNode.removeChild(elem);
-          }
-
-          function blockMessageFunction(uid){
-            console.log("block");
-            socket.emit('block first message', { to_uid:uid, uid:{{user.id}} });
-            var elem = document.getElementById('first-message-'+uid);
-            elem.parentNode.removeChild(elem);
-          }
-
-          function sendMessageFunction(room_id){
-            console.log("test!");
-            console.log('send message to room:'+room_id);
-            var message = $('#message_in_'+room_id).val();
-            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
-          }
 
 
 /***

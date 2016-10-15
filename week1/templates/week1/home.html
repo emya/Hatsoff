@@ -107,7 +107,7 @@
 				<blockquote>
 				    <div class="row">
 					<div class="col-sm-8 col-sm-offset-2">
-	                                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
@@ -123,9 +123,10 @@
 						{% if showcase.youtube %}
 						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
 						{% endif %}
-                                            {% else %}
+                        {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-                                            {% endif %}
+                        {% endif %}
+
 					    <ul style="list-style-type:none; padding-left:0px;">
 						<li>Title:{{showcase.title}}</li>
 						<li>Description of work:{{showcase.describe}}</li>

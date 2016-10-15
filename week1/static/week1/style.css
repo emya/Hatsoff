@@ -87,8 +87,9 @@ a {
    text-align:center;
 }
 
-#header #header-menus #link{
-   font-size: 36px
+#header #header-menus a{
+   font-size: 18px;
+   font: Asap;
 }
 
 

@@ -87,6 +87,11 @@ a {
    text-align:center;
 }
 
+#header #header-menus a{
+   font-size: 50px
+}
+
+
 #header #header-right {
    display: inline-block;
    width: 200px;
@@ -218,6 +223,12 @@ img.icons_img {
    font-size: 16px;
 }
 
+#hometop .topbuttons{
+   margin: 0 0 30px;
+   font-size: 24px;
+   font: Asap;
+}
+
 #hometop #hometop-left {
    display: inline-block;
    width: 300px;
@@ -257,6 +268,11 @@ img.icons_img {
 #about #about-left {
    display: inline-block;
    width: 68%;
+}
+#about .about_paragraph {
+   text-align: left;
+   padding: 20px; 
+   font-size: 18px;
 }
 
 #about #about-right {

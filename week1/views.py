@@ -665,7 +665,7 @@ def home_edit_photo(request):
     instance = get_object_or_404(Profile, user=currentuser)
 
     if request.method == 'POST':
-        form = PersonalPhoto(request.FILES, instance=instance, label_suffix="")
+        form = PersonalPhoto(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             form.save()
 

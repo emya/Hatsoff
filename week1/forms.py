@@ -114,18 +114,24 @@ class Step4(forms.ModelForm):
 class Step5(forms.ModelForm):
     class Meta:
         model = Showcase
-        fields = ('title', 'image', 'describe', 'role', 'completion')
+        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role', 'completion')
         widgets = {
         }
         labels = {
             'title': _('Title'),
-            'image': _('Photo'),
+            'image': _('Add Photo'),
+            'video': _('Add Video'),
+            'youtube': _('Add URL link to Youtube'),
             'describe': _('Descibe your work'),
             'role': _('Your Role'),
             'completion': _('Year of completion'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data
+        if 'video' in self.cleaned_data:
+            video = self.cleaned_data['video'] 
+            if not video.name.endswith('.mp4'):
+                raise forms.ValidationError(_("Please choose mp4 file."))
         return cleaned_data
 
 class Step6(forms.ModelForm):
@@ -136,7 +142,7 @@ class Step6(forms.ModelForm):
         }
         labels = {
             'title': _('Title'),
-            'image': _('Photo'),
+            'image': _('Add Photo'),
             'describe': _('Descibe your work'),
             'role': _('Your Role'),
             'status': _('Status of work (for eg: entering post-production phase)'),

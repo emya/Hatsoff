@@ -4,7 +4,6 @@
 {% load staticfiles %}
 
 
-<p>My ID:{{myid}}</p>
 
 <!--div id="nickWrap">
     <p>Enter a username</p>
@@ -15,7 +14,9 @@
     </form>
 </div-->
 
-<div id="onlineusersWrap">
+<div id="folderWrap">
+  <div id="folder-left">
+
     <h4>Online users</h4>
     <ul style="list-style-type:none;">
        <div id="users"></div>
@@ -24,6 +25,26 @@
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+
+    <form action="">
+      <input id="room" autocomplete="off" />
+      <input id="message" autocomplete="off" />
+      <button id="send">Send room</button>
+    </form>
+
+    <div id="roomOne"></div>
+    <div id="roomTwo"></div>
+
+    <div id="firstMessage"></div>
+
+    <h4>Users you blocked</h4>
+    <div id="blockMessage"></div>
+
+  </div>
+  <div id="folder-center">
+    <div id="acceptMessage"></div>
+  </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
@@ -31,12 +52,125 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
           var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('at chat message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
-          socket.on('temp message', function (data) {
+          socket.on('chat message', function (data) {
              console.log(data);
+  	         $('#'+data.room).append($('<li><span class="error"><br>'+data.message+'</span><br/>'));
           });
-      
+
+          /***
           socket.emit('subscribe', 'roomOne');
+          socket.emit('subscribe', 'roomTwo');
+
+      	  $('#send').click(function(e) {
+      	     var room = $('#room').val(),
+      	     message = $('#message').val();
+             e.preventDefault();
+
+      	     socket.emit('send chat message', { room: room, message: message });
+      	  });
+          ***/
+
+          socket.on('new accept user', function(data){
+             var elem = document.getElementById('acceptMessage');
+             var div = document.createElement("div");
+             div.setAttribute('id', 'message-room-'+data.room_id);
+             elem.appendChild(div);
+             $('#message-room-'+data.room_id).prepend($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>')); 
+             socket.emit('subscribe message room', data.room_id);
+          });
+
+          socket.on('new block user', function(uid){
+             $('#blockMessage').prepend($('<li><span class="error"><br>'+uid+'</span><br/>')); 
+          });
+
+          socket.on('send first message', function(data){
+             $('#firstMessage').append($('<li id="first-message-'+data.uid+'"><span class="error"><br>'+data.uid+' sent a message :'+data.msg+'</span><button onclick="acceptMessageFunction(\''+data.uid+'\',\''+data.msg+'\',\''+data.room_id+'\')">Accept</button>&nbsp <button onclick="blockMessageFunction('+data.uid+')">Block</button><br/>')); 
+          });
+
+          socket.on('update first message', function(docs){
+            for(var i=0; i < docs.length; i++){
+              var uid = (docs[i]['uid1'] == {{user.id}}) ? docs[i]['uid2'] : docs[i]['uid1'];
+
+              console.log("user id:"+{{user.id}});
+              console.log("uid:"+uid);
+              console.log("first message:"+docs[i]);
+
+              if (docs[i]['messages']){
+                 var mdocs = docs[i]['messages'];
+
+                 for(var j=0; j < mdocs.length; j++){
+                     if ( mdocs[j]['uid'] == uid ) {
+                        $('#firstMessage').append($('<li id="first-message-'+uid+'"><span class="error"><br>'+uid+' sent a message :'+mdocs[j]['content']+'</span><button onclick="acceptMessageFunction(\''+uid+'\',\''+mdocs[j]['content']+'\',\''+docs[i]['_id']+'\')">Accept</button>&nbsp <button onclick="blockMessageFunction('+uid+')">Block</button><br/>')); 
+                     }
+                 }
+
+              }
+            }
+          });
+
+
+          socket.on('update chat message', function(docs){
+            console.log('update chat message');
+            for(var i=0; i < docs.length; i++){
+              var uid = (docs[i]['uid1'] == {{user.id}}) ? docs[i]['uid2'] : docs[i]['uid1'];
+
+              console.log("user id:"+{{user.id}});
+              console.log("uid:"+uid);
+              console.log("first message:"+docs[i]);
+
+
+              if (docs[i]['messages']){
+                 var room_id = docs[i]['_id'];
+                 var mdocs = docs[i]['messages'];
+                 var elem = document.getElementById('acceptMessage');
+                 var div = document.createElement("div");
+                 div.setAttribute('id', 'message-room-'+room_id);
+                 elem.appendChild(div);
+                 var message_form = '<div><form><input type="text" id="message_in_'+room_id+'"><button onclick="sendMessageFunction(\'room_id\')">Send</button></form></div>';
+
+                 for(var j=0; j < mdocs.length; j++){
+                     if ( mdocs[j]['uid'] == uid ) {
+                        $('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
+                     }else{
+                        $('#message-room-'+room_id).append($('<li><span class="error"><br> You : '+mdocs[j]['content']+'</span><br/>')); 
+                     }
+                 }
+                 $('#message-room-'+room_id).append($(message_form)); 
+              }
+
+            }
+          });
+
+          socket.on('room message', function (data) {
+             console.log("room message");
+             $('#message-room-'+data.room_id).prepend($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>'));
+          });
+
+
+          function acceptMessageFunction(uid, msg, room_id){
+            console.log("accept");
+            socket.emit('accept first message', { to_uid:uid, uid:{{user.id}}, msg:msg, room_id:room_id });
+            var elem = document.getElementById('first-message-'+uid);
+            elem.parentNode.removeChild(elem);
+          }
+
+          function blockMessageFunction(uid){
+            console.log("block");
+            socket.emit('block first message', { to_uid:uid, uid:{{user.id}} });
+            var elem = document.getElementById('first-message-'+uid);
+            elem.parentNode.removeChild(elem);
+          }
+
+          function sendMessageFunction(room_id){
+            console.log("test!");
+            console.log('send message to room:'+room_id);
+            var message = $('#message_in_'+room_id).val();
+            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
+          }
+
 
 /***
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});

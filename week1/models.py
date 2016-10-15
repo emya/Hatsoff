@@ -24,7 +24,7 @@ class Profile(models.Model):
     skill8 = models.CharField(max_length=200, default='', blank=True)
     skill9 = models.CharField(max_length=200, default='', blank=True)
     skill10 = models.CharField(max_length=200, default='', blank=True)
-    weburl = models.URLField(max_length=200, default='', blank=True)
+    weburl = models.URLField(null=True, blank=True)
     funaboutyou = models.CharField(max_length=200, default='', blank=True)
     fQuote = models.CharField(max_length=200, default='', blank=True)
     fFilm = models.CharField(max_length=200, default='', blank=True)
@@ -42,6 +42,8 @@ class Showcase(models.Model):
     title = models.CharField(max_length=200, default='', blank=True)
     number = models.IntegerField(null=True)#1 to 10
     image = models.ImageField(upload_to='showcaseimg/', null=True, blank=True)
+    video = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
+    youtube = models.URLField(null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
     role = models.CharField(max_length=300, default='', blank=True)
     completion = models.IntegerField(null=True, blank=True)#year of completion
@@ -50,7 +52,7 @@ class UpcomingWork(models.Model):
     user = models.ForeignKey(User)
     title = models.CharField(max_length=200, default='', blank=True)
     number = models.IntegerField()#1 to 10
-    image = models.ImageField(upload_to='showcaseimg/', null=True, blank=True)
+    image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
     role = models.CharField(max_length=300, default='', blank=True)
     status = models.CharField(max_length=300, default='', blank=True)

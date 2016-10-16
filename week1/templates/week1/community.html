@@ -350,8 +350,8 @@
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               var n  = users.indexOf(uid);
-	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Gave a Hatsoff!</br></span></div>';
               var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
               var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';

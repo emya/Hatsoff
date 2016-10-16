@@ -32,30 +32,37 @@
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               for(var i=0; i < docs.length; i++){
-		  if ( docs[i]['user']['uid'] ) {
-		  var uid = docs[i]['user']['uid'];
-		  var n  = users.indexOf(uid);
-		  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-		  if ( n != -1) {
-		    if (uid == {{user.id}}){
-			//$('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="shareskill-content"> shared a skill !</p></div><br/>'));
-		    } else{
-			$('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp is interested in sharing skill with you!</div><br/>'));
-		    }
-		  } else{
-		    if (uid == {{user.id}}){
-			//$('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="shareskill-content">'+docs[i]['content']+'</p></div><br/>'));
-		    } else{
-			$('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp is interested in sharing skill with you!</div><br/>'));
-		    }
-			    //$('#shareskillHistory').append($('<hr>'));
-                   }	  
-                 }
-	      }
+            		  if ( docs[i]['user']['uid'] ) {
+              		  var uid = docs[i]['user']['uid'];
+              		  var n  = users.indexOf(uid);
+              		  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+              		  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                    var start_message = '<form><input id="startMessage" autocomplete="off" /><button onclick="startmessageFunction('+uid+')">Send Message</button></form>';
+              		  if ( n != -1) {
+              		    if (uid == {{user.id}}){
+              			//$('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="shareskill-content"> shared a skill !</p></div><br/>'));
+              		    } else{
+              			     $('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp is interested in sharing skill with you!</div>'+start_message+'<br/>'));
+              		    }
+              		  } else{
+              		    if (uid == {{user.id}}){
+              			//$('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="shareskill-content">'+docs[i]['content']+'</p></div><br/>'));
+              		    } else{
+              			     $('#shareskillHistory').append($('<li><div class="shareskill-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp is interested in sharing skill with you!</div>'+start_message+'<br/>'));
+              		    }
+              			    //$('#shareskillHistory').append($('<hr>'));
+                    }	  
+                  }
+          	}
 
 	         //$('#shareskillHistory').append($('<li><div class=""><br>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp shared skill</br></div><br/>'));
           });
+
+          function startmessageFunction(uid){
+            console.log('uid on message:'+uid);
+            var message = $('#startMessage').val();
+            socket.emit('start message', { to_uid:uid, uid:{{user.id}}, msg:message });
+          }
 
     </script>
   </div>

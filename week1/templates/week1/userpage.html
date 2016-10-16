@@ -90,11 +90,26 @@
 				<blockquote>
 				    <div class="row">
 					<div class="col-sm-8 col-sm-offset-2">
-					    {% if showcase.image %}
-						<img src="{{ showcase.image.url }}" class="maincontent">
-					    {% else %}
+
+					    {% if showcase.image or showcase.video or showcase.youtube %}
+
+						{% if showcase.image %}
+						    <img src="{{ showcase.image.url }}" class="maincontent">
+						{% endif %}
+
+						{% if showcase.video %}
+						    <video controls id="video">
+						        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"></source>
+						    </video>
+						{% endif %}
+
+						{% if showcase.youtube %}
+						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+						{% endif %}
+                        {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-					    {% endif %}
+                        {% endif %}
+
 					    <ul style="list-style-type:none; padding-left:0px;">
 						<li>Title:{{showcase.title}}</li>
 						<li>Description of work:{{showcase.describe}}</li>
@@ -153,12 +168,27 @@
 			    <blockquote>
 			    <div class="row">
 					<div class="col-sm-8 col-sm-offset-2">
-	                                   <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-					    {% if showcase.image %}
-						<img src="{{ showcase.image.url }}" class="maincontent">
-					    {% else %}
+
+                        {% if showcase.image or showcase.video or showcase.youtube %}
+
+						{% if showcase.image %}
+						    <img src="{{ showcase.image.url }}" class="maincontent">
+						{% endif %}
+
+						{% if showcase.video %}
+						    <video controls id="video">
+						        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"></source>
+						    </video>
+						{% endif %}
+
+						{% if showcase.youtube %}
+						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+						{% endif %}
+                        {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-					    {% endif %}
+                        {% endif %}
+
+
 					    <ul style="list-style-type:none; padding-left:0px;">
 						<li>Title:{{showcase.title}}</li>
 						<li>Description of work:{{showcase.describe}}</li>
@@ -672,41 +702,54 @@
 
 	  socket.on('update user timeline history', function(data){
                 console.log('update user timeline history');
-                var share = data.share;
-                var community = data.community;
-                var len_share = share.length;
-                var len_community = community.length;
+                var sharedocs = data.share;
+                var communitydocs = data.community;
+                var len_share = sharedocs.length;
+                var len_community = communitydocs.length;
 	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
-
+		var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
+		var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+		var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
                 while (i_share < len_share || i_community < len_community){
                     if (i_share < len_share && i_community < len_community){
-                       var t_share = share[i_share]["created"];
-                       var t_community = community[i_community]["created"];
+                       var t_share = sharedocs[i_share]["created"];
+                       var t_community = communitydocs[i_community]["created"];
                        if (t_share > t_community){
-			  var uid = share[i_share]['to_uid'];
+			  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+			  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+			  var uid = sharedocs[i_share]['to_uid'];
+                          var content = sharedocs[i_share]['content'];
+                          console.log("content:"+content+"i_share:"+i_share);
 			  var n  = users.indexOf(uid);
 			  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-			  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"></div></div></div></li>'));
+			  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
                           i_share += 1;
                        }else{
-			  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div></div></li>'));
+			  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+			  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+			  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
                           i_community += 1;
                        }
 
                     }else if(i_share < len_share){
-                       var t_share = share[i_share]["created"];
+                       var t_share = sharedocs[i_share]["created"];
+                       var content = sharedocs[i_share]['content'];
 		       var n  = users.indexOf(uid);
 		       var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-		       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"></div></div></div></li>'));
+		       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+		       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+		       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
                        i_share += 1;
 
                     }else if(i_community < len_community){
-		       $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div></div></li>'));
+		       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+		       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+		       $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
                        i_community += 1;
 
                     }

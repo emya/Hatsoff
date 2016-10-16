@@ -1,6 +1,6 @@
 # exclude everything except hatoff/settings.py
 hatsoff/settings.py
-hatsoff/db.sqlite3
+#hatsoff/db.sqlite3
 week1/*2.py
-db.sqlite3
+#db.sqlite3
 *.swp

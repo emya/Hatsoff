@@ -107,12 +107,26 @@
 				<blockquote>
 				    <div class="row">
 					<div class="col-sm-8 col-sm-offset-2">
-	                                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-					    {% if showcase.image %}
-						<img src="{{ showcase.image.url }}" class="maincontent">
-					    {% else %}
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+					    {% if showcase.image or showcase.video or showcase.youtube %}
+
+						{% if showcase.image %}
+						    <img src="{{ showcase.image.url }}" class="maincontent">
+						{% endif %}
+
+						{% if showcase.video %}
+						    <video controls id="video">
+						        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"></source>
+						    </video>
+						{% endif %}
+
+						{% if showcase.youtube %}
+						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+						{% endif %}
+                        {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-					    {% endif %}
+                        {% endif %}
+
 					    <ul style="list-style-type:none; padding-left:0px;">
 						<li>Title:{{showcase.title}}</li>
 						<li>Description of work:{{showcase.describe}}</li>
@@ -166,8 +180,20 @@
 			    <div class="row">
 					<div class="col-sm-8 col-sm-offset-2">
 	                                   <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-					    {% if showcase.image %}
-						<img src="{{ showcase.image.url }}" class="maincontent">
+ 					    {% if showcase.image or showcase.video or showcase.youtube %}
+						{% if showcase.image %}
+						    <img src="{{ showcase.image.url }}" class="maincontent">
+						{% endif %}
+
+						{% if showcase.video %}
+						    <video controls id="video">
+						       <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"/>
+						    </video>
+						{% endif %}
+
+						{% if showcase.youtube %}
+						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+						{% endif %}
 					    {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 					    {% endif %}
@@ -599,15 +625,20 @@
                 var i_share = 0;
                 var i_community = 0;
 
+                console.log('update share length:'+len_share);
+
                 while (i_share < len_share || i_community < len_community){
                     if (i_share < len_share && i_community < len_community){
                        var t_share = share[i_share]["created"];
                        var t_community = community[i_community]["created"];
                        if (t_share > t_community){
 			  var uid = share[i_share]['to_uid'];
+                          var content = share[i_share]['content'];
 			  var n  = users.indexOf(uid);
+                          console.log("content:"+share[i_share]);
+                          console.log("content:"+content);
 			  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-			  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"></div></div></div></li>'));
+			  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div></div></li>'));
 
                           i_share += 1;
                        }else{
@@ -618,9 +649,10 @@
 
                     }else if(i_share < len_share){
                        var t_share = share[i_share]["created"];
+                       var content = share[i_share]['content'];
 		       var n  = users.indexOf(uid);
 		       var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-		       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"></div></div></div></li>'));
+		       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div></div></li>'));
 
                        i_share += 1;
 
@@ -637,6 +669,39 @@
 	  $('.timeline-panel').click(function() {
 	    $('.timeline-body', this).toggle(); // p00f
 	  });
+
+
+          $(document).ready(function() {
+
+            console.log("ready!");
+            var time = 15;
+            var scale = 1;
+
+            var video_obj = null;
+
+            document.getElementById('video').addEventListener('loadedmetadata', function() {
+                 this.currentTime = time;
+                 video_obj = this;
+            }, false);
+
+            document.getElementById('video').addEventListener('loadeddata', function() {
+                 var video = document.getElementById('video');
+
+                 var canvas = document.createElement("canvas");
+                 canvas.width = video.videoWidth * scale;
+                 canvas.height = video.videoHeight * scale;
+                 canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                 var img = document.createElement("img");
+                img.src = canvas.toDataURL();
+                $('#thumbnail').append(img);
+
+                video_obj.currentTime = 0;
+
+            }, false);
+
+        });
+
 
 
 	</script>

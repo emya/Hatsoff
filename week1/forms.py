@@ -130,7 +130,7 @@ class Step5(forms.ModelForm):
         cleaned_data = self.cleaned_data
         if 'video' in self.cleaned_data:
             video = self.cleaned_data['video'] 
-            if not video.name.endswith('.mp4'):
+            if video and not video.name.endswith('.mp4'):
                 raise forms.ValidationError(_("Please choose mp4 file."))
         return cleaned_data
 

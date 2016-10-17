@@ -818,6 +818,20 @@ to here
    min-height: 150px;
 }
 
+#folderWrap #message-left{
+   display: inline-block;
+   width: 300px;
+   vertical-align: top;
+   padding: 50px;
+}
+
+#folderWrap #message-center{
+   display: inline-block;
+   width: 400px;
+   vertical-align: top;
+   padding: 50px;
+}
+
 .popupShareSkill {
    position: relative;
    display: inline-block;

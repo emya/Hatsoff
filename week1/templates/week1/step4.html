@@ -14,7 +14,8 @@
      <div id="step-right">
         <h3>Profile</h3>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
-            <br>{{form.weburl.label_tag}}</br> {{form.weburl}}<br/>
+        {{ form.errors }}
+        <br>{{form.weburl.label_tag}}</br> {{form.weburl}}<br/>
 	    <div class="submit-wrapper">
 		<input type="submit" value="Next Step" class="step-submit"/>
 		<a href="{% url 'week1:step5' %}">Skip</a>

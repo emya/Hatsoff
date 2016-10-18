@@ -5,6 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import authenticate
 
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
 from django.forms import extras
 from .models import Profile, Showcase, UpcomingWork
 
@@ -109,6 +112,14 @@ class Step4(forms.ModelForm):
         }
     def clean(self):
         cleaned_data = self.cleaned_data
+        if 'weburl' in self.cleaned_data:
+            weburl = self.cleaned_data['weburl']
+            if weburl:
+                validate = URLValidator()
+                try:
+                    validate(weburl)
+                except ValidationError, e:
+                    raise forms.ValidationError(_(e))
         return cleaned_data
 
 class Step5(forms.ModelForm):
@@ -130,7 +141,7 @@ class Step5(forms.ModelForm):
         cleaned_data = self.cleaned_data
         if 'video' in self.cleaned_data:
             video = self.cleaned_data['video'] 
-            if not video.name.endswith('.mp4'):
+            if video and not video.name.endswith('.mp4'):
                 raise forms.ValidationError(_("Please choose mp4 file."))
         return cleaned_data
 

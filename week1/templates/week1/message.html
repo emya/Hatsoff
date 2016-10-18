@@ -15,13 +15,14 @@
 </div-->
 
 <div id="folderWrap">
-  <div id="folder-left">
+  <div id="message-left">
 
-    <h4>Online users</h4>
+    <h4>Users</h4>
     <ul style="list-style-type:none;">
-       <div id="users"></div>
+       <div id="chatusers"></div>
     </ul>
-    <div id="messages"></div>
+    <!--div id="messages"></div>
+    
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
@@ -33,16 +34,22 @@
     </form>
 
     <div id="roomOne"></div>
-    <div id="roomTwo"></div>
+    <div id="roomTwo"></div-->
 
-    <div id="firstMessage"></div>
+    <div class="left-section">
+      <h4>Message Request</h4>
+      <div id="firstMessage"></div>
+    </div>
 
-    <h4>Users you blocked</h4>
-    <div id="blockMessage"></div>
+    <div class="left-section">
+      <h4>Users you blocked</h4>
+      <div id="blockMessage"></div>
+    </div>
 
   </div>
-  <div id="folder-center">
+  <div id="message-center">
     <div id="acceptMessage"></div>
+
   </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -54,6 +61,9 @@
           var socket = io.connect("{{nodejs_url}}");
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('at chat message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+
+          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var usernames = [{% for u in usernames %}"{{ u }}", {% endfor %}];
 
 
           function acceptMessageFunction(uid, msg, room_id){
@@ -75,6 +85,7 @@
             console.log("test!");
             console.log('send message to room:'+room_id);
             var message = $('#message_in_'+room_id).val();
+            $('#message_in_'+room_id).val('');
             socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
           }
 
@@ -98,12 +109,28 @@
           ***/
 
           socket.on('new accept user', function(data){
+
+             var div = document.getElementById('acceptMessage');
+             var elem = document.createElement("div");
+             elem.setAttribute('class', 'row');
+             elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with</div><div class="panel-body"><ul class="chat" id="message-room-'+data.room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+data.room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+data.room_id+'\')">Send</button></span></div></div></div></div></div>';
+             div.appendChild(elem);
+             //$('#message-room-'+data.room_id).append($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>')); 
+
+             if (data.uid == {{user.id}}){
+                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
+
+             }else{
+                $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
+             }
+             /***
              var elem = document.getElementById('acceptMessage');
              var div = document.createElement("div");
              div.setAttribute('id', 'message-room-'+data.room_id);
              elem.appendChild(div);
              $('#message-room-'+data.room_id).prepend($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>')); 
              socket.emit('subscribe message room', data.room_id);
+             ***/
           });
 
           socket.on('new block user', function(uid){
@@ -145,24 +172,50 @@
               console.log("uid:"+uid);
               console.log("first message:"+docs[i]);
 
+              var n  = users.indexOf(uid);
 
               if (docs[i]['messages']){
                  var room_id = docs[i]['_id'];
                  var mdocs = docs[i]['messages'];
+
+                 if ($('#message-room-'+room_id).length == 0){
+                  var div = document.getElementById('acceptMessage');
+                  var elem = document.createElement("div");
+                  elem.setAttribute('class', 'row');
+                  elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with</div><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
+                  div.appendChild(elem);
+
+                 }
+                 /**
                  var elem = document.getElementById('acceptMessage');
                  var div = document.createElement("div");
                  div.setAttribute('id', 'message-room-'+room_id);
                  elem.appendChild(div);
                  var message_form = "<div><form><input type='text' id='message_in_"+room_id+"'><button onclick='sendMessageFunction(\""+room_id+"\")'>Send</button></form></div>";
+                 **/
 
                  for(var j=0; j < mdocs.length; j++){
+                     if ( j== 0){
+                        if (n != -1){
+                           $('#chatusers').append($('<li><span class="error"><br>'+usernames[n]+' : '+mdocs[j]['content']+'</span><br/>')); 
+                        }else{
+                           $('#chatusers').append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
+                        }
+                      }
+
                      if ( mdocs[j]['uid'] == uid ) {
-                        $('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
+                        if (n != -1){
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+usernames[n]+' : '+mdocs[j]['content']+'</span><br/>')); 
+                        }else{
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
+                        }
                      }else{
-                        $('#message-room-'+room_id).append($('<li><span class="error"><br> You : '+mdocs[j]['content']+'</span><br/>')); 
+                        $('#message-room-'+room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                      }
                  }
-                 $('#message-room-'+room_id).append($(message_form)); 
+                 //$('#message-room-'+room_id).append($(message_form)); 
               }
 
             }
@@ -170,7 +223,17 @@
 
           socket.on('room message', function (data) {
              console.log("room message");
-             $('#message-room-'+data.room_id).append($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>'));
+             var n  = users.indexOf(data.uid);
+             if (data.uid == {{user.id}}){
+                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
+             }else{
+                if (n != -1){
+                  $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
+                }else{
+                  $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
+                }
+             }
+
           });
 
 

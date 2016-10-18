@@ -4,3 +4,4 @@ hatsoff/settings.py
 week1/*2.py
 #db.sqlite3
 *.swp
+*.pyc

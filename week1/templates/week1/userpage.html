@@ -388,128 +388,128 @@
 
 
 	      function likeFunction(c_type, c_id){
-		 console.log('uid on like:'+c_type+':'+c_id);
-		 popLike();
-                 if (c_type == 2){
-		    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
-		    console.log('like upcoming');
-                 }else if (c_type == 3){
-		    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
-		    console.log('like portfolio');
-                 }
+		    console.log('uid on like:'+c_type+':'+c_id);
+		    popLike();
+            if (c_type == 2){
+			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+			    console.log('like upcoming');
+            }else if (c_type == 3){
+			    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+			    console.log('like portfolio');
+            }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
 
 	      function popLike(){
-		 var popup = document.getElementById('likePop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('likePop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function popShare(){
-		 var popup = document.getElementById('sharePop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('sharePop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function shareFunction(c_type, c_id){
-		 console.log('uid on share:'+c_type+':'+c_id);
-		 popShared();
-                 if (c_type == 2){
-		    socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
-                 }else if (c_type == 3){
-		    socket.emit('share portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
-                 }
+			 console.log('uid on share:'+c_type+':'+c_id);
+			 popShared();
+             if (c_type == 2){
+		         socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+             }else if (c_type == 3){
+		         socket.emit('share portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+             }
 		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
 
 	      function popShared(){
-		 var popup = document.getElementById('sharedPop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('sharedPop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function popThanks(){
-		 var popup = document.getElementById('thanksPop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('thanksPop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function thanksFunction(){
-		 console.log('thanks!');
-		 popGave();
-		 socket.emit('give thanks', {to_uid:{{t_user.id}}, uid:{{user.id}}});
-		 console.log('thanks!');
+			 console.log('thanks!');
+			 popGave();
+			 socket.emit('give thanks', {to_uid:{{t_user.id}}, uid:{{user.id}}});
+			 console.log('thanks!');
 	      }
 
 	      function popGave(){
-		 var popup = document.getElementById('gavePop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('gavePop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function popHatsoff(){
-		 var popup = document.getElementById('hatsoffPop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('hatsoffPop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function hatsoffFunction(){
-		 console.log('hatsoff!');
-		 popGavehatsoff();
-		 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}});
+			 console.log('hatsoff!');
+			 popGavehatsoff();
+			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}});
 	      }
 
 	      function popGavehatsoff(){
-		 var popup = document.getElementById('gavehatsoffPop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('gavehatsoffPop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function popFollow(){
-		 var popup = document.getElementById('followPop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('followPop');
+			 popup.classList.toggle('show');
 	      }
 
 	      function followFunction(){
-		 console.log('follow!');
-		 popFollowed();
+			 console.log('follow!');
+			 popFollowed();
 		 //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
 
 	      function popFollowed(){
-		 var popup = document.getElementById('followedPop');
-		 popup.classList.toggle('show');
+			 var popup = document.getElementById('followedPop');
+			 popup.classList.toggle('show');
 	      }
 
-              var p_id = 1
-    	      function changeContent(number, length){
-                    console.log('Click!'+number);
+          var p_id = 1
+    	  function changeContent(number, length){
+                console.log('Click!'+number);
 	            //socket.emit('change portfolio', {uid:{{user.id}}, to_uid:{{t_user.id}}, p_id:number});
-                    if( p_id != number ){
-	              socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
-                    }
+                if( p_id != number ){
+	               socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
+                }
 
-                    for (var i = 1; i <= length; i++){
-		        $('#'+i).show().siblings('div').hide();
-		    }
-		    $('#'+number).show().siblings('div').hide();
-                    p_id = number;
+                for (var i = 1; i <= length; i++){
+		           $('#'+i).show().siblings('div').hide();
+		        }
+			    $('#'+number).show().siblings('div').hide();
+	               p_id = number;
 
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
-		    if (h.style.display == 'block'){
-		        h.style.display = 'none';
-		    }
-		    s.style.display = 'block';
-                    hide_portfolio(number);
+	               var h = document.getElementById('portfolio_hide');
+	               var s = document.getElementById('portfolio_show');
+			    if (h.style.display == 'block'){
+			        h.style.display = 'none';
+			    }
+			    s.style.display = 'block';
+	            hide_portfolio(number);
 	      };
 
 	      function show_portfolio(number, length){
-                    console.log('show more!');
-                    for (var i = 1; i <= length; i++){
-		        $('#portfolioComment_'+i).hide();
-		    }
-		    $('#portfolioComment_'+number).show();
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
-		    if (s.style.display == 'block'){
-		        s.style.display = 'none';
-		    }
-		    h.style.display = 'block';
+                console.log('show more!');
+                for (var i = 1; i <= length; i++){
+		            $('#portfolioComment_'+i).hide();
+		        }
+			    $('#portfolioComment_'+number).show();
+	            var h = document.getElementById('portfolio_hide');
+	            var s = document.getElementById('portfolio_show');
+			    if (s.style.display == 'block'){
+			        s.style.display = 'none';
+			    }
+			    h.style.display = 'block';
                     /***
 		    if ($('#portfolio_hide').style.display == 'block'){
 		        $('#portfolio_hide').style.display = 'none';
@@ -523,10 +523,10 @@
 	      };
 
 	      function hide_portfolio(number){
-                    console.log('hide more!');
+            console.log('hide more!');
 		    $('#portfolioComment_'+number).hide();
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
+            var h = document.getElementById('portfolio_hide');
+            var s = document.getElementById('portfolio_show');
 		    if (h.style.display == 'block'){
 		        h.style.display = 'none';
 		    }
@@ -554,10 +554,10 @@
               }
 
 	      socket.on('new portfolio comment', function(data){
-                    console.log('new portfolio comment on home');
+            console.log('new portfolio comment on home');
 		    var uid = data.from_uid;
-                    var p_id = data.p_id;
-                    console.log(p_id);
+            var p_id = data.p_id;
+            console.log(p_id);
 		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
@@ -580,19 +580,19 @@
 	      });
 
 	      socket.on('update portfolio comment', function(docs){
-                  console.log('socket on portfolio comment:'+p_id);
-		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	          for(var i = 0; i < docs.length; i++){
-                      if (docs[i]['p_id']) {
-                          var p_id = docs[i]['p_id'];
-                          console.log('If!');
-		          if (docs[i]['user']['uid']){
-				var uid = docs[i]['user']['uid'];
-				var n  = users.indexOf(uid);
-				var data = docs[i];
-				var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+            console.log('socket on portfolio comment:'+p_id);
+		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	        for(var i = 0; i < docs.length; i++){
+                if (docs[i]['p_id']) {
+                    var p_id = docs[i]['p_id'];
+                    console.log('If!');
+		            if (docs[i]['user']['uid']){
+						var uid = docs[i]['user']['uid'];
+						var n  = users.indexOf(uid);
+						var data = docs[i];
+						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 				if ( n != -1) {
 				      if (uid == {{user.id}}){
 				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
@@ -706,32 +706,32 @@
                 var communitydocs = data.community;
                 var len_share = sharedocs.length;
                 var len_community = communitydocs.length;
-	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	            var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	            var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
-		var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
-		var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
-		var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
+		        var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
+		        var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+		        var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
                 while (i_share < len_share || i_community < len_community){
                     if (i_share < len_share && i_community < len_community){
                        var t_share = sharedocs[i_share]["created"];
                        var t_community = communitydocs[i_community]["created"];
                        if (t_share > t_community){
-			  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-			  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-			  var uid = sharedocs[i_share]['to_uid'];
+				          var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+						  var uid = sharedocs[i_share]['to_uid'];
                           var content = sharedocs[i_share]['content'];
                           console.log("content:"+content+"i_share:"+i_share);
-			  var n  = users.indexOf(uid);
-			  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-			  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+						  var n  = users.indexOf(uid);
+						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+						  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
                           i_share += 1;
                        }else{
-			  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-			  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-			  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+						  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+						  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+community[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
                           i_community += 1;
                        }
@@ -739,17 +739,17 @@
                     }else if(i_share < len_share){
                        var t_share = sharedocs[i_share]["created"];
                        var content = sharedocs[i_share]['content'];
-		       var n  = users.indexOf(uid);
-		       var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-		       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-		       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-		       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+				       var n  = users.indexOf(uid);
+				       var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+				       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+				       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+				       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
                        i_share += 1;
 
                     }else if(i_community < len_community){
-		       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-		       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-		       $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+				       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+				       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+				       $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
                        i_community += 1;
 
                     }

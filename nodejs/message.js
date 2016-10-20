@@ -456,6 +456,10 @@ io.on('connection', function(socket){
            var newdocs = [];
            var curIdx = 0;
            var len = sharedocs.length;
+           if (len == 0){
+               socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+           }eles{
+
 	   async.each(sharedocs, function(docs){
 		if (docs.content_type == 1){
 		  async.waterfall([
@@ -503,6 +507,7 @@ io.on('connection', function(socket){
                  }
 		}
           });
+   }
         },
         ], function(err, result){
           console.log("err:"+err);

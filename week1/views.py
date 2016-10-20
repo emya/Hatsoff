@@ -1046,21 +1046,13 @@ def messages(request):
 
     users = []
     usernames = []
-    userphoto = []
     for u in allusers:
-        try:
-            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-        except Profile.DoesNotExist:
-            prof = None
-
-        if prof != None:
-            users.append(u.id)
-            #usernames.append([u.first_name, u.last_name])
-            usernames.append(u.first_name)
-            userphoto.append(str(prof))
+        users.append(u.id)
+        #usernames.append([u.first_name, u.last_name])
+        usernames.append(u.first_name)
 
     media_url = settings.MEDIA_URL
-    variables = RequestContext(request, {'users':users, 'usernames':usernames, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
+    variables = RequestContext(request, {'users':users, 'usernames':usernames, 'media_url':media_url, 'nodejs_url':nodejs_url})
     return render_to_response('week1/message.html', variables, )
 
 @login_required

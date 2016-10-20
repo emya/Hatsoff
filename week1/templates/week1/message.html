@@ -186,6 +186,15 @@
                   div.appendChild(elem);
 
                  }
+
+                 if ($('#short-room-'+room_id).length == 0){
+                  var div = document.getElementById('chatusers');
+                  var elem = document.createElement("div");
+                  elem.setAttribute('class', 'row');
+                  elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-miniheading">'+usernames[n]+'</div><div class="panel-minibody"><ul class="chat" id="short-room-'+room_id+'"></ul></div></div></div></div>';
+                  div.appendChild(elem);
+
+                 }
                  /**
                  var elem = document.getElementById('acceptMessage');
                  var div = document.createElement("div");
@@ -197,9 +206,9 @@
                  for(var j=0; j < mdocs.length; j++){
                      if ( j== 0){
                         if (n != -1){
-                           $('#chatusers').append($('<li><span class="error"><br>'+usernames[n]+' : '+mdocs[j]['content']+'</span><br/>')); 
+                           $('#short-room-'+room_id).append($('<li><span class="error"><br>'+mdocs[j]['content']+'</span><br/>')); 
                         }else{
-                           $('#chatusers').append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
+                           $('#short-room-'+room_id).append($('<li><span class="error"><br>'+mdocs[j]['content']+'</span><br/>')); 
                         }
                       }
 

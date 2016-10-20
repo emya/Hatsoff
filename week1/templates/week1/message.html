@@ -109,11 +109,12 @@
           ***/
 
           socket.on('new accept user', function(data){
+             var n  = users.indexOf(data.uid);
 
              var div = document.getElementById('acceptMessage');
              var elem = document.createElement("div");
              elem.setAttribute('class', 'row');
-             elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with</div><div class="panel-body"><ul class="chat" id="message-room-'+data.room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+data.room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+data.room_id+'\')">Send</button></span></div></div></div></div></div>';
+             elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with '+usernames[n]+'</div><div class="panel-body"><ul class="chat" id="message-room-'+data.room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+data.room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+data.room_id+'\')">Send</button></span></div></div></div></div></div>';
              div.appendChild(elem);
              //$('#message-room-'+data.room_id).append($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>')); 
 
@@ -121,7 +122,7 @@
                 $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
 
              }else{
-                $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
+                $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
              }
              /***
              var elem = document.getElementById('acceptMessage');
@@ -144,6 +145,7 @@
           socket.on('update first message', function(docs){
             for(var i=0; i < docs.length; i++){
               var uid = (docs[i]['uid1'] == {{user.id}}) ? docs[i]['uid2'] : docs[i]['uid1'];
+              var n  = users.indexOf(uid);
 
               console.log("user id:"+{{user.id}});
               console.log("uid:"+uid);
@@ -167,12 +169,13 @@
             console.log('update chat message');
             for(var i=0; i < docs.length; i++){
               var uid = (docs[i]['uid1'] == {{user.id}}) ? docs[i]['uid2'] : docs[i]['uid1'];
+              var n  = users.indexOf(uid);
 
               console.log("user id:"+{{user.id}});
               console.log("uid:"+uid);
               console.log("first message:"+docs[i]);
 
-              var n  = users.indexOf(uid);
+             
 
               if (docs[i]['messages']){
                  var room_id = docs[i]['_id'];
@@ -182,7 +185,7 @@
                   var div = document.getElementById('acceptMessage');
                   var elem = document.createElement("div");
                   elem.setAttribute('class', 'row');
-                  elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with</div><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
+                  elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with'+usernames[n]+'</div><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
                   div.appendChild(elem);
 
                  }
@@ -214,10 +217,10 @@
 
                      if ( mdocs[j]['uid'] == uid ) {
                         if (n != -1){
-                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+usernames[n]+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }else{
-                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }
                      }else{

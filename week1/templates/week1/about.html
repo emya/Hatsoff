@@ -3,6 +3,22 @@
 
 {% block content %}
 <!--button class="btn btn-primary" data-toggle="modal" data-target=".bd-mymodal-lg">Large modal</button-->
+<!--script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"-->
+<script type="text/javascript">
+  $(window).load(function(){
+    var p_type = "{{p_type}}";
+    console.log("p_type");
+    if (p_type != "-1"){
+      //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
+      $('.bd-mymodal-lg').modal();
+      console.log("hey:"+p_type+' : '+typeof(p_type));
+    }else{
+      console.log("hey else:"+p_type+' : '+typeof(p_type));
+    }
+
+  });
+  
+ </script>
 
 <div class="modal fade bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

@@ -155,7 +155,7 @@ def about(request):
 
                 return render_to_response('week1/about.html', variables, )
 
-    variables = RequestContext(request, {})
+    variables = RequestContext(request, {'p_type':-1})
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/about.html', variables, )

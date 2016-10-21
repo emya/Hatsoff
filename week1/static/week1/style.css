@@ -163,6 +163,14 @@ img.icons_img {
    padding: 0 10px;
 }
 
+#myModal {
+   display: none;
+}
+
+.modal {
+   display: none;
+}
+
 #footer-wrapper {
    width: 100%;
    background-color: #efefef;

@@ -199,11 +199,9 @@
 
 
 <!--original lines-->
-    <div class="post-wrapper">
 	<!--form action="">
 	  <textarea id="p" autocomplete="off" placeholder=" Enter text, website or video URL" rows="5" cols="70"></textarea><button>Post</button>
 	</form-->
-    </div>
 
 
     <!--ul style="list-style-type:none; padding-left:0px;">
@@ -385,11 +383,12 @@
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               for(var i=0; i < docs.length; i++){
                  if (docs[i]['user']['uid']) {
-			var uid = docs[i]['user']['uid'];
+			                  var uid = docs[i]['user']['uid'];
                         var c_id = docs[i]['_id'];
-			var n  = users.indexOf(uid);
-			var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+			                  var n  = users.indexOf(uid);
+			                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id;
                         var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Gave a Hatsoff!</br></span></div>';
                         var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
@@ -401,17 +400,17 @@
 			   if (uid == {{user.id}}){
 			       //$('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+reply+'</div><br/>'));
 
-                              $('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+                              $('#communityPost').append($('<a href="'+post_link+'"><li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li></a>'));
 			   } else{
-                              $('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+                              $('#communityPost').append($('<a href="'+post_link+'"><li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li></a>'));
 			       //$('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+hatsoff+thanks+follow+'</br>'+reply+'</div><br/>'));
 			   }
 			} else{
 			   if (uid == {{user.id}}){
-                              $('#communityPost').append($('<li class="media"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+                              $('#communityPost').append($('<a href="'+post_link+'"><li class="media"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li></a>'));
 			       //$('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+reply+'</div><br/>'));
 			   } else{
-                              $('#communityPost').append($('<li class="media"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+                              $('#communityPost').append($('<a href="'+post_link+'"><li class="media"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs[i]['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li></a>'));
 			       //$('#communityPost').append($('<li><div class="post-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="post-content">'+docs[i]['content']+'</p></br>'+like+shareskill+share+hatsoff+thanks+follow+'</br>'+reply+'</div><br/>'));
 			   }
 			}

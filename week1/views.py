@@ -1161,6 +1161,25 @@ def community(request):
     return render_to_response('week1/community.html', variables, )
 
 @login_required
+def community_post(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    c_id = request.GET.get('c_id')
+    print "c_id:", c_id
+
+    uid = request.user.id
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
+    currentuser = User.objects.get(id=uid, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'c_id':c_id})
+    return render_to_response('week1/community_post.html', variables, )
+
+@login_required
 def notification(request):
     query = request.GET.get('search_query', None)
     

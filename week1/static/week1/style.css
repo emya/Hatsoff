@@ -1690,3 +1690,7 @@ input[type="file"]{
     background-color: #555;
 }
 
+.post-body li {
+  list-style-type:none; 
+}
+

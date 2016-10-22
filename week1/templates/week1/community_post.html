@@ -26,28 +26,91 @@
   <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="well well-sm">
-          <form class="form-horizontal" action="" method="">
           <fieldset>
             <legend class="text-center">
-	      Do you have project updates or questions to the community?
             </legend>
     
             <!-- Post body -->
             <div class="eachpost">
-              <div class="col-md-9 post-body">
+              <div class="col-md-10 post-body">
               </div>
             </div>
     
             <!-- Form actions -->
           </fieldset>
-          </form>
         </div>
       </div>
   </div>
 
 
 
+<div class="community-container">
   <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+       {% if upcoming %}
+       <h3> About this project </h3>
+          {% if upcoming.image %}
+              <img src="{{ upcoming.image.url }}" class="maincontent">
+          {% else %}
+              <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+          {% endif %}
+           <div class="description-wrapper">
+              <ul>
+                <li>Description of your upcoming work:{{upcoming.describe}}</li>
+                <li>Your role:{{upcoming.role}}</li>
+                <li>Status:{{upcoming.status}}</li>
+                <li>Target finish date:{{upcoming.targetdate}}</li>
+                <li>Comment:{{upcoming.comment}}</li>
+              </ul>
+              <ul>
+                <li><span style="font-weight: bold;">Looking for</span>
+                  <br>&nbsp{{upcoming.collaborators}}</br></li>
+                <li>Funding:{{upcoming.fund}}</li>
+                <li>Comment:{{upcoming.comment_help}}</li>
+              </ul>
+           </div>
+
+           <hr class="divider"/>
+             
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#leaveComment_upcoming" data-toggle="tab">Leave Comment</a></li>
+              <li><a href="#showComment_upcoming" data-toggle="tab">Show Comment</a></li>
+            </ul>
+
+            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+              <div class="tab-pane active" id="leaveComment_upcoming">
+                <div class="well well-ssm">
+                  <form class="form-horizontal" action="" id="upcoming_form">
+                      <fieldset>
+                        <!-- Post body -->
+                        <div class="form-group">
+                          <div class="col-md-9">
+                            <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+                          </div>
+                        </div>
+          
+                        <!-- Form actions -->
+                        <div class="form-group">
+                          <div class="col-md-12 text-right">
+                          <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
+                          </div>
+                        </div>
+                      </fieldset>
+                  </form>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="showComment_upcoming">
+                <ul style="list-style-type:none; padding-left:30px;">
+                  <div id="upcomingComment"></div>
+                </ul>
+              </div>
+           </div>
+       {% endif %}
+    </div>
+  </div>
+</div>
+  <!--div class="row">
     <div class="col-sm-10 col-sm-offset-3" id="logout">
         <div class="comment-tabs">
             <div class="tab-content">
@@ -60,7 +123,7 @@
             </div>
         </div>
 	</div>
-  </div>
+  </div-->
 </div>
 
 
@@ -78,109 +141,109 @@
           socket.emit('join community post', {uid:{{user.id}}, uname:"{{user.first_name}}", c_id:"{{c_id}}" });
           /***to here***/
           function popShare(){
-	    var popup = document.getElementById('sharePop');
+      	    var popup = document.getElementById('sharePop');
             popup.classList.toggle('show');
-	  }
+      	  }
 
           function shareFunction(uid, c_id){
             console.log('uid on share:'+uid+':'+c_id);
             popShared();
-	    socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	          socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
           }
 
           function popShared(){
-	    var popup = document.getElementById('sharedPop');
+      	    var popup = document.getElementById('sharedPop');
             popup.classList.toggle('show');
-	  }
+      	  }
 
           function popShareSkill(){
-	    var popup = document.getElementById('shareskillPop');
+      	    var popup = document.getElementById('shareskillPop');
             popup.classList.toggle('show');
-	  }
+      	  }
 
           function shareskillFunction(uid, c_id){
             console.log('uid on shareskill:'+uid+':'+c_id);
             popThankyou();
-	    socket.emit('share skill', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+      	    socket.emit('share skill', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
           }
 
           function popThankyou(){
-	    var popup = document.getElementById('thankyouPop');
+	          var popup = document.getElementById('thankyouPop');
             popup.classList.toggle('show');
-	  }
+	        }
 
           function hatsoffFunction(uid){
             console.log('uid on hatsoff:'+uid);
             popHatsoff();
-	    socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}});
+	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}});
           }
 
           function popHatsoff(){
-	    var popup = document.getElementById('hatsoffPop');
+	          var popup = document.getElementById('hatsoffPop');
             popup.classList.toggle('show');
-	  }
+	        }
 
           function thanksFunction(uid){
             console.log('uid on thanks:'+uid);
             popThanks();
-	    socket.emit('give thanks', {to_uid:uid, uid:{{user.id}}});
+	          socket.emit('give thanks', {to_uid:uid, uid:{{user.id}}});
           }
 
           function popThanks(){
-	    var popup = document.getElementById('thanksPop');
+	          var popup = document.getElementById('thanksPop');
             popup.classList.toggle('show');
-	  }
+	        }
 
           function followFunction(uid){
             console.log('uid on follow:'+uid);
             popFollow();
-	    socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
+	          socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
           }
 
           function popFollow(){
-	    var popup = document.getElementById('followPop');
+	          var popup = document.getElementById('followPop');
             popup.classList.toggle('show');
-	  }
+	        }
 
           function likeFunction(uid, c_id){
             console.log('uid on like:'+uid+':'+c_id);
             popLike();
-	    socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
           }
 
           function popLike(){
-	    var popup = document.getElementById('likePop');
+	          var popup = document.getElementById('likePop');
             popup.classList.toggle('show');
-	  }
+	        }
 
           function replyFunction(uid, c_id){
             console.log('reply uid:'+uid+':'+c_id);
             console.log('reply comment:'+$('#replyComment_'+c_id).val());
             var reply = $('#replyComment_'+c_id).val();
 
-	    socket.emit('reply community', {to_uid:uid, uid:{{user.id}}, c_id:c_id, msg:reply});
+	          socket.emit('reply community', {to_uid:uid, uid:{{user.id}}, c_id:c_id, msg:reply});
             $('#replyComment_'+c_id).val('');
           }
 
-	  $('form').submit(function(){
+      	  $('form').submit(function(){
             if ($('#p').val().length != 0){
-		socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}}, function(data){
-		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
-		});
-		$('#p').val('');
-		return false;
-	    }
-	  });
+      		         socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}}, function(data){
+      		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+      		  });
+      		  $('#p').val('');
+      		  return false;
+      	    }
+	        });
 
-	  socket.on('new reply community', function(data){
+	        socket.on('new reply community', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
               console.log('new reply community c_id:'+c_id);
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               var n  = users.indexOf(uid);
-	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+      	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+      	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
               if ( n != -1) {
                     if (uid == {{user.id}}){
 	               //$('#communityPost').prepend($('<hr>'));
@@ -199,7 +262,7 @@
               }
           });
 	 
-	  socket.on('get community post', function(docs){
+	        socket.on('get community post', function(docs){
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               if (docs['user']['uid']) {
@@ -218,7 +281,7 @@
                   			if ( n != -1) {
                   			   if (uid == {{user.id}}){
 
-                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+                              $('.post-body').append($('<li class="media" style="ist-style-type:none;"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
 			                      } else{
                               $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
                   			   }
@@ -230,7 +293,7 @@
 			                      }
 			                  }
                         if (docs['replys']) {
-                           var rdocs = docs[i]['replys'];
+                           var rdocs = docs['replys'];
                            console.log('replys');
                            for(var j=0; j < rdocs.length; j++){
                               if (rdocs[j]['user']['uid']){

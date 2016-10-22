@@ -46,6 +46,7 @@ var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
   replys: [replySchema],
+  tag: Number,//1: Yes, -1: No
   created: {type: Date, default:Date.now}
 });
 
@@ -237,7 +238,7 @@ io.on('connection', function(socket){
     var query = CommunityPost.find({});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('join community'+docs);
+      //console.log('join community'+docs);
       socket.emit('update community post', docs);
     }); 
 
@@ -765,14 +766,15 @@ io.on('connection', function(socket){
   socket.on('community post', function(data, callback){
     var d = new Date();
     console.log('date:'+d); 
+    console.log('tag:'+data.tag); 
     
-    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag});
     newPost.save(function(err, post){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:'+post.id);
-        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id});
+        console.log('saved:'+post);
+        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag});
       }
     });
   });

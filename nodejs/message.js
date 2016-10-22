@@ -203,11 +203,13 @@ io.on('connection', function(socket){
 io.on('connection', function(socket){
 
   socket.on('join message', function(data){
-     /** temporary
-     PortfolioPost.find({}).remove().exec();
+     /**
      PortfolioPost.find({p_id:2}).remove().exec();
+     PortfolioPost.find({}).remove().exec();
      CommunityPost.find({}).remove().exec();
      CommentPost.find({}).remove().exec();
+     SharePost.find({}).remove().exec();
+     ShareSkillPost.find({}).remove().exec();
      NotificationPost.find({}).remove().exec();
      MessageRelation.find({}).remove().exec();
      **/
@@ -255,6 +257,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('at folder', function(data){
+    /**
     console.log('at folder'+socket.uid);
     var query = ShareSkillPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -262,6 +265,40 @@ io.on('connection', function(socket){
       console.log('at folder'+docs);
       socket.emit('update shareskill', docs);
     }); 
+    **/
+    var query = ShareSkillPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, sharedocs){
+           console.log('share skill:'+sharedocs);
+           var newdocs = [];
+           var curIdx = 0;
+           var len = sharedocs.length;
+           async.each(sharedocs, function(docs){
+              async.waterfall([
+                 function(callback){
+                    CommunityPost.findOne({'_id':docs.community_id}).exec(function(err, post){
+                      callback(null, post);
+                    });
+                 },
+                 function(post){
+                   console.log("second");
+                   if (post){
+                      docs.set('community', post.toJSON(), {strict: false});
+                      newdocs.push(docs);
+                   }else{
+                      newdocs.push(docs);
+                   }
+                   //console.log("****newdocs****:"+newdocs);
+                   curIdx += 1;
+                   if (curIdx == len){
+                     console.log("***********************************length of newdocs:"+newdocs.length);
+                     socket.emit('update shareskill', newdocs);
+                   }
+                 }
+              ], function(err, result){
+              });
+            });
+
+     });
   });
 
   socket.on('at hatsoff', function(data){
@@ -472,26 +509,27 @@ io.on('connection', function(socket){
            }else{
 
 		   async.each(sharedocs, function(docs){
-			if (docs.content_type == 1){
+			  if (docs.content_type == 1){
 			  async.waterfall([
 			     function(callback){
-				 CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
-				    callback(null, post);
-				 });
+				      CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
+				        callback(null, post);
+				      });
 			     },
 			     function(post){
-				 console.log("second");
-				 docs.set('content', post.toJSON(), {strict: false});
-				 newdocs.push(docs);
-				 //console.log("****newdocs****:"+newdocs);
-				 curIdx += 1;
-				 if (curIdx == len){
-				  console.log("***********************************length of newdocs:"+newdocs.length);
-				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-				 }
-			     }
-			  ], function(err, result){
-			  });
+    				 console.log("second");
+    				 docs.set('content', post.toJSON(), {strict: false});
+    				 newdocs.push(docs);
+    				 //console.log("****newdocs****:"+newdocs);
+    				 curIdx += 1;
+    				 if (curIdx == len){
+    				  console.log("***********************************length of newdocs:"+newdocs.length);
+    				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+    				 }
+    			 }
+    		], function(err, result){
+    	});
+
 			} else if(docs.content_type == 2){
 			 curIdx += 1;
 			 if (curIdx == len){

@@ -43,13 +43,11 @@
 	<div class="home-step">
 	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
             <ul style="list-style-type:none">
-		<li>Fun fact about you:{{profile.funaboutyou}}</li>
-		<li>Hobby:{{profile.hobby}}</li>
-		<li>Favorite quote:{{profile.fQuote}}</li>
-		<li>Favorite film:{{profile.fFilm}}</li>
-		<li>Favorite TV show:{{profile.fTV}}</li>
-		<li>Favorite youTube channel:{{profile.fYoutube}}</li>
-		<li>Favorite book:{{profile.fBook}}</li>
+				<li>Hobby:{{profile.hobby}}</li>
+				<li>Favorite quote:{{profile.fQuote}}</li>
+				<li>Favorite film:{{profile.fFilm}}</li>
+				<li>Favorite book/author:{{profile.fBook}}</li>
+				<li>Book/Film/TV show you are reading/watching now:{{profile.filmNow}}</li>
             </ul>
 	</div>
     </div>
@@ -808,7 +806,7 @@
 	<div id="message-board">
         </div>
 
-
+    
 	<!--div id="thanks-hatsoff">
 	    <h4>Thanks - Hats off</h4>
 	    <div id="hatsoffusers">

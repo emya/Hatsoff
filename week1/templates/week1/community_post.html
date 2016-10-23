@@ -1,0 +1,323 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<!--div id="home-friends">
+
+<h4>Folder</h4>
+<ul style="list-style-type:none">
+{% if folderusers %}
+   {% for u in folderusers %}
+        {% if u.photo %}
+	   <li><img src="{{ u.photo.url }}" width="50px"></li>
+        {% else %}
+	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
+        {% endif %}
+   {% endfor %}
+{% endif %}
+</ul>
+</div-->
+
+<div id="home-main">
+
+<div class="community-container">
+  <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="well well-sm">
+          <fieldset>
+            <legend class="text-center">
+            </legend>
+    
+            <!-- Post body -->
+            <div class="eachpost">
+              <div class="col-md-10 post-body">
+              </div>
+            </div>
+    
+            <!-- Form actions -->
+          </fieldset>
+        </div>
+      </div>
+  </div>
+
+
+
+<div class="community-container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+       {% if upcoming %}
+       <h3> About this project </h3>
+          {% if upcoming.image %}
+              <img src="{{ upcoming.image.url }}" class="maincontent">
+          {% else %}
+              <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+          {% endif %}
+           <div class="description-wrapper">
+              <ul>
+                <li>Description of your upcoming work:{{upcoming.describe}}</li>
+                <li>Your role:{{upcoming.role}}</li>
+                <li>Status:{{upcoming.status}}</li>
+                <li>Target finish date:{{upcoming.targetdate}}</li>
+                <li>Comment:{{upcoming.comment}}</li>
+              </ul>
+              <ul>
+                <li><span style="font-weight: bold;">Looking for</span>
+                  <br>&nbsp{{upcoming.collaborators}}</br></li>
+                <li>Funding:{{upcoming.fund}}</li>
+                <li>Comment:{{upcoming.comment_help}}</li>
+              </ul>
+           </div>
+
+           <hr class="divider"/>
+             
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#leaveComment_upcoming" data-toggle="tab">Leave Comment</a></li>
+              <li><a href="#showComment_upcoming" data-toggle="tab">Show Comment</a></li>
+            </ul>
+
+            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+              <div class="tab-pane active" id="leaveComment_upcoming">
+                <div class="well well-ssm">
+                  <form class="form-horizontal" action="" id="upcoming_form">
+                      <fieldset>
+                        <!-- Post body -->
+                        <div class="form-group">
+                          <div class="col-md-9">
+                            <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+                          </div>
+                        </div>
+          
+                        <!-- Form actions -->
+                        <div class="form-group">
+                          <div class="col-md-12 text-right">
+                          <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
+                          </div>
+                        </div>
+                      </fieldset>
+                  </form>
+                </div>
+              </div>
+
+              <div class="tab-pane" id="showComment_upcoming">
+                <ul style="list-style-type:none; padding-left:30px;">
+                  <div id="upcomingComment"></div>
+                </ul>
+              </div>
+           </div>
+       {% endif %}
+    </div>
+  </div>
+</div>
+  <!--div class="row">
+    <div class="col-sm-10 col-sm-offset-3" id="logout">
+        <div class="comment-tabs">
+            <div class="tab-content">
+                <div class="tab-pane active" id="comments-logout">                
+                    <ul class="media-list" id="communityPost">
+                      
+                    </ul> 
+                </div>
+
+            </div>
+        </div>
+	</div>
+  </div-->
+</div>
+
+
+
+
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+	  /*var socket = io();*/
+          var socket = io.connect("{{nodejs_url}}");
+
+          /***new lines***/
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('join community post', {uid:{{user.id}}, uname:"{{user.first_name}}", c_id:"{{c_id}}" });
+          /***to here***/
+          function popShare(){
+      	    var popup = document.getElementById('sharePop');
+            popup.classList.toggle('show');
+      	  }
+
+          function shareFunction(uid, c_id){
+            console.log('uid on share:'+uid+':'+c_id);
+            popShared();
+	          socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
+
+          function popShared(){
+      	    var popup = document.getElementById('sharedPop');
+            popup.classList.toggle('show');
+      	  }
+
+          function popShareSkill(){
+      	    var popup = document.getElementById('shareskillPop');
+            popup.classList.toggle('show');
+      	  }
+
+          function shareskillFunction(uid, c_id){
+            console.log('uid on shareskill:'+uid+':'+c_id);
+            popThankyou();
+      	    socket.emit('share skill', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
+
+          function popThankyou(){
+	          var popup = document.getElementById('thankyouPop');
+            popup.classList.toggle('show');
+	        }
+
+          function hatsoffFunction(uid){
+            console.log('uid on hatsoff:'+uid);
+            popHatsoff();
+	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popHatsoff(){
+	          var popup = document.getElementById('hatsoffPop');
+            popup.classList.toggle('show');
+	        }
+
+          function thanksFunction(uid){
+            console.log('uid on thanks:'+uid);
+            popThanks();
+	          socket.emit('give thanks', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popThanks(){
+	          var popup = document.getElementById('thanksPop');
+            popup.classList.toggle('show');
+	        }
+
+          function followFunction(uid){
+            console.log('uid on follow:'+uid);
+            popFollow();
+	          socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popFollow(){
+	          var popup = document.getElementById('followPop');
+            popup.classList.toggle('show');
+	        }
+
+          function likeFunction(uid, c_id){
+            console.log('uid on like:'+uid+':'+c_id);
+            popLike();
+	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
+
+          function popLike(){
+	          var popup = document.getElementById('likePop');
+            popup.classList.toggle('show');
+	        }
+
+          function replyFunction(uid, c_id){
+            console.log('reply uid:'+uid+':'+c_id);
+            console.log('reply comment:'+$('#replyComment_'+c_id).val());
+            var reply = $('#replyComment_'+c_id).val();
+
+	          socket.emit('reply community', {to_uid:uid, uid:{{user.id}}, c_id:c_id, msg:reply});
+            $('#replyComment_'+c_id).val('');
+          }
+
+      	  $('form').submit(function(){
+            if ($('#p').val().length != 0){
+      		         socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}}, function(data){
+      		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+      		  });
+      		  $('#p').val('');
+      		  return false;
+      	    }
+	        });
+
+	        socket.on('new reply community', function(data){
+              var uid = data.uid;
+              var c_id = data.community_id;
+              console.log('new reply community c_id:'+c_id);
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              var n  = users.indexOf(uid);
+      	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+      	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+              if ( n != -1) {
+                    if (uid == {{user.id}}){
+	               //$('#communityPost').prepend($('<hr>'));
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    } else{
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    }
+
+              }else{
+	          //$('#communityPost').prepend($('<hr>'));
+                    if (uid == {{user.id}}){
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    } else {
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    }
+              }
+          });
+	 
+	        socket.on('get community post', function(docs){
+              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              if (docs['user']['uid']) {
+			                  var uid = docs['user']['uid'];
+                        var c_id = docs['_id'];
+			                  var n  = users.indexOf(uid);
+			                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Gave a Hatsoff!</br></span></div>';
+                        var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
+                        var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
+                        var like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+                        var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
+                        var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
+                        var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
+                  			if ( n != -1) {
+                  			   if (uid == {{user.id}}){
+
+                              $('.post-body').append($('<li class="media" style="ist-style-type:none;"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+			                      } else{
+                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+                  			   }
+                  			} else{
+                  			   if (uid == {{user.id}}){
+                              $('.post-body').append($('<li class="media"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+			                      } else{
+                              $('.post-body').append($('<li class="media"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><div class="media-body"><div class="well well-lg"><h4 class="media-heading text-uppercase reviews">'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p><a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+hatsoff+thanks+follow+like+shareskill+share+'</div></div></li>'));
+			                      }
+			                  }
+                        if (docs['replys']) {
+                           var rdocs = docs['replys'];
+                           console.log('replys');
+                           for(var j=0; j < rdocs.length; j++){
+                              if (rdocs[j]['user']['uid']){
+                      				  var ruid = rdocs[j]['user']['uid']
+                      				  var m  = users.indexOf(ruid);
+                      				  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+                      				  if ( m != -1) {
+                      				     $('#replyHistory_'+c_id).append($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p class="reply-content">'+rdocs[j]['content']+'</p></br></div><br/>'));
+                      				   }else{
+                      				     $('#replyHistory_'+c_id).append($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p class="reply-content">'+rdocs[j]['content']+'</p></br></div><br/>'));
+                  				       }
+                               }
+                           }
+                        }
+              }
+	  });
+        
+          /**
+	  socket.on('whisper', function(data){
+	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+          });
+          **/
+    </script>
+</div>
+
+
+{% endblock %}

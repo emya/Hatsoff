@@ -2,12 +2,160 @@
 {% load staticfiles %}
 
 {% block content %}
+<!--button class="btn btn-primary" data-toggle="modal" data-target=".bd-mymodal-lg">Large modal</button-->
+<!--script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"-->
+<script type="text/javascript">
+  $(window).load(function(){
+    var p_type = "{{p_type}}";
+    console.log("p_type");
+    if (p_type != "-1"){
+      //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
+      $('.bd-mymodal-lg').modal();
+      console.log("hey:"+p_type+' : '+typeof(p_type));
+    }else{
+      console.log("hey else:"+p_type+' : '+typeof(p_type));
+    }
+
+  });
+  
+ </script>
+
+<div class="modal fade bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <!--h4 class="modal-title" id="myModalLabel"-->
+                <h4 class="signupLabel">
+                    Login/SignUp to MatchHat</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
+                    <div class="col-md-10">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            {% if p_type %}
+                                {% if p_typ == 0 %}
+            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                {% else %}
+            <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+            <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                {% endif %}
+                            {% else %}
+                            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+                            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                            {% endif %}
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content" style="text-align:center;">
+                            {% if p_type %}
+                                {% if p_typ == 0 %}
+                                    <div class="tab-pane active" id="LoginTop">
+                                {% else %}
+                                    <div class="tab-pane" id="LoginTop">
+                                {% endif %}
+                            {% else %}
+                               <div class="tab-pane active" id="LoginTop">
+                            {% endif %}
+
+                                <!--form role="form" class="form-horizontal"-->
+                                <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
+            {% if form.non_field_errors  %}
+            <ul style="list-style-type:none">
+               {% for error in form.non_field_errors %}
+            <li>{{error}}</li>
+               {% endfor %}
+            </ul>
+            {% endif %}
+                                <div class="form-group">
+          <br>
+          <br>
+                                  <input type="email" name="username" id="username" placeholder=" Email" class="sign-text">
+          <br>
+          <br>
+                <input type="password" name="password" id="password" placeholder=" Password">
+                                </div>
+
+                                <div class="row">
+        <a href="{% url 'week1:reset' %}">Forgot password?</a>
+        <div class="login-wrapper">
+           <input type="submit" value="Log me in" name="login" class="login-submit"/>
+        </div>
+        <input type="hidden" name="next" value="/home/" />
+                                </div>
+                                </form>
+                            </div>
+                            {% if p_type %}
+                                {% if p_typ == 0 %}
+                                    <div class="tab-pane" id="Signup">
+                                {% else %}
+                                    <div class="tab-pane active" id="Signup">
+                                {% endif %}
+                            {% else %}
+                               <div class="tab-pane" id="Signup">
+                            {% endif %}
+
+
+                                <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
+            {% if form.non_field_errors  %}
+            <ul style="list-style-type:none">
+               {% for error in form.non_field_errors %}
+            <li>{{error}}</li>
+               {% endfor %}
+            </ul>
+            {% endif %}
+                                <div class="form-group">
+          <br>
+          <br>
+          <input type="email" name="username" placeholder=" Email" class="sign-text">
+          <br>
+          <br>
+          <input type="text" name="first_name" placeholder=" First Name" class="sign-text">
+          <br>
+          <br>
+          <input type="text" name="last_name" placeholder=" Last Name" class="sign-text">
+          <br>
+          <br>
+          <div class="popup" onclick="popFunction()">
+          <input type="password" name="password1" placeholder=" Password">
+          <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+          </div>
+          <br>
+          <br>
+          <input type="password" name="password2" placeholder=" Confirm Password">
+          <br>
+          <br>
+
+                                </div>
+                                <div class="row">
+            <div class="login-wrapper">
+                <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+            </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+      ...
+    </div>
+  </div>
+</div>
+
+
 <div class="paragraph">
 	<img src="{% static 'images/indextop_tmp.png'%}" align="center" width="350px">
 	<h3>Leave a trace in the world with what you create</h3>
 </div>
 
-<div class="paragraph">
+<div class="row">
+<div class="row col-xs-3">
+</div>
+<div class="row col-xs-7">
 	<p>
 	Our mission is to create a community that empowers creators, entrepreneurs to innovate, do what they love, and succeed.
 	</p>
@@ -15,6 +163,9 @@
 	<p>
 	MatchHat does not take a fee. 100% of funds and earned income goes directly to the creatives.
 	</p>
+  </div>
+  <div class="row col-xs-2">
+</div>
 </div>
 <table style="width: 750px" align="center" id="space">
    <tr class="spaceUnder">
@@ -68,144 +219,6 @@
 
 </table>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <!--h4 class="modal-title" id="myModalLabel"-->
-                <h4 class="signupLabel">
-                    Login/SignUp to MatchHat</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
-                    <div class="col-md-10">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% else %}
-				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% endif %}
-                            {% else %}
-                            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-                            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                            {% endif %}
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content" style="text-align:center;">
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane active" id="LoginTop">
-                                {% else %}
-                                    <div class="tab-pane" id="LoginTop">
-                                {% endif %}
-                            {% else %}
-                               <div class="tab-pane active" id="LoginTop">
-                            {% endif %}
 
-                                <!--form role="form" class="form-horizontal"-->
-                                <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
-				    {% if form.non_field_errors  %}
-				    <ul style="list-style-type:none">
-				       {% for error in form.non_field_errors %}
-					  <li>{{error}}</li>
-				       {% endfor %}
-				    </ul>
-				    {% endif %}
-                                <div class="form-group">
-				  <br>
-				  <br>
-                                  <input type="email" name="username" id="username" placeholder=" Email" class="sign-text">
-				  <br>
-				  <br>
-			          <input type="password" name="password" id="password" placeholder=" Password">
-                                </div>
-
-                                <div class="row">
-				<a href="{% url 'week1:reset' %}">Forgot password?</a>
-				<div class="login-wrapper">
-				   <input type="submit" value="Log me in" name="login" class="login-submit"/>
-				</div>
-				<input type="hidden" name="next" value="/home/" />
-                                </div>
-                                </form>
-                            </div>
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane" id="Signup">
-                                {% else %}
-                                    <div class="tab-pane active" id="Signup">
-                                {% endif %}
-                            {% else %}
-                               <div class="tab-pane" id="Signup">
-                            {% endif %}
-
-
-                                <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
-				    {% if form.non_field_errors  %}
-				    <ul style="list-style-type:none">
-				       {% for error in form.non_field_errors %}
-					  <li>{{error}}</li>
-				       {% endfor %}
-				    </ul>
-				    {% endif %}
-                                <div class="form-group">
-				  <br>
-				  <br>
-				  <input type="email" name="username" placeholder=" Email" class="sign-text">
-				  <br>
-				  <br>
-				  <input type="text" name="first_name" placeholder=" First Name" class="sign-text">
-				  <br>
-				  <br>
-				  <input type="text" name="last_name" placeholder=" Last Name" class="sign-text">
-				  <br>
-				  <br>
-				  <div class="popup" onclick="popFunction()">
-				  <input type="password" name="password1" placeholder=" Password">
-				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
-				  </div>
-				  <br>
-				  <br>
-				  <input type="password" name="password2" placeholder=" Confirm Password">
-				  <br>
-				  <br>
-
-                                </div>
-                                <div class="row">
-				    <div class="login-wrapper">
-				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
-				    </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!--div id="OR" class="hidden-xs">
-                            OR</div-->
-                    </div>
-                    <!--div class="col-md-4">
-                        <div class="row text-center sign-with">
-                            <div class="col-md-12">
-                                <h3>
-                                    Sign in with</h3>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="btn-group btn-group-justified">
-                                    <a href="#" class="btn btn-primary">Facebook</a> <a href="#" class="btn btn-danger">
-                                        Google</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div-->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

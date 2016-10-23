@@ -14,16 +14,15 @@
      <div id="step-right">
             <h3>Fun Facts</h3>
 	    <form action="" method="POST" class="step-form">{% csrf_token %}
-                <br>{{form.funaboutyou.label_tag}}</br> {{form.funaboutyou}}<br/>
+                <br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/>
+                <br>{{form.explore.label_tag}}</br> {{form.explore}}<br/>
+                <br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
+                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/>
                 <br>{{form.hobby.label_tag}}</br> {{form.hobby}}<br/>
                 <br>{{form.fQuote.label_tag}}</br> {{form.fQuote}}<br/>
                 <br>{{form.fFilm.label_tag}}</br> {{form.fFilm}}<br/>
-                <br>{{form.fTV.label_tag}}</br> {{form.fTV}}<br/>
-                <br>{{form.fYoutube.label_tag}}</br> {{form.fYoutube}}<br/>
                 <br>{{form.fBook.label_tag}}</br> {{form.fBook}}<br/>
-                <br>{{form.bookNow.label_tag}}</br> {{form.bookNow}}<br/>
                 <br>{{form.filmNow.label_tag}}</br> {{form.filmNow}}<br/>
-                <br>{{form.TVNow.label_tag}}</br> {{form.TVNow}}<br/>
                 <br>{{form.cities.label_tag}}</br> {{form.cities}}<br/>
 
 	    <div class="submit-wrapper">

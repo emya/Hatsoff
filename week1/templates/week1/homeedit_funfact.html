@@ -10,13 +10,16 @@
         <h3>Update your information</h3>
         {{ form.errors }}
         <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-        {{form.funaboutyou.label_tag}}</br> {{ form.funaboutyou }}<br/>
-        {{form.hobby.label_tag}} </br>      {{ form.hobby }}<br/>
-        {{form.fQuote.label_tag}}</br>      {{ form.fQuote }}<br/>
-        {{form.fFilm.label_tag}}</br>       {{ form.fFilm }}<br/>
-        {{form.fTV.label_tag}} </br>        {{ form.fTV }}<br/>
-        {{form.fYoutube.label_tag}}</br>    {{ form.fYoutube }}<br/>
-        {{form.fBook.label_tag}} </br>      {{ form.fBook }}<br/>
+                <br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/>
+                <br>{{form.explore.label_tag}}</br> {{form.explore}}<br/>
+                <br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
+                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/>
+                <br>{{form.hobby.label_tag}}</br> {{form.hobby}}<br/>
+                <br>{{form.fQuote.label_tag}}</br> {{form.fQuote}}<br/>
+                <br>{{form.fFilm.label_tag}}</br> {{form.fFilm}}<br/>
+                <br>{{form.fBook.label_tag}}</br> {{form.fBook}}<br/>
+                <br>{{form.filmNow.label_tag}}</br> {{form.filmNow}}<br/>
+                <br>{{form.cities.label_tag}}</br> {{form.cities}}<br/>
 	<div class="submit-wrapper">
 		<input type="submit" value="Update" class="step-submit" />
 		<input type="hidden" name="next" value="home.html">

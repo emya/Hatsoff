@@ -62,7 +62,7 @@ class LoginForm(forms.Form):
 class Step1(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('photo', 'profession', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fTV', 'fYoutube', 'fBook', 'bookNow', 'filmNow', 'TVNow', 'hobby', 'cities')
+        fields = ('photo', 'profession', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
         labels = {
             'profession': _('Profession'),
             'worksAt': _('Independent/Company name'),
@@ -170,18 +170,17 @@ class Step6(forms.ModelForm):
 class Step7(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('funaboutyou', 'fQuote', 'fFilm', 'fTV', 'fYoutube', 'fBook', 'bookNow', 'filmNow', 'TVNow', 'hobby', 'cities')
+        fields = ('collaborators', 'explore', 'availableHours', 'rate', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
         labels = {
-            'funaboutyou': _('Fun fact about you (eg. I can hold my breath for 1 minute)'),
+            'collaborators': _('Collaborators you may want to collaborate with (eg. scientists)'),
+            'explore': _('Projects/ fields you may want to explore (eg. interior design)'),
+            'availableHours': _('How many hours per week would you be available for a project of your choice?'),
+            'rate': _('What is your rate? Would you be open to free collaboration?'),
             'hobby': _('Hobby'),
             'fQuote': _('Favorite quote(s)'),
-            'fFilm': _('Favorite film(s)'),
-            'fTV': _('Favorite TV show(s)'),
-            'fYoutube': _('Favorite Youtube channel(s)/video'),
-            'fBook': _('Favorite book(s)'),
-            'bookNow': _('Book you are reading now'),
-            'filmNow': _('Film you are watching now'),
-            'TVNow': _('TV series you are watching now'),
+            'fFilm': _('Favorite film/TV show/online show'),
+            'fBook': _('Favorite book/author'),
+            'filmNow': _('Book/Film/TV show you are reading/watching now'),
             'cities': _('Lived in other cities? if so where?'),
         }
     def clean(self):

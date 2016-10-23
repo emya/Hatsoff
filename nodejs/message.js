@@ -46,6 +46,7 @@ var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
   replys: [replySchema],
+  tag: Number,//1: Yes, -1: No
   created: {type: Date, default:Date.now}
 });
 
@@ -202,11 +203,13 @@ io.on('connection', function(socket){
 io.on('connection', function(socket){
 
   socket.on('join message', function(data){
-     /** temporary
-     PortfolioPost.find({}).remove().exec();
+     /**
      PortfolioPost.find({p_id:2}).remove().exec();
+     PortfolioPost.find({}).remove().exec();
      CommunityPost.find({}).remove().exec();
      CommentPost.find({}).remove().exec();
+     SharePost.find({}).remove().exec();
+     ShareSkillPost.find({}).remove().exec();
      NotificationPost.find({}).remove().exec();
      MessageRelation.find({}).remove().exec();
      **/
@@ -237,13 +240,24 @@ io.on('connection', function(socket){
     var query = CommunityPost.find({});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('join community'+docs);
+      //console.log('join community'+docs);
       socket.emit('update community post', docs);
     }); 
 
   });
 
+  socket.on('join community post', function(data){
+    console.log('join community');
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) throw err;
+      console.log('join community'+post);
+      socket.emit('get community post', post);
+    });
+
+  });
+
   socket.on('at folder', function(data){
+    /**
     console.log('at folder'+socket.uid);
     var query = ShareSkillPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -251,6 +265,40 @@ io.on('connection', function(socket){
       console.log('at folder'+docs);
       socket.emit('update shareskill', docs);
     }); 
+    **/
+    var query = ShareSkillPost.find({'to_uid':socket.uid});
+    query.sort('-created').limit(30).exec(function(err, sharedocs){
+           console.log('share skill:'+sharedocs);
+           var newdocs = [];
+           var curIdx = 0;
+           var len = sharedocs.length;
+           async.each(sharedocs, function(docs){
+              async.waterfall([
+                 function(callback){
+                    CommunityPost.findOne({'_id':docs.community_id}).exec(function(err, post){
+                      callback(null, post);
+                    });
+                 },
+                 function(post){
+                   console.log("second");
+                   if (post){
+                      docs.set('community', post.toJSON(), {strict: false});
+                      newdocs.push(docs);
+                   }else{
+                      newdocs.push(docs);
+                   }
+                   //console.log("****newdocs****:"+newdocs);
+                   curIdx += 1;
+                   if (curIdx == len){
+                     console.log("***********************************length of newdocs:"+newdocs.length);
+                     socket.emit('update shareskill', newdocs);
+                   }
+                 }
+              ], function(err, result){
+              });
+            });
+
+     });
   });
 
   socket.on('at hatsoff', function(data){
@@ -456,53 +504,59 @@ io.on('connection', function(socket){
            var newdocs = [];
            var curIdx = 0;
            var len = sharedocs.length;
-	   async.each(sharedocs, function(docs){
-		if (docs.content_type == 1){
-		  async.waterfall([
-		     function(callback){
-		         CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
-                            callback(null, post);
-                         });
-		     },
-		     function(post){
-		         console.log("second");
-		         docs.set('content', post.toJSON(), {strict: false});
-		         newdocs.push(docs);
-		         //console.log("****newdocs****:"+newdocs);
-		         curIdx += 1;
-                         if (curIdx == len){
+           if (len == 0){
+               socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+           }else{
+
+		   async.each(sharedocs, function(docs){
+			  if (docs.content_type == 1){
+			  async.waterfall([
+			     function(callback){
+				      CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
+				        callback(null, post);
+				      });
+			     },
+			     function(post){
+    				 console.log("second");
+    				 docs.set('content', post.toJSON(), {strict: false});
+    				 newdocs.push(docs);
+    				 //console.log("****newdocs****:"+newdocs);
+    				 curIdx += 1;
+    				 if (curIdx == len){
+    				  console.log("***********************************length of newdocs:"+newdocs.length);
+    				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+    				 }
+    			 }
+    		], function(err, result){
+    	});
+
+			} else if(docs.content_type == 2){
+			 curIdx += 1;
+			 if (curIdx == len){
 			  console.log("***********************************length of newdocs:"+newdocs.length);
 			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-                         }
-		     }
-		  ], function(err, result){
-	          });
-		} else if(docs.content_type == 2){
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs.length);
-		  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-                 }
-		} else if(docs.content_type == 3){
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs.length);
-		  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-                 }
-		} else if(docs.content_type == 4){
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs.length);
-		  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-                 }
-		} else{
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs.length);
-		  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-                 }
-		}
-          });
+			 }
+			} else if(docs.content_type == 3){
+			 curIdx += 1;
+			 if (curIdx == len){
+			  console.log("***********************************length of newdocs:"+newdocs.length);
+			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+			 }
+			} else if(docs.content_type == 4){
+			 curIdx += 1;
+			 if (curIdx == len){
+			  console.log("***********************************length of newdocs:"+newdocs.length);
+			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+			 }
+			} else{
+			 curIdx += 1;
+			 if (curIdx == len){
+			  console.log("***********************************length of newdocs:"+newdocs.length);
+			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+			 }
+			}
+                    });
+           }
         },
         ], function(err, result){
           console.log("err:"+err);
@@ -750,14 +804,15 @@ io.on('connection', function(socket){
   socket.on('community post', function(data, callback){
     var d = new Date();
     console.log('date:'+d); 
+    console.log('tag:'+data.tag); 
     
-    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag});
     newPost.save(function(err, post){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:'+post.id);
-        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id});
+        console.log('saved:'+post);
+        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag});
       }
     });
   });

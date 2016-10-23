@@ -163,6 +163,14 @@ img.icons_img {
    padding: 0 10px;
 }
 
+#myModal {
+   display: none;
+}
+
+.modal {
+   display: none;
+}
+
 #footer-wrapper {
    width: 100%;
    background-color: #efefef;
@@ -816,7 +824,7 @@ to here
 
 #folderWrap #folder-center{
    display: inline-block;
-   width: 500px;
+   width: 700px;
    vertical-align: top;
    padding: 50px;
 }
@@ -1659,6 +1667,11 @@ input[type="file"]{
     height: 250px;
 }
 
+.panel-minibody
+{
+    height: 100px;
+}
+
 ::-webkit-scrollbar-track
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -1675,5 +1688,9 @@ input[type="file"]{
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
+}
+
+.post-body li {
+  list-style-type:none; 
 }
 

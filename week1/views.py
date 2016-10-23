@@ -155,7 +155,7 @@ def about(request):
 
                 return render_to_response('week1/about.html', variables, )
 
-    variables = RequestContext(request, {})
+    variables = RequestContext(request, {'p_type':-1})
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/about.html', variables, )
@@ -1046,21 +1046,13 @@ def messages(request):
 
     users = []
     usernames = []
-    userphoto = []
     for u in allusers:
-        try:
-            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-        except Profile.DoesNotExist:
-            prof = None
-
-        if prof != None:
-            users.append(u.id)
-            #usernames.append([u.first_name, u.last_name])
-            usernames.append(u.first_name)
-            userphoto.append(str(prof))
+        users.append(u.id)
+        #usernames.append([u.first_name, u.last_name])
+        usernames.append(u.first_name)
 
     media_url = settings.MEDIA_URL
-    variables = RequestContext(request, {'users':users, 'usernames':usernames, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
+    variables = RequestContext(request, {'users':users, 'usernames':usernames, 'media_url':media_url, 'nodejs_url':nodejs_url})
     return render_to_response('week1/message.html', variables, )
 
 @login_required
@@ -1167,6 +1159,40 @@ def community(request):
 
     variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'userphoto':userphoto, 'users':users, 'folderusers':folderusers})
     return render_to_response('week1/community.html', variables, )
+
+@login_required
+def community_post(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    c_id = request.GET.get('c_id')
+    print "c_id:", c_id
+
+    tag = int(request.GET.get('tag'))
+
+    print "tag:",tag, type(tag)
+
+    auid = request.GET.get('u')
+    print "uid:",auid 
+
+    uid = request.user.id
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
+    currentuser = User.objects.get(id=uid, username=request.user.username)
+    author = User.objects.get(id=auid)
+    profile = Profile.objects.get(user=currentuser)
+    if tag != -1:
+        try:
+            upcoming = UpcomingWork.objects.get(user=author, number=tag)
+            variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'c_id':c_id, 'upcoming':upcoming})
+        except UpcomingWork.DoesNotExist:
+            variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'c_id':c_id})
+    else:
+        variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'c_id':c_id})
+
+    return render_to_response('week1/community_post.html', variables, )
 
 @login_required
 def notification(request):

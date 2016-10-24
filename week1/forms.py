@@ -134,7 +134,7 @@ class Step5(forms.ModelForm):
             'image': _('Add Photo'),
             'video': _('Add Video'),
             'youtube': _('Add URL link to Youtube'),
-            'describe': _('Descibe your work'),
+            'describe': _('Describe your work'),
             'role': _('Your Role'),
             'completion': _('Year of completion'),
         }
@@ -155,7 +155,7 @@ class Step6(forms.ModelForm):
         labels = {
             'title': _('Title'),
             'image': _('Add Photo'),
-            'describe': _('Descibe your work'),
+            'describe': _('Describe your work'),
             'role': _('Your Role'),
             'status': _('Status of work (for eg: entering post-production phase)'),
             'targetdate': _('Target finish date'),

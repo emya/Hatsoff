@@ -60,6 +60,9 @@ class UpcomingWork(models.Model):
     get_help = models.IntegerField(null=True, blank=True)#1: yes 2:Open to collaboration 3:no thanks
     collaborators = models.CharField(max_length=300, default='', blank=True)
     fund = models.CharField(max_length=200, default='', blank=True)
+    preferred_city = models.CharField(max_length=200, default='', blank=True)
+    time_commitment = models.DateTimeField(null=True, blank=True)
+    give_back = models.IntegerField(null=True, blank=True)
     comment_help = models.CharField(max_length=300, default='', blank=True)
 
 class Hatsoff(models.Model):

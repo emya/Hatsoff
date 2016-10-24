@@ -149,7 +149,7 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help')
+        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'time_commitment', 'give_back')
         widgets = {
         }
         labels = {
@@ -163,6 +163,9 @@ class Step6(forms.ModelForm):
             'collaborators': _('Collaborators'),
             'fund': _('Do you need to raise funds? If so how much and for what?'),
             'comment_help': _('Comments'),
+            'preferred_city': _('Preferred city location of collaborator?'),
+            'time_commitment': _('Time commitment of project? (Dates, no. of hours per day etc)'),
+            'give_back': _('How will you give back to your collaborator?'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

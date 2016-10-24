@@ -28,8 +28,15 @@
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
             <br>{{form.collaborators.label_tag}}</br>{{form.collaborators}}<br/>
             <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
+            <br>{{form.time_commitment.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/><br/>
+            <br>{{form.give_back.label_tag}}</br>
+                <input type="radio" name="give_back" value="1">Paid compensation</br>
+                <input type="radio" name="give_back" value="2">Exchange  of skills/services</br>
+                <input type="radio" name="give_back" value="3">Negotiable</br>
             <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
 	    <div class="submit-wrapper">
+        <a href="{% url 'week1:step5' %}">Back</a>
 		<input type="submit" value="Next Step" class="step-submit"/>
 		<a href="{% url 'week1:step7' %}">Skip</a>
 	    </div>

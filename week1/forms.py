@@ -67,7 +67,8 @@ class Step1(forms.ModelForm):
             'profession': _('Profession'),
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
-            'education': _('Education'),
+            'education': _('Education (School and degree)'),
+            'language': _('Language(s)'),
             'birthdate': _('Birthdate'),
             'photo': _('Add profile photo'),
         }

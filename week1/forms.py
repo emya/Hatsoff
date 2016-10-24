@@ -12,11 +12,11 @@ from django.forms import extras
 from .models import Profile, Showcase, UpcomingWork
 
 class RegistrationForm(forms.Form):
-    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"), label_suffix="")
-    first_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("First Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
-    last_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Last Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"), label_suffix="")
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password again"), label_suffix="")
+    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Email")), label=_("Email address"), label_suffix="")
+    first_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" First name")), label=_("First Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
+    last_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Last name")), label=_("Last Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False, placeholder=" Password")), label=_("Password"), label_suffix="")
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False, placeholder=" Confirm Password")), label=_("Password again"), label_suffix="")
 
     def clean(self):
         MIN_LENGTH = 8
@@ -38,8 +38,8 @@ class RegistrationForm(forms.Form):
         raise forms.ValidationError(_("The email already exists, Please log in with the email or try another one"))
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"))
-    password = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"))
+    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Email")), label=_("Email address"))
+    password = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False, placeholder=" Password")), label=_("Password"))
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')

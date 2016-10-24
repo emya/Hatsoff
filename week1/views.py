@@ -46,9 +46,10 @@ def index(request):
             else:
                 print "Else None"
                 message = []
+                signupform = RegistrationForm()
                 message.append("The username or password is incorrect.")
                 print "message", message
-                variables = RequestContext(request, {'message':message, 'form':form, 'p_type':0})
+                variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
 
                 #template = loader.get_template('week1/discover.html')
                 return render_to_response('week1/index.html', variables, )
@@ -80,17 +81,20 @@ def index(request):
                         return render(request, 'week1/welcome.html')
                 #return HttpResponseRedirect('/week1/home/')
             else:
+                loginform = LoginForm()
                 messages = []
                 messages.append(form.errors)
-                variables = RequestContext(request, {'messages':messages, 'form':form, 'p_type':1})
+                variables = RequestContext(request, {'messages':messages, 'signupform':form, 'loginform':loginform, 'p_type':1})
 
                 return render_to_response('week1/index.html', variables, )
     """
     else:
         form = RegistrationForm()
     """
+    loginform = LoginForm()
+    signupform = RegistrationForm()
 
-    variables = RequestContext(request, {})
+    variables = RequestContext(request, {'p_type':-1, 'loginform':loginform, 'signupform':signupform})
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/index.html', variables, )
@@ -114,10 +118,11 @@ def about(request):
             # When user is None
             else:
                 print "Else None"
+                signupform = RegistrationForm()
                 message = []
                 message.append("The username or password is incorrect.")
                 print "message", message
-                variables = RequestContext(request, {'message':message, 'form':form, 'p_type':0})
+                variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
 
                 #template = loader.get_template('week1/discover.html')
                 return render_to_response('week1/about.html', variables, )
@@ -149,13 +154,16 @@ def about(request):
                         return render(request, 'week1/welcome.html')
                 #return HttpResponseRedirect('/week1/home/')
             else:
+                loginform = LoginForm()
                 messages = []
                 messages.append(form.errors)
-                variables = RequestContext(request, {'messages':messages, 'form':form, 'p_type':1})
+                variables = RequestContext(request, {'messages':messages, 'signupform':form, 'loginform':loginform, 'p_type':1})
 
                 return render_to_response('week1/about.html', variables, )
 
-    variables = RequestContext(request, {'p_type':-1})
+    loginform = LoginForm()
+    signupform = RegistrationForm()
+    variables = RequestContext(request, {'p_type':-1, 'loginform':loginform, 'signupform':signupform})
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/about.html', variables, )

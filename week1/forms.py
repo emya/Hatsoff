@@ -132,7 +132,7 @@ class Step5(forms.ModelForm):
         labels = {
             'title': _('Title'),
             'image': _('Add Photo'),
-            'video': _('Add Video'),
+            'video': _('Add Video (mp4)'),
             'youtube': _('Add URL link to Youtube'),
             'describe': _('Describe your work'),
             'role': _('Your Role'),

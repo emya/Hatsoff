@@ -12,11 +12,11 @@ from django.forms import extras
 from .models import Profile, Showcase, UpcomingWork
 
 class RegistrationForm(forms.Form):
-    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"), label_suffix="")
-    first_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("First Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
-    last_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Last Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"), label_suffix="")
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password again"), label_suffix="")
+    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Email")), label=_("Email address"), label_suffix="")
+    first_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" First name")), label=_("First Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
+    last_name = forms.RegexField(regex=r'^[a-zA-Z]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Last name")), label=_("Last Name"), label_suffix="", error_messages={'invalid': _("This value must contain only letters.") })
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False, placeholder=" Password")), label=_("Password"), label_suffix="")
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False, placeholder=" Confirm Password")), label=_("Password again"), label_suffix="")
 
     def clean(self):
         MIN_LENGTH = 8
@@ -38,8 +38,8 @@ class RegistrationForm(forms.Form):
         raise forms.ValidationError(_("The email already exists, Please log in with the email or try another one"))
 
 class LoginForm(forms.Form):
-    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100)), label=_("Email address"))
-    password = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"))
+    username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Email")), label=_("Email address"))
+    password = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False, placeholder=" Password")), label=_("Password"))
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
@@ -67,7 +67,8 @@ class Step1(forms.ModelForm):
             'profession': _('Profession'),
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
-            'education': _('Education'),
+            'education': _('Education (School and degree)'),
+            'language': _('Language(s)'),
             'birthdate': _('Birthdate'),
             'photo': _('Add profile photo'),
         }
@@ -133,7 +134,7 @@ class Step5(forms.ModelForm):
             'image': _('Add Photo'),
             'video': _('Add Video'),
             'youtube': _('Add URL link to Youtube'),
-            'describe': _('Descibe your work'),
+            'describe': _('Describe your work'),
             'role': _('Your Role'),
             'completion': _('Year of completion'),
         }
@@ -148,13 +149,13 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help')
+        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'time_commitment', 'give_back')
         widgets = {
         }
         labels = {
             'title': _('Title'),
             'image': _('Add Photo'),
-            'describe': _('Descibe your work'),
+            'describe': _('Describe your work'),
             'role': _('Your Role'),
             'status': _('Status of work (for eg: entering post-production phase)'),
             'targetdate': _('Target finish date'),
@@ -162,6 +163,9 @@ class Step6(forms.ModelForm):
             'collaborators': _('Collaborators'),
             'fund': _('Do you need to raise funds? If so how much and for what?'),
             'comment_help': _('Comments'),
+            'preferred_city': _('Preferred city location of collaborator?'),
+            'time_commitment': _('Time commitment of project? (Dates, no. of hours per day etc)'),
+            'give_back': _('How will you give back to your collaborator?'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

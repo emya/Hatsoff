@@ -18,6 +18,7 @@
             {{form.describe}} </br>
             <!--br>Describe yourself</br> <textarea rows="5" cols="70" align="center" name='describe'></textarea><br/-->
 	    <div class="submit-wrapper">
+        <a href="{% url 'week1:step1' %}">Back</a>
 		<input type="submit" value="Next Step" class="step-submit"/>
 		<a href="{% url 'week1:step3' %}">Skip</a>
 	    </div>

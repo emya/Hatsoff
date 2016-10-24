@@ -12,7 +12,7 @@
      </div>
 
      <div id="step-right">
-        <h3>Showcase your work</h3>
+        <h3>Showcase past works</h3>
 	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
             <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
             <br>{{form.image.label_tag}}</br> {{form.image}}<br/>
@@ -22,6 +22,7 @@
             <br>{{form.role.label_tag}}</br> {{form.role}} <br/>
             <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
 	    <div class="submit-wrapper">
+            <a href="{% url 'week1:step4' %}">Back</a>
                {% if num_show and num_show == 10 %}
 	           <input type="submit" value="Next Step" name="next" class="step-submit"/>
                {% else %}

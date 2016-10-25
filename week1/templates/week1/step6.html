@@ -22,9 +22,13 @@
             <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/>
             <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
             <br>Looking to get help from the community?</br>
-                <input type="radio" name="get_help" value="1">Yes please!</br>
-                <input type="radio" name="get_help" value="2">Open to collaboration!</br>
-                <input type="radio" name="get_help" value="3">I'm ok thanks!</br>
+                <label for="get_help">Do you need Collaborators?
+                </label>
+                <select id="get_help">
+                <option value="1">Yes, please!</option>
+                <option value="2">Open to collaboration!</option>
+                <option value="3">Not right now, thanks!</option>
+                </select><br>
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
             <br>{{form.collaborators.label_tag}}</br>{{form.collaborators}}<br/>
             <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>

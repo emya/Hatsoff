@@ -27,7 +27,11 @@ class Profile(models.Model):
     weburl = models.URLField(null=True, blank=True)
     collaborators = models.CharField(max_length=300, default='', blank=True)
     explore = models.CharField(max_length=200, default='', blank=True)
+<<<<<<< Updated upstream
     availableHours = models.IntegerField(null=True, blank=True)
+=======
+    availableHours = models.IntegerField(blank=True, null=True)
+>>>>>>> Stashed changes
     rate = models.CharField(max_length=200, default='', blank=True)
     hobby = models.CharField(max_length=200, default='', blank=True)
     fQuote = models.CharField(max_length=200, default='', blank=True)

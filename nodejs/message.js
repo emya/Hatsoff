@@ -614,6 +614,85 @@ io.on('connection', function(socket){
     }); 
     ***/
 
+var query_cp = CommunityPost.find({'user.uid':data.to_uid});
+    async.waterfall([
+        function(callback){
+           console.log("communitydocs");
+           var query_cp = CommunityPost.find({'user.uid':data.to_uid});
+           query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
+              callback(null, communitydocs);
+           });
+        },
+        function(communitydocs, callback){
+           console.log("communitydocs:"+communitydocs.length);
+           var query_sh = SharePost.find({'user.uid':data.to_uid});
+     query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
+              callback(null, communitydocs, sharedocs);
+           });
+        },
+        function(communitydocs, sharedocs){ 
+           var newdocs = [];
+           var curIdx = 0;
+           var len = sharedocs.length;
+           if (len == 0){
+               socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
+           }else{
+
+       async.each(sharedocs, function(docs){
+        if (docs.content_type == 1){
+        async.waterfall([
+           function(callback){
+              CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
+                callback(null, post);
+              });
+           },
+           function(post){
+             console.log("second");
+             docs.set('content', post.toJSON(), {strict: false});
+             newdocs.push(docs);
+             //console.log("****newdocs****:"+newdocs);
+             curIdx += 1;
+             if (curIdx == len){
+              console.log("***********************************length of newdocs:"+newdocs.length);
+              socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
+             }
+           }
+        ], function(err, result){
+      });
+
+      } else if(docs.content_type == 2){
+       curIdx += 1;
+       if (curIdx == len){
+        console.log("***********************************length of newdocs:"+newdocs.length);
+        socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
+       }
+      } else if(docs.content_type == 3){
+       curIdx += 1;
+       if (curIdx == len){
+        console.log("***********************************length of newdocs:"+newdocs.length);
+        socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
+       }
+      } else if(docs.content_type == 4){
+       curIdx += 1;
+       if (curIdx == len){
+        console.log("***********************************length of newdocs:"+newdocs.length);
+        socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
+       }
+      } else{
+       curIdx += 1;
+       if (curIdx == len){
+        console.log("***********************************length of newdocs:"+newdocs.length);
+        socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
+       }
+      }
+                    });
+           }
+        },
+        ], function(err, result){
+          console.log("err:"+err);
+        }); 
+
+    /**
     var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     async.waterfall([
         function(callback){
@@ -684,7 +763,8 @@ io.on('connection', function(socket){
         },
         ], function(err, result){
           console.log("err:"+err);
-        }); 
+        });
+    **/
 
   });
 

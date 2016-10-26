@@ -115,16 +115,17 @@ class Step4(forms.ModelForm):
         cleaned_data = self.cleaned_data
         url = cleaned_data.get('weburl')
         print (url)
-        if (not (url.startswith('http://'))):
-            url = 'http://' + url
-            cleaned_data['weburl'] = url
-            
-            if url:
-                validate = URLValidator()
-                try:
-                    validate(url)
-                except ValidationError, e:
-                    raise forms.ValidationError(_(e))
+        if 'weburl' in cleaned_data:
+            if (not (url.startswith('http://'))):
+                url = 'http://' + url
+                cleaned_data['weburl'] = url
+                
+                if url:
+                    validate = URLValidator()
+                    try:
+                        validate(url)
+                    except ValidationError, e:
+                        raise forms.ValidationError(_(e))
         return cleaned_data
 
 class Step5(forms.ModelForm):

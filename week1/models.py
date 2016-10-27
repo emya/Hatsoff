@@ -78,3 +78,7 @@ class FavoriteFolder(models.Model):
     actionuser = models.IntegerField()#1 or 2
     status = models.IntegerField(range(0, 4))
     #0:add favorite, 1:add favorite each other
+
+class Profession(models.Model):
+    skill = models.CharField(max_length=30, blank=Flase, unique=True)
+    count = IntegerField(null=True, default=0)

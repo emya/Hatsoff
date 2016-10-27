@@ -395,9 +395,16 @@ def step3(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
+        print request.POST
+        tags = request.POST.getlist('tags')
+        print "tags", tags
+
         form = Step3(request.POST, label_suffix="", instance=instance)
         if form.is_valid():
-            step = form.save()
+            if len(tags) != 10:
+                for i in range(10-len(tags)):
+                    tags.append("")
+
             """
             skill1 = form.cleaned_data["skill1"]
             skill2 = form.cleaned_data["skill2"]
@@ -409,15 +416,22 @@ def step3(request):
             skill8 = form.cleaned_data["skill8"]
             skill9 = form.cleaned_data["skill9"]
             skill10 = form.cleaned_data["skill10"]
+            """
 
             Profile.objects.filter(user=currentuser).update(
-                skill1=skill1, 
-                skill2=skill2, 
-                skill3=skill3,
-                skill4=skill4,
-                skill5=skill5
+                skill1=tags[0], 
+                skill2=tags[1], 
+                skill3=tags[2],
+                skill4=tags[3],
+                skill5=tags[4],
+                skill6=tags[5], 
+                skill7=tags[6], 
+                skill8=tags[7],
+                skill9=tags[8],
+                skill10=tags[9],
             )
-            """
+
+            print tags
 
             nextform = Step4(label_suffix="", instance=instance)
             return HttpResponseRedirect('/week1/step4/', {'form': nextform})

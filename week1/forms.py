@@ -93,7 +93,7 @@ class Step2(forms.ModelForm):
 class Step3(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('skill1', 'skill2', 'skill3')
+        fields = ('skill1', 'skill2', 'skill3', 'skill4', 'skill5', 'skill6', 'skill7', 'skill8', 'skill9', 'skill10')
         widgets = {
         }
         labels = {

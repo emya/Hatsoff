@@ -63,8 +63,41 @@
         </div>
 	<div class="home-step-out">
 	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <h3>{{user.first_name}}&nbsp{{user.last_name}}, {{profile.profession}}</h3>
+            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
            <p>{{profile.describe}}</p>
+	    <a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+           <p>
+           {% if profile.skill1 and profile.skill1 != ""%}	
+           {{profile.skill1}}
+           {% endif %}
+           {% if profile.skill2 and profile.skill2 != ""%}	
+           &nbsp{{profile.skill2}}
+           {% endif %}
+           {% if profile.skill3 and profile.skill3 != ""%}	
+           &nbsp{{profile.skill3}}
+           {% endif %}
+           {% if profile.skill4 and profile.skill4 != ""%}	
+           &nbsp{{profile.skill4}}
+           {% endif %}
+           {% if profile.skill5 and profile.skill5 != ""%}	
+           &nbsp{{profile.skill5}}
+           {% endif %}
+           {% if profile.skill6 and profile.skill6 != ""%}	
+           &nbsp{{profile.skill6}}
+           {% endif %}
+           {% if profile.skill7 and profile.skill7 != ""%}	
+           &nbsp{{profile.skill7}}
+           {% endif %}
+           {% if profile.skill8 and profile.skill8 != ""%}	
+           &nbsp{{profile.skill8}}
+           {% endif %}
+           {% if profile.skill9 and profile.skill9 != ""%}	
+           &nbsp{{profile.skill9}}
+           {% endif %}
+           {% if profile.skill10 and profile.skill10 != ""%}	
+           &nbsp{{profile.skill10}}
+           {% endif %}
+           </p>
         </div>
     </div>
 

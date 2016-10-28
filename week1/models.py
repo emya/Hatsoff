@@ -27,11 +27,7 @@ class Profile(models.Model):
     weburl = models.URLField(null=True, blank=True)
     collaborators = models.CharField(max_length=300, default='', blank=True)
     explore = models.CharField(max_length=200, default='', blank=True)
-<<<<<<< Updated upstream
     availableHours = models.IntegerField(null=True, blank=True)
-=======
-    availableHours = models.IntegerField(blank=True, null=True)
->>>>>>> Stashed changes
     rate = models.CharField(max_length=200, default='', blank=True)
     hobby = models.CharField(max_length=200, default='', blank=True)
     fQuote = models.CharField(max_length=200, default='', blank=True)
@@ -63,6 +59,16 @@ class UpcomingWork(models.Model):
     comment = models.CharField(max_length=300, default='', blank=True)
     get_help = models.IntegerField(null=True, blank=True)#1: yes 2:Open to collaboration 3:no thanks
     collaborators = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill1 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill2 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill3 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill4 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill5 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill6 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill7 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill8 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill9 = models.CharField(max_length=300, default='', blank=True)
+    collaborator_skill10 = models.CharField(max_length=300, default='', blank=True)
     fund = models.CharField(max_length=200, default='', blank=True)
     preferred_city = models.CharField(max_length=200, default='', blank=True)
     time_commitment = models.DateTimeField(null=True, blank=True)
@@ -82,3 +88,9 @@ class FavoriteFolder(models.Model):
     actionuser = models.IntegerField()#1 or 2
     status = models.IntegerField(range(0, 4))
     #0:add favorite, 1:add favorite each other
+
+class Profession(models.Model):
+    skill = models.CharField(max_length=30, blank=False, unique=True)
+    count = models.IntegerField(null=True, default=0)
+
+    

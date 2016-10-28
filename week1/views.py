@@ -22,7 +22,7 @@ from itertools import chain
 from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
-from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork
+from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork, Profession
 from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
 
 # Create your views here.
@@ -395,9 +395,29 @@ def step3(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
+        print request.POST
+        tags = request.POST.getlist('tags')
+        print "tags", tags
+
         form = Step3(request.POST, label_suffix="", instance=instance)
+
         if form.is_valid():
-            step = form.save()
+            tagls = []
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 10:
+                for i in range(10-len(tagls)):
+                    tagls.append("")
+
             """
             skill1 = form.cleaned_data["skill1"]
             skill2 = form.cleaned_data["skill2"]
@@ -409,15 +429,22 @@ def step3(request):
             skill8 = form.cleaned_data["skill8"]
             skill9 = form.cleaned_data["skill9"]
             skill10 = form.cleaned_data["skill10"]
+            """
 
             Profile.objects.filter(user=currentuser).update(
-                skill1=skill1, 
-                skill2=skill2, 
-                skill3=skill3,
-                skill4=skill4,
-                skill5=skill5
+                skill1=tagls[0], 
+                skill2=tagls[1], 
+                skill3=tagls[2],
+                skill4=tagls[3],
+                skill5=tagls[4],
+                skill6=tagls[5], 
+                skill7=tagls[6], 
+                skill8=tagls[7],
+                skill9=tagls[8],
+                skill10=tagls[9]
             )
-            """
+
+            print tagls
 
             nextform = Step4(label_suffix="", instance=instance)
             return HttpResponseRedirect('/week1/step4/', {'form': nextform})
@@ -430,6 +457,7 @@ def step3(request):
 
     else:
         form = Step3(label_suffix="", instance=instance)
+        print form
 
     variables = RequestContext(request, {'form':form})
 
@@ -512,10 +540,38 @@ def step6(request):
             work = form.save(commit=False)
             work.user = currentuser
             get_help = form.cleaned_data["get_help"]
+            print get_help
             if get_help == 1 or get_help == 2:
+                tagls = []
                 work.collaborators = form.cleaned_data["collaborators"]
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
+                tags = request.POST.getlist('tags')
+                print "tags", tags
+                for tag in tags:
+                    lowtag = tag.capitalize()
+                    tagls.append(lowtag)
+                    try:
+                        obj = Profession.objects.get(skill=lowtag)
+                        obj.count += 1
+                        obj.save()
+                    except Profession.DoesNotExist:
+                        obj = Profession(skill=lowtag, count=1)
+                        obj.save()
+
+                if len(tagls) != 10:
+                    for i in range(10-len(tagls)):
+                        tagls.append("")
+                work.collaborator_skill1 = tagls[0] 
+                work.collaborator_skill2 = tagls[1] 
+                work.collaborator_skill3 = tagls[2] 
+                work.collaborator_skill4 = tagls[3] 
+                work.collaborator_skill5 = tagls[4] 
+                work.collaborator_skill6 = tagls[5] 
+                work.collaborator_skill7 = tagls[6] 
+                work.collaborator_skill8 = tagls[7] 
+                work.collaborator_skill9 = tagls[8] 
+                work.collaborator_skill10 = tagls[9] 
             else:
                 work.collaborators = ""
                 work.fund = ""
@@ -636,6 +692,71 @@ def home_edit_profession(request):
 
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_profession.html', {'profile':usersprofile, 'form':form})
+
+@csrf_protect
+@login_required
+def home_edit_professionskills(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    instance = get_object_or_404(Profile, user=currentuser)
+    if request.method == 'POST':
+        print request.POST
+        tags = request.POST.getlist('tags')
+        print "tags", tags
+
+        form = Step3(request.POST, label_suffix="", instance=instance)
+        tagls = []
+
+        if form.is_valid():
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 10:
+                for i in range(10-len(tagls)):
+                    tagls.append("")
+
+            Profile.objects.filter(user=currentuser).update(
+                skill1=tagls[0], 
+                skill2=tagls[1], 
+                skill3=tagls[2],
+                skill4=tagls[3],
+                skill5=tagls[4],
+                skill6=tagls[5], 
+                skill7=tagls[6], 
+                skill8=tagls[7],
+                skill9=tagls[8],
+                skill10=tagls[9]
+            )
+
+            print tagls
+
+            return HttpResponseRedirect('/week1/home/')
+            #return render_to_response('week1/step5.html', {'form':nextform})
+
+        else:
+            messages = []
+            messages.append(form.errors)
+            variables = RequestContext(request, {'messages':messages, 'form':form})
+
+    else:
+        form = Step3(label_suffix="", instance=instance)
+        print form
+
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/homeedit_professionskills.html', {'profile':usersprofile, 'form':form})
 
 @csrf_protect
 @login_required
@@ -792,6 +913,32 @@ def home_edit_upcoming(request):
                 work.collaborators = form.cleaned_data["collaborators"]
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
+                tags = request.POST.getlist('tags')
+                tagls = []
+                for tag in tags:
+                    lowtag = tag.capitalize()
+                    tagls.append(lowtag)
+                    try:
+                        obj = Profession.objects.get(skill=lowtag)
+                        obj.count += 1
+                        obj.save()
+                    except Profession.DoesNotExist:
+                        obj = Profession(skill=lowtag, count=1)
+                        obj.save()
+
+                if len(tagls) != 10:
+                    for i in range(10-len(tagls)):
+                        tagls.append("")
+                work.collaborator_skill1 = tagls[0] 
+                work.collaborator_skill2 = tagls[1] 
+                work.collaborator_skill3 = tagls[2] 
+                work.collaborator_skill4 = tagls[3] 
+                work.collaborator_skill5 = tagls[4] 
+                work.collaborator_skill6 = tagls[5] 
+                work.collaborator_skill7 = tagls[6] 
+                work.collaborator_skill8 = tagls[7] 
+                work.collaborator_skill9 = tagls[8] 
+                work.collaborator_skill10 = tagls[9] 
             else:
                 work.collaborators = ""
                 work.fund = ""
@@ -869,10 +1016,17 @@ def results_friends(request, query):
     except ObjectDoesNotExist:
         foundusers = None
 
+    q = query.capitalize()
+    try:
+        foundskills = Profile.objects.filter( Q(skill1=q) | Q(skill2=q) | Q(skill3=q) | Q(skill4=q) | Q(skill5=q) | Q(skill6=q) | Q(skill7=q) | Q(skill8=q) | Q(skill9=q) | Q(skill10=q)).exclude(id=request.user.id)
+    except ObjectDoesNotExist:
+        foundskills = None
+
+
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'query':query, 'users':foundusers, 'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'query':query, 'users':foundusers, 'skills':foundskills, 'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 

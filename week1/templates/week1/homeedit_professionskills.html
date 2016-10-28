@@ -1,0 +1,45 @@
+{% extends 'week1/base_simple.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="step">
+     <div id="step-left">
+     </div>
+
+     <div id="step-right">
+        <h3>Update your profession</h3>
+        {{ form.errors }}
+	<form action="" method="POST" class="step-form">{% csrf_token %}
+        <br>List your skills (for eg: design, programming)</br> 
+                </br>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#myTags").tagit();
+                });
+                </script>
+
+                <ul id="myTags">
+                    <!-- Existing list items will be pre-added to the tags -->
+                    <li>{{ form.skill1.value }}</li>
+                    <li>{{ form.skill2.value }}</li>
+                    <li>{{ form.skill3.value }}</li>
+                    <li>{{ form.skill4.value }}</li>
+                    <li>{{ form.skill5.value }}</li>
+                    <li>{{ form.skill6.value }}</li>
+                    <li>{{ form.skill7.value }}</li>
+                    <li>{{ form.skill8.value }}</li>
+                    <li>{{ form.skill9.value }}</li>
+                    <li>{{ form.skill10.value }}</li>
+                </ul>
+	    <div class="submit-wrapper">
+		<input type="submit" value="Update" class="step-submit"/>
+		<input type="hidden" name="next" value="home.html">
+		<a href="{% url 'week1:home' %}">Back to Home</a>
+	    </div>
+	</form>
+     </div>
+
+</div>
+
+{% endblock %}

@@ -46,6 +46,38 @@
 	<div class="home-step-out">
             <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}, {{target_profile.profession}}</h3>
             <p>{{target_profile.describe}}</p>
+            <p>
+           {% if target_profile.skill1 and target_profile.skill1 != ""%}	
+           {{target_profile.skill1}}
+           {% endif %}
+           {% if target_profile.skill2 and target_profile.skill2 != ""%}	
+           &nbsp{{target_profile.skill2}}
+           {% endif %}
+           {% if target_profile.skill3 and target_profile.skill3 != ""%}	
+           &nbsp{{target_profile.skill3}}
+           {% endif %}
+           {% if target_profile.skill4 and target_profile.skill4 != ""%}	
+           &nbsp{{target_profile.skill4}}
+           {% endif %}
+           {% if target_profile.skill5 and target_profile.skill5 != ""%}	
+           &nbsp{{target_profile.skill5}}
+           {% endif %}
+           {% if target_profile.skill6 and target_profile.skill6 != ""%}	
+           &nbsp{{target_profile.skill6}}
+           {% endif %}
+           {% if target_profile.skill7 and target_profile.skill7 != ""%}	
+           &nbsp{{target_profile.skill7}}
+           {% endif %}
+           {% if target_profile.skill8 and target_profile.skill8 != ""%}	
+           &nbsp{{target_profile.skill8}}
+           {% endif %}
+           {% if target_profile.skill9 and target_profile.skill9 != ""%}	
+           &nbsp{{target_profile.skill9}}
+           {% endif %}
+           {% if target_profile.skill10 and target_profile.skill10 != ""%}	
+           &nbsp{{target_profile.skill10}}
+           {% endif %}
+           </p>
         </div>
     </div>
 

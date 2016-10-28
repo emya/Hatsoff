@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^edit/photo/$', views.home_edit_photo, name='edit_photo'),
     url(r'^edit/url/$', views.home_edit_url, name='edit_url'),
     url(r'^edit/profession/$', views.home_edit_profession, name='edit_profession'),
+    url(r'^edit/skills/$', views.home_edit_professionskills, name='edit_professionskills'),
     url(r'^edit/previouswork/$', views.home_edit_newpreviouswork, name='edit_newpreviouswork'),
     url(r'^edit/previousworks/(?P<num>\d+)/$', views.home_edit_previouswork, name='edit_previouswork'),
     url(r'^edit/upcomingwork/$', views.home_edit_upcoming, name='edit_upcoming'),

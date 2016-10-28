@@ -13,27 +13,60 @@
 
      <div id="step-right">
         <h3>Profile</h3>
-	<form action="" method="POST" class="step-form">{% csrf_token %}
-            <br>List your skills (for eg: design, programming)</br> 
-            </br>
-            1&nbsp;{{form.skill1}}<br/>
-            2&nbsp;{{form.skill2}}<br/>
-            3&nbsp;{{form.skill3}}<br/>
-            <!--
-            4&nbsp;<input type='text' name='skill4' ><br/>
-            5&nbsp;<input type='text' name='skill5' ><br/>
-            6&nbsp;<input type='text' name='skill6' ><br/>
-            7&nbsp;<input type='text' name='skill7' ><br/>
-            8&nbsp;<input type='text' name='skill8' ><br/>
-            9&nbsp;<input type='text' name='skill9' ><br/>
-            10<input type='text' name='skill10' ><br/>
-            -->
-	    <div class="submit-wrapper">
-        <a href="{% url 'week1:step2' %}">Back</a>
-		<input type="submit" value="Next Step" class="step-submit"/>
-		<a href="{% url 'week1:step4' %}">Skip</a>
-	    </div>
-	</form>
+    	<form action="" method="POST" class="step-form">{% csrf_token %}
+                <br>List your skills (for eg: design, programming)</br> 
+                </br>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#myTags").tagit();
+                });
+                </script>
+
+                <ul id="myTags">
+                    <!-- Existing list items will be pre-added to the tags -->
+                    <li>{{ form.skill1.value }}</li>
+                    <li>{{ form.skill2.value }}</li>
+                    <li>{{ form.skill3.value }}</li>
+                    <li>{{ form.skill4.value }}</li>
+                    <li>{{ form.skill5.value }}</li>
+                    <li>{{ form.skill6.value }}</li>
+                    <li>{{ form.skill7.value }}</li>
+                    <li>{{ form.skill8.value }}</li>
+                    <li>{{ form.skill9.value }}</li>
+                    <li>{{ form.skill10.value }}</li>
+                </ul>
+
+                <!--
+                1&nbsp;{{form.skill1}}<br/>
+                2&nbsp;{{form.skill2}}<br/>
+                3&nbsp;{{form.skill3}}<br/>
+                4&nbsp;<input type='text' name='skill4' ><br/>
+                5&nbsp;<input type='text' name='skill5' ><br/>
+                6&nbsp;<input type='text' name='skill6' ><br/>
+                7&nbsp;<input type='text' name='skill7' ><br/>
+                8&nbsp;<input type='text' name='skill8' ><br/>
+                9&nbsp;<input type='text' name='skill9' ><br/>
+                10<input type='text' name='skill10' ><br/>
+                -->
+    	    <div class="submit-wrapper">
+            <a href="{% url 'week1:step2' %}">Back</a>
+    		<input type="submit" value="Next Step" class="step-submit"/>
+    		<a href="{% url 'week1:step4' %}">Skip</a>
+    	    </div>
+    	</form>
+
+        <!--form action="" method="POST" class="step-form">{% csrf_token %}
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $("#myTags").tagit();
+            });
+            </script>
+
+            <ul id="myTags">
+            </ul>
+            <input type="submit" value="Submit" name="submit_tag" class="step-submit"/>
+        </form-->
+
      </div>
 
 </div>

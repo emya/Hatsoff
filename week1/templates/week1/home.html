@@ -63,8 +63,41 @@
         </div>
 	<div class="home-step-out">
 	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <h3>{{user.first_name}}&nbsp{{user.last_name}}, {{profile.profession}}</h3>
+            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
            <p>{{profile.describe}}</p>
+	    <a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+           <p>
+           {% if profile.skill1 and profile.skill1 != ""%}	
+           {{profile.skill1}}
+           {% endif %}
+           {% if profile.skill2 and profile.skill2 != ""%}	
+           &nbsp{{profile.skill2}}
+           {% endif %}
+           {% if profile.skill3 and profile.skill3 != ""%}	
+           &nbsp{{profile.skill3}}
+           {% endif %}
+           {% if profile.skill4 and profile.skill4 != ""%}	
+           &nbsp{{profile.skill4}}
+           {% endif %}
+           {% if profile.skill5 and profile.skill5 != ""%}	
+           &nbsp{{profile.skill5}}
+           {% endif %}
+           {% if profile.skill6 and profile.skill6 != ""%}	
+           &nbsp{{profile.skill6}}
+           {% endif %}
+           {% if profile.skill7 and profile.skill7 != ""%}	
+           &nbsp{{profile.skill7}}
+           {% endif %}
+           {% if profile.skill8 and profile.skill8 != ""%}	
+           &nbsp{{profile.skill8}}
+           {% endif %}
+           {% if profile.skill9 and profile.skill9 != ""%}	
+           &nbsp{{profile.skill9}}
+           {% endif %}
+           {% if profile.skill10 and profile.skill10 != ""%}	
+           &nbsp{{profile.skill10}}
+           {% endif %}
+           </p>
         </div>
     </div>
 
@@ -302,6 +335,38 @@
               <ul>
 	        <li><span style="font-weight: bold;">Looking for</span>
                     <br>&nbsp{{upcoming.collaborators}}</br></li>
+	        <li>Skills:
+	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
+	           {{ upcoming.collaborator_skill1 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill2 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill3 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill4 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill5 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill6 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill7 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill8 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill9 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill10 }}
+	           {% endif %}
+	        </li>
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>

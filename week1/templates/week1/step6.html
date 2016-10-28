@@ -14,6 +14,12 @@
      <div id="step-right">
         <h3>What are you working on now?</h3>
 	<form action="" method="POST" class="step-form"  enctype="multipart/form-data">{% csrf_token %}
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#myTags").tagit();
+                });
+            </script> 
+
             <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
             <br>{{form.image.label_tag}}</br> {{form.image}}<br/>
             <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
@@ -24,13 +30,27 @@
             <br>Looking to get help from the community?</br>
                 <label for="get_help">Do you need Collaborators?
                 </label>
-                <select id="get_help">
+                <select name="get_help">
                 <option value="1">Yes, please!</option>
                 <option value="2">Open to collaboration!</option>
                 <option value="3">Not right now, thanks!</option>
                 </select><br>
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
             <br>{{form.collaborators.label_tag}}</br>{{form.collaborators}}<br/>
+            <br>
+            <label>What kind of skills would your collaborator(s) need?</label>
+            <ul id="myTags">
+                <li>{{ form.collaborator_skill1.value }}</li>
+                <li>{{ form.collaborator_skill2.value }}</li>
+                <li>{{ form.collaborator_skill3.value }}</li>
+                <li>{{ form.collaborator_skill4.value }}</li>
+                <li>{{ form.collaborator_skill5.value }}</li>
+                <li>{{ form.collaborator_skill6.value }}</li>
+                <li>{{ form.collaborator_skill7.value }}</li>
+                <li>{{ form.collaborator_skill8.value }}</li>
+                <li>{{ form.collaborator_skill9.value }}</li>
+                <li>{{ form.collaborator_skill10.value }}</li>
+            </ul>
             <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
             <br>{{form.time_commitment.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/><br/>

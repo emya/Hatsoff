@@ -93,7 +93,7 @@ class Step2(forms.ModelForm):
 class Step3(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('skill1', 'skill2', 'skill3')
+        fields = ('skill1', 'skill2', 'skill3', 'skill4', 'skill5', 'skill6', 'skill7', 'skill8', 'skill9', 'skill10')
         widgets = {
         }
         labels = {
@@ -115,16 +115,17 @@ class Step4(forms.ModelForm):
         cleaned_data = self.cleaned_data
         url = cleaned_data.get('weburl')
         print (url)
-        if (not (url.startswith('http://'))):
-            url = 'http://' + url
-            cleaned_data['weburl'] = url
-            
-            if url:
-                validate = URLValidator()
-                try:
-                    validate(url)
-                except ValidationError, e:
-                    raise forms.ValidationError(_(e))
+        if 'weburl' in cleaned_data:
+            if (not (url.startswith('http://'))):
+                url = 'http://' + url
+                cleaned_data['weburl'] = url
+                
+                if url:
+                    validate = URLValidator()
+                    try:
+                        validate(url)
+                    except ValidationError, e:
+                        raise forms.ValidationError(_(e))
         return cleaned_data
 
 class Step5(forms.ModelForm):
@@ -153,7 +154,7 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'time_commitment', 'give_back')
+        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
         widgets = {
         }
         labels = {
@@ -223,7 +224,7 @@ class PersonalInfo(forms.ModelForm):
         labels = {
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
-            'education': _('Education'),
+            'education': _('Education (School and degree)'),
             'language': _('Language'),
         }
     def clean(self):

@@ -80,5 +80,7 @@ class FavoriteFolder(models.Model):
     #0:add favorite, 1:add favorite each other
 
 class Profession(models.Model):
-    skill = models.CharField(max_length=30, blank=Flase, unique=True)
-    count = IntegerField(null=True, default=0)
+    skill = models.CharField(max_length=30, blank=False, unique=True)
+    count = models.IntegerField(null=True, default=0)
+
+    

@@ -335,6 +335,38 @@
               <ul>
 	        <li><span style="font-weight: bold;">Looking for</span>
                     <br>&nbsp{{upcoming.collaborators}}</br></li>
+	        <li>Skills:
+	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
+	           {{ upcoming.collaborator_skill1 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill2 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill3 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill4 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill5 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill6 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill7 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill8 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill9 }}
+	           {% endif %}
+	           {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
+	           &nbsp{{ upcoming.collaborator_skill10 }}
+	           {% endif %}
+	        </li>
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>

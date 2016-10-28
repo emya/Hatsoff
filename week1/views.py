@@ -400,9 +400,9 @@ def step3(request):
         print "tags", tags
 
         form = Step3(request.POST, label_suffix="", instance=instance)
-        tagls = []
 
         if form.is_valid():
+            tagls = []
             for tag in tags:
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
@@ -540,10 +540,38 @@ def step6(request):
             work = form.save(commit=False)
             work.user = currentuser
             get_help = form.cleaned_data["get_help"]
+            print get_help
             if get_help == 1 or get_help == 2:
+                tagls = []
                 work.collaborators = form.cleaned_data["collaborators"]
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
+                tags = request.POST.getlist('tags')
+                print "tags", tags
+                for tag in tags:
+                    lowtag = tag.capitalize()
+                    tagls.append(lowtag)
+                    try:
+                        obj = Profession.objects.get(skill=lowtag)
+                        obj.count += 1
+                        obj.save()
+                    except Profession.DoesNotExist:
+                        obj = Profession(skill=lowtag, count=1)
+                        obj.save()
+
+                if len(tagls) != 10:
+                    for i in range(10-len(tagls)):
+                        tagls.append("")
+                work.collaborator_skill1 = tagls[0] 
+                work.collaborator_skill2 = tagls[1] 
+                work.collaborator_skill3 = tagls[2] 
+                work.collaborator_skill4 = tagls[3] 
+                work.collaborator_skill5 = tagls[4] 
+                work.collaborator_skill6 = tagls[5] 
+                work.collaborator_skill7 = tagls[6] 
+                work.collaborator_skill8 = tagls[7] 
+                work.collaborator_skill9 = tagls[8] 
+                work.collaborator_skill10 = tagls[9] 
             else:
                 work.collaborators = ""
                 work.fund = ""
@@ -885,6 +913,32 @@ def home_edit_upcoming(request):
                 work.collaborators = form.cleaned_data["collaborators"]
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
+                tags = request.POST.getlist('tags')
+                tagls = []
+                for tag in tags:
+                    lowtag = tag.capitalize()
+                    tagls.append(lowtag)
+                    try:
+                        obj = Profession.objects.get(skill=lowtag)
+                        obj.count += 1
+                        obj.save()
+                    except Profession.DoesNotExist:
+                        obj = Profession(skill=lowtag, count=1)
+                        obj.save()
+
+                if len(tagls) != 10:
+                    for i in range(10-len(tagls)):
+                        tagls.append("")
+                work.collaborator_skill1 = tagls[0] 
+                work.collaborator_skill2 = tagls[1] 
+                work.collaborator_skill3 = tagls[2] 
+                work.collaborator_skill4 = tagls[3] 
+                work.collaborator_skill5 = tagls[4] 
+                work.collaborator_skill6 = tagls[5] 
+                work.collaborator_skill7 = tagls[6] 
+                work.collaborator_skill8 = tagls[7] 
+                work.collaborator_skill9 = tagls[8] 
+                work.collaborator_skill10 = tagls[9] 
             else:
                 work.collaborators = ""
                 work.fund = ""
@@ -962,10 +1016,17 @@ def results_friends(request, query):
     except ObjectDoesNotExist:
         foundusers = None
 
+    q = query.capitalize()
+    try:
+        foundskills = Profile.objects.filter( Q(skill1=q) | Q(skill2=q) | Q(skill3=q) | Q(skill4=q) | Q(skill5=q) | Q(skill6=q) | Q(skill7=q) | Q(skill8=q) | Q(skill9=q) | Q(skill10=q)).exclude(id=request.user.id)
+    except ObjectDoesNotExist:
+        foundskills = None
+
+
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'query':query, 'users':foundusers, 'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'query':query, 'users':foundusers, 'skills':foundskills, 'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 

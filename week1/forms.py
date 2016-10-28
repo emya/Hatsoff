@@ -154,7 +154,7 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'time_commitment', 'give_back')
+        fields = ('title', 'image', 'describe', 'role', 'status', 'targetdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
         widgets = {
         }
         labels = {
@@ -224,7 +224,7 @@ class PersonalInfo(forms.ModelForm):
         labels = {
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
-            'education': _('Education'),
+            'education': _('Education (School and degree)'),
             'language': _('Language'),
         }
     def clean(self):

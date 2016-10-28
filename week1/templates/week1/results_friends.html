@@ -27,17 +27,29 @@
 
 <h3>Results for {{query}}</h3>
 
+<h4>Users whose name contain {{query}}</h4>
 {% if users %}
     <ul style="list-style-type:none">
     {% for u in users %}
             <!--li><button onClick="hatsoff();"><img src="" width="20px"></button></li-->
             <li><a href="{% url 'week1:get_profile' u.id %}" class="link-userpage">{{u.first_name}} {{u.last_name}}</a> </li>
     {% endfor %}
+
     </ul>
 {% else %}
-    <h4>There are no results that match your search</h4>
+    <p>There are no users that match your search</p>
 {% endif %}
 
+<h4>Users who have skill of {{query}}</h4>
+{% if skills %}
+    <ul style="list-style-type:none">
+    {% for s in skills %}
+            <li><a href="{% url 'week1:get_profile' s.user.id %}" class="link-userpage">{{s.user.first_name}} {{s.user.last_name}}</a> </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>There are no results that match your search</p>
+{% endif %}
 </div>
 
 {% endblock %}

@@ -22,11 +22,21 @@
 
 <div id="home-main">
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#myTags").tagit();
+  });
+</script> 
+
 <div class="community-container">
   <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="well well-sm">
           <form class="form-horizontal" action="" method="">
+           
+
+
+
           <fieldset>
             <legend class="text-center">
 	      Do you have project updates or questions to the community?
@@ -38,6 +48,10 @@
                 <textarea class="form-control" id="p" autocomplete="off" name="message" placeholder="Please enter your communtiy post here..." rows="5" style="width:600px;"></textarea>
               </div>
             </div>
+
+            
+            <ul id="myTags">
+            </ul>
     
             <!-- Form actions -->
             <div class="form-group">
@@ -215,7 +229,7 @@
 
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <!--script src="http://code.jquery.com/jquery-1.11.1.js"></script-->
     <script>
 	  /*var socket = io();*/
           var socket = io.connect("{{nodejs_url}}");

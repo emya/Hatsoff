@@ -6,6 +6,13 @@ var mongoose = require('mongoose')
 var users = {};
 var chatusers = {};
 
+var dbfile = '../db.sqlite3';
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database(dbfile);
+
+
+
+
 /** redis
 var redis = require('redis');
 var sub = redis.createClient();
@@ -240,7 +247,7 @@ io.on('connection', function(socket){
     var query = CommunityPost.find({});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      //console.log('join community'+docs);
+      console.log('join community'+docs);
       socket.emit('update community post', docs);
     }); 
 
@@ -885,6 +892,29 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     var d = new Date();
     console.log('date:'+d); 
     console.log('tag:'+data.tag); 
+    var ls = [];
+    if(data.skillls.length != 0){
+      for (var i = 0; i < data.skillls.length; i++) {
+        var item = data.skillls[i];  // Calling myNodeList.item(i) isn't necessary in JavaScript
+        ls.push(item);
+        console.log(item);
+      }
+      if (data.skillls.length < 5){
+        for (var i = data.skillls.length; i <= 5; i++){
+          ls.push(data.skillls[0]);
+        }
+      }
+    }
+
+    
+    db.serialize(function() {
+     db.each("SELECT * FROM week1_profile where skill1 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill2 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill3 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill4 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill5 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill6 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill7 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill8 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill9 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill10 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"')",  function(err, row) {
+        if(err){
+          console.log(err);
+        }
+        console.log(row.user_id + ": " + row.profession);
+     });
+    });
     
     var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag});
     newPost.save(function(err, post){

@@ -1323,6 +1323,40 @@ def community(request):
     return render_to_response('week1/community.html', variables, )
 
 @login_required
+def community_needyou(request):
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
+
+    allusers = list(User.objects.all())
+
+    users = []
+    userphoto = []
+    for u in allusers:
+        print "uid", u.id
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = None
+
+        if prof != None:
+            users.append(u.id)
+            userphoto.append(str(prof))
+
+    uid = request.user.id
+
+    currentuser = User.objects.get(id=uid, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'userphoto':userphoto, 'users':users})
+    return render_to_response('week1/community_needyou.html', variables, )
+
+@login_required
 def community_post(request):
     query = request.GET.get('search_query', None)
     

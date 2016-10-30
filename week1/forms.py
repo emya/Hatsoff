@@ -220,7 +220,7 @@ class ForgotPasswordForm(PasswordResetForm):
 class PersonalInfo(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('worksAt', 'city', 'education', 'language', 'skill1', 'skill2', 'skill3')
+        fields = ('worksAt', 'city', 'education', 'language')
         labels = {
             'worksAt': _('Independent/Company name'),
             'city': _('City'),

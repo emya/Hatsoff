@@ -10,20 +10,16 @@
         <h3>Update your information</h3>
     {{ form.errors }}
     <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-       <br>{{form.city.label_tag}}</br> <input type='text' name='city' value='{{ profile.city }}'><br/>
-       <br>{{form.worksAt.label_tag}}</br> <input type='text' name='worksAt' value='{{ profile.worksAt }}'><br/>
-       <br>{{form.education.label_tag}}</br> <input type='text' name='education' value='{{ profile.education }}'><br/>
-       <br>{{form.language.label_tag}}</br> <input type='text' name='language' value='{{ profile.language }}'><br/>
-
-       <br>Skills</br> 
-                <input type='text' name='skill1' value='{{ profile.skill1 }}'><br/>
-                <input type='text' name='skill2' value='{{ profile.skill2 }}'><br/>
-                <input type='text' name='skill3' value='{{ profile.skill3 }}'><br/>
-        <div class="submit-wrapper">
-		<input type="submit" value="Update" class="step-submit" />
-		<input type="hidden" name="next" value="home.html">
-		<a href="{% url 'week1:home' %}">Back to Home</a>
-        </div>
+      <br>{{form.city.label_tag}}</br> {{form.city}} <br/>
+      <br>{{form.worksAt.label_tag}}</br> {{form.worksAt}}<br/>
+      <br>{{form.education.label_tag}}</br> {{form.education}}<br/>
+      <br>{{form.language.label_tag}}</br> {{form.language}}<br/>
+ 
+      <div class="submit-wrapper">
+    		<input type="submit" value="Update" class="step-submit" />
+    		<input type="hidden" name="next" value="home.html">
+    		<a href="{% url 'week1:home' %}">Back to Home</a>
+      </div>
     </form>
     </div>
 

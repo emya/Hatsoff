@@ -27,7 +27,9 @@
             <br>{{form.status.label_tag}}</br> {{form.status}}<br/>
             <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/>
             <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
-            <br><b>Looking to get help from the community?</b></br>
+            <br>Looking to get help from the community?</br>
+                <label for="get_help">Do you need Collaborators?
+                </label>
                 <select name="get_help">
                 <option value="1">Yes, please!</option>
                 <option value="2">Open to collaboration!</option>
@@ -53,11 +55,9 @@
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
             <br>{{form.time_commitment.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/><br/>
             <br>{{form.give_back.label_tag}}</br>
-                <select id="give_back">
-                <option value="1">Paid compensation</option>
-                <option value="2">Exchange of skills/services</option>
-                <option value="3">Negotiable</option>
-                </select><br>
+                <input type="radio" name="give_back" value="1">Paid compensation</br>
+                <input type="radio" name="give_back" value="2">Exchange  of skills/services</br>
+                <input type="radio" name="give_back" value="3">Negotiable</br>
             <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
 	    <div class="submit-wrapper">
         <a href="{% url 'week1:step5' %}">Back</a>

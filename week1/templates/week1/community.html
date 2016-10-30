@@ -22,11 +22,21 @@
 
 <div id="home-main">
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#myTags").tagit();
+  });
+</script> 
+
 <div class="community-container">
   <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="well well-sm">
           <form class="form-horizontal" action="" method="">
+           
+
+
+
           <fieldset>
             <legend class="text-center">
 	      Do you have project updates or questions to the community?
@@ -35,9 +45,13 @@
             <!-- Post body -->
             <div class="form-group">
               <div class="col-md-9">
-                <textarea class="form-control" id="p" autocomplete="off" name="message" placeholder="Please enter your communtiy post here..." rows="5" style="width:600px;"></textarea>
+                <textarea class="form-control" id="p" autocomplete="off" name="message" placeholder="Please enter your communtiy post here..." rows="3" style="width:680px;"></textarea>
               </div>
             </div>
+
+             
+            <label>Skill tag (up to 5)</label><ul id="myTags">
+            </ul>
     
             <!-- Form actions -->
             <div class="form-group">
@@ -215,7 +229,7 @@
 
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <!--script src="http://code.jquery.com/jquery-1.11.1.js"></script-->
     <script>
 	  /*var socket = io();*/
           var socket = io.connect("{{nodejs_url}}");
@@ -316,17 +330,29 @@
             if (tagvalue) {
               tagInt = parseInt(tagvalue);
             }
+
+            var skillls = [];
+            var lis = document.getElementById("myTags").getElementsByTagName("li");
+
+            console.log('lis:'+lis.length);
+            for (var i = 0; i < lis.length; i++){
+              var t = lis[i].childNodes[0].textContent;
+              if ( t!= "" ){
+                 skillls.push(t); 
+                 console.log('lis:'+t);
+              }
+            }
             console.log('tag:'+tagvalue);
             if ($('#p').val().length != 0){
-      		    socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}, tag:tagInt}, function(data){
+      		    socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
       		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
       		  });
       		  $('#p').val('');
-      		    return false;
+      		  return false;
       	    }
       	  });
 
-	  socket.on('new reply community', function(data){
+	        socket.on('new reply community', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
               console.log('new reply community c_id:'+c_id);
@@ -395,7 +421,7 @@
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               for(var i=0; i < docs.length; i++){
-                 if (docs[i]['user']['uid']) {
+                 if (docs[i]['user'] && docs[i]['user']['uid']) {
 			                  var uid = docs[i]['user']['uid'];
                         var c_id = docs[i]['_id'];
 			                  var n  = users.indexOf(uid);

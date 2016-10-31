@@ -53,6 +53,7 @@ var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
   replys: [replySchema],
+  skillls: [String],
   tag: Number,//1: Yes, -1: No
   created: {type: Date, default:Date.now}
 });
@@ -263,6 +264,59 @@ io.on('connection', function(socket){
 
   });
 
+  socket.on('at community needs you', function(data){
+    console.log('at community needs you');
+
+
+      /////new lines
+    db.serialize(function() {
+      db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=?", socket.uid, function(err, row) {
+        if(err){
+          console.log(err);
+        }
+        else {
+          if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
+            var skillls = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+            console.log("skillls:"+skillls);
+            var newdocs = [];
+            var query = CommunityPost.find({});
+            query.sort('-created').limit(50).exec(function(err, docs){
+              if (err) throw err;
+
+              var len = docs.length;
+              var curIdx = 0;
+              async.each(docs, function(doc){
+
+                if(doc.skillls && doc.skillls.length != 0){
+                  for (var j = 0; j < doc.skillls.length; j++) {
+                    var item = doc.skillls[j];  // Calling myNodeList.item(i) isn't necessary in JavaScript
+                    console.log("item:"+item);
+                    if (item != "" && skillls.indexOf(item) != -1 ){
+                      console.log("push");
+                      newdocs.push(doc);
+                    }
+                  }
+                }
+                curIdx += 1;
+                if (len == curIdx){
+                  console.log("newdocs:"+newdocs.length);
+                  console.log("newdocs:"+newdocs);
+                  socket.emit('update community post needs you', newdocs);
+                }
+
+              });
+
+            });
+          } 
+        }
+        
+      });
+    });
+
+  });
+
+
+
   socket.on('at folder', function(data){
     /**
     console.log('at folder'+socket.uid);
@@ -274,7 +328,7 @@ io.on('connection', function(socket){
     }); 
     **/
     var query = ShareSkillPost.find({'to_uid':socket.uid});
-    query.sort('-created').limit(30).exec(function(err, sharedocs){
+      query.sort('-created').limit(30).exec(function(err, sharedocs){
            console.log('share skill:'+sharedocs);
            var newdocs = [];
            var curIdx = 0;
@@ -916,7 +970,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
      });
     });
     
-    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag});
+    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls});
     newPost.save(function(err, post){
       if (err) {
         console.log(err);

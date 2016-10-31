@@ -1030,6 +1030,31 @@ def results_friends(request, query):
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 
+
+@login_required
+def talent_list(request, query):
+    newquery = request.GET.get('search_query', None)
+    
+    if newquery != None:
+        return HttpResponseRedirect('/week1/results/friends/'+newquery, {'query': newquery})
+
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    #temporary results
+
+    q = query.capitalize()
+    try:
+        foundskills = Profile.objects.filter( Q(skill1=q) | Q(skill2=q) | Q(skill3=q) | Q(skill4=q) | Q(skill5=q) | Q(skill6=q) | Q(skill7=q) | Q(skill8=q) | Q(skill9=q) | Q(skill10=q)).exclude(id=request.user.id)
+    except ObjectDoesNotExist:
+        foundskills = None
+
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    profile = Profile.objects.get(user=currentuser)
+
+    variables = RequestContext(request, {'query':query, 'skills':foundskills, 'nodejs_url':nodejs_url, 'profile':profile})
+    return render_to_response('week1/talent_list.html', variables, )
+    #return HttpResponse(t.render(c))
+
 @login_required
 def hatsoff_list(request):
     query = request.GET.get('search_query', None)

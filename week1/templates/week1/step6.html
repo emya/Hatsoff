@@ -51,14 +51,20 @@
                 <li>{{ form.collaborator_skill9.value }}</li>
                 <li>{{ form.collaborator_skill10.value }}</li>
             </ul>
-            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
             <br>{{form.time_commitment.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/><br/>
             <br>{{form.give_back.label_tag}}</br>
-                <input type="radio" name="give_back" value="1">Paid compensation</br>
+                <select name="give_back">
+                <option value="1">Paid compensation</option>
+                <option value="2">Exchange  of skills/services</option>
+                <option value="3">Negotiable</option>
+                </select><br>
+
+                <!--input type="radio" name="give_back" value="1">Paid compensation</br>
                 <input type="radio" name="give_back" value="2">Exchange  of skills/services</br>
-                <input type="radio" name="give_back" value="3">Negotiable</br>
-            <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
+                <input type="radio" name="give_back" value="3">Negotiable</br-->
+            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            <!--br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/-->
 	    <div class="submit-wrapper">
         <a href="{% url 'week1:step5' %}">Back</a>
 		<input type="submit" value="Next Step" class="step-submit"/>

@@ -24,21 +24,23 @@
             <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/>
             <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
             <br>Looking to get help from the community?</br>
+                <select name="get_help">
                 {% if form.get_help.value == 1 %}
-                <input type="radio" name="get_help" value="1" checked>Yes please!</br>
+                <option value="1" selected="selected">Yes please!</option>
                 {% else %}
-                <input type="radio" name="get_help" value="1">Yes please!</br>
+                <option value="1">Yes please!</option>
                 {% endif %}
                 {% if form.get_help.value == 2 %}
-                <input type="radio" name="get_help" value="2" checked>Open to collaboration!</br>
+                <option value="2" selected="selected">Open to collaboration!</option>
                 {% else %}
-                <input type="radio" name="get_help" value="2">Open to collaboration!</br>
+                <option value="2">Open to collaboration!</option>
                 {% endif %}
                 {% if form.get_help.value == 3 %}
-                <input type="radio" name="get_help" value="3" checked>I'm ok thanks!</br>
+                <option value="3" selected="selected">I'm ok thanks!</option>
                 {% else %}
-                <input type="radio" name="get_help" value="3">I'm ok thanks!</br>
+                <option value="3">I'm ok thanks!</option>
                 {% endif %}
+                </select>
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
             <br>{{form.collaborators.label_tag}}</br>{{form.collaborators}}<br/>
             <br>
@@ -56,28 +58,31 @@
                 <li>{{ form.collaborator_skill10.value }}</li>
             </ul>
 
-            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
             <br>{{form.time_commitment.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01" ><br/><br/>
+
             <br>{{form.give_back.label_tag}}</br>
+            <select name="give_back">
                 {% if form.give_back.value == 1 %}
-                <input type="radio" name="give_back" value="1" checked>Paid compensation</br>
+                <option value="1" selected="selected">Paid compensation</option>
                 {% else %}
-                <input type="radio" name="give_back" value="1">Paid compensation</br>
+                <option value="1">Paid compensation</option>
                 {% endif %}
 
                 {% if form.give_back.value == 2 %}
-                <input type="radio" name="give_back" value="2" checked>Exchange  of skills/services</br>
+                <option value="2" selected="selected">Exchange  of skills/services</option>
                 {% else %}
-                <input type="radio" name="give_back" value="2">Exchange  of skills/services</br>
+                <option value="2">Exchange  of skills/services</option>
                 {% endif %}
 
                 {% if form.give_back.value == 3 %}
-                <input type="radio" name="give_back" value="3" checked>Negotiable</br>
+                <option value="3" selected="selected">Negotiable</option>
                 {% else %}
-                <input type="radio" name="give_back" value="3">Negotiable</br>
+                <option value="3">Negotiable</option>
                 {% endif %}
-            <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
+            </select>
+            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            <!--br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/-->
 
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>

@@ -1,0 +1,40 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<div id="home-friends">
+</div>
+
+<div id="home-main">
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+          var socket = io.connect("{{nodejs_url}}");
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+
+  	  //$('#hatsoff').onclick(function(){
+  	  function Hatsoff(){
+              //this = $(this);
+              var uid = $('#hatsoff').attr('uid');
+              socket.emit('hatsoff', uid, function(){
+                 console.log(uid);
+              });
+          };
+    </script>
+
+<h4>Users who have skill of {{query}}</h4>
+{% if skills %}
+    <ul style="list-style-type:none">
+    {% for s in skills %}
+            <li><a href="{% url 'week1:get_profile' s.user.id %}" class="link-userpage">{{s.user.first_name}} {{s.user.last_name}}</a> </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>There are no results that match your search</p>
+{% endif %}
+</div>
+
+{% endblock %}

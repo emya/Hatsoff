@@ -27,13 +27,12 @@
       
 	<div class="home-step">
 	    <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <ul style="list-style-type:none">
-		<li>City: {{profile.city}}</li>
-		<li>Work at/as: {{profile.worksAt}}</li>
-		<li>Education: {{profile.education}}</li>
-		<li>Language: {{profile.language}}</li>
-		<li>Skills: {{profile.skill1}}</li>
-            </ul>
+        <ul style="list-style-type:none">
+			<li>City: {{profile.city}}</li>
+			<li>Work at/as: {{profile.worksAt}}</li>
+			<li>Education: {{profile.education}}</li>
+			<li>Language: {{profile.language}}</li>
+        </ul>
 	</div>
 	<div class="home-step-out">
 	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>

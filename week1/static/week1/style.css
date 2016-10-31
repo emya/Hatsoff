@@ -1523,6 +1523,11 @@ input[type="file"]{
     border-radius: 50px;
     cursor: pointer;
 }
+
+.boxed {
+    border: 1px black ;
+}
+
 .custom-input-file:hover .uploadPhoto { display: block; }
 
 .community-container {

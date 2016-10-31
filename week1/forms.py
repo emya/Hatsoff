@@ -113,10 +113,10 @@ class Step4(forms.ModelForm):
         }
     def clean(self):
         cleaned_data = self.cleaned_data
-        url = cleaned_data.get('weburl')
-        print (url)
         if 'weburl' in cleaned_data:
-            if (not (url.startswith('http://'))):
+            url = cleaned_data.get('weburl')
+            print (url)
+            if url != "" and (not (url.startswith('http://'))):
                 url = 'http://' + url
                 cleaned_data['weburl'] = url
                 
@@ -125,7 +125,7 @@ class Step4(forms.ModelForm):
                     try:
                         validate(url)
                     except ValidationError, e:
-                        raise forms.ValidationError(_(e))
+                        raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
         return cleaned_data
 
 class Step5(forms.ModelForm):
@@ -220,7 +220,7 @@ class ForgotPasswordForm(PasswordResetForm):
 class PersonalInfo(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('worksAt', 'city', 'education', 'language', 'skill1', 'skill2', 'skill3')
+        fields = ('worksAt', 'city', 'education', 'language')
         labels = {
             'worksAt': _('Independent/Company name'),
             'city': _('City'),

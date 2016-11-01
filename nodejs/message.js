@@ -976,7 +976,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
         console.log(err);
       } else{
         console.log('saved:'+post);
-        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag});
+        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
       }
     });
   });

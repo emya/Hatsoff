@@ -44,47 +44,47 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
 	  /*var socket = io();*/
-          var socket = io.connect("{{nodejs_url}}");
-          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-          socket.emit('at follow', {uid:{{user.id}}, uname:"{{user.first_name}}"});
-          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+       var socket = io.connect("{{nodejs_url}}");
+       socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+       socket.emit('at follow', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+       var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+       var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
-	  socket.on('update followgave', function(docs){
-              for(var i=0; i < docs.length; i++){
-                 if (docs[i]['to_uid']) {
-	       	     var uid = docs[i]['to_uid'];
-		     var n  = users.indexOf(uid);
-		     var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		     var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-		     if ( n != -1) {
-			 $('#followGave').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br>'));
-                     }else{
-			 $('#followGave').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
-                     }
-                 }
-              }
-              document.getElementById("gaveNum").innerHTML = docs.length;
+	     socket.on('update followgave', function(docs){
+        for(var i=0; i < docs.length; i++){
+          if (docs[i]['to_uid']) {
+	       	  var uid = docs[i]['to_uid'];
+		        var n  = users.indexOf(uid);
+		        var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		        if ( n != -1) {
+			         $('#followGave').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br>'));
+            }else{
+			         $('#followGave').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
+            }
+          }
+        }
+        document.getElementById("gaveNum").innerHTML = docs.length;
 
-          });
+       });
 
-	  socket.on('update followreceived', function(docs){
-              for(var i=0; i < docs.length; i++){
-                 if (docs[i]['user']['uid']) {
-	       	     var uid = docs[i]['user']['uid'];
-		     var n  = users.indexOf(uid);
-		     var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		     var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-		     if ( n != -1) {
-			 $('#followReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br>'));
-                     }else{
-			 $('#followReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
-                     }
+	     socket.on('update followreceived', function(docs){
+        for(var i=0; i < docs.length; i++){
+          if (docs[i]['user']['uid']) {
+	       	  var uid = docs[i]['user']['uid'];
+		        var n  = users.indexOf(uid);
+		        var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		        if ( n != -1) {
+			         $('#followReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a></br>'));
+            }else{
+			         $('#followReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
+            }
 
-                 }
-              }
-              document.getElementById("receivedNum").innerHTML = docs.length;
-          });
+          }
+        }
+        document.getElementById("receivedNum").innerHTML = docs.length;
+       });
 
     </script>
 </div>

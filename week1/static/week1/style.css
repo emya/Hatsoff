@@ -792,6 +792,10 @@ to here
    text-align: left;
 }
 
+#community-main #communityPost ul{
+   list-style-type:none;
+}
+
 #home-main button.shareskillButton{
    border-radius: 5px;
    border: 0px;
@@ -973,6 +977,46 @@ to here
 }
 
 .popupLike .show {
+   visibility: visible;
+}
+
+.popupCollaborate {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.popupCollaborate .popuptextCollaborate {
+   visibility: hidden;
+   width: 200px;
+   background-color: #d5a6bd;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 8px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -80px;
+}
+
+.popupCollaborate .popuptextCollaborate::after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #d5a6bd transparent transparent transparent;
+}
+
+.popupCollaborate .show {
    visibility: visible;
 }
 
@@ -1548,6 +1592,10 @@ input[type="file"]{
     width: 530px;
 }
 
+.well-smm {
+    width: 620px;
+}
+
 .well-lg {
     padding: 24px;
     background-color: #d9ead3;
@@ -1575,16 +1623,17 @@ input[type="file"]{
 }
 #quote-carousel .carousel-control {
     background: none;
-    color: #CACACA;
-    font-size: 2.3em;
+    /* color: #CACACA; */
+    color: black;
+    font-size: 5.3em;
     text-shadow: none;
     margin-top: 30px;
 }
 #quote-carousel .carousel-control.left {
-    left: -60px;
+    /* left: -60px; */
 }
 #quote-carousel .carousel-control.right {
-    right: -60px;
+    /* right: -60px; */
 }
 #quote-carousel .carousel-indicators {
     right: 50%;
@@ -1699,3 +1748,18 @@ input[type="file"]{
   list-style-type:none; 
 }
 
+.carousel-control.left {
+   background-image: -webkit-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+   /**background-image: -o-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);**/
+} 
+
+.collaborate-btn {
+   background-color: #d5a6bd;
+   color: #fff; 
+   border-style: solid;
+   border-color: #d5a6bd transparent transparent transparent;
+}
+
+hr .solid-divider{
+   border-top: 1px solid #333;
+}

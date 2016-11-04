@@ -121,22 +121,23 @@
 
 <div id="home-main-center">
 
-<div class="portfolio-container">
-    <div class="row">
+<!--div class="portfolio-container"-->
+<div class="home-step">
+    <!--div class="row"-->
         <h3>Portfolio</h3>
-        <div class="col-md-12" data-wow-delay="0.6s">
+        <!--div class="col-md-12" data-wow-delay="0.6s"-->
             <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
                 <!-- Carousel Slides / Quotes -->
                 <div class="carousel-inner text-center">
 
-                    <!-- Quote 1 -->
-		    {% if showcases %}
-			{% for showcase in showcases %}
+	                    <!-- Quote 1 -->
+			    {% if showcases %}
+				{% for showcase in showcases %}
 			    {% if forloop.counter == 1 %}
 			    <div class="item active">
 				<blockquote>
-				    <div class="row">
-					<div class="col-sm-8 col-sm-offset-2">
+				    <!--div class="row">
+					<div class="col-sm-8 col-sm-offset-2"-->
 	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
@@ -163,62 +164,56 @@
 						<li>Your role:{{showcase.role}}</li>
 						<li>Year of completion:{{showcase.completion}}</li>
 					    </ul>
-                                            <hr class="divider"/>
+                        <hr class="divider"/>
 
-                                            <ul class="nav nav-tabs">
-						<li class="active"><a href="#leaveComment" data-toggle="tab">Leave Comment</a></li>
-						<li><a href="#showComment" data-toggle="tab">Show Comment</a></li>
-                                            </ul>
-                                            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
-                                              <div class="tab-pane active" id="leaveComment">
-						<div class="well well-ss">
-						  <form class="form-horizontal" action="" id="portfolio_form">{% csrf_token %}
-						      <fieldset>
-						        <!-- Post body -->
-						        <div class="form-group">
-						          <div class="col-md-9">
-						    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:370px;"></textarea>
-						          </div>
-						        </div>
-    
-						        <!-- Form actions -->
-						        <div class="form-group">
-						          <div class="col-md-12 text-right">
-						    	      <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
-						          </div>
-						        </div>
-						      </fieldset>
-						  </form>
-						</div>
-					      </div>
+                        <ul class="nav nav-tabs">
+							<li class="active"><a href="#leaveComment" data-toggle="tab">Leave Comment</a></li>
+							<li><a href="#showComment" data-toggle="tab">Show Comment</a></li>
+                        </ul>
 
-                                              <div class="tab-pane" id="showComment">
+                        <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+	                        <div class="tab-pane active" id="leaveComment">
+								<div class="well well-ssm">
+								  <form class="form-horizontal" action="" id="portfolio_form">{% csrf_token %}
+								      <fieldset>
+								        <!-- Post body -->
+								        <div class="form-group">
+								          <div class="col-md-9">
+								    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+								          </div>
+								        </div>
+		    
+								        <!-- Form actions -->
+								        <div class="form-group">
+								          <div class="col-md-12 text-right">
+								    	      <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
+								          </div>
+								        </div>
+								      </fieldset>
+								  </form>
+								</div>
+						    </div>
+
+                        <div class="tab-pane" id="showComment">
 					        <ul style="list-style-type:none; padding-left:0px;">
-			                            <div id="portfolioComment_{{forloop.counter}}"></div>
-                                                </ul>
-                                              </div>
-                                           </div>
-
-
-					</div>
-				    </div>
+			                    <div id="portfolioComment_{{forloop.counter}}"></div>
+                            </ul>
+                        </div>
+                    	</div>
+					<!--/div>
+				    </div-->
 				</blockquote>
 			    </div>
-                            {% else %}
+
+                {% else %}
 			    <div class="item">
 			    <blockquote>
-			    <div class="row">
-					<div class="col-sm-8 col-sm-offset-2">
-	                                   <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
- 					    {% if showcase.image or showcase.video or showcase.youtube %}
+			    <!--div class="row">
+					<div class="col-sm-8 col-sm-offset-2"-->
+	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+ 					    {% if showcase.image or showcase.youtube %}
 						{% if showcase.image %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
-						{% endif %}
-
-						{% if showcase.video %}
-						    <video controls id="video">
-						       <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"/>
-						    </video>
 						{% endif %}
 
 						{% if showcase.youtube %}
@@ -233,68 +228,67 @@
 						<li>Your role:{{showcase.role}}</li>
 						<li>Year of completion:{{showcase.completion}}</li>
 					    </ul>
-                                            <hr class="divider"/>
+                        <hr class="divider"/>
                                             
-                                            <ul class="nav nav-tabs">
-						<li class="active"><a href="#leaveComment_{{forloop.counter}}" data-toggle="tab">Leave Comment</a></li>
-						<li><a href="#showComment_{{forloop.counter}}" data-toggle="tab">Show Comment</a></li>
-                                            </ul>
+                        <ul class="nav nav-tabs">
+							<li class="active"><a href="#leaveComment_{{forloop.counter}}" data-toggle="tab">Leave Comment</a></li>
+							<li><a href="#showComment_{{forloop.counter}}" data-toggle="tab">Show Comment</a></li>
+                        </ul>
 
-                                            <div class="tab-content" style="width:350px; padding:0px; border:0px;">
-                                              <div class="tab-pane active" id="leaveComment_{{forloop.counter}}">
-						<div class="well well-ss">
-						  <form class="form-horizontal" action="" id="portfolio_form">
-						      <fieldset>
-						        <!-- Post body -->
-						        <div class="form-group">
-						          <div class="col-md-9">
-						    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:370px;"></textarea>
-						          </div>
-						        </div>
-    
-						        <!-- Form actions -->
-						        <div class="form-group">
-						          <div class="col-md-12 text-right">
-						    	     <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
-						          </div>
-						        </div>
-						      </fieldset>
-						  </form>
-						</div>
-					      </div>
+                        <div class="tab-content" style="width:350px; padding:0px; border:0px;">
+	                        <div class="tab-pane active" id="leaveComment_{{forloop.counter}}">
+								<div class="well well-ssm">
+								  <form class="form-horizontal" action="" id="portfolio_form">
+								      <fieldset>
+								        <!-- Post body -->
+								        <div class="form-group">
+								          <div class="col-md-9">
+								    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+								          </div>
+								        </div>
+		    
+								        <!-- Form actions -->
+								        <div class="form-group">
+								          <div class="col-md-12 text-right">
+								    	     <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
+								          </div>
+								        </div>
+								      </fieldset>
+								  </form>
+								</div>
+						    </div>
 
-                                              <div class="tab-pane" id="showComment_{{forloop.counter}}">
-					        <ul style="list-style-type:none; padding-left:0px;">
-			                            <div id="portfolioComment_{{forloop.counter}}"></div>
-                                                </ul>
-                                              </div>
-                                           </div>
-
-
-					</div>
-				    </div>
+                            <div class="tab-pane" id="showComment_{{forloop.counter}}">
+						        <ul style="list-style-type:none; padding-left:0px;">
+				                   <div id="portfolioComment_{{forloop.counter}}"></div>
+	                            </ul>
+                            </div>
+                        </div>
+					<!--/div>
+				</div-->
 				</blockquote>
 			    </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
+                {% endif %}
+                {% endfor %}
+                {% else %}
 	            <a href="{% url 'week1:edit_newpreviouswork' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-                    {% endif %}
+                {% endif %}
                 </div>
 
                 <!-- Carousel Buttons Next/Prev -->
-                <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+                <!--a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a-->
+                <a data-slide="prev" href="#quote-carousel" class="carousel-control left">&lsaquo;</a>
+                <a data-slide="next" href="#quote-carousel" class="carousel-control right">&rsaquo;</a>
             </div>
-        </div>
-   </div>
+        <!--/div-->
+   <!--/div-->
 </div>
 
 
-
 	<div class="home-step">
-            <script>
+        <script>
 		function show_upcoming(){
                     console.log('show more!');
 		    $('#upcomingComment').show();
@@ -308,9 +302,9 @@
 		    $('#upcoming_hide').hide();
 		    $('#upcoming_show').show();
 		};
-            </script>
+        </script>
 
-            <h3>What’s Next</h3>
+        <h3>What’s Next</h3>
 	    <a href="{% url 'week1:edit_upcoming' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
@@ -512,7 +506,7 @@
 	      function followFunction(){
 			 console.log('follow!');
 			 popFollowed();
-		 //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
+		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
 
 	      function popFollowed(){
@@ -776,8 +770,9 @@
 		        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
-                var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
-		        var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+                var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
+		        //var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+		        var thanks = '';
 		        var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
 
                 console.log('update share length:'+len_share);

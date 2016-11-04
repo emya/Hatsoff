@@ -69,7 +69,7 @@ var commentSchema = mongoose.Schema({
 
 var CommentPost = mongoose.model('CommentPost', commentSchema);
 
-// action id  1:comment, 2:hatsoff, 3:shareskill, 4:like, 5:share, 6:thanks
+// action id  1:comment, 2:hatsoff, 3:shareskill, 4:like, 5:share, 6:thanks, 7:collaborate, 8:follow
 var notificationSchema = mongoose.Schema({
   to_uid: Number,
   action_user: {uid: Number, first_name: String, last_name: String},
@@ -108,6 +108,15 @@ var shareskillSchema = mongoose.Schema({
 });
 
 var ShareSkillPost = mongoose.model('ShareSkillPost', shareskillSchema);
+
+var collaborateSchema = mongoose.Schema({
+  to_uid: Number,
+  user: {uid: Number, first_name: String, last_name: String},
+  community_id: String,
+  created: {type: Date, default:Date.now}
+});
+
+var CollaboratePost = mongoose.model('CollaboratePost', collaborateSchema);
 
 var likeSchema = mongoose.Schema({
   to_uid: Number,
@@ -248,7 +257,7 @@ io.on('connection', function(socket){
     var query = CommunityPost.find({});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('join community'+docs);
+      console.log('join community');
       socket.emit('update community post', docs);
     }); 
 
@@ -318,15 +327,40 @@ io.on('connection', function(socket){
 
 
   socket.on('at folder', function(data){
-    /**
-    console.log('at folder'+socket.uid);
-    var query = ShareSkillPost.find({'to_uid':socket.uid});
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      console.log('at folder'+docs);
-      socket.emit('update shareskill', docs);
-    }); 
-    **/
+
+    var query = CollaboratePost.find({'to_uid':socket.uid});
+      query.sort('-created').limit(30).exec(function(err, collaboratedocs){
+           console.log('share skill:'+collaboratedocs);
+           var newdocs = [];
+           var curIdx = 0;
+           var len = collaboratedocs.length;
+           async.each(collaboratedocs, function(docs){
+              async.waterfall([
+                 function(callback){
+                    CommunityPost.findOne({'_id':docs.community_id}).exec(function(err, post){
+                      callback(null, post);
+                    });
+                 },
+                 function(post){
+                   console.log("second");
+                   if (post){
+                      docs.set('community', post.toJSON(), {strict: false});
+                      newdocs.push(docs);
+                   }else{
+                      newdocs.push(docs);
+                   }
+                   //console.log("****newdocs****:"+newdocs);
+                   curIdx += 1;
+                   if (curIdx == len){
+                     console.log("***********************************length of newdocs:"+newdocs.length);
+                     socket.emit('update collaborate', newdocs);
+                   }
+                 }
+              ], function(err, result){
+              });
+            });
+     });
+      /***
     var query = ShareSkillPost.find({'to_uid':socket.uid});
       query.sort('-created').limit(30).exec(function(err, sharedocs){
            console.log('share skill:'+sharedocs);
@@ -358,8 +392,9 @@ io.on('connection', function(socket){
               ], function(err, result){
               });
             });
-
      });
+     ***/
+
   });
 
   socket.on('at hatsoff', function(data){
@@ -976,7 +1011,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
         console.log(err);
       } else{
         console.log('saved:'+post);
-        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag});
+        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
       }
     });
   });
@@ -994,6 +1029,26 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
           if (!err) {
             console.log('Success!');
             io.emit('new reply community', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
+          }
+        });
+      }
+    });
+    
+  });
+
+  socket.on('community comment', function(data, callback){
+    var d = new Date();
+    console.log('community comment date:'+d); 
+    
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+        post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
+        post.save(function (err) {
+          if (!err) {
+            console.log('Success!');
+            io.emit('new community comment', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
           }
         });
       }
@@ -1026,6 +1081,30 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     });
   });
 
+  socket.on('give collaborate', function(data, callback){
+    var d = new Date();
+    console.log('date:'+d); 
+    console.log('give collaborate:'+socket.uid); 
+    
+    var newPost = new CollaboratePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, community_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:');
+      }
+    });
+
+    var newNotification = new NotificationPost({action_id:7, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        console.log('saved:');
+      }
+    });
+  });
 
   socket.on('give thanks', function(data, callback){
     var d = new Date();
@@ -1057,20 +1136,66 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
   socket.on('give hatsoff', function(data, callback){
     var d = new Date();
     console.log('give hatsoff'+socket.uid); 
+
+    HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}}).exec(function(err, result){
+      if(err){
+        console.log(err);
+      }else{
+        if (!result){
+          var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+          newPost.save(function(err){
+              if (err) {
+                console.log(err);
+              } else{
+                socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+                if (data.to_uid in users){
+                    users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+                }
+              }
+          });
+
+        } 
+      }
+    });
+
     
-    var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
-    newPost.save(function(err){
+
+    var newNotification = new NotificationPost({action_id:2, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
-        if (data.to_uid in users){
-            users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+        //console.log('saved:');
+      }
+    });
+  });
+
+  socket.on('give follow', function(data, callback){
+    var d = new Date();
+    console.log('give follow'+socket.uid); 
+    
+    FollowPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}}).exec(function(err, result){
+      if(err){
+      }else{
+        if(!result){
+          var newPost = new FollowPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+          newPost.save(function(err){
+            if (err) {
+              console.log(err);
+            } else{
+              console.log('new history');
+              socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:8});
+              if (data.to_uid in users){
+                  users[data.to_uid].emit('new notification', {action_id:8, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+              }
+            }
+          }); 
         }
       }
     });
 
-    var newNotification = new NotificationPost({action_id:2, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newNotification = new NotificationPost({action_id:8, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
       if (err) {

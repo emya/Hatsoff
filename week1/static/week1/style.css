@@ -792,6 +792,10 @@ to here
    text-align: left;
 }
 
+#community-main #communityPost ul{
+   list-style-type:none;
+}
+
 #home-main button.shareskillButton{
    border-radius: 5px;
    border: 0px;
@@ -1588,6 +1592,10 @@ input[type="file"]{
     width: 530px;
 }
 
+.well-smm {
+    width: 620px;
+}
+
 .well-lg {
     padding: 24px;
     background-color: #d9ead3;
@@ -1751,5 +1759,7 @@ input[type="file"]{
    border-style: solid;
    border-color: #d5a6bd transparent transparent transparent;
 }
-}
 
+hr .solid-divider{
+   border-top: 1px solid #333;
+}

@@ -211,15 +211,9 @@
 			    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
 	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
- 					    {% if showcase.image or showcase.video or showcase.youtube %}
+ 					    {% if showcase.image or showcase.youtube %}
 						{% if showcase.image %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
-						{% endif %}
-
-						{% if showcase.video %}
-						    <video controls id="video">
-						       <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"/>
-						    </video>
 						{% endif %}
 
 						{% if showcase.youtube %}
@@ -512,7 +506,7 @@
 	      function followFunction(){
 			 console.log('follow!');
 			 popFollowed();
-		 //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
+		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
 
 	      function popFollowed(){
@@ -776,8 +770,9 @@
 		        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
-                var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()">Hatsoff</br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
-		        var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+                var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
+		        //var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+		        var thanks = '';
 		        var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
 
                 console.log('update share length:'+len_share);

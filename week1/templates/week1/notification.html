@@ -37,6 +37,12 @@
               else if (data.action_id === 6){
 	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp gave you a thanks.'+'</p></span><br/>'));
               }
+              else if (data.action_id === 7){
+           $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp wanted to collaborate with you.'+'</p></span><br/>'));
+              }
+              else if (data.action_id === 8){
+           $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp followed you.'+'</p></span><br/>'));
+              }
 	  });
         
 	  socket.on('update notification', function(docs){
@@ -58,6 +64,12 @@
                  }
                  else if (docs[i]['action_id'] === 6){
 	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a thanks.'+'</p></span><br/>'));
+                 }
+                 else if (docs[i]['action_id'] === 7){
+              $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp wanted to collaborate with you.'+'</p></span><br/>'));
+                 }
+                 else if (docs[i]['action_id'] === 8){
+              $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'</p></span><br/>'));
                  }
               }
 	  });

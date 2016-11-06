@@ -392,40 +392,58 @@
 
             <hr class="divider"/>
              
-            <ul class="nav nav-tabs">
+           <div class="well well-ssm">
+            <ul id="upcomingComment" style="list-style-type:none;">
+            	
+            </ul>
+
+            <form class="form-horizontal" action="">
+                <div class="form-group">
+                    <div class="col-md-9">
+                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 text-right">
+                    	<button class="btn btn-primary btn-lg" onclick="submitUpcomingComment()">Post</button>
+                	</div>
+            	</div>
+            </form>
+
+            </div>
+
+            <!--ul class="nav nav-tabs">
 	        <li class="active"><a href="#leaveComment_upcoming" data-toggle="tab">Leave Comment</a></li>
 	        <li><a href="#showComment_upcoming" data-toggle="tab">Show Comment</a></li>
             </ul>
 
             <div class="tab-content" style="width:350px; padding:0px; border:0px;">
               <div class="tab-pane active" id="leaveComment_upcoming">
-	        <div class="well well-ssm">
-	          <form class="form-horizontal" action="" id="upcoming_form">
-	              <fieldset>
-	                <!-- Post body -->
-	                <div class="form-group">
-	                  <div class="col-md-9">
-	                    <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
-	                  </div>
-	                </div>
-    
-	                <!-- Form actions -->
-	                <div class="form-group">
-	                  <div class="col-md-12 text-right">
-	             	    <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
-	                  </div>
-	                </div>
-	              </fieldset>
-	          </form>
+		        <div class="well well-ssm">
+		          <form class="form-horizontal" action="" id="upcoming_form">
+		              <fieldset>
+		                <div class="form-group">
+		                  <div class="col-md-9">
+		                    <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+		                  </div>
+		                </div>
+	    
+		                <div class="form-group">
+		                  <div class="col-md-12 text-right">
+		             	    <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
+		                  </div>
+		                </div>
+		              </fieldset>
+		          </form>
 	        </div>
 	      </div>
 
               <div class="tab-pane" id="showComment_upcoming">
-	        <ul style="list-style-type:none; padding-left:30px;">
-	          <div id="upcomingComment"></div>
+	        	<ul style="list-style-type:none; padding-left:30px;">
+	          	<div id="upcomingComment"></div>
                 </ul>
               </div>
-           </div>
+           </div-->
 
 	    {% endif %}
 	</div>
@@ -620,6 +638,30 @@
 		    return false;
           }
 
+ 		   function submitUForm(){
+            console.log('form submit');
+
+            var com = $('#c_upcoming').val();
+            if (com.length != 0){
+		        socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
+		    } 
+		    $('#c_upcoming').val('');
+		    return false;
+	      }
+
+
+	      function submitUpcomingComment(){
+            console.log('form submit upcoming');
+            var post_val = $('#c_upcoming').val();
+                    
+            if (post_val.length != 0){
+                console.log('if:'+post_val);
+		        socket.emit('upcoming comment', {msg:post_val, to:{{user.id}}, uid:{{user.id}} });
+            }
+		    $('#c_upcoming').val('');
+		    return false;
+          }
+
               /**
 	      $('#portfolio_form').submit(function(e){
                     e.preventDefault();
@@ -666,16 +708,16 @@
 
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
@@ -718,16 +760,7 @@
 	      });
 
 	      //$('#upcoming_form').submit(function(){
-              function submitUForm(){
-                    console.log('form submit');
-
-                    var com = $('#c_upcoming').val();
-                    if (com.length != 0){
-		        socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
-		    } 
-		    $('#c_upcoming').val('');
-		    return false;
-	      }
+              
 
 	      socket.on('new upcoming comment', function(data){
             console.log('new upcoming comment on home');
@@ -740,17 +773,17 @@
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
 		             //$('#communityPost').prepend($('<hr>'));
-		             $('#upcomingComment').prepend($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#upcomingComment').prepend($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		        //$('#communityPost').prepend($('<hr>'));
 		          if (uid == {{user.id}}){
-		             $('#upcomingComment').prepend($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#upcomingComment').prepend($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });

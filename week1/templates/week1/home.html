@@ -435,6 +435,9 @@
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
+		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+
           /**
 	      socket.on('number thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;
@@ -564,13 +567,13 @@
 	      };
 
 	      function show_portfolio(number, length){
-                    console.log('show more!');
-                    for (var i = 0; i < length; i++){
+            console.log('show more!');
+            for (var i = 0; i < length; i++){
 		        $('#portfolioComment_'+i).hide();
 		    }
 		    $('#portfolioComment_'+number).show();
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
+            var h = document.getElementById('portfolio_hide');
+            var s = document.getElementById('portfolio_show');
 		    if (s.style.display == 'block'){
 		        s.style.display = 'none';
 		    }
@@ -578,10 +581,10 @@
 	      };
 
 	      function hide_portfolio(number){
-                    console.log('hide more!');
+            console.log('hide more!');
 		    $('#portfolioComment_'+number).hide();
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
+            var h = document.getElementById('portfolio_hide');
+            var s = document.getElementById('portfolio_show');
 		    if (h.style.display == 'block'){
 		        h.style.display = 'none';
 		    }
@@ -614,13 +617,32 @@
               });
               **/
 
+          function submitComment(uid, c_id){
+            console.log('form submit comment'+c_id);
+            var post_val = $('#c_'+c_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('comment:'+post_val);
+              socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+	          var m  = users.indexOf({{user.id}});
+	          var url_link = "{% url 'week1:get_profile' user.id %}";
+	          if (m != -1){
+	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	          }else{
+	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	          }
+            }
+            $('#c_'+c_id).val('');
+            return false;
+          } 
+
 	      socket.on('new portfolio comment', function(data){
-                    console.log('new portfolio comment on home');
+            console.log('new portfolio comment on home');
 		    var uid = data.from_uid;
-                    var p_id = data.p_id;
-                    console.log(p_id);
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+            var p_id = data.p_id;
+            console.log(p_id);
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -642,34 +664,34 @@
 	      });
 
 	      socket.on('update portfolio comment', function(docs){
-                  console.log('socket on portfolio comment');
-		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	          for(var i = 0; i < docs.length; i++){
-                      if (docs[i]['p_id']) {
-                          var p_id = docs[i]['p_id'];
-                          console.log('If!');
-                          if (docs[i]['user']['uid']){
-				var uid = docs[i]['user']['uid'];
-				var n  = users.indexOf(uid);
-				var data = docs[i];
-				var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-				if ( n != -1) {
-				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      } else{
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      }
+            console.log('socket on portfolio comment');
+		  	var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		 	var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	        for(var i = 0; i < docs.length; i++){
+                if (docs[i]['p_id']) {
+                    var p_id = docs[i]['p_id'];
+                    console.log('If!');
+                    if (docs[i]['user']['uid']){
+						var uid = docs[i]['user']['uid'];
+						var n  = users.indexOf(uid);
+						var data = docs[i];
+						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+						if ( n != -1) {
+						      if (uid == {{user.id}}){
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      } else{
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      }
 
-				}else{
-				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      } else {
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      }
-				}
-			}
+						}else{
+						      if (uid == {{user.id}}){
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      } else {
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      }
+						}
+					}
 
                       } else{
                           console.log('Else!');
@@ -690,11 +712,11 @@
 	      }
 
 	      socket.on('new upcoming comment', function(data){
-                    console.log('new upcoming comment on home');
+            console.log('new upcoming comment on home');
 		    var uid = data.from_uid;
-                    console.log(uid);
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+            console.log(uid);
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		    if ( n != -1) {
@@ -716,8 +738,8 @@
 	      });
 
 	      socket.on('update upcoming comment', function(docs){
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    for(var i=0; i < docs.length; i++){
 		       if (docs[i]['user']['uid']){
 			    var uid = docs[i]['user']['uid'];
@@ -751,32 +773,32 @@
           }
 
 	  socket.on('update comment', function(docs){
-            console.log('update comment on home');
-	    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-            var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+        console.log('update comment on home');
+	    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	    for(var i = 0; i < docs.length; i++){
-		if (docs[i]['from_user']['uid']){
-			var uid = docs[i]['from_user']['uid'];
-			var n  = users.indexOf(uid);
-			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-			if ( n != -1) {
-			    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-			}else{
-			    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+			if (docs[i]['from_user']['uid']){
+				var uid = docs[i]['from_user']['uid'];
+				var n  = users.indexOf(uid);
+				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+				if ( n != -1) {
+				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+				}else{
+				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
 
-			}
-	        }
+				}
+		    }
 	      }
 	  });
 
 	  socket.on('new comment', function(data){
-                console.log('new comment on userpage');
+            console.log('new comment on userpage');
 	        var uid = data.from_uid;
-                console.log(p_id);
-	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+            console.log(p_id);
+	        //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	        var n  = users.indexOf(uid);
-		var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 	        if ( n != -1) {
 	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
 	        }else{
@@ -790,8 +812,8 @@
                 var communitydocs = data.community;
                 var len_share = sharedocs.length;
                 var len_community = communitydocs.length;
-		        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		        //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
                 var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';

@@ -412,6 +412,9 @@
                   document.getElementById("followNum").innerHTML = count;
               });
 
+	      var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+
 
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
@@ -567,25 +570,46 @@
 	      };
 
               // For portfolio
-              function submitPForm(number){
-                    console.log('form submit portfolio');
-                    var post_val = $('#c_portfolio_'+number).val();
+          function submitPForm(number){
+            console.log('form submit portfolio');
+            var post_val = $('#c_portfolio_'+number).val();
                     
-                    if (post_val.length != 0){
-                        console.log('if:'+p_id+':'+post_val);
+            if (post_val.length != 0){
+                console.log('if:'+p_id+':'+post_val);
 		        socket.emit('portfolio comment', {msg:post_val, to:{{t_user.id}}, uid:{{user.id}}, p_id:number});
-                    }
+            }
 		    $('#c_portfolio_'+number).val('');
 		    return false;
-              }
+          }
+
+
+          function submitComment(uid, c_id){
+            console.log('form submit comment'+c_id);
+            var post_val = $('#c_'+c_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('comment:'+post_val);
+              socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+	          var m  = users.indexOf({{user.id}});
+	          var url_link = "{% url 'week1:get_profile' user.id %}";
+	          if (m != -1){
+	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	          }else{
+	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	          }
+            }
+            $('#c_'+c_id).val('');
+            return false;
+          } 
+
 
 	      socket.on('new portfolio comment', function(data){
             console.log('new portfolio comment on home');
 		    var uid = data.from_uid;
             var p_id = data.p_id;
             console.log(p_id);
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -607,8 +631,8 @@
 
 	      socket.on('update portfolio comment', function(docs){
             console.log('socket on portfolio comment:'+p_id);
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	        for(var i = 0; i < docs.length; i++){
                 if (docs[i]['p_id']) {
                     var p_id = docs[i]['p_id'];
@@ -643,19 +667,19 @@
 
 
 	      //$('#upcoming_form').submit(function(){
-              function submitUForm(){
-                    console.log('form submit');
-                    var com = $('#c_upcoming').val();
-                    if (com.length != 0){
+          function submitUForm(){
+            console.log('form submit');
+            var com = $('#c_upcoming').val();
+            if (com.length != 0){
 		        socket.emit('upcoming comment', {msg:com, to:{{t_user.id}}, uid:{{user.id}}});
-                    }
+            }
 		    $('#c_upcoming').val('');
 		    return false;
 	      }
 
 	      socket.on('update upcoming comment', function(docs){
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    for(var i=0; i < docs.length; i++){
 		       if (docs[i]['user']['uid']){
 			    var uid = docs[i]['user']['uid'];
@@ -694,7 +718,7 @@
 
 	  socket.on('update comment', function(docs){
 	    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-            var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	    for(var i = 0; i < docs.length; i++){
 		if (docs[i]['from_user']['uid']){
 			var uid = docs[i]['from_user']['uid'];
@@ -711,12 +735,12 @@
 	  });
 
 	  socket.on('new comment', function(data){
-                console.log('new comment on userpage');
-	        var uid = data.from;
-                console.log(p_id);
-	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	        var n  = users.indexOf(uid);
+        console.log('new comment on userpage');
+	    var uid = data.from;
+        console.log(p_id);
+	    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	    var n  = users.indexOf(uid);
 		var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 	        if ( n != -1) {
 	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
@@ -732,8 +756,8 @@
                 var communitydocs = data.community;
                 var len_share = sharedocs.length;
                 var len_community = communitydocs.length;
-	            var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-	            var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	            //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	            //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
 		        var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';

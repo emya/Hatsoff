@@ -112,7 +112,8 @@ var ShareSkillPost = mongoose.model('ShareSkillPost', shareskillSchema);
 var collaborateSchema = mongoose.Schema({
   to_uid: Number,
   user: {uid: Number, first_name: String, last_name: String},
-  community_id: String,
+  content_type: Number,
+  content_id: String,
   created: {type: Date, default:Date.now}
 });
 
@@ -1087,7 +1088,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     console.log('date:'+d); 
     console.log('give collaborate:'+socket.uid); 
     
-    var newPost = new CollaboratePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, community_id:data.c_id});
+    var newPost = new CollaboratePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_id:data.c_id, content_type:data.c_type});
     newPost.save(function(err){
       if (err) {
         console.log(err);
@@ -1096,7 +1097,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       }
     });
 
-    var newNotification = new NotificationPost({action_id:7, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newNotification = new NotificationPost({action_id:7, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_id:data.c_id, content_type:data.c_type});
 
     newNotification.save(function(err){
       if (err) {
@@ -1104,7 +1105,8 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       } else{
         console.log('saved:');
       }
-    });
+    }); 
+    
   });
 
   socket.on('give thanks', function(data, callback){

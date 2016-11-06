@@ -169,6 +169,7 @@
  						<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
 					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
                         <hr class="divider"/>
@@ -258,6 +259,7 @@
  						<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
 					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
                         <hr class="divider"/>
 
@@ -387,6 +389,7 @@
 	    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
 	    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+        <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
 
@@ -557,6 +560,17 @@
 			 popFollowed();
 		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
+
+	      function collaborateFunction(c_type, c_id){
+            console.log('uid on like:'+c_type+':'+c_id);
+            popCollaborate();
+            socket.emit('give collaborate', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
+          }
+
+          function popCollaborate(){
+            var popup = document.getElementById('collaboratePop');
+            popup.classList.toggle('show');
+          }
 
 	      function popFollowed(){
 			 var popup = document.getElementById('followedPop');

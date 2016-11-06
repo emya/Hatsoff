@@ -323,7 +323,7 @@
           function collaborateFunction(uid, c_id){
             console.log('uid on like:'+uid+':'+c_id);
             popCollaborate();
-            socket.emit('give collaborate', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+            socket.emit('give collaborate', {to_uid:uid, uid:{{user.id}}, c_id:c_id, c_type:1});
           }
 
           function popCollaborate(){

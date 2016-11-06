@@ -561,6 +561,7 @@ io.on('connection', function(socket){
     var query3 = PortfolioPost.find({'to_uid':socket.uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
+      console.log("portfolio:"+docs);
       socket.emit('update portfolio comment', docs);
     }); 
 

@@ -173,7 +173,27 @@
 
                         <hr class="divider"/>
 
-                        <ul class="nav nav-tabs">
+                        <div class="well well-ssm">
+	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+	                        	
+	                        </ul>
+
+	                        <form class="form-horizontal" action="">
+		                        <div class="form-group">
+			                        <div class="col-md-9">
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <div class="col-md-12 text-right">
+			                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+		                        	</div>
+	                        	</div>
+	                        </form>
+
+                        </div>
+
+                        <!--ul class="nav nav-tabs">
 							<li class="active"><a href="#leaveComment" data-toggle="tab">Leave Comment</a></li>
 							<li><a href="#showComment" data-toggle="tab">Show Comment</a></li>
                         </ul>
@@ -183,14 +203,12 @@
 								<div class="well well-ssm">
 								  <form class="form-horizontal" action="" id="portfolio_form">{% csrf_token %}
 								      <fieldset>
-								        <!-- Post body -->
 								        <div class="form-group">
 								          <div class="col-md-9">
 								    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
 								          </div>
 								        </div>
 		    
-								        <!-- Form actions -->
 								        <div class="form-group">
 								          <div class="col-md-12 text-right">
 								    	      <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
@@ -206,7 +224,7 @@
 			                    <div id="portfolioComment_{{forloop.counter}}"></div>
                             </ul>
                         </div>
-                    	</div>
+                    	</div-->
 					<!--/div>
 				    </div-->
 				</blockquote>
@@ -242,41 +260,27 @@
 					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
 
                         <hr class="divider"/>
-                                            
-                        <ul class="nav nav-tabs">
-							<li class="active"><a href="#leaveComment_{{forloop.counter}}" data-toggle="tab">Leave Comment</a></li>
-							<li><a href="#showComment_{{forloop.counter}}" data-toggle="tab">Show Comment</a></li>
-                        </ul>
 
-                        <div class="tab-content" style="width:350px; padding:0px; border:0px;">
-	                        <div class="tab-pane active" id="leaveComment_{{forloop.counter}}">
-								<div class="well well-ssm">
-								  <form class="form-horizontal" action="" id="portfolio_form">
-								      <fieldset>
-								        <!-- Post body -->
-								        <div class="form-group">
-								          <div class="col-md-9">
-								    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
-								          </div>
-								        </div>
-		    
-								        <!-- Form actions -->
-								        <div class="form-group">
-								          <div class="col-md-12 text-right">
-								    	     <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
-								          </div>
-								        </div>
-								      </fieldset>
-								  </form>
-								</div>
-						    </div>
+                        <div class="well well-ssm">
+	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+	                        	
+	                        </ul>
 
-                            <div class="tab-pane" id="showComment_{{forloop.counter}}">
-						        <ul style="list-style-type:none; padding-left:0px;">
-				                   <div id="portfolioComment_{{forloop.counter}}"></div>
-	                            </ul>
-                            </div>
+	                        <form class="form-horizontal" action="">
+		                        <div class="form-group">
+			                        <div class="col-md-9">
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <div class="col-md-12 text-right">
+			                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+		                        	</div>
+	                        	</div>
+	                        </form>
+
                         </div>
+                                            
 					<!--/div>
 				</div-->
 				</blockquote>
@@ -591,18 +595,31 @@
 		    s.style.display = 'block';
 	      };
 
-              // For portfolio
-              function submitPForm(number){
-                    console.log('form submit portfolio'+number);
-                    var post_val = $('#c_portfolio_'+number).val();
+          // For portfolio
+          function submitPForm(number){
+            console.log('form submit portfolio'+number);
+            var post_val = $('#c_portfolio_'+number).val();
                     
-                    if (post_val.length != 0){
-                        console.log('if:'+number+':'+post_val);
+            if (post_val.length != 0){
+                console.log('if:'+number+':'+post_val);
 		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number});
-                    }
+            }
 		    $('#c_portfolio_'+number).val('');
 		    return false;
-              }
+          }
+
+          function submitShowcaseComment(number){
+            console.log('form submit portfolio'+number);
+            var post_val = $('#c_portfolio_'+number).val();
+                    
+            if (post_val.length != 0){
+                console.log('if:'+number+':'+post_val);
+		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number, uid:{{user.id}} });
+            }
+		    $('#c_portfolio_'+number).val('');
+		    return false;
+          }
+
               /**
 	      $('#portfolio_form').submit(function(e){
                     e.preventDefault();
@@ -665,14 +682,15 @@
 
 	      socket.on('update portfolio comment', function(docs){
             console.log('socket on portfolio comment');
-		  	var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		 	var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		  	//var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		 	//var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	        for(var i = 0; i < docs.length; i++){
                 if (docs[i]['p_id']) {
                     var p_id = docs[i]['p_id'];
                     console.log('If!');
                     if (docs[i]['user']['uid']){
 						var uid = docs[i]['user']['uid'];
+                        console.log('If!'+uid);
 						var n  = users.indexOf(uid);
 						var data = docs[i];
 						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);

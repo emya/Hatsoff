@@ -576,10 +576,6 @@ to here
    text-align: center;
 }
 
-#home-main .home-step #portfolioComment_1{
-   display: none;
-}
-
 #home-main .home-step #portfolio_hide{
    display: none;
    text-align: center;
@@ -1613,7 +1609,7 @@ input[type="file"]{
     width: 600px;
 }
 #quote-carousel {
-    padding: 0 10px 30px 10px;
+    padding: 0 0px 30px 0px;
     margin-top: 30px;
     /* Control buttons  */
     /* Previous button  */
@@ -1631,9 +1627,11 @@ input[type="file"]{
 }
 #quote-carousel .carousel-control.left {
     /* left: -60px; */
+    height: 200px;
 }
 #quote-carousel .carousel-control.right {
     /* right: -60px; */
+    height: 200px;
 }
 #quote-carousel .carousel-indicators {
     right: 50%;
@@ -1667,12 +1665,19 @@ input[type="file"]{
 .item blockquote {
     border-left: none;
     margin: 0;
+    padding: 0;
 }
 .item blockquote p:before {
-    content: "\f10d";
+    /* content: "\f10d";*/
     font-family: 'Fontawesome';
     float: left;
     margin-right: 10px;
+}
+blockquote {
+   padding: 0 !important;
+}
+blockquote:before {
+   padding: 0 !important;
 }
 .tab-content-s{
     width: 350px;

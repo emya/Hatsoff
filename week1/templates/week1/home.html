@@ -26,46 +26,9 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
-	    <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
         <ul style="list-style-type:none">
-			<li>City: {{profile.city}}</li>
-			<li>Work at/as: {{profile.worksAt}}</li>
-			<li>Education: {{profile.education}}</li>
-			<li>Language: {{profile.language}}</li>
-        </ul>
-	</div>
-	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            URL: {{ profile.weburl }}
-        </div>
-
-	<div class="home-step">
-	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <ul style="list-style-type:none">
-				<li>Hobby: {{profile.hobby}}</li>
-				<li>Favorite quote: {{profile.fQuote}}</li>
-				<li>Favorite film: {{profile.fFilm}}</li>
-				<li>Favorite book/author: {{profile.fBook}}</li>
-				<li>Book/Film/TV show you are reading/watching now: {{profile.filmNow}}</li>
-            </ul>
-	</div>
-    </div>
-
-    <div id="home-secondcolumn">
-	<div class="home-step">
-		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-		{% if profile.photo %}
-	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
-		{% else %}
-		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
-		{% endif %}
-        </div>
-	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
-           <p>{{profile.describe}}</p>
-	    <a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-           <p>
+			<a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+           <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
            {% endif %}
@@ -96,14 +59,64 @@
            {% if profile.skill10 and profile.skill10 != ""%}	
            &nbsp{{profile.skill10}}
            {% endif %}
-           </p>
+           </li>
+	        <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+				<li>City: {{profile.city}}</li>
+				<li>Work at: {{profile.worksAt}}</li>
+				<li>Education: {{profile.education}}</li>
+				<li>Language: {{profile.language}}</li>
+
+	        <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            	<li>Website: {{ profile.weburl }}</li>
+
+	        <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+				<li>Want to explore: {{profile.explore}}</li>
+				<li>Hobby: {{profile.hobby}}</li>
+				<li>Favorite quote: {{profile.fQuote}}</li>
+				<li>Films I love: {{profile.fFilm}}</li>
+				<li>Books I love: {{profile.fBook}}</li>
+				<li>Lived in: {{profile.cities}}</li>
+        </ul>
+	</div>
+	<!--div class="home-step-out">
+	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            URL: {{ profile.weburl }}
+    </div-->
+
+	<!--div class="home-step">
+	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            <ul style="list-style-type:none">
+				<li>Want to explore: {{profile.explore}}</li>
+				<li>Hobby: {{profile.hobby}}</li>
+				<li>Favorite quote: {{profile.fQuote}}</li>
+				<li>Favorite film: {{profile.fFilm}}</li>
+				<li>Favorite book/author: {{profile.fBook}}</li>
+				<li>Book/Film/TV show you are reading/watching now: {{profile.filmNow}}</li>
+            </ul>
+	</div-->
+    </div>
+
+    <div id="home-secondcolumn">
+	<div class="home-step">
+		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+		{% if profile.photo %}
+	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
+		{% else %}
+		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
+		{% endif %}
+        </div>
+	<div class="home-step-out">
+	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
+           <p>{{profile.describe}}</p>
+	    
         </div>
     </div>
 
     <div id="home-thirdcolumn">
        <ul style="list-style-type:none">
-	 <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
-         <li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li>
+	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
+         <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
 	 <li><a href="{% url 'week1:messages' %}"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
 	 <li><a href=""><img src="{% static 'images/pitch.png'%}" class="icons-img"></a></li>
@@ -164,9 +177,37 @@
 						<li>Your role:{{showcase.role}}</li>
 						<li>Year of completion:{{showcase.completion}}</li>
 					    </ul>
+
+					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
+ 						<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
+					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+
+
                         <hr class="divider"/>
 
-                        <ul class="nav nav-tabs">
+                        <div class="well well-ssm">
+	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+	                        	
+	                        </ul>
+
+	                        <form class="form-horizontal" action="">
+		                        <div class="form-group">
+			                        <div class="col-md-9">
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <div class="col-md-12 text-right">
+			                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+		                        	</div>
+	                        	</div>
+	                        </form>
+
+                        </div>
+
+                        <!--ul class="nav nav-tabs">
 							<li class="active"><a href="#leaveComment" data-toggle="tab">Leave Comment</a></li>
 							<li><a href="#showComment" data-toggle="tab">Show Comment</a></li>
                         </ul>
@@ -176,14 +217,12 @@
 								<div class="well well-ssm">
 								  <form class="form-horizontal" action="" id="portfolio_form">{% csrf_token %}
 								      <fieldset>
-								        <!-- Post body -->
 								        <div class="form-group">
 								          <div class="col-md-9">
 								    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
 								          </div>
 								        </div>
 		    
-								        <!-- Form actions -->
 								        <div class="form-group">
 								          <div class="col-md-12 text-right">
 								    	      <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
@@ -199,7 +238,7 @@
 			                    <div id="portfolioComment_{{forloop.counter}}"></div>
                             </ul>
                         </div>
-                    	</div>
+                    	</div-->
 					<!--/div>
 				    </div-->
 				</blockquote>
@@ -228,42 +267,35 @@
 						<li>Your role:{{showcase.role}}</li>
 						<li>Year of completion:{{showcase.completion}}</li>
 					    </ul>
+
+						<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
+ 						<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
+					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+
                         <hr class="divider"/>
-                                            
-                        <ul class="nav nav-tabs">
-							<li class="active"><a href="#leaveComment_{{forloop.counter}}" data-toggle="tab">Leave Comment</a></li>
-							<li><a href="#showComment_{{forloop.counter}}" data-toggle="tab">Show Comment</a></li>
-                        </ul>
 
-                        <div class="tab-content" style="width:350px; padding:0px; border:0px;">
-	                        <div class="tab-pane active" id="leaveComment_{{forloop.counter}}">
-								<div class="well well-ssm">
-								  <form class="form-horizontal" action="" id="portfolio_form">
-								      <fieldset>
-								        <!-- Post body -->
-								        <div class="form-group">
-								          <div class="col-md-9">
-								    	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
-								          </div>
-								        </div>
-		    
-								        <!-- Form actions -->
-								        <div class="form-group">
-								          <div class="col-md-12 text-right">
-								    	     <button class="btn btn-primary btn-lg" onclick="submitPForm({{forloop.counter}})">Post</button>
-								          </div>
-								        </div>
-								      </fieldset>
-								  </form>
-								</div>
-						    </div>
+                        <div class="well well-ssm">
+	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+	                        	
+	                        </ul>
 
-                            <div class="tab-pane" id="showComment_{{forloop.counter}}">
-						        <ul style="list-style-type:none; padding-left:0px;">
-				                   <div id="portfolioComment_{{forloop.counter}}"></div>
-	                            </ul>
-                            </div>
+	                        <form class="form-horizontal" action="">
+		                        <div class="form-group">
+			                        <div class="col-md-9">
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                        <div class="col-md-12 text-right">
+			                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+		                        	</div>
+	                        	</div>
+	                        </form>
+
                         </div>
+                                            
 					<!--/div>
 				</div-->
 				</blockquote>
@@ -364,42 +396,70 @@
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>
 	    </div>
+
+        <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
+	    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+	    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
+	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
+	    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+        <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+
+
+
             <hr class="divider"/>
              
-            <ul class="nav nav-tabs">
+           <div class="well well-ssm">
+            <ul id="upcomingComment" style="list-style-type:none;">
+            	
+            </ul>
+
+            <form class="form-horizontal" action="">
+                <div class="form-group">
+                    <div class="col-md-9">
+                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 text-right">
+                    	<button class="btn btn-primary btn-lg" onclick="submitUpcomingComment()">Post</button>
+                	</div>
+            	</div>
+            </form>
+
+            </div>
+
+            <!--ul class="nav nav-tabs">
 	        <li class="active"><a href="#leaveComment_upcoming" data-toggle="tab">Leave Comment</a></li>
 	        <li><a href="#showComment_upcoming" data-toggle="tab">Show Comment</a></li>
             </ul>
 
             <div class="tab-content" style="width:350px; padding:0px; border:0px;">
               <div class="tab-pane active" id="leaveComment_upcoming">
-	        <div class="well well-ssm">
-	          <form class="form-horizontal" action="" id="upcoming_form">
-	              <fieldset>
-	                <!-- Post body -->
-	                <div class="form-group">
-	                  <div class="col-md-9">
-	                    <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
-	                  </div>
-	                </div>
-    
-	                <!-- Form actions -->
-	                <div class="form-group">
-	                  <div class="col-md-12 text-right">
-	             	    <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
-	                  </div>
-	                </div>
-	              </fieldset>
-	          </form>
+		        <div class="well well-ssm">
+		          <form class="form-horizontal" action="" id="upcoming_form">
+		              <fieldset>
+		                <div class="form-group">
+		                  <div class="col-md-9">
+		                    <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:470px;"></textarea>
+		                  </div>
+		                </div>
+	    
+		                <div class="form-group">
+		                  <div class="col-md-12 text-right">
+		             	    <button class="btn btn-primary btn-lg" onclick="submitUForm()">Post</button>
+		                  </div>
+		                </div>
+		              </fieldset>
+		          </form>
 	        </div>
 	      </div>
 
               <div class="tab-pane" id="showComment_upcoming">
-	        <ul style="list-style-type:none; padding-left:30px;">
-	          <div id="upcomingComment"></div>
+	        	<ul style="list-style-type:none; padding-left:30px;">
+	          	<div id="upcomingComment"></div>
                 </ul>
               </div>
-           </div>
+           </div-->
 
 	    {% endif %}
 	</div>
@@ -413,9 +473,14 @@
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
+		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+
+          /**
 	      socket.on('number thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;
               });
+          **/
 
 	      socket.on('number hatsoff', function(count){
                   document.getElementById("hatsoffNum").innerHTML = count;
@@ -509,6 +574,17 @@
 		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
 
+	      function collaborateFunction(c_type, c_id){
+            console.log('uid on like:'+c_type+':'+c_id);
+            popCollaborate();
+            socket.emit('give collaborate', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
+          }
+
+          function popCollaborate(){
+            var popup = document.getElementById('collaboratePop');
+            popup.classList.toggle('show');
+          }
+
 	      function popFollowed(){
 			 var popup = document.getElementById('followedPop');
 			 popup.classList.toggle('show');
@@ -540,13 +616,13 @@
 	      };
 
 	      function show_portfolio(number, length){
-                    console.log('show more!');
-                    for (var i = 0; i < length; i++){
+            console.log('show more!');
+            for (var i = 0; i < length; i++){
 		        $('#portfolioComment_'+i).hide();
 		    }
 		    $('#portfolioComment_'+number).show();
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
+            var h = document.getElementById('portfolio_hide');
+            var s = document.getElementById('portfolio_show');
 		    if (s.style.display == 'block'){
 		        s.style.display = 'none';
 		    }
@@ -554,28 +630,65 @@
 	      };
 
 	      function hide_portfolio(number){
-                    console.log('hide more!');
+            console.log('hide more!');
 		    $('#portfolioComment_'+number).hide();
-                    var h = document.getElementById('portfolio_hide');
-                    var s = document.getElementById('portfolio_show');
+            var h = document.getElementById('portfolio_hide');
+            var s = document.getElementById('portfolio_show');
 		    if (h.style.display == 'block'){
 		        h.style.display = 'none';
 		    }
 		    s.style.display = 'block';
 	      };
 
-              // For portfolio
-              function submitPForm(number){
-                    console.log('form submit portfolio'+number);
-                    var post_val = $('#c_portfolio_'+number).val();
+          // For portfolio
+          function submitPForm(number){
+            console.log('form submit portfolio'+number);
+            var post_val = $('#c_portfolio_'+number).val();
                     
-                    if (post_val.length != 0){
-                        console.log('if:'+number+':'+post_val);
+            if (post_val.length != 0){
+                console.log('if:'+number+':'+post_val);
 		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number});
-                    }
+            }
 		    $('#c_portfolio_'+number).val('');
 		    return false;
-              }
+          }
+
+          function submitShowcaseComment(number){
+            console.log('form submit portfolio'+number);
+            var post_val = $('#c_portfolio_'+number).val();
+                    
+            if (post_val.length != 0){
+                console.log('if:'+number+':'+post_val);
+		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number, uid:{{user.id}} });
+            }
+		    $('#c_portfolio_'+number).val('');
+		    return false;
+          }
+
+ 		   function submitUForm(){
+            console.log('form submit');
+
+            var com = $('#c_upcoming').val();
+            if (com.length != 0){
+		        socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
+		    } 
+		    $('#c_upcoming').val('');
+		    return false;
+	      }
+
+
+	      function submitUpcomingComment(){
+            console.log('form submit upcoming');
+            var post_val = $('#c_upcoming').val();
+                    
+            if (post_val.length != 0){
+                console.log('if:'+post_val);
+		        socket.emit('upcoming comment', {msg:post_val, to:{{user.id}}, uid:{{user.id}} });
+            }
+		    $('#c_upcoming').val('');
+		    return false;
+          }
+
               /**
 	      $('#portfolio_form').submit(function(e){
                     e.preventDefault();
@@ -590,62 +703,82 @@
               });
               **/
 
+          function submitComment(uid, c_id){
+            console.log('form submit comment'+c_id);
+            var post_val = $('#c_'+c_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('comment:'+post_val);
+              socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+	          var m  = users.indexOf({{user.id}});
+	          var url_link = "{% url 'week1:get_profile' user.id %}";
+	          if (m != -1){
+	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	          }else{
+	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	          }
+            }
+            $('#c_'+c_id).val('');
+            return false;
+          } 
+
 	      socket.on('new portfolio comment', function(data){
-                    console.log('new portfolio comment on home');
+            console.log('new portfolio comment on home');
 		    var uid = data.from_uid;
-                    var p_id = data.p_id;
-                    console.log(p_id);
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+            var p_id = data.p_id;
+            console.log(p_id);
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
 
 	      socket.on('update portfolio comment', function(docs){
-                  console.log('socket on portfolio comment');
-		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	          for(var i = 0; i < docs.length; i++){
-                      if (docs[i]['p_id']) {
-                          var p_id = docs[i]['p_id'];
-                          console.log('If!');
-                          if (docs[i]['user']['uid']){
-				var uid = docs[i]['user']['uid'];
-				var n  = users.indexOf(uid);
-				var data = docs[i];
-				var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-				if ( n != -1) {
-				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      } else{
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      }
+            console.log('socket on portfolio comment');
+		  	//var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		 	//var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+	        for(var i = 0; i < docs.length; i++){
+                if (docs[i]['p_id']) {
+                    var p_id = docs[i]['p_id'];
+                    console.log('If!');
+                    if (docs[i]['user']['uid']){
+						var uid = docs[i]['user']['uid'];
+                        console.log('If!'+uid);
+						var n  = users.indexOf(uid);
+						var data = docs[i];
+						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+						if ( n != -1) {
+						      if (uid == {{user.id}}){
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      } else{
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      }
 
-				}else{
-				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      } else {
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      }
-				}
-			}
+						}else{
+						      if (uid == {{user.id}}){
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      } else {
+						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						      }
+						}
+					}
 
                       } else{
                           console.log('Else!');
@@ -654,46 +787,37 @@
 	      });
 
 	      //$('#upcoming_form').submit(function(){
-              function submitUForm(){
-                    console.log('form submit');
-
-                    var com = $('#c_upcoming').val();
-                    if (com.length != 0){
-		        socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
-		    } 
-		    $('#c_upcoming').val('');
-		    return false;
-	      }
+              
 
 	      socket.on('new upcoming comment', function(data){
-                    console.log('new upcoming comment on home');
+            console.log('new upcoming comment on home');
 		    var uid = data.from_uid;
-                    console.log(uid);
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+            console.log(uid);
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
 		             //$('#communityPost').prepend($('<hr>'));
-		             $('#upcomingComment').prepend($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#upcomingComment').prepend($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		        //$('#communityPost').prepend($('<hr>'));
 		          if (uid == {{user.id}}){
-		             $('#upcomingComment').prepend($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#upcomingComment').prepend($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
 
 	      socket.on('update upcoming comment', function(docs){
-		    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    for(var i=0; i < docs.length; i++){
 		       if (docs[i]['user']['uid']){
 			    var uid = docs[i]['user']['uid'];
@@ -727,32 +851,32 @@
           }
 
 	  socket.on('update comment', function(docs){
-            console.log('update comment on home');
-	    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-            var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+        console.log('update comment on home');
+	    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	    for(var i = 0; i < docs.length; i++){
-		if (docs[i]['from_user']['uid']){
-			var uid = docs[i]['from_user']['uid'];
-			var n  = users.indexOf(uid);
-			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-			if ( n != -1) {
-			    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-			}else{
-			    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+			if (docs[i]['from_user']['uid']){
+				var uid = docs[i]['from_user']['uid'];
+				var n  = users.indexOf(uid);
+				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+				if ( n != -1) {
+				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
+				}else{
+				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
 
-			}
-	        }
+				}
+		    }
 	      }
 	  });
 
 	  socket.on('new comment', function(data){
-                console.log('new comment on userpage');
+            console.log('new comment on userpage');
 	        var uid = data.from_uid;
-                console.log(p_id);
-	        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-	        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+            console.log(p_id);
+	        //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+	        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	        var n  = users.indexOf(uid);
-		var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 	        if ( n != -1) {
 	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
 	        }else{
@@ -766,8 +890,8 @@
                 var communitydocs = data.community;
                 var len_share = sharedocs.length;
                 var len_community = communitydocs.length;
-		        var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		        var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		        //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
                 var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
@@ -786,37 +910,194 @@
 						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 						  var uid = sharedocs[i_share]['to_uid'];
 			              var content = sharedocs[i_share]['content'];
+			              var c_id = sharedocs[i_share]['_id'];
 						  var n  = users.indexOf(uid);
-			                          
+                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
+                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+                          var tag = (content['tag']) ? content['tag'] : 0;
 						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-						  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+                          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                          var skillls = "";
+						  if (content['skillls']){
+	                          if(content['skillls'].length != 0){
+	                            var ls = content['skillls'];
+	                            skillls += "<div> Tags: ";
+	                            for (var j = 0; j < ls.length; j++){
+	                              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	                              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	                            } 
+	                            skillls += "</div><br>";
+	                          }
+                          }
+			                          
+						  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+						  	//<div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+						  if (content['replys']) {
+	                           var rdocs = content['replys'];
+	                           console.log('replys');
+	                           for(var j=0; j < rdocs.length; j++){
+	                              if (rdocs[j]['user']['uid']){
+	                      			var ruid = rdocs[j]['user']['uid']
+	                      			var m  = users.indexOf(ruid);
+	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	                      			if ( m != -1) {
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}else{
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}
+	                             }
+	                           }
+                          }
 
                           i_share += 1;
                        }else{
+                       	  var uid = {{user.id}};
+			              var content = communitydocs[i_community];
                        	  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
 						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-						  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+
+						  var c_id = content['_id'];
+						  var n  = users.indexOf(uid);
+                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
+                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+                          var tag = (content['tag']) ? content['tag'] : 0;
+						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                          var skillls = "";
+						  if (content['skillls']){
+	                          if(content['skillls'].length != 0){
+	                            var ls = content['skillls'];
+	                            skillls += "<div> Tags: ";
+	                            for (var j = 0; j < ls.length; j++){
+	                              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	                              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	                            } 
+	                            skillls += "</div><br>";
+	                          }
+                          }
+
+
+						  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+						  //$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+
+						  if (content['replys']) {
+	                           var rdocs = content['replys'];
+	                           console.log('replys');
+	                           for(var j=0; j < rdocs.length; j++){
+	                              if (rdocs[j]['user']['uid']){
+	                      			var ruid = rdocs[j]['user']['uid']
+	                      			var m  = users.indexOf(ruid);
+	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	                      			if ( m != -1) {
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}else{
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}
+	                             }
+	                           }
+                          }
 
                           i_community += 1;
                        }
 
                     }else if(i_share < len_share){
-                       var t_share = sharedocs[i_share]["created"];
-                       var content = sharedocs[i_share]['content'];
-				       var n  = users.indexOf(uid);
-				       var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-				       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-				       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-				       $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
-                       i_share += 1;
+						var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+						var uid = sharedocs[i_share]['to_uid'];
+			            var content = sharedocs[i_share]['content'];
+			            var c_id = sharedocs[i_share]['_id'];
+						var n  = users.indexOf(uid);
+                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
+                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+                        var tag = (content['tag']) ? content['tag'] : 0;
+						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                        var skillls = "";
+						if (content['skillls']){
+	                        if(content['skillls'].length != 0){
+	                          var ls = content['skillls'];
+	                          skillls += "<div> Tags: ";
+	                          for (var j = 0; j < ls.length; j++){
+	                            var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	                            skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	                          } 
+	                          skillls += "</div><br>";
+	                        }
+                        }
+			                          
+					    $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+
+					    if (content['replys']) {
+	                           var rdocs = content['replys'];
+	                           console.log('replys');
+	                           for(var j=0; j < rdocs.length; j++){
+	                              if (rdocs[j]['user']['uid']){
+	                      			var ruid = rdocs[j]['user']['uid']
+	                      			var m  = users.indexOf(ruid);
+	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	                      			if ( m != -1) {
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}else{
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}
+	                             }
+	                           }
+                        }
+
+                        i_share += 1;
 
                     }else if(i_community < len_community){
-                       var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-				       var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-				       $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
-                       i_community += 1;
+						var uid = {{user.id}};
+			            var content = communitydocs[i_community];
+                       	var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+
+						var c_id = content['_id'];
+						var n  = users.indexOf(uid);
+                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
+                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+                        var tag = (content['tag']) ? content['tag'] : 0;
+						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                        var skillls = "";
+						if (content['skillls']){
+	                        if(content['skillls'].length != 0){
+	                          var ls = content['skillls'];
+	                          skillls += "<div> Tags: ";
+	                          for (var j = 0; j < ls.length; j++){
+	                            var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	                            skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	                          } 
+	                          skillls += "</div><br>";
+	                        }
+                        }
+
+						$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+
+						if (content['replys']) {
+	                           var rdocs = content['replys'];
+	                           console.log('replys');
+	                           for(var j=0; j < rdocs.length; j++){
+	                              if (rdocs[j]['user']['uid']){
+	                      			var ruid = rdocs[j]['user']['uid']
+	                      			var m  = users.indexOf(ruid);
+	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	                      			if ( m != -1) {
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}else{
+	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                      			}
+	                             }
+	                           }
+                        }
+
+                        i_community += 1;
 
                     }
 
@@ -828,6 +1109,7 @@
 	  });
 
 
+/**
           $(document).ready(function() {
 
             console.log("ready!");
@@ -858,6 +1140,7 @@
             }, false);
 
         });
+ **/
 
 
 

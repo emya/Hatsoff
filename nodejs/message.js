@@ -112,7 +112,8 @@ var ShareSkillPost = mongoose.model('ShareSkillPost', shareskillSchema);
 var collaborateSchema = mongoose.Schema({
   to_uid: Number,
   user: {uid: Number, first_name: String, last_name: String},
-  community_id: String,
+  content_type: Number,
+  content_id: String,
   created: {type: Date, default:Date.now}
 });
 
@@ -561,6 +562,7 @@ io.on('connection', function(socket){
     var query3 = PortfolioPost.find({'to_uid':socket.uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
+      console.log("portfolio:"+docs);
       socket.emit('update portfolio comment', docs);
     }); 
 
@@ -697,6 +699,47 @@ io.on('connection', function(socket){
       if (err) throw err;
       socket.emit('number user follow', count);
     }); 
+
+
+    var uid1, uid2, action_user;
+    if (socket.uid < data.to_uid){
+      uid1 = socket.uid;
+      uid2 = data.to_uid; 
+      action_user = 1;
+    }else{
+      uid2 = socket.uid;
+      uid1 = data.to_uid; 
+      action_user = 2;
+    }
+
+    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+      if (err) {
+        console.log(err);
+      }else {
+        if (result){
+          socket.join(result._id);
+          socket.emit('set message', result);
+          console.log('result:'+result);
+        }else{
+
+          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
+          newMessageRelation.save(function(error, newdata){
+
+            if (error) {
+              console.log(error);
+            }else{
+              /** emmit new message to data.to_uid message.html **/
+                socket.join(newdata._id);
+                console.log('newdata:'+newdata);
+                socket.emit('set message', newdata) 
+            }
+          });
+
+        }
+
+      }
+    });
+
 
     /***
     var query_cp = CommunityPost.find({'user.uid':data.to_uid});
@@ -1086,7 +1129,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     console.log('date:'+d); 
     console.log('give collaborate:'+socket.uid); 
     
-    var newPost = new CollaboratePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, community_id:data.c_id});
+    var newPost = new CollaboratePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_id:data.c_id, content_type:data.c_type});
     newPost.save(function(err){
       if (err) {
         console.log(err);
@@ -1095,7 +1138,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       }
     });
 
-    var newNotification = new NotificationPost({action_id:7, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newNotification = new NotificationPost({action_id:7, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_id:data.c_id, content_type:data.c_type});
 
     newNotification.save(function(err){
       if (err) {
@@ -1103,7 +1146,8 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       } else{
         console.log('saved:');
       }
-    });
+    }); 
+    
   });
 
   socket.on('give thanks', function(data, callback){
@@ -1475,6 +1519,50 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     });
   });
 
+
+  socket.on('send message', function(data){
+    console.log('send message');
+    var uid1, uid2, action_user;
+    if (socket.uid < data.to_uid){
+      uid1 = data.uid;
+      uid2 = data.to_uid; 
+      action_user = 1;
+    }else{
+      uid2 = data.uid;
+      uid1 = data.to_uid; 
+      action_user = 2;
+    }
+
+    console.log('uid1:'+uid1);
+    console.log('uid2:'+uid2);
+    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+      if (err) {
+        console.log(err);
+      }else {
+        if (result){
+          result.messages.push({uid:data.uid, content:data.msg});
+          result.save(function (error) {
+            if (!error) {
+              console.log('Succeed to send message!');
+            }
+            console.log('sent message is saved!');
+            socket.join(result._id);
+            //socket.emit('new message', {uid:data.uid, content:data.msg});
+            io.sockets.in(result._id).emit('new message', {uid:data.uid, content:data.msg});
+            console.log('result:'+result);
+          });
+
+        }else{
+
+        }
+
+      }
+    });
+
+  });
+
+
+/*
   socket.on('send message', function(data){
     io.sockets.in(data.room_id).emit('room message', data);
 
@@ -1492,6 +1580,50 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     });
 
   });
+  */
+
+  socket.on('get message', function(data){
+    console.log('start message');
+    var uid1, uid2, action_user;
+    if (socket.uid < data.to_uid){
+      uid1 = socket.uid;
+      uid2 = data.to_uid; 
+      action_user = 1;
+    }else{
+      uid2 = socket.uid;
+      uid1 = data.to_uid; 
+      action_user = 2;
+    }
+
+    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+      if (err) {
+        console.log(err);
+      }else {
+        if (result){
+          socket.join(result._id);
+          socket.emit('set message', result);
+          console.log('result:'+result);
+        }else{
+
+          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
+          newMessageRelation.save(function(error, newdata){
+
+            if (error) {
+              console.log(error);
+            }else{
+              /** emmit new message to data.to_uid message.html **/
+                console.log('newdata:'+newdata);
+                socket.emit('set message', newdata) 
+            }
+          });
+
+        }
+
+      }
+    });
+
+  });
+
 
   /***
   uid1: Number,
@@ -1527,7 +1659,6 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
             if (error) {
               console.log(error);
             }else{
-
               /** emmit new message to data.to_uid message.html **/
               if (users[data.to_uid]){
                 users[data.to_uid].emit('send first message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 

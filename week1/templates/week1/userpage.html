@@ -83,13 +83,10 @@
 	 	 <li><div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
 	 	 <li><div class="popupFollow" onclick="popFollow()">Follow&nbsp<span id="followNum"></br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li>
 
-         <li><a href="#" id="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+         <!--li><a href="#" id="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li-->
 	 	 <li><img src="{% static 'images/pitch.png'%}" class="icons-img"></li>
-       	 <li><div class="loginModal" data-toggle="modal" data-target=".bd-mymodal-lg">Chat</div></li>	
-       	 <!--li><div class="round hollow text-center">
-        	<a href="#" id="addClass"><span class="glyphicon glyphicon-comment"></span> Open in chat </a>
-        	</div>
-         </li-->
+         <li><a href="#" id="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+
        </ul>
 
        <!--div class="home-bottom">
@@ -601,6 +598,59 @@
             return false;
           } 
 
+          function sendMessage(){
+            console.log('send message');
+            var post_val = $('#status_message').val();
+                    
+            if (post_val.length != 0){
+                console.log('if:'+post_val);
+		        socket.emit('send message', {msg:post_val, to_uid:{{t_user.id}}, uid:{{user.id}} });
+            }
+		    $('#status_message').val('');
+		    return false;
+          }
+
+          function getMessage(){
+            console.log('get message');
+		    //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
+          }
+
+		  socket.on('set message', function(data){
+            console.log('set message');
+            console.log(data['_id']);
+
+            if(data){
+            	if(data['messages']){
+            		for (var i=0; i < data['messages'].length; i++){
+            			if (data['messages'][i]['content']){
+            				if(data['messages'][i]['uid'] == {{user.id}}){
+            					$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">You</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            				}else if(data['messages'][i]['uid'] == {{t_user.id}}){
+            					$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            				}
+            			}
+
+            		}
+
+            	}
+
+            }
+
+		  });
+
+		  socket.on('new message', function(data){
+            console.log('new message');
+            console.log(data['_id']);
+
+            if(data.uid == {{user.id}}){
+            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">You</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+            }else if(data.uid == {{t_user.id}}){
+            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+            }
+
+		  });
 
 	      socket.on('new portfolio comment', function(data){
             console.log('new portfolio comment on home');
@@ -700,19 +750,19 @@
 			    }
 		       }
 		    }
-	      });
+	     });
  
           /***
           ***/
 
-          function submitCForm(){
-                console.log('post comment');
-                if ($('#comment').val().length != 0){
-                    socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}});
-                }
-                $('#comment').val('');            
-                return false;
-          }
+      function submitCForm(){
+            console.log('post comment');
+            if ($('#comment').val().length != 0){
+                socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}});
+            }
+            $('#comment').val('');            
+            return false;
+      }
 
 
 	  socket.on('update comment', function(docs){
@@ -1016,7 +1066,7 @@
 
 <div class="popup-box chat-popup" id="qnimate">
 		  	<div class="popup-head">
-				<div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> Gurdeep Osahan</div>
+				<div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> {{t_user.first_name}} &nbsp {{t_user.last_name}}</div>
 				  <div class="popup-head-right pull-right">
 					<!--div class="btn-group">
 						  <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
@@ -1030,66 +1080,48 @@
 						  </ul>
 					</div-->
 					
-					<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button>
-					<button data-widget="remove" id="removeClass" class="close" type="button">x</button>
+					<!--button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button-->
+					<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">x</button>
                   </div>
 		  		</div>
 				<div class="popup-messages">
     		
-					<div class="direct-chat-messages">
+					<div class="direct-chat-messages" id="chat_room">
 					
-						<div class="chat-box-single-line">
-									<abbr class="timestamp">October 8th, 2015</abbr>
+						<!--div class="chat-box-single-line">
+							<abbr class="timestamp">October 8th, 2015</abbr>
 						</div>
 					
-						<!-- Message. Default to the left -->
 	                    <div class="direct-chat-msg doted-border">
-		                      <div class="direct-chat-info clearfix">
+		                    <div class="direct-chat-info clearfix">
 		                        <span class="direct-chat-name pull-left">Osahan</span>
-		                      </div>
-	                      <!-- /.direct-chat-info -->
-	                      	  <img alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img -->
-		                      <div class="direct-chat-text">
+		                    </div>
+	                      	<img alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img">
+		                    <div class="direct-chat-text">
 		                        Hey bro, how’s everything going ?
-		                      </div>
-							  <div class="direct-chat-info clearfix">
+		                    </div>
+							<div class="direct-chat-info clearfix">
 		                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
-		                      </div>
-							  <!--div class="direct-chat-info clearfix">
-								<span class="direct-chat-img-reply-small pull-left"></span>
-								<span class="direct-chat-reply-name">Singh</span>
-							  </div-->
-	                      <!-- /.direct-chat-text -->
+		                    </div>
 	                    </div>
-	                    <!-- /.direct-chat-msg -->
 					
 					
 						<div class="chat-box-single-line">
 							<abbr class="timestamp">October 9th, 2015</abbr>
 						</div>
-			
 					
-					
-					<!-- Message. Default to the left -->
-                    <div class="direct-chat-msg doted-border">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-left">Osahan</span>
-                      </div>
-                      <!-- /.direct-chat-info -->
-                      <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        Hey bro, how’s everything going ?
-                      </div>
-					  <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
-                      </div>
-					  <!--div class="direct-chat-info clearfix">
-					    <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img big-round">
-					    <span class="direct-chat-reply-name">Singh</span>
-					  </div-->
-                      <!-- /.direct-chat-text -->
-                    </div>
-                    <!-- /.direct-chat-msg -->
+	                    <div class="direct-chat-msg doted-border">
+	                      <div class="direct-chat-info clearfix">
+	                        <span class="direct-chat-name pull-left">Osahan</span>
+	                      </div>
+	                      <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img">
+	                      <div class="direct-chat-text">
+	                        Hey bro, how’s everything going ?
+	                      </div>
+						  <div class="direct-chat-info clearfix">
+	                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+	                      </div>
+	                    </div-->
 					
                   </div>
 			
@@ -1101,7 +1133,7 @@
 					<button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>
 		            <button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>
 					<button class="bg_none pull-right"><i class="glyphicon glyphicon-thumbs-up"></i> </button-->
-					<button class="btn btn-primary btn-lg pull-right">Send </button>
+					<button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
 				</div>
 			</div>
 </div>

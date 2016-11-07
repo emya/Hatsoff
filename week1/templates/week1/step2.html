@@ -14,6 +14,7 @@
      <div id="step-right">
         <h3>Profile</h3>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
+     {{ form.errors }}
             <br>{{form.describe.label_tag}}</br>
             {{form.describe}} </br>
             <!--br>Describe yourself</br> <textarea rows="5" cols="70" align="center" name='describe'></textarea><br/-->

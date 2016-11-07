@@ -84,7 +84,7 @@ class Step2(forms.ModelForm):
             'describe': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
         }
         labels = {
-            'describe': _('Describe yourself (your career, your interests) (2-3 lines)'),
+            'describe': _('Describe yourself, your career, your interests (80 characters)'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

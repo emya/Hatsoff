@@ -13,7 +13,7 @@ class Profile(models.Model):
     birthyear = models.DateTimeField(null=True, blank=True)
     birthdate = models.DateTimeField(null=True, blank=True)
     language = models.CharField(max_length=100, default='', blank=True)
-    describe = models.CharField(max_length=500, default='', blank=True)
+    describe = models.CharField(max_length=80, default='', blank=True)
     skill1 = models.CharField(max_length=200, default='', blank=True)
     skill2 = models.CharField(max_length=200, default='', blank=True)
     skill3 = models.CharField(max_length=200, default='', blank=True)

@@ -26,46 +26,9 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
-	    <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
         <ul style="list-style-type:none">
-			<li>City: {{profile.city}}</li>
-			<li>Work at/as: {{profile.worksAt}}</li>
-			<li>Education: {{profile.education}}</li>
-			<li>Language: {{profile.language}}</li>
-        </ul>
-	</div>
-	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            URL: {{ profile.weburl }}
-        </div>
-
-	<div class="home-step">
-	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <ul style="list-style-type:none">
-				<li>Hobby: {{profile.hobby}}</li>
-				<li>Favorite quote: {{profile.fQuote}}</li>
-				<li>Favorite film: {{profile.fFilm}}</li>
-				<li>Favorite book/author: {{profile.fBook}}</li>
-				<li>Book/Film/TV show you are reading/watching now: {{profile.filmNow}}</li>
-            </ul>
-	</div>
-    </div>
-
-    <div id="home-secondcolumn">
-	<div class="home-step">
-		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-		{% if profile.photo %}
-	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
-		{% else %}
-		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
-		{% endif %}
-        </div>
-	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
-           <p>{{profile.describe}}</p>
-	    <a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
-           <p>
+			<a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+           <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
            {% endif %}
@@ -96,7 +59,57 @@
            {% if profile.skill10 and profile.skill10 != ""%}	
            &nbsp{{profile.skill10}}
            {% endif %}
-           </p>
+           </li>
+	        <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+				<li>City: {{profile.city}}</li>
+				<li>Work at: {{profile.worksAt}}</li>
+				<li>Education: {{profile.education}}</li>
+				<li>Language: {{profile.language}}</li>
+
+	        <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            	<li>Website: {{ profile.weburl }}</li>
+
+	        <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+				<li>Want to explore: {{profile.explore}}</li>
+				<li>Hobby: {{profile.hobby}}</li>
+				<li>Favorite quote: {{profile.fQuote}}</li>
+				<li>Films I love: {{profile.fFilm}}</li>
+				<li>Books I love: {{profile.fBook}}</li>
+				<li>Lived in: {{profile.cities}}</li>
+        </ul>
+	</div>
+	<!--div class="home-step-out">
+	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            URL: {{ profile.weburl }}
+    </div-->
+
+	<!--div class="home-step">
+	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            <ul style="list-style-type:none">
+				<li>Want to explore: {{profile.explore}}</li>
+				<li>Hobby: {{profile.hobby}}</li>
+				<li>Favorite quote: {{profile.fQuote}}</li>
+				<li>Favorite film: {{profile.fFilm}}</li>
+				<li>Favorite book/author: {{profile.fBook}}</li>
+				<li>Book/Film/TV show you are reading/watching now: {{profile.filmNow}}</li>
+            </ul>
+	</div-->
+    </div>
+
+    <div id="home-secondcolumn">
+	<div class="home-step">
+		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+		{% if profile.photo %}
+	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
+		{% else %}
+		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
+		{% endif %}
+        </div>
+	<div class="home-step-out">
+	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
+           <p>{{profile.describe}}</p>
+	    
         </div>
     </div>
 

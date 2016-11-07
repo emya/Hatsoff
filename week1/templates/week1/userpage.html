@@ -13,39 +13,7 @@
       
 	<div class="home-step">
         <ul style="list-style-type:none">
-			<li>City:{{target_profile.city}}</li>
-			<li>Work at/as:{{target_profile.worksAt}}</li>
-			<li>Education:{{target_profile.education}}</li>
-			<li>Language:{{target_profile.language}}</li>
-        </ul>
-	</div>
-	<div class="home-step-out">
-            URL:{{ target_profile.weburl }}
-        </div>
-
-	<div class="home-step">
-            <ul style="list-style-type:none">
-                <li>Hobby:{{target_profile.hobby}}</li>
-				<li>Favorite quote:{{target_profile.fQuote}}</li>
-				<li>Favorite film:{{target_profile.fFilm}}</li>
-				<li>Favorite book/author:{{target_profile.fBook}}</li>
-				<li>Book/Film/TV show you are reading/watching now:{{target_profile.filmNow}}</li>
-            </ul>
-	</div>
-    </div>
-
-    <div id="home-secondcolumn">
-	<div class="home-step">
-	{% if target_profile.photo %}
-	    <img src="{{ target_profile.photo.url }}" class="maincontent">
-	{% else %}
-	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
-	{% endif %}
-        </div>
-	<div class="home-step-out">
-            <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}, {{target_profile.profession}}</h3>
-            <p>{{target_profile.describe}}</p>
-            <p>
+         	<li>Skills:
            {% if target_profile.skill1 and target_profile.skill1 != ""%}	
            {{target_profile.skill1}}
            {% endif %}
@@ -76,7 +44,34 @@
            {% if target_profile.skill10 and target_profile.skill10 != ""%}	
            &nbsp{{target_profile.skill10}}
            {% endif %}
-           </p>
+           </li>
+			<li>City:{{target_profile.city}}</li>
+			<li>Work at/as:{{target_profile.worksAt}}</li>
+			<li>Education:{{target_profile.education}}</li>
+			<li>Language:{{target_profile.language}}</li>
+            <li>Website:{{ target_profile.weburl }}</li>
+            <li>Want to explore: {{target_profile.explore}}</li>
+			<li>Hobby: {{target_profile.hobby}}</li>
+			<li>Favorite quote: {{target_profile.fQuote}}</li>
+			<li>Films I love: {{target_profile.fFilm}}</li>
+			<li>Books I love: {{target_profile.fBook}}</li>
+			<li>Lived in: {{target_profile.cities}}</li>
+    	</ul>
+	</div>
+
+    </div>
+
+    <div id="home-secondcolumn">
+	<div class="home-step">
+	{% if target_profile.photo %}
+	    <img src="{{ target_profile.photo.url }}" class="maincontent">
+	{% else %}
+	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
+	{% endif %}
+        </div>
+	<div class="home-step-out">
+            <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}, {{target_profile.profession}}</h3>
+            <p>{{target_profile.describe}}</p>
         </div>
     </div>
 
@@ -88,8 +83,13 @@
 	 	 <li><div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
 	 	 <li><div class="popupFollow" onclick="popFollow()">Follow&nbsp<span id="followNum"></br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li>
 
-	 	 <li><img src="{% static 'images/chat.png'%}" class="icons-img"></li>
+         <li><a href="#" id="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
 	 	 <li><img src="{% static 'images/pitch.png'%}" class="icons-img"></li>
+       	 <li><div class="loginModal" data-toggle="modal" data-target=".bd-mymodal-lg">Chat</div></li>	
+       	 <!--li><div class="round hollow text-center">
+        	<a href="#" id="addClass"><span class="glyphicon glyphicon-comment"></span> Open in chat </a>
+        	</div>
+         </li-->
        </ul>
 
        <!--div class="home-bottom">
@@ -382,6 +382,15 @@
 	      var users = [{% for u in users %} {{ u }} ,{% endfor %}];
           var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
+		 $(function(){
+			$("#addClass").click(function () {
+		        $('#qnimate').addClass('popup-box-on');
+		    });
+		          
+		    $("#removeClass").click(function () {
+		        $('#qnimate').removeClass('popup-box-on');
+		    });
+		  })
 
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
@@ -1002,6 +1011,99 @@
 </div>
 
 
+</div>
+
+
+<div class="popup-box chat-popup" id="qnimate">
+		  	<div class="popup-head">
+				<div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> Gurdeep Osahan</div>
+				  <div class="popup-head-right pull-right">
+					<!--div class="btn-group">
+						  <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
+						   <i class="glyphicon glyphicon-cog"></i> 
+						   </button>
+						  <ul role="menu" class="dropdown-menu pull-right">
+							<li><a href="#">Media</a></li>
+							<li><a href="#">Block</a></li>
+							<li><a href="#">Clear Chat</a></li>
+							<li><a href="#">Email Chat</a></li>
+						  </ul>
+					</div-->
+					
+					<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button>
+					<button data-widget="remove" id="removeClass" class="close" type="button">x</button>
+                  </div>
+		  		</div>
+				<div class="popup-messages">
+    		
+					<div class="direct-chat-messages">
+					
+						<div class="chat-box-single-line">
+									<abbr class="timestamp">October 8th, 2015</abbr>
+						</div>
+					
+						<!-- Message. Default to the left -->
+	                    <div class="direct-chat-msg doted-border">
+		                      <div class="direct-chat-info clearfix">
+		                        <span class="direct-chat-name pull-left">Osahan</span>
+		                      </div>
+	                      <!-- /.direct-chat-info -->
+	                      	  <img alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img -->
+		                      <div class="direct-chat-text">
+		                        Hey bro, how’s everything going ?
+		                      </div>
+							  <div class="direct-chat-info clearfix">
+		                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+		                      </div>
+							  <!--div class="direct-chat-info clearfix">
+								<span class="direct-chat-img-reply-small pull-left"></span>
+								<span class="direct-chat-reply-name">Singh</span>
+							  </div-->
+	                      <!-- /.direct-chat-text -->
+	                    </div>
+	                    <!-- /.direct-chat-msg -->
+					
+					
+						<div class="chat-box-single-line">
+							<abbr class="timestamp">October 9th, 2015</abbr>
+						</div>
+			
+					
+					
+					<!-- Message. Default to the left -->
+                    <div class="direct-chat-msg doted-border">
+                      <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-left">Osahan</span>
+                      </div>
+                      <!-- /.direct-chat-info -->
+                      <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img -->
+                      <div class="direct-chat-text">
+                        Hey bro, how’s everything going ?
+                      </div>
+					  <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+                      </div>
+					  <!--div class="direct-chat-info clearfix">
+					    <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img big-round">
+					    <span class="direct-chat-reply-name">Singh</span>
+					  </div-->
+                      <!-- /.direct-chat-text -->
+                    </div>
+                    <!-- /.direct-chat-msg -->
+					
+                  </div>
+			
+			</div>
+			<div class="popup-messages-footer">
+				<textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
+				<div class="btn-footer">
+					<!--button class="bg_none"><i class="glyphicon glyphicon-film"></i> </button>
+					<button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>
+		            <button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>
+					<button class="bg_none pull-right"><i class="glyphicon glyphicon-thumbs-up"></i> </button-->
+					<button class="btn btn-primary btn-lg pull-right">Send </button>
+				</div>
+			</div>
 </div>
 
 {% endblock %}

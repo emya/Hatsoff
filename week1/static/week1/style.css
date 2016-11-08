@@ -58,7 +58,8 @@ a {
 
 #header #logo {
    display: inline-block;
-   /*float: left;*/
+    
+   float: left;
    width: 50px;
    /*line-height: 100px;*/
 }
@@ -80,11 +81,10 @@ a {
    width: 800px;
    line-height: 100px;
    /*
-   float: left;
    min-width: 600px;
    width: calc(100% - 300px);
    */
-   text-align:center;
+   text-align: center;
 }
 
 #header #header-right {

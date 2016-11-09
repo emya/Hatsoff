@@ -322,13 +322,10 @@ io.on('connection', function(socket){
         
       });
     });
-
   });
 
 
-
   socket.on('at folder', function(data){
-
     var query = CollaboratePost.find({'to_uid':socket.uid});
       query.sort('-created').limit(30).exec(function(err, collaboratedocs){
            console.log('share skill:'+collaboratedocs);
@@ -663,6 +660,7 @@ io.on('connection', function(socket){
   });
  
   socket.on('at userpage', function(data){
+
     console.log('at userpage'+socket.uid);
     var query = CommentPost.find({'to_uid':data.to_uid});
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -721,8 +719,8 @@ io.on('connection', function(socket){
           socket.emit('set message', result);
           console.log('result:'+result);
         }else{
-
-          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
+          //Default status is 2
+          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:2 });
           newMessageRelation.save(function(error, newdata){
 
             if (error) {
@@ -1548,7 +1546,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
             console.log('sent message is saved!');
             socket.join(result._id);
             //socket.emit('new message', {uid:data.uid, content:data.msg});
-            io.sockets.in(result._id).emit('new message', {uid:data.uid, content:data.msg});
+            io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id});
             console.log('result:'+result);
           });
 

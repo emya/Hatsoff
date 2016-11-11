@@ -70,6 +70,23 @@
             	<li>Website: {{ profile.weburl }}</li>
 
 	        <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+				<li>Interested in: 
+				{% if profile.interestproject == 1%}
+				  Side projects
+				{% endif %}
+
+				{% if profile.interestproject == 2 %}  
+				  Short term projects
+				{% endif %}
+
+				{% if profile.interestproject == 3 %}  
+				  Long term projects
+				{% endif %}
+
+				{% if profile.interestproject == 4 %}  
+				  Full-time projects
+				{% endif %}
+				</li>
 				<li>Want to explore: {{profile.explore}}</li>
 				<li>Hobby: {{profile.hobby}}</li>
 				<li>Favorite quote: {{profile.fQuote}}</li>

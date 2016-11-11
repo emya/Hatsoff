@@ -10,10 +10,37 @@
         <h3>Update your information</h3>
         {{ form.errors }}
         <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                <br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/>
+                <label for="interestproject">{{form.interestproject.label_tag}}
+                </label>
+                <select name="interestproject">
+                {% if form.interestproject.value == 1 %}
+                    <option value="1" selected="selected">Side projects</option>
+                {% else %}
+                    <option value="1" >Side projects</option>
+                {% endif %}
+
+                {% if form.interestproject.value == 2 %}
+                    <option value="2" selected="selected">Short term projects</option>
+                {% else %}
+                    <option value="2" >Short term projects</option>
+                {% endif %}
+
+                {% if form.interestproject.value == 3 %}
+                    <option value="3" selected="selected">Long term projects</option>
+                {% else %}
+                    <option value="3">Long term projects</option>
+                {% endif %}
+
+                {% if form.interestproject.value == 4 %}
+                    <option value="4" selected="selected">Full-time projects</option>
+                {% else %}
+                    <option value="4" >Full-time projects</option>
+                {% endif %}
+                </select><br>
+                <!--br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/-->
                 <br>{{form.explore.label_tag}}</br> {{form.explore}}<br/>
-                <br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
-                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/>
+                <!--br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
+                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/-->
                 <br>{{form.hobby.label_tag}}</br> {{form.hobby}}<br/>
                 <br>{{form.fQuote.label_tag}}</br> {{form.fQuote}}<br/>
                 <br>{{form.fFilm.label_tag}}</br> {{form.fFilm}}<br/>

@@ -14,10 +14,18 @@
      <div id="step-right">
             <h3>Fun Facts</h3>
 	    <form action="" method="POST" class="step-form">{% csrf_token %}
-                <br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/>
+                <!--br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/-->
+                <label for="interestproject">{{form.interestproject.label_tag}}
+                </label>
+                <select name="interestproject">
+                <option value="1">Side projects</option>
+                <option value="2">Short term projects</option>
+                <option value="3">Long term projects</option>
+                <option value="4">Full-time projects</option>
+                </select><br>
                 <br>{{form.explore.label_tag}}</br> {{form.explore}}<br/>
-                <br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
-                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/>
+                <!--br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
+                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/-->
                 <br>{{form.hobby.label_tag}}</br> {{form.hobby}}<br/>
                 <br>{{form.fQuote.label_tag}}</br> {{form.fQuote}}<br/>
                 <br>{{form.fFilm.label_tag}}</br> {{form.fFilm}}<br/>

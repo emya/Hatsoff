@@ -26,6 +26,7 @@ class Profile(models.Model):
     skill10 = models.CharField(max_length=200, default='', blank=True)
     weburl = models.URLField(null=True, blank=True)
     collaborators = models.CharField(max_length=300, default='', blank=True)
+    interestproject = models.IntegerField(null=True, blank=True)
     explore = models.CharField(max_length=200, default='', blank=True)
     availableHours = models.IntegerField(null=True, blank=True)
     rate = models.CharField(max_length=200, default='', blank=True)

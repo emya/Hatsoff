@@ -22,8 +22,9 @@
            </div>
 
 	    <div id='header-menus'>
-		    <a href="{% url 'week1:index' %}">HOME</a>
-		    <a href="{% url 'week1:about' %}">ABOUT</a>
+		    
+                <a href="{% url 'week1:index' %}" style="border:1px; border-style:solid; border-color:#FFFFFF; padding: 1em;">Home</a>
+		    <a href="{% url 'week1:about' %}">About</a>
             </div>
 
 
@@ -31,7 +32,10 @@
 		    <!--a href="{% url 'week1:signup' %}" class="blue">&nbsp;Sign Up&nbsp;</a>
 		    <a href="{% url 'week1:login' %}" class="pink">&nbsp;Log In&nbsp;</a-->
                     <!--div class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login/SignUp</div-->
-                    <div class="loginModal" data-toggle="modal" data-target=".bd-mymodal-lg">Login/SignUp</div>
+            
+                    
+                    <div class="loginModal" data-toggle="modal" data-target=".bd-mymodal-lg">
+                        <a class="button btn-primary btn-lg"> <span class="glyphicon glyphicon-log-in"></span> Login / SignUp</a></div>
 
 	    </div>
 

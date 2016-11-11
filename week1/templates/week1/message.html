@@ -89,6 +89,20 @@
             socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
           }
 
+          function mainMessage(room_id){
+            console.log("main!:"+room_id);
+            var elems = $("div[id^='row_']");
+            console.log("elems!"+elems.length);
+            console.log("elems!"+elems[0]);
+            var idname = "row_"+room_id;
+            for (var i = 0; i < elems.length; i++){
+              if (elems[i].getAttribute("id") == idname){
+                elems[i].style.display = "block";
+              }else{
+                elems[i].style.display = "none";
+              }
+            }
+          }
 
           socket.on('chat message', function (data) {
              console.log(data);
@@ -114,7 +128,7 @@
              var div = document.getElementById('acceptMessage');
              var elem = document.createElement("div");
              elem.setAttribute('class', 'row');
-             elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with '+usernames[n]+'</div><div class="panel-body"><ul class="chat" id="message-room-'+data.room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+data.room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+data.room_id+'\')">Send</button></span></div></div></div></div></div>';
+             elem.innerHTML = '<div class="row" id="row_'+data.room_id+'"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-body"><ul class="chat" id="message-room-'+data.room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+data.room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+data.room_id+'\')">Send</button></span></div></div></div></div></div>';
              div.appendChild(elem);
              //$('#message-room-'+data.room_id).append($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>')); 
 
@@ -179,20 +193,25 @@
                  var room_id = docs[i]['_id'];
                  var mdocs = docs[i]['messages'];
 
-                 if ($('#message-room-'+room_id).length == 0){
+                 if ($('#message-room-'+room_id).length == 0 ) {
                   var div = document.getElementById('acceptMessage');
                   var elem = document.createElement("div");
                   elem.setAttribute('class', 'row');
-                  elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-heading">Chat with'+usernames[n]+'</div><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
+                  elem.innerHTML = '<div class="row" id="row_'+room_id+'"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
                   div.appendChild(elem);
-
                  }
+
+                  if (i != 0){
+                    var div = document.getElementById('row_'+room_id);
+                    console.log("div:"+div);
+                    div.style.display = "none";
+                  }
 
                  if ($('#short-room-'+room_id).length == 0){
                   var div = document.getElementById('chatusers');
                   var elem = document.createElement("div");
                   elem.setAttribute('class', 'row');
-                  elem.innerHTML = '<div class="row"><div class="col-md-10"><div class="panel panel-primary"><div class="panel-miniheading">'+usernames[n]+'</div><div class="panel-minibody"><ul class="chat" id="short-room-'+room_id+'"></ul></div></div></div></div>';
+                  elem.innerHTML = '<div class="row"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-miniheading">'+usernames[n]+'</div><div class="panel-minibody" onclick="mainMessage(\''+room_id+'\')"><ul class="chat" id="short-room-'+room_id+'"></ul></div></div></div></div>';
                   div.appendChild(elem);
 
                  }
@@ -234,6 +253,16 @@
           socket.on('new message', function (data) {
              console.log("room message");
              var n  = users.indexOf(data.uid);
+
+            if ($('#short-room-'+data.room_id).length == 0){
+                  var div = document.getElementById('chatusers');
+                  var elem = document.createElement("div");
+                  elem.setAttribute('class', 'row');
+                  elem.innerHTML = '<div class="row"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-miniheading">'+usernames[n]+'</div><div class="panel-minibody" onclick="mainMessage(\''+data.room_id+'\')"><ul class="chat" id="short-room-'+data.room_id+'"></ul></div></div></div></div>';
+                  div.appendChild(elem);
+
+            }
+
              if (data.uid == {{user.id}}){
                 $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
              }else{

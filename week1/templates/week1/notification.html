@@ -21,7 +21,7 @@
           socket.emit('check notification');
           /***to here***/
 
-	  socket.on('new notification', function(data){
+	        socket.on('new notification', function(data){
               if (data.action_id === 1){
 	         $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
               }
@@ -43,9 +43,9 @@
               else if (data.action_id === 8){
            $('#notifications').prepend($('<li><span class="error"><br><p>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp followed you.'+'</p></span><br/>'));
               }
-	  });
+	         });
         
-	  socket.on('update notification', function(docs){
+	         socket.on('update notification', function(docs){
               for(var i = 0; i < docs.length; i++){
                  if (docs[i]['action_id'] === 1){
 	            $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
@@ -72,7 +72,7 @@
               $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'</p></span><br/>'));
                  }
               }
-	  });
+	         });
 
           /***
   	  $('#setNick').submit(function(e){

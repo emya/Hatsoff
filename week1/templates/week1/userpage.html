@@ -623,10 +623,20 @@
             	if(data['messages']){
             		for (var i=0; i < data['messages'].length; i++){
             			if (data['messages'][i]['content']){
+			   				var n  = users.indexOf(data['messages'][i]['uid']);
             				if(data['messages'][i]['uid'] == {{user.id}}){
-            					$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">You</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            					if (n != -1){
+            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            					}else{
+            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+            					}
             				}else if(data['messages'][i]['uid'] == {{t_user.id}}){
-            					$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            					if ( n != -1){
+            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+            					}else{
+            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+            					}
             				}
             			}
 
@@ -642,11 +652,21 @@
             console.log('new message');
             console.log(data['_id']);
 
+			var n  = users.indexOf(uid);
             if(data.uid == {{user.id}}){
-            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">You</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            	if (n != -1){
+            		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            	}else{
+            		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+            	}
 
             }else if(data.uid == {{t_user.id}}){
-            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            	if (n != -1){
+	            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+            	}else{
+	            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+            	}
 
             }
 
@@ -1066,7 +1086,7 @@
 
 <div class="popup-box chat-popup" id="qnimate">
 		  	<div class="popup-head">
-				<div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> {{t_user.first_name}} &nbsp {{t_user.last_name}}</div>
+				<div class="popup-head-left pull-left"><!--img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"--> {{t_user.first_name}} &nbsp {{t_user.last_name}}</div>
 				  <div class="popup-head-right pull-right">
 					<!--div class="btn-group">
 						  <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">

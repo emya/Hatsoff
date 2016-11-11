@@ -1723,7 +1723,7 @@ blockquote:before {
 .panel-body
 {
     overflow-y: scroll;
-    height: 250px;
+    height: 550px;
 }
 
 .panel-minibody

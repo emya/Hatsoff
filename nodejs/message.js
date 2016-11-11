@@ -1520,42 +1520,70 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
 
   socket.on('send message', function(data){
     console.log('send message');
-    var uid1, uid2, action_user;
-    if (socket.uid < data.to_uid){
-      uid1 = data.uid;
-      uid2 = data.to_uid; 
-      action_user = 1;
-    }else{
-      uid2 = data.uid;
-      uid1 = data.to_uid; 
-      action_user = 2;
-    }
 
-    console.log('uid1:'+uid1);
-    console.log('uid2:'+uid2);
-    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
-      if (err) {
-        console.log(err);
-      }else {
-        if (result){
-          result.messages.push({uid:data.uid, content:data.msg});
-          result.save(function (error) {
-            if (!error) {
-              console.log('Succeed to send message!');
-            }
-            console.log('sent message is saved!');
-            socket.join(result._id);
-            //socket.emit('new message', {uid:data.uid, content:data.msg});
-            io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id});
-            console.log('result:'+result);
-          });
+    if(data.to_uid){
+      var uid1, uid2, action_user;
+      if (socket.uid < data.to_uid){
+        uid1 = data.uid;
+        uid2 = data.to_uid; 
+        action_user = 1;
+      }else{
+        uid2 = data.uid;
+        uid1 = data.to_uid; 
+        action_user = 2;
+      }
 
-        }else{
+      console.log('uid1:'+uid1);
+      console.log('uid2:'+uid2);
+      MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+        if (err) {
+          console.log(err);
+        }else {
+          if (result){
+            result.messages.push({uid:data.uid, content:data.msg});
+            result.save(function (error) {
+              if (!error) {
+                console.log('Succeed to send message!');
+              }
+              console.log('sent message is saved!');
+              socket.join(result._id);
+              //socket.emit('new message', {uid:data.uid, content:data.msg});
+              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id});
+              console.log('result:'+result);
+            });
+
+          }else{
+
+          }
 
         }
+      });
+    }else if(data.room_id){
 
-      }
-    });
+      MessageRelation.findById(data.room_id, function(err, result){
+        if (err) {
+          console.log(err);
+        }else {
+          if (result){
+            result.messages.push({uid:data.uid, content:data.msg});
+            result.save(function (error) {
+              if (!error) {
+                console.log('Succeed to send message!');
+              }
+              console.log('sent message is saved!');
+              socket.join(result._id);
+              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id});
+              console.log('result:'+result);
+            });
+
+          }else{
+
+          }
+
+        }
+      });
+
+    }
 
   });
 

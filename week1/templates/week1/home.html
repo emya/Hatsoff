@@ -27,7 +27,7 @@
       
 	<div class="home-step">
         <ul style="list-style-type:none">
-			<a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
            <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
@@ -60,16 +60,16 @@
            &nbsp{{profile.skill10}}
            {% endif %}
            </li>
-	        <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
 				<li>City: {{profile.city}}</li>
 				<li>Work at: {{profile.worksAt}}</li>
 				<li>Education: {{profile.education}}</li>
 				<li>Language: {{profile.language}}</li>
 
-	        <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             	<li>Website: {{ profile.weburl }}</li>
 
-	        <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
 				<li>Interested in: 
 				{% if profile.interestproject == 1%}
 				  Side projects
@@ -96,12 +96,12 @@
         </ul>
 	</div>
 	<!--div class="home-step-out">
-	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             URL: {{ profile.weburl }}
     </div-->
 
 	<!--div class="home-step">
-	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	    <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             <ul style="list-style-type:none">
 				<li>Want to explore: {{profile.explore}}</li>
 				<li>Hobby: {{profile.hobby}}</li>
@@ -115,15 +115,18 @@
 
     <div id="home-secondcolumn">
 	<div class="home-step">
-		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+        
+		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+        <br>
 		{% if profile.photo %}
 	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
 		{% else %}
 		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
 		{% endif %}
+        
         </div>
 	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
            <p>{{profile.describe}}</p>
 	    
@@ -165,10 +168,13 @@
 				{% for showcase in showcases %}
 			    {% if forloop.counter == 1 %}
 			    <div class="item active">
+                    
+                    
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="top"></i></a>
+                    <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
@@ -266,7 +272,8 @@
 			    <blockquote>
 			    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+                    <br>
  					    {% if showcase.image or showcase.youtube %}
 						{% if showcase.image %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
@@ -320,7 +327,7 @@
                 {% endif %}
                 {% endfor %}
                 {% else %}
-	            <a href="{% url 'week1:edit_newpreviouswork' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                 {% endif %}
                 </div>
@@ -354,7 +361,9 @@
         </script>
 
         <h3>What’s Next</h3>
-	    <a href="{% url 'week1:edit_upcoming' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+        
+	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+        <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
 	            <img src="{{ upcoming.image.url }}" class="maincontent">

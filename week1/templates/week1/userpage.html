@@ -12,69 +12,71 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
-        <ul style="list-style-type:none">
-         	<li>Skills:
-           {% if target_profile.skill1 and target_profile.skill1 != ""%}	
-           {{target_profile.skill1}}
-           {% endif %}
-           {% if target_profile.skill2 and target_profile.skill2 != ""%}	
-           &nbsp{{target_profile.skill2}}
-           {% endif %}
-           {% if target_profile.skill3 and target_profile.skill3 != ""%}	
-           &nbsp{{target_profile.skill3}}
-           {% endif %}
-           {% if target_profile.skill4 and target_profile.skill4 != ""%}	
-           &nbsp{{target_profile.skill4}}
-           {% endif %}
-           {% if target_profile.skill5 and target_profile.skill5 != ""%}	
-           &nbsp{{target_profile.skill5}}
-           {% endif %}
-           {% if target_profile.skill6 and target_profile.skill6 != ""%}	
-           &nbsp{{target_profile.skill6}}
-           {% endif %}
-           {% if target_profile.skill7 and target_profile.skill7 != ""%}	
-           &nbsp{{target_profile.skill7}}
-           {% endif %}
-           {% if target_profile.skill8 and target_profile.skill8 != ""%}	
-           &nbsp{{target_profile.skill8}}
-           {% endif %}
-           {% if target_profile.skill9 and target_profile.skill9 != ""%}	
-           &nbsp{{target_profile.skill9}}
-           {% endif %}
-           {% if target_profile.skill10 and target_profile.skill10 != ""%}	
-           &nbsp{{target_profile.skill10}}
-           {% endif %}
-           </li>
-			<li>City:{{target_profile.city}}</li>
-			<li>Work at/as:{{target_profile.worksAt}}</li>
-			<li>Education:{{target_profile.education}}</li>
-			<li>Language:{{target_profile.language}}</li>
-            <li>Website:{{ target_profile.weburl }}</li>
-			<li>Interested in: 
-				{% if target_profile.interestproject == 1%}
-				  Side projects
-				{% endif %}
+	    <div class="info-panel">
+	        <ul style="list-style-type:none">
+	         	<li>Skills:
+	           {% if target_profile.skill1 and target_profile.skill1 != ""%}	
+	           {{target_profile.skill1}}
+	           {% endif %}
+	           {% if target_profile.skill2 and target_profile.skill2 != ""%}	
+	           &nbsp{{target_profile.skill2}}
+	           {% endif %}
+	           {% if target_profile.skill3 and target_profile.skill3 != ""%}	
+	           &nbsp{{target_profile.skill3}}
+	           {% endif %}
+	           {% if target_profile.skill4 and target_profile.skill4 != ""%}	
+	           &nbsp{{target_profile.skill4}}
+	           {% endif %}
+	           {% if target_profile.skill5 and target_profile.skill5 != ""%}	
+	           &nbsp{{target_profile.skill5}}
+	           {% endif %}
+	           {% if target_profile.skill6 and target_profile.skill6 != ""%}	
+	           &nbsp{{target_profile.skill6}}
+	           {% endif %}
+	           {% if target_profile.skill7 and target_profile.skill7 != ""%}	
+	           &nbsp{{target_profile.skill7}}
+	           {% endif %}
+	           {% if target_profile.skill8 and target_profile.skill8 != ""%}	
+	           &nbsp{{target_profile.skill8}}
+	           {% endif %}
+	           {% if target_profile.skill9 and target_profile.skill9 != ""%}	
+	           &nbsp{{target_profile.skill9}}
+	           {% endif %}
+	           {% if target_profile.skill10 and target_profile.skill10 != ""%}	
+	           &nbsp{{target_profile.skill10}}
+	           {% endif %}
+	           </li>
+				<li>City:{{target_profile.city}}</li>
+				<li>Work at/as:{{target_profile.worksAt}}</li>
+				<li>Education:{{target_profile.education}}</li>
+				<li>Language:{{target_profile.language}}</li>
+	            <li>Website:{{ target_profile.weburl }}</li>
+				<li>Interested in: 
+					{% if target_profile.interestproject == 1%}
+					  Side projects
+					{% endif %}
 
-				{% if target_profile.interestproject == 2 %}  
-				  Short term projects
-				{% endif %}
+					{% if target_profile.interestproject == 2 %}  
+					  Short term projects
+					{% endif %}
 
-				{% if target_profile.interestproject == 3 %}  
-				  Long term projects
-				{% endif %}
+					{% if target_profile.interestproject == 3 %}  
+					  Long term projects
+					{% endif %}
 
-				{% if target_profile.interestproject == 4 %}  
-				  Full-time projects
-				{% endif %}
-			</li>
+					{% if target_profile.interestproject == 4 %}  
+					  Full-time projects
+					{% endif %}
+				</li>
 
-            <li>Want to explore: {{target_profile.explore}}</li>
-			<li>Hobby: {{target_profile.hobby}}</li>
-			<li>Favorite quote: {{target_profile.fQuote}}</li>
-			<li>Films I love: {{target_profile.fFilm}}</li>
-			<li>Books I love: {{target_profile.fBook}}</li>
-			<li>Lived in: {{target_profile.cities}}</li>
-    	</ul>
+	            <li>Want to explore: {{target_profile.explore}}</li>
+				<li>Hobby: {{target_profile.hobby}}</li>
+				<li>Favorite quote: {{target_profile.fQuote}}</li>
+				<li>Films I love: {{target_profile.fFilm}}</li>
+				<li>Books I love: {{target_profile.fBook}}</li>
+				<li>Lived in: {{target_profile.cities}}</li>
+	    	</ul>
+		</div>
 	</div>
 
     </div>

@@ -547,6 +547,12 @@ to here
    font-size: 14px;
 }
 
+#home-main .home-step .info-panel
+{
+    overflow-y: scroll;
+    height: 400px;
+}
+
 #home-main .home-step-out {
    padding: 5px;
    /*margin: 5px;*/

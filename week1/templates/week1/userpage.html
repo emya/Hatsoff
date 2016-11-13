@@ -670,7 +670,7 @@
             console.log('new message');
             console.log(data['_id']);
 
-			var n  = users.indexOf(uid);
+			var n  = users.indexOf(data.uid);
             if(data.uid == {{user.id}}){
             	if (n != -1){
             		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));

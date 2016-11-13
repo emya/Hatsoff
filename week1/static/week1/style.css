@@ -2078,3 +2078,6 @@ hr .solid-divider{
     height: 275px;
     overflow: auto;
 }
+.img-circle {
+    width: 80px;
+}

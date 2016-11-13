@@ -1229,17 +1229,24 @@ def messages(request):
     nodejs_url = settings.NODEJS_SOCKET_URL
     myid = request.user.id
 
-    allusers = list(User.objects.all().exclude(id=myid))
+    allusers = list(User.objects.all())
 
     users = []
     usernames = []
+    userphoto = []
     for u in allusers:
-        users.append(u.id)
-        #usernames.append([u.first_name, u.last_name])
         usernames.append(u.first_name)
+        users.append(u.id)
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = "None"
+
+        userphoto.append(str(prof))
 
     media_url = settings.MEDIA_URL
-    variables = RequestContext(request, {'users':users, 'usernames':usernames, 'media_url':media_url, 'nodejs_url':nodejs_url})
+    variables = RequestContext(request, {'users':users, 'userphoto':userphoto, 'usernames':usernames, 'media_url':media_url, 'nodejs_url':nodejs_url})
     return render_to_response('week1/message.html', variables, )
 
 @login_required

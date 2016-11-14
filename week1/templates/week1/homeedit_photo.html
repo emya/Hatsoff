@@ -6,15 +6,43 @@
 <div id="home-edit">
 
 <form action="" class="" method="POST" class="step-form" enctype="multipart/form-data">{% csrf_token %}
-        <br>{{form.photo.label_tag}}</br> {{form.photo}}<br/>
-
+        <br>{{form.photo.label_tag}}</br> <!--{{form.photo}}<br/-->
+        <input id="id_photo" type="file" name="photo"><br/>
+        <img id="blah" src="#" alt="your image" />
          <div class="submit-wrapper">
-		<input type="submit" value="Update" class="step-submit" />
-		<input type="hidden" name="next" value="home.html">
+			<input type="submit" value="Update" class="step-submit" />
+			<input type="hidden" name="next" value="home.html">
 	        <a href="{% url 'week1:home' %}">Back to Home</a>
          </div>
 </form>
 
 </div>
+
+<script type="text/javascript">
+
+window.onload = function (){
+	{% if form.instance.photo %}
+		$('#blah').attr('src', "{{form.instance.photo.url}}");
+	{% endif %}
+};
+
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#id_photo").change(function(){
+    readURL(this);
+});
+
+</script>>
 
 {% endblock %}

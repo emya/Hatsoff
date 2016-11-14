@@ -492,14 +492,21 @@ def step4(request):
 @login_required
 def step5(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
-    if request.method == 'POST':
-        form = Step5(request.POST, request.FILES, label_suffix="")
-        if form.is_valid():
-            num_show = Showcase.objects.filter(user=currentuser).count()
+    num_show = Showcase.objects.filter(user=currentuser).count()
 
+    if num_show == 0:
+        s = Showcase.objects.create(user=currentuser, number=1)
+        s.save()
+        num_show = 1
+
+    instance = get_object_or_404(Showcase, user=currentuser, number=num_show)
+
+    if request.method == 'POST':
+        form = Step5(request.POST, request.FILES, label_suffix="", instance=instance)
+        if form.is_valid():
             show = form.save(commit=False)
             show.user = currentuser
-            show.number = num_show+1
+            #show.number = num_show+1
             show.save()
 
             if 'next' in request.POST:
@@ -516,7 +523,7 @@ def step5(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step5(label_suffix="")
+        form = Step5(label_suffix="", instance=instance)
 
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step5.html', variables, )
@@ -590,7 +597,7 @@ def step6(request):
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
-        form = Step6(label_suffix="")
+        form = Step6(label_suffix="", instance=instance)
 
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step6.html', variables, )

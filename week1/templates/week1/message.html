@@ -240,10 +240,10 @@
 
                      if ( mdocs[j]['uid'] == uid ) {
                         if (n != -1 && photos[n] != "None" && photos[n] != ""){
-                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src=src="{{media_url}}'+photos[n]+'"  alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{{media_url}}'+photos[n]+'"  alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+usernames[n]+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }else{
-                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{% static 'images/profileimage.png' %}"  alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }
                      }else{

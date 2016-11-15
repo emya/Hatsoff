@@ -1441,7 +1441,24 @@ def notification(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
+
+    allusers = list(User.objects.all())
+
+    users = []
+    usernames = []
+    userphoto = []
+    for u in allusers:
+        usernames.append(u.first_name)
+        users.append(u.id)
+        try:
+            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
+            print "prof", prof, type(prof)
+        except Profile.DoesNotExist:
+            prof = "None"
+
+        userphoto.append(str(prof))
+
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'users':users, 'usernames':usernames, 'userphoto':userphoto})
     return render_to_response('week1/notification.html', variables, )
 
 @login_required

@@ -935,7 +935,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     }); 
   });
 
-  socket.on('check notification', function(){
+  socket.on('at notification', function(){
     console.log('check notification');
     var query = NotificationPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -1202,7 +1202,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
 
     
 
-    var newNotification = new NotificationPost({action_id:2, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newNotification = new NotificationPost({action_id:2, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
       if (err) {
@@ -1227,7 +1227,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
               console.log(err);
             } else{
               console.log('new history');
-              socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:8});
+              socket.emit('new history', {to_uid:data.to_uid, content_type:1, action_id:8});
               if (data.to_uid in users){
                   users[data.to_uid].emit('new notification', {action_id:8, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
               }
@@ -1237,13 +1237,13 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       }
     });
 
-    var newNotification = new NotificationPost({action_id:8, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newNotification = new NotificationPost({action_id:8, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        //console.log('saved:');
+        console.log('notification saved:');
       }
     });
   });

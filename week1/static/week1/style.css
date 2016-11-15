@@ -529,6 +529,11 @@ to here
    width: 350px;
 }
 
+img.notification_img {
+   width: 80px;
+   margin: 10px;
+}
+
 #home-main #home-thirdcolumn {
    display: inline-block;
    vertical-align: top;

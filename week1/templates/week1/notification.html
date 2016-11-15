@@ -82,9 +82,25 @@
               }
 	         });
         
-	         socket.on('update notification', function(docs){
+	         socket.on('update notification', function(data){
+              var docs = data.newdocs;
+              var myMember = data.myMember;
+              var myFriends = [];
+              if (myMember['friends']){
+                myFriends = myMember['friends'];
+              }
+
               for(var i = 0; i < docs.length; i++){
+                if(docs[i]['action_user'] && docs[i]['action_user']['uid']){
                  var uid = docs[i]['action_user']['uid'];
+                 var theirFriends = [];
+                 var commonFriends = [];
+                 if (docs[i]['friends']){
+                    theirFriends = docs[i]['friends']; 
+                    commonFriends = myFriends.filter(function(v) { if(theirFriends.indexOf(v) != -1) {return 1} })
+                 }
+                 var commonNum = commonFriends.length;
+                 console.log('commonFriends:'+commonFriends);
                  var n = users.indexOf(uid);
                  if (docs[i]['action_id'] === 1){
 	                 $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
@@ -133,11 +149,12 @@
                  }
                  else if (docs[i]['action_id'] === 8){
                   if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br><div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div> <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span></span><br/>'));
+                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br><div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div> <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
                   }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br><div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div> <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span></span><br/>'));
+                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br><div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div> <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
                   }
                  }
+               }
               }
 	         });
 

@@ -86,7 +86,7 @@
               var docs = data.newdocs;
               var myMember = data.myMember;
               var myFriends = [];
-              if (myMember['friends']){
+              if (myMember != null && myMember['friends']){
                 myFriends = myMember['friends'];
               }
 

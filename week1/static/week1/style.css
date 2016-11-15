@@ -529,6 +529,11 @@ to here
    width: 350px;
 }
 
+img.notification_img {
+   width: 80px;
+   margin: 10px;
+}
+
 #home-main #home-thirdcolumn {
    display: inline-block;
    vertical-align: top;
@@ -545,6 +550,12 @@ to here
    padding: 5px;
    margin: 5px;
    font-size: 14px;
+}
+
+#home-main .home-step .info-panel
+{
+    overflow-y: scroll;
+    height: 400px;
 }
 
 #home-main .home-step-out {
@@ -976,6 +987,46 @@ to here
    visibility: visible;
 }
 
+.popupShare {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.popupShare .popuptextShared {
+   visibility: hidden;
+   width: 200px;
+   background-color: #d5a6bd;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 8px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -80px;
+}
+
+.popupShare .popuptextShared::after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #d5a6bd transparent transparent transparent;
+}
+
+.popupShare .show {
+   visibility: visible;
+}
+
 .popupCollaborate {
    position: relative;
    display: inline-block;
@@ -1016,6 +1067,7 @@ to here
    visibility: visible;
 }
 
+/*
 .popupShare {
    position: relative;
    display: inline-block;
@@ -1095,6 +1147,7 @@ to here
 .popupShared .show {
    visibility: visible;
 }
+*/
 
 .popupThanks {
    position: relative;
@@ -2077,4 +2130,7 @@ hr .solid-divider{
     color: black;
     height: 275px;
     overflow: auto;
+}
+.img-circle {
+    width: 80px;
 }

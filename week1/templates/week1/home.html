@@ -27,7 +27,7 @@
       
 	<div class="home-step">
         <ul style="list-style-type:none">
-			<a href="{% url 'week1:edit_professionskills' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
            <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
@@ -60,16 +60,16 @@
            &nbsp{{profile.skill10}}
            {% endif %}
            </li>
-	        <a href="{% url 'week1:edit_personalinfo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
 				<li>City: {{profile.city}}</li>
 				<li>Work at: {{profile.worksAt}}</li>
 				<li>Education: {{profile.education}}</li>
 				<li>Language: {{profile.language}}</li>
 
-	        <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             	<li>Website: {{ profile.weburl }}</li>
 
-	        <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
 				<li>Interested in: 
 				{% if profile.interestproject == 1%}
 				  Side projects
@@ -96,12 +96,12 @@
         </ul>
 	</div>
 	<!--div class="home-step-out">
-	    <a href="{% url 'week1:edit_url' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             URL: {{ profile.weburl }}
     </div-->
 
 	<!--div class="home-step">
-	    <a href="{% url 'week1:edit_funfact' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	    <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             <ul style="list-style-type:none">
 				<li>Want to explore: {{profile.explore}}</li>
 				<li>Hobby: {{profile.hobby}}</li>
@@ -115,15 +115,18 @@
 
     <div id="home-secondcolumn">
 	<div class="home-step">
-		<a href="{% url 'week1:edit_photo' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+        
+		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+        <br>
 		{% if profile.photo %}
 	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
 		{% else %}
 		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
 		{% endif %}
+        
         </div>
 	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
             <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
            <p>{{profile.describe}}</p>
 	    
@@ -165,10 +168,13 @@
 				{% for showcase in showcases %}
 			    {% if forloop.counter == 1 %}
 			    <div class="item active">
+                    
+                    
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="top"></i></a>
+                    <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
@@ -196,9 +202,9 @@
 					    </ul>
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
- 						<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
-					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+ 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div>
               			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
@@ -266,7 +272,8 @@
 			    <blockquote>
 			    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+                    <br>
  					    {% if showcase.image or showcase.youtube %}
 						{% if showcase.image %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
@@ -286,9 +293,12 @@
 					    </ul>
 
 						<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
- 						<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+ 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
-					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
+ 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div>
               			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
                         <hr class="divider"/>
@@ -320,7 +330,7 @@
                 {% endif %}
                 {% endfor %}
                 {% else %}
-	            <a href="{% url 'week1:edit_newpreviouswork' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                 {% endif %}
                 </div>
@@ -354,7 +364,9 @@
         </script>
 
         <h3>What’s Next</h3>
-	    <a href="{% url 'week1:edit_upcoming' %}"><img src="{% static 'images/edit.png'%}" align="right"></a>
+        
+	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+        <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
 	            <img src="{{ upcoming.image.url }}" class="maincontent">
@@ -415,10 +427,10 @@
 	    </div>
 
         <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
-	    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-	    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
+ 		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
+		<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
-	    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>
+		<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div>
         <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
@@ -587,7 +599,7 @@
 
 	      function followFunction(){
 			 console.log('follow!');
-			 popFollowed();
+			 popFollow();
 		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
 
@@ -911,10 +923,12 @@
 		        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
                 var i_share = 0;
                 var i_community = 0;
-                var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
+				var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
+                //var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
 		        //var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
+		        //var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
 		        var thanks = '';
-		        var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
+				var follow = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div>';
 
                 console.log('update share length:'+len_share);
 
@@ -923,7 +937,8 @@
                        var t_share = sharedocs[i_share]["created"];
                        var t_community = communitydocs[i_community]["created"];
                        if (t_share > t_community){
-                       	  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+                       	  //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+ 						  var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>';
 						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 						  var uid = sharedocs[i_share]['to_uid'];
 			              var content = sharedocs[i_share]['content'];
@@ -971,7 +986,7 @@
                        }else{
                        	  var uid = {{user.id}};
 			              var content = communitydocs[i_community];
-                       	  var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+ 						  var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>';
 						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 
 						  var c_id = content['_id'];
@@ -1021,7 +1036,7 @@
 
                     }else if(i_share < len_share){
 
-						var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+ 						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>';
 						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 						var uid = sharedocs[i_share]['to_uid'];
 			            var content = sharedocs[i_share]['content'];
@@ -1071,7 +1086,7 @@
 
 						var uid = {{user.id}};
 			            var content = communitydocs[i_community];
-                       	var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
+ 						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>';
 						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 
 						var c_id = content['_id'];

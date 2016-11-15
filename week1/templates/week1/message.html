@@ -64,6 +64,7 @@
 
           var users = [{% for u in users %} {{ u }} ,{% endfor %}];
           var usernames = [{% for u in usernames %}"{{ u }}", {% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
 
           function acceptMessageFunction(uid, msg, room_id){
@@ -214,6 +215,11 @@
                   elem.innerHTML = '<div class="row"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-miniheading">'+usernames[n]+'</div><div class="panel-minibody" onclick="mainMessage(\''+room_id+'\')"><ul class="chat" id="short-room-'+room_id+'"></ul></div></div></div></div>';
                   div.appendChild(elem);
 
+                 }else{
+                  var ul = document.getElementById('short-room-'+room_id);
+                  ul.innerHTML = "";
+                  $('#short-room-'+room_id).append($('<li><span class="error"><br>'+mdocs[j]['content']+'</span><br/>')); 
+
                  }
                  /**
                  var elem = document.getElementById('acceptMessage');
@@ -224,7 +230,7 @@
                  **/
 
                  for(var j=0; j < mdocs.length; j++){
-                     if ( j== 0){
+                     if ( j == mdocs.length-1){
                         if (n != -1){
                            $('#short-room-'+room_id).append($('<li><span class="error"><br>'+mdocs[j]['content']+'</span><br/>')); 
                         }else{
@@ -233,15 +239,20 @@
                       }
 
                      if ( mdocs[j]['uid'] == uid ) {
-                        if (n != -1){
-                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                        if (n != -1 && photos[n] != "None" && photos[n] != ""){
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{{media_url}}'+photos[n]+'"  alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+usernames[n]+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }else{
-                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                           $('#message-room-'+room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }
                      }else{
-                        $('#message-room-'+room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                        var m  = users.indexOf({{user.id}});
+                        if (m != -1 && photos[m] != "None" && photos[m] != ""){
+                          $('#message-room-'+room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[m]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                        }else{
+                          $('#message-room-'+room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p></div></li>'));
+                        }
                      }
                  }
                  //$('#message-room-'+room_id).append($(message_form)); 
@@ -261,15 +272,23 @@
                   elem.innerHTML = '<div class="row"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-miniheading">'+usernames[n]+'</div><div class="panel-minibody" onclick="mainMessage(\''+data.room_id+'\')"><ul class="chat" id="short-room-'+data.room_id+'"></ul></div></div></div></div>';
                   div.appendChild(elem);
 
+            }else{
+                  var ul = document.getElementById('short-room-'+data.room_id);
+                  ul.innerHTML = "";
+                  $('#short-room-'+data.room_id).append($('<li><span class="error"><br>'+data.content+'</span><br/>')); 
             }
 
              if (data.uid == {{user.id}}){
-                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
+              if (n != -1 && photos[n] != "None" && photos[n] != ""){
+                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[m]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
+              }else{
+                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
+              }
              }else{
-                if (n != -1){
-                  $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
+                if (n != -1 && photos[n] != "None" && photos[n] != ""){
+                  $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{{media_url}}'+photos[n]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
                 }else{
-                  $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+data.uid+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
+                  $('#message-room-'+data.room_id).append($('<li class="left clearfix"><span class="chat-img pull-left"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+usernames[n]+'</strong></div><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
                 }
              }
 

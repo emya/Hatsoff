@@ -51,8 +51,9 @@
                   {{form.photo.label_tag}} 
                 </div>
                 <div class="boxed">
-                  {{form.photo}} 
-            </div>
+                  <input id="id_photo" type="file" name="photo"><br/>
+                  <img id="blah" src="#" alt="your image" />
+                </div>
             </div>
 	    <!--/table-->
             <div class="submit-wrapper">
@@ -62,5 +63,35 @@
      </div>
 
 </div>
+
+<script type="text/javascript">
+
+window.onload = function (){
+  {% if form.instance.photo %}
+    $('#blah').attr('src', "{{form.instance.photo.url}}");
+  {% else %}
+    $('#blah').attr('src', "{% static 'images/profileimage.png' %}");
+  {% endif %}
+};
+
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#id_photo").change(function(){
+    readURL(this);
+});
+
+</script>>
+
 
 {% endblock %}

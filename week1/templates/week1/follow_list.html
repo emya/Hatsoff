@@ -52,8 +52,10 @@
 
 	     socket.on('update followgave', function(docs){
         for(var i=0; i < docs.length; i++){
-          if (docs[i]['to_uid']) {
-	       	  var uid = docs[i]['to_uid'];
+          var uid1 = docs[i]['uid1'];
+          var uid2 = docs[i]['uid2'];
+          var uid = (uid1=={{user.id}}) ? uid2 : uid1;
+          if (uid != "undefined") {
 		        var n  = users.indexOf(uid);
 		        var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -69,9 +71,14 @@
        });
 
 	     socket.on('update followreceived', function(docs){
+        var count = 0;
         for(var i=0; i < docs.length; i++){
-          if (docs[i]['user']['uid']) {
-	       	  var uid = docs[i]['user']['uid'];
+          var uid1 = docs[i]['uid1'];
+          var uid2 = docs[i]['uid2'];
+          console.log('uid2:'+uid2);
+          var uid = (uid1=={{user.id}}) ? uid2 : uid1;
+          console.log('uid:'+uid);
+          if (uid != undefined || uid != null) {
 		        var n  = users.indexOf(uid);
 		        var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 		        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -80,10 +87,10 @@
             }else{
 			         $('#followReceived').append($('<li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a></br>'));
             }
-
+            count += 1;
           }
         }
-        document.getElementById("receivedNum").innerHTML = docs.length;
+        document.getElementById("receivedNum").innerHTML = count;
        });
 
     </script>

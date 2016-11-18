@@ -1653,8 +1653,10 @@ input[type="file"]{
 }
 
 .btn.btn-primary.btn-lg{
+    /*
     background-color: #d5a6bd;
     border-color: #d5a6bd;
+    */
 }
 
 /*portfolio*/

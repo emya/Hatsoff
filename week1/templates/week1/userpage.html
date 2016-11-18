@@ -105,9 +105,10 @@
 		<li><div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div></li>
 		<li><div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed the user!</br></span></div></li>
 
-         <!--li><a href="#" id="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li-->
-	 	<li><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></li>
-        <li><a href="#" id="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+        <!--li><a href="#" class="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+	 	<li><a href="#" class="addClass"><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li-->
+        <li><a href="#" onclick="defaultMessage(1)"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+	 	<li><a href="#" onclick="defaultMessage(2)"><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
 
        </ul>
 
@@ -407,7 +408,7 @@
           var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
 		 $(function(){
-			$("#addClass").click(function () {
+			$(".addClass").click(function () {
 		        $('#qnimate').addClass('popup-box-on');
 		    });
 		          
@@ -415,6 +416,15 @@
 		        $('#qnimate').removeClass('popup-box-on');
 		    });
 		  })
+
+		  function defaultMessage(c_type){
+		    $('#qnimate').addClass('popup-box-on');
+		    if (c_type == 1){//launch chat
+		    	document.getElementById('status_message').value = '';
+		    }else if(c_type == 2){//pitch
+		    	document.getElementById('status_message').value = 'I would like to pitch your project!';
+		    }
+		  }
 
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
@@ -506,8 +516,10 @@
 
 	      function collaborateFunction(c_type, c_id){
             console.log('uid on like:'+c_type+':'+c_id);
-            popCollaborate();
+            //popCollaborate();
             socket.emit('give collaborate', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
+		    $('#qnimate').addClass('popup-box-on');
+		    document.getElementById('status_message').value = 'I would like to collaborate with you!';
           }
 
           function popCollaborate(){

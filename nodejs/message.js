@@ -724,11 +724,30 @@ io.on('connection', function(socket){
                 socket.emit('set message', newdata) 
             }
           });
-
         }
-
       }
     });
+
+    // Follow status 0:not following, 1:following
+    FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
+      if(error) throw error;
+
+       
+      FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
+        if(err){
+        }else{
+          if(result){
+            if( result.status == 2 || (result.uid1==socket.uid && result.action_user==1) || (result.uid2==socket.uid && result.action_user==2)){
+              socket.emit('follow status', {status:1, count:count});
+            }else{
+              socket.emit('follow status', {status:0, count:count});
+            }
+          }else{
+            socket.emit('follow status', {status:0, count:count});
+          }
+        }
+      });
+    }); 
 
 
     /***
@@ -743,8 +762,8 @@ io.on('connection', function(socket){
     }); 
     ***/
 
-var query_cp = CommunityPost.find({'user.uid':data.to_uid});
-    async.waterfall([
+    var query_cp = CommunityPost.find({'user.uid':data.to_uid});
+      async.waterfall([
         function(callback){
            console.log("communitydocs");
            var query_cp = CommunityPost.find({'user.uid':data.to_uid});

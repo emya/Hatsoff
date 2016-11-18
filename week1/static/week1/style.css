@@ -433,7 +433,7 @@ to here
 
 #home-main {
    display: inline-block;
-   width: 750px;
+   width: 850px;
    padding: 20px;
 }
 
@@ -537,7 +537,7 @@ img.notification_img {
 #home-main #home-thirdcolumn {
    display: inline-block;
    vertical-align: top;
-   width: 100px;
+   width: 150px;
 }
 
 #home-main #home-thirdcolumn .home-bottom {
@@ -2135,4 +2135,15 @@ hr .solid-divider{
 }
 .img-circle {
     width: 80px;
+}
+.followstatus {
+   display:inline;
+}
+#follow-profile{
+   display:inline;
+}
+.following {
+   background-color:#8e7cc3;
+   color: white;
+   display:inline;
 }

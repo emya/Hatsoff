@@ -12,7 +12,7 @@
 	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
             <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
             <br>{{form.image.label_tag}}</br>
-                <input id="id_photo" type="file" name="image"><br/>
+                <input id="id_image" type="file" name="image"><br/>
                 <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
             <!--br>{{form.video.label_tag}}</br> {{form.video}}<br/-->
             <br>{{form.youtube.label_tag}}</br> {{form.youtube}}<br/>

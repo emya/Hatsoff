@@ -243,6 +243,10 @@
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
           /***to here***/
+
+          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+
           function popShare(){
 	          var popup = document.getElementById('sharePop');
             popup.classList.toggle('show');
@@ -386,8 +390,6 @@
               var uid = data.uid;
               var c_id = data.community_id;
               console.log('new reply community c_id:'+c_id);
-              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               var n  = users.indexOf(uid);
       	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
       	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
@@ -413,8 +415,6 @@
               var uid = data.uid;
               var c_id = data.community_id;
               console.log('new community comment c_id:'+c_id);
-              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               var n  = users.indexOf(uid);
               var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
@@ -432,8 +432,6 @@
               var uid = data.uid;
               var c_id = data.community_id;
               console.log('c_id:'+c_id);
-              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               var n  = users.indexOf(uid);
 	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -484,8 +482,6 @@
         	  });
                 
         	  socket.on('update community post', function(docs){
-              var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-              var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
               for(var i=0; i < docs.length; i++){
                  if (docs[i]['user'] && docs[i]['user']['uid']) {
 			                  var uid = docs[i]['user']['uid'];

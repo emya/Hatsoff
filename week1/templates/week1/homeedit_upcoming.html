@@ -1,4 +1,4 @@
-{% extends 'week1/basehome.html'%}
+k{% extends 'week1/basehome.html'%}
 
 {% block content %}
 {% load staticfiles %}
@@ -18,13 +18,12 @@
 
             <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
             <br>{{form.image.label_tag}}</br>
-                <input id="id_photo" type="file" name="image"><br/>
+                <input id="id_image" type="file" name="image"><br/>
                 <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
             <br>{{form.describe.label_tag}}</br>{{form.describe}}<br/>
             <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
             <br>{{form.status.label_tag}}</br>{{form.status}}<br/>
             <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/>
-            <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
             <br>Looking to get help from the community?</br>
                 <select name="get_help">
                 {% if form.get_help.value == 1 %}
@@ -84,6 +83,7 @@
                 {% endif %}
             </select>
             <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
             <!--br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/-->
 
 	    <div class="submit-wrapper">

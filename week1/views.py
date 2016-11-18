@@ -446,9 +446,9 @@ def step3(request):
 
             print tagls
 
-            nextform = Step4(label_suffix="", instance=instance)
-            return HttpResponseRedirect('/week1/step4/', {'form': nextform})
-            #return render_to_response('week1/step5.html', {'form':nextform})
+            return HttpResponseRedirect('/week1/home/')
+            #nextform = Step4(label_suffix="", instance=instance)
+            #return HttpResponseRedirect('/week1/step4/', {'form': nextform})
 
         else:
             messages = []

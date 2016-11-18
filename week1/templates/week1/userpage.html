@@ -489,6 +489,10 @@
 
 	      function hatsoffFunction(){
 			 console.log('hatsoff!');
+             var count = parseInt(document.getElementById("hatsoffNum").innerHTML);
+             if(!isNaN(count)){
+             	document.getElementById("hatsoffNum").innerHTML = count+1;
+             }
 			 popGavehatsoff();
 			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}});
 	      }

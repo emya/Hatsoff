@@ -583,9 +583,9 @@ io.on('connection', function(socket){
         function(communitydocs, callback){
            console.log("communitydocs:"+communitydocs.length);
        	   var query_sh = SharePost.find({'user.uid':socket.uid});
-	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
-              callback(null, communitydocs, sharedocs);
-           });
+      	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
+                    callback(null, communitydocs, sharedocs);
+                 });
         },
         function(communitydocs, sharedocs){ 
            var newdocs = [];
@@ -1214,6 +1214,20 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
     var d = new Date();
     console.log('give hatsoff'+socket.uid); 
 
+    var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    newhat.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+        if (data.to_uid in users){
+          users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+
+    });
+
+/*
     HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}}).exec(function(err, result){
       if(err){
         console.log(err);
@@ -1234,6 +1248,7 @@ var query_cp = CommunityPost.find({'user.uid':data.to_uid});
         } 
       }
     });
+*/
 
     var newNotification = new NotificationPost({action_id:2, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 

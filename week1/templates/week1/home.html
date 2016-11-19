@@ -27,7 +27,7 @@
       
 	<div class="home-step">
         <ul style="list-style-type:none">
-			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
            <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
@@ -60,16 +60,16 @@
            &nbsp{{profile.skill10}}
            {% endif %}
            </li>
-	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></i></a>
 				<li>City: {{profile.city}}</li>
 				<li>Work at: {{profile.worksAt}}</li>
 				<li>Education: {{profile.education}}</li>
 				<li>Language: {{profile.language}}</li>
 
-	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
             	<li>Website: {{ profile.weburl }}</li>
 
-	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 				<li>Interested in: 
 				{% if profile.interestproject == 1%}
 				  Side projects
@@ -116,7 +116,7 @@
     <div id="home-secondcolumn">
 	<div class="home-step">
         
-		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
         <br>
 		{% if profile.photo %}
 	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
@@ -126,7 +126,7 @@
         
         </div>
 	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
             <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
            <p>{{profile.describe}}</p>
 	    
@@ -138,7 +138,7 @@
 	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
-	 <li><a href="{% url 'week1:messages' %}"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+	 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
 	 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
        </ul>
 
@@ -173,7 +173,7 @@
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="top"></i></a>
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
                     <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
@@ -330,7 +330,7 @@
                 {% endif %}
                 {% endfor %}
                 {% else %}
-	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                 {% endif %}
                 </div>
@@ -365,7 +365,7 @@
 
         <h3>What’s Next</h3>
         
-	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
         <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}

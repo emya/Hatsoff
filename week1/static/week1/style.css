@@ -434,7 +434,7 @@ to here
 #home-main {
    display: inline-block;
    width: 850px;
-   padding: 20px 120px;
+   padding: 20px;
 }
 
 #home-main p.post-content {
@@ -788,6 +788,7 @@ img.notification_img {
    font-family: sans-serif;
    **/
    background-color: #f7f7f7;
+   text-align: center;
 }
 
 #community-main {

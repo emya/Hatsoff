@@ -434,7 +434,7 @@ to here
 #home-main {
    display: inline-block;
    width: 850px;
-   padding: 20px;
+   padding: 20px 120px;
 }
 
 #home-main p.post-content {

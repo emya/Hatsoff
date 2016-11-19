@@ -728,7 +728,6 @@
 
 		  socket.on('new message', function(data){
             console.log('new message');
-            console.log(data['_id']);
 
 			var n  = users.indexOf(data.uid);
             if(data.uid == {{user.id}}){

@@ -280,7 +280,7 @@
 
              if (data.uid == {{user.id}}){
               if (n != -1 && photos[n] != "None" && photos[n] != ""){
-                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[m]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
+                $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[n]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
               }else{
                 $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
               }

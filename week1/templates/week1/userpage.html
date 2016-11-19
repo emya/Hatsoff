@@ -517,6 +517,17 @@
 			 console.log('follow!');
 			 popFollowed();
 		     socket.emit('give follow', {to_uid:{{t_user.id}}, uid:{{user.id}}});
+
+		  	 var count = parseInt(document.getElementById("followNum").innerHTML);
+             if(!isNaN(count)){
+             	count += 1;
+             }
+		     var elemprofile = document.getElementById("follow-profile");
+		  	 var elem = document.getElementsByClassName("followstatus");
+		  	 elemprofile.innerHTML = '';
+		  	 elem.innerHTML = '';
+		  	 $('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
+		  	 $('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+count+'</span>'));
 	      }
 
 	      function popFollowed(){

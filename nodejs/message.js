@@ -1235,6 +1235,7 @@ io.on('connection', function(socket){
     var d = new Date();
     console.log('give hatsoff'+socket.uid); 
 
+/*
     var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
     newhat.save(function(err){
       if (err) {
@@ -1247,19 +1248,20 @@ io.on('connection', function(socket){
       }
 
     });
+*/
 
-/*
-    HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}}).exec(function(err, result){
+    HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id}).exec(function(err, result){
       if(err){
         console.log(err);
       }else{
         if (!result){
-          var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+          var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
           newPost.save(function(err){
               if (err) {
                 console.log(err);
               } else{
-                socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+                socket.emit('new history', {to_uid:data.to_uid, content_type:data.content_type, content_id:data.content_id, action_id:2});
+                socket.emit('new hatsoff userpage');
                 if (data.to_uid in users){
                     users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
                 }
@@ -1269,7 +1271,6 @@ io.on('connection', function(socket){
         } 
       }
     });
-*/
 
     var newNotification = new NotificationPost({action_id:2, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 

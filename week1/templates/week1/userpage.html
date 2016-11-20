@@ -495,10 +495,6 @@
 
 	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
-             var count = parseInt(document.getElementById("hatsoffNum").innerHTML);
-             if(!isNaN(count)){
-             	document.getElementById("hatsoffNum").innerHTML = count+1;
-             }
 			 popGavehatsoff();
 			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 	      }
@@ -674,6 +670,13 @@
             console.log('get message');
 		    //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
           }
+
+          socket.on('new hatsoff userpage', function(){
+             var count = parseInt(document.getElementById("hatsoffNum").innerHTML);
+             if(!isNaN(count)){
+             	document.getElementById("hatsoffNum").innerHTML = count+1;
+             }
+          });
 
 		  socket.on('set message', function(data){
             console.log('set message');

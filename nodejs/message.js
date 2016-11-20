@@ -166,11 +166,13 @@ var FollowPost = mongoose.model('FollowPost', followSchema);
 
 var hatsoffSchema = mongoose.Schema({
   to_uid: Number,
+  content_type: Number,
+  content_id: String,
   user: {uid: Number, first_name: String, last_name: String},
   created: {type: Date, default:Date.now}
 });
-// content_type 1:community post
 
+// content_type 1:community post 2:upcoming work 3:portfolio 4:shared post 5:profile
 var HatsoffPost = mongoose.model('HatsoffPost', hatsoffSchema);
 
 var messageSchema = mongoose.Schema({
@@ -1233,12 +1235,12 @@ io.on('connection', function(socket){
     var d = new Date();
     console.log('give hatsoff'+socket.uid); 
 
-    var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
     newhat.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+        socket.emit('new history', {to_uid:data.to_uid, content_type:data.content_type, content_id:data.content_id, action_id:2});
         if (data.to_uid in users){
           users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
         }

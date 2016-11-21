@@ -166,11 +166,13 @@ var FollowPost = mongoose.model('FollowPost', followSchema);
 
 var hatsoffSchema = mongoose.Schema({
   to_uid: Number,
+  content_type: Number,
+  content_id: String,
   user: {uid: Number, first_name: String, last_name: String},
   created: {type: Date, default:Date.now}
 });
-// content_type 1:community post
 
+// content_type 1:community post 2:upcoming work 3:portfolio 4:shared post 5:profile
 var HatsoffPost = mongoose.model('HatsoffPost', hatsoffSchema);
 
 var messageSchema = mongoose.Schema({
@@ -562,6 +564,7 @@ io.on('connection', function(socket){
 
     HatsoffPost.find({'to_uid':socket.uid}).count(function(err, count){
       if (err) throw err;
+      console.log("count:"+count);
       socket.emit('number hatsoff', count);
     }); 
 
@@ -595,26 +598,26 @@ io.on('connection', function(socket){
                socket.emit('update timeline history', {share:newdocs, community:communitydocs});
            }else{
 
-		   async.each(sharedocs, function(docs){
-			  if (docs.content_type == 1){
-			  async.waterfall([
-			     function(callback){
-				      CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
-				        callback(null, post);
-				      });
-			     },
-			     function(post){
-    				 console.log("second");
-    				 docs.set('content', post.toJSON(), {strict: false});
-    				 newdocs.push(docs);
-    				 //console.log("****newdocs****:"+newdocs);
-    				 curIdx += 1;
-    				 if (curIdx == len){
-    				  console.log("***********************************length of newdocs:"+newdocs.length);
-    				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-    				 }
-    			 }
-    		], function(err, result){
+    		   async.each(sharedocs, function(docs){
+    			  if (docs.content_type == 1){
+    			  async.waterfall([
+    			     function(callback){
+    				      CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
+    				        callback(null, post);
+    				      });
+    			     },
+    			     function(post){
+        				 console.log("second");
+        				 docs.set('content', post.toJSON(), {strict: false});
+        				 newdocs.push(docs);
+        				 //console.log("****newdocs****:"+newdocs);
+        				 curIdx += 1;
+        				 if (curIdx == len){
+        				  console.log("***********************************length of newdocs:"+newdocs.length);
+        				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+        				 }
+        			 }
+        		], function(err, result){
     	});
 
 			} else if(docs.content_type == 2){
@@ -1233,31 +1236,33 @@ io.on('connection', function(socket){
     var d = new Date();
     console.log('give hatsoff'+socket.uid); 
 
-    var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+/*
+    var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
     newhat.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+        socket.emit('new history', {to_uid:data.to_uid, content_type:data.content_type, content_id:data.content_id, action_id:2});
         if (data.to_uid in users){
           users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
         }
       }
 
     });
+*/
 
-/*
-    HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}}).exec(function(err, result){
+    HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id}).exec(function(err, result){
       if(err){
         console.log(err);
       }else{
         if (!result){
-          var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+          var newPost = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
           newPost.save(function(err){
               if (err) {
                 console.log(err);
               } else{
-                socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:2});
+                socket.emit('new history', {to_uid:data.to_uid, content_type:data.content_type, content_id:data.content_id, action_id:2});
+                socket.emit('new hatsoff userpage');
                 if (data.to_uid in users){
                     users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
                 }
@@ -1267,7 +1272,6 @@ io.on('connection', function(socket){
         } 
       }
     });
-*/
 
     var newNotification = new NotificationPost({action_id:2, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 

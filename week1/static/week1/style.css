@@ -454,7 +454,7 @@ to here
 }
 
 #home-main-center {
-   width: 550px;
+   width: 650px;
    text-align: center;
 }
 
@@ -788,6 +788,7 @@ img.notification_img {
    font-family: sans-serif;
    **/
    background-color: #f7f7f7;
+   text-align: center;
 }
 
 #community-main {

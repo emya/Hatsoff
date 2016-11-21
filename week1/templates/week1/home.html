@@ -27,7 +27,7 @@
       
 	<div class="home-step">
         <ul style="list-style-type:none">
-			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
            <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
@@ -60,16 +60,16 @@
            &nbsp{{profile.skill10}}
            {% endif %}
            </li>
-	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></i></a>
 				<li>City: {{profile.city}}</li>
 				<li>Work at: {{profile.worksAt}}</li>
 				<li>Education: {{profile.education}}</li>
 				<li>Language: {{profile.language}}</li>
 
-	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
             	<li>Website: {{ profile.weburl }}</li>
 
-	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 				<li>Interested in: 
 				{% if profile.interestproject == 1%}
 				  Side projects
@@ -116,7 +116,7 @@
     <div id="home-secondcolumn">
 	<div class="home-step">
         
-		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
         <br>
 		{% if profile.photo %}
 	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
@@ -126,7 +126,7 @@
         
         </div>
 	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
             <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
            <p>{{profile.describe}}</p>
 	    
@@ -138,17 +138,17 @@
 	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
-	 <li><a href="{% url 'week1:messages' %}"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
+	 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
 	 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
        </ul>
 
-       <div class="home-bottom">
+       <!--div class="home-bottom">
 	    <ul style="list-style-type:none">
 	      <li><a href=""><img src="{% static 'images/contribute.png'%}" class="icons-img"></a></li>
 	      <li><img src="{% static 'images/recommend.png'%}" class="icons-img"></li>
 	      <li><img src="{% static 'images/help.png'%}" class="icons-img"></li>
 	    </ul>
-       </div>
+       </div-->
 
     </div>
 
@@ -173,7 +173,7 @@
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="top"></i></a>
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
                     <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
@@ -203,14 +203,14 @@
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followeing</br></span></div>
               			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
                         <hr class="divider"/>
 
-                        <div class="well well-ssm">
+                        <div class="well well-smm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -297,13 +297,13 @@
 					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
 					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
               			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
                         <hr class="divider"/>
 
-                        <div class="well well-ssm">
+                        <div class="well well-smm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -330,7 +330,7 @@
                 {% endif %}
                 {% endfor %}
                 {% else %}
-	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                 {% endif %}
                 </div>
@@ -365,7 +365,7 @@
 
         <h3>What’s Next</h3>
         
-	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
         <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
@@ -383,7 +383,6 @@
 	        <li>Description of your upcoming work:{{upcoming.describe}}</li>
 	        <li>Your role:{{upcoming.role}}</li>
 	        <li>Status:{{upcoming.status}}</li>
-	        <li>Target finish date:{{upcoming.targetdate}}</li>
 	        <li>Comment:{{upcoming.comment}}</li>
 	      </ul>
               <ul>
@@ -421,6 +420,23 @@
 	           &nbsp{{ upcoming.collaborator_skill10 }}
 	           {% endif %}
 	        </li>
+	        <li>Preferred city location of collaborator:{{upcoming.preferred_city}}</li>
+	        <li>Start date:{{upcoming.targetstartdate}}</li>
+	        <li>End date:{{upcoming.targetfinishdate}}</li>
+	        <li>How often to work with collaborator:{{upcoming.often}}</li>
+	        <li>How to give back to collaborator:
+	        {% if upcoming.give_back == 1 %}
+	        Paid compensation
+	        {% endif %}
+
+	        {% if upcoming.give_back == 2 %}
+	        Exchange  of skills/services
+	        {% endif %}
+
+	        {% if upcoming.give_back == 3 %}
+	        Negotiable
+	        {% endif %}
+	        </li>
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>
@@ -428,7 +444,7 @@
 
         <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-		<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+		<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
 		<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
         <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
@@ -437,7 +453,7 @@
 
             <hr class="divider"/>
              
-           <div class="well well-ssm">
+           <div class="well well-smm">
             <ul id="upcomingComment" style="list-style-type:none;">
             	
             </ul>
@@ -581,10 +597,10 @@
 			 popup.classList.toggle('show');
 	      }
 
-	      function hatsoffFunction(){
+	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
 			 popGavehatsoff();
-			 socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}});
+			 socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 	      }
 
 	      function popGavehatsoff(){
@@ -1215,6 +1231,7 @@
     </div>
 
 <div class="timeline-container">
+    <h3>Activity</h3>
     <ul class="timeline">
         <!--div id="timeline-history">
         <li>

@@ -102,7 +102,7 @@
          <li>Follow &nbsp<span id="followNum"></span></li>
 	 	<li><div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
 	 	<li><div class="popupFollow" onclick="popFollow()">Follow&nbsp<span id="followNum"></br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li-->
-		<li><div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div></li>
+		<li><div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div></li>
 		<!--li><div class="followstatus"><div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum"></span></div></div></li-->
 		<li><div id="follow-profile"></div></li>
 
@@ -162,7 +162,7 @@
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 					    <div class="followstatus"></div>
 					    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
 					    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
@@ -173,7 +173,7 @@
 
                         <hr class="divider"/>
 
-                         <div class="well well-ssm">
+                         <div class="well well-smm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -227,7 +227,7 @@
 					    </ul>
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 					    <div class="followstatus"></div>
 					    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
 					    <div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
@@ -235,7 +235,7 @@
 
                         <hr class="divider"/>
 
-                         <div class="well well-ssm">
+                         <div class="well well-smm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -306,7 +306,6 @@
 		        <li>Description of your upcoming work:{{upcoming.describe}}</li>
 		        <li>Your role:{{upcoming.role}}</li>
 		        <li>Status:{{upcoming.status}}</li>
-		        <li>Target finish date:{{upcoming.targetdate}}</li>
 		        <li>Comment:{{upcoming.comment}}</li>
 	      	  </ul>
               <ul>
@@ -344,6 +343,23 @@
 	           &nbsp{{ upcoming.collaborator_skill10 }}
 	           {% endif %}
 	        </li>
+	        <li>Preferred city location of collaborator:{{upcoming.preferred_city}}</li>
+	        <li>Start date:{{upcoming.targetstartdate}}</li>
+	        <li>End date:{{upcoming.targetfinishdate}}</li>
+	        <li>How often to work with collaborator:{{upcoming.often}}</li>
+	        <li>How to give back to collaborator:
+	        {% if upcoming.give_back == 1 %}
+	        Paid compensation
+	        {% endif %}
+
+	        {% if upcoming.give_back == 2 %}
+	        Exchange  of skills/services
+	        {% endif %}
+
+	        {% if upcoming.give_back == 3 %}
+	        Negotiable
+	        {% endif %}
+	        </li>
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
 
@@ -351,7 +367,7 @@
             </div>
         <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-		<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+		<div class="popupHatsoff" onclick="hatsoffFunction(2,1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
         <!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 	    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div-->
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>
@@ -362,7 +378,7 @@
             <hr class="divider"/>
 
 
-           <div class="well well-ssm">
+           <div class="well well-smm">
             <ul id="upcomingComment" style="list-style-type:none;">
             	
             </ul>
@@ -493,14 +509,10 @@
 			 popup.classList.toggle('show');
 	      }
 
-	      function hatsoffFunction(){
+	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
-             var count = parseInt(document.getElementById("hatsoffNum").innerHTML);
-             if(!isNaN(count)){
-             	document.getElementById("hatsoffNum").innerHTML = count+1;
-             }
 			 popGavehatsoff();
-			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}});
+			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 	      }
 
 	      function popGavehatsoff(){
@@ -675,6 +687,13 @@
 		    //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
           }
 
+          socket.on('new hatsoff userpage', function(){
+             var count = parseInt(document.getElementById("hatsoffNum").innerHTML);
+             if(!isNaN(count)){
+             	document.getElementById("hatsoffNum").innerHTML = count+1;
+             }
+          });
+
 		  socket.on('set message', function(data){
             console.log('set message');
             console.log(data['_id']);
@@ -728,7 +747,6 @@
 
 		  socket.on('new message', function(data){
             console.log('new message');
-            console.log(data['_id']);
 
 			var n  = users.indexOf(data.uid);
             if(data.uid == {{user.id}}){
@@ -1160,6 +1178,7 @@
     </div>
 
 <div class="timeline-container">
+    <h3>Activity</h3>
     <ul class="timeline">
     </ul>
 </div>

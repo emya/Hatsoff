@@ -23,7 +23,6 @@ k{% extends 'week1/basehome.html'%}
             <br>{{form.describe.label_tag}}</br>{{form.describe}}<br/>
             <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
             <br>{{form.status.label_tag}}</br>{{form.status}}<br/>
-            <br>{{form.targetdate.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01"><br/>
             <br>Looking to get help from the community?</br>
                 <select name="get_help">
                 {% if form.get_help.value == 1 %}
@@ -60,7 +59,10 @@ k{% extends 'week1/basehome.html'%}
             </ul>
 
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
-            <br>{{form.time_commitment.label_tag}}</br><input type='date' name='targetdate' min="2016-10-01" ><br/><br/>
+            <br>{{form.targetstartdate.label_tag}}</br><input type='date' name='targetstartdate' min="2016-10-01"><br/>
+            <br>{{form.targetfinishdate.label_tag}}</br><input type='date' name='targetfinishdate' min="2016-10-01"><br/>
+
+            <br>{{form.often.label_tag}}</br>{{form.often}}<br/>
 
             <br>{{form.give_back.label_tag}}</br>
             <select name="give_back">
@@ -141,7 +143,7 @@ function readURL(input) {
     }
 }
 
-$("#id_photo").change(function(){
+$("#id_image").change(function(){
     readURL(this);
 });
 </script>

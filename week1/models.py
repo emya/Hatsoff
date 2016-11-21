@@ -56,7 +56,8 @@ class UpcomingWork(models.Model):
     describe = models.CharField(max_length=500, default='', blank=True)
     role = models.CharField(max_length=300, default='', blank=True)
     status = models.CharField(max_length=300, default='', blank=True)
-    targetdate = models.DateTimeField(max_length=300, null=True, blank=True)#year of completion
+    targetstartdate = models.DateTimeField(null=True, blank=True)#year of completion
+    targetfinishdate = models.DateTimeField(300, null=True, blank=True)#year of completion
     comment = models.CharField(max_length=300, default='', blank=True)
     get_help = models.IntegerField(null=True, blank=True)#1: yes 2:Open to collaboration 3:no thanks
     collaborators = models.CharField(max_length=300, default='', blank=True)
@@ -72,6 +73,7 @@ class UpcomingWork(models.Model):
     collaborator_skill10 = models.CharField(max_length=300, default='', blank=True)
     fund = models.CharField(max_length=200, default='', blank=True)
     preferred_city = models.CharField(max_length=200, default='', blank=True)
+    often = models.CharField(max_length=300, default='', blank=True)
     time_commitment = models.DateTimeField(null=True, blank=True)
     give_back = models.IntegerField(null=True, blank=True)
     comment_help = models.CharField(max_length=300, default='', blank=True)

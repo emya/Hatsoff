@@ -306,7 +306,6 @@
 		        <li>Description of your upcoming work:{{upcoming.describe}}</li>
 		        <li>Your role:{{upcoming.role}}</li>
 		        <li>Status:{{upcoming.status}}</li>
-		        <li>Target finish date:{{upcoming.targetdate}}</li>
 		        <li>Comment:{{upcoming.comment}}</li>
 	      	  </ul>
               <ul>
@@ -343,6 +342,23 @@
 	           {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
 	           &nbsp{{ upcoming.collaborator_skill10 }}
 	           {% endif %}
+	        </li>
+	        <li>Preferred city location of collaborator:{{upcoming.preferred_city}}</li>
+	        <li>Start date:{{upcoming.targetstartdate}}</li>
+	        <li>End date:{{upcoming.targetfinishdate}}</li>
+	        <li>How often to work with collaborator:{{upcoming.often}}</li>
+	        <li>How to give back to collaborator:
+	        {% if upcoming.give_back == 1 %}
+	        Paid compensation
+	        {% endif %}
+
+	        {% if upcoming.give_back == 2 %}
+	        Exchange  of skills/services
+	        {% endif %}
+
+	        {% if upcoming.give_back == 3 %}
+	        Negotiable
+	        {% endif %}
 	        </li>
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
@@ -1162,6 +1178,7 @@
     </div>
 
 <div class="timeline-container">
+    <h3>Activity</h3>
     <ul class="timeline">
     </ul>
 </div>

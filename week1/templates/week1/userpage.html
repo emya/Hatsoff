@@ -104,6 +104,7 @@
 	 	<li><div class="popupFollow" onclick="popFollow()">Follow&nbsp<span id="followNum"></br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li-->
 		<li><div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div></li>
 		<!--li><div class="followstatus"><div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum"></span></div></div></li-->
+		<li><div id="hatsoff-profile"></div></li>
 		<li><div id="follow-profile"></div></li>
 
         <!--li><a href="#" class="addClass"><img src="{% static 'images/chat.png'%}" class="icons-img"></a></li>
@@ -520,6 +521,11 @@
 			 popup.classList.toggle('show');
 	      }
 
+	      function hatsoffedFunction(){
+			 console.log('hatsoff!');
+			 popGavehatsoff();
+		  }
+
 	      function popFollow(){
 			 var popup = document.getElementById('followPop');
 			 popup.classList.toggle('show');
@@ -747,23 +753,35 @@
 
 		  socket.on('hatsoff status', function(docs){
 		  	var len = docs.length;
+		  	var flag1 = false;
+		  	var flag2 = false;
+		  	var flag3 = false;
+		  	var flag4 = false;
+		  	var flag5 = false;
 		  	for (var i = 0; i < len; i++){
 		  		if(docs[i]['content_id'] && docs[i]['content_type']){
 		  			var c_id = docs[i]['content_id'];
 		  			var c_type = docs[i]['content_type'];
-		  			if(c_type == 1){
+		  			if(c_type == 1){//community post
 
-		  			}else if(c_type == 2){
+		  			}else if(c_type == 2){//upcoming work
 
-		  			}else if(c_type == 3){
+		  			}else if(c_type == 3){//portfolio
 
-		  			}else if(c_type == 4){
+		  			}else if(c_type == 4){//shared post
 
-		  			}else if(c_type == 5){
-		  				
+		  			}else if(c_type == 5){//profile
+		  				var elemprofile = document.getElementById("hatsoff-profile");
+		  				elemprofile.innerHTML = '';
+				  		$('#hatsoff-profile').append($('<div class="popupHatsoff" onclick="hatsoffedFunction()"><img src="{% static 'images/grey_hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tipped off your hat</span><span id="hatsoffNum"></span></div>'));
+				  		flag5 = true;
 		  			}
 		  				
 		  		}	
+		  	}
+
+		  	if(flag5 == false){
+		  		$('#hatsoff-profile').append($('<div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div>'));
 		  	}
 		  });
 

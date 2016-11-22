@@ -752,6 +752,11 @@ io.on('connection', function(socket){
       });
     }); 
 
+    HatsoffPost.find({'user.uid':socket.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
+      if(error) throw error;
+      console.log('hatsoff status:'+docs);
+      socket.emit('hatsoff status', docs);
+    }); 
 
     /***
     var query_cp = CommunityPost.find({'user.uid':data.to_uid});

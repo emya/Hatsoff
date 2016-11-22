@@ -745,6 +745,28 @@
 		  	}
 		  });
 
+		  socket.on('hatsoff status', function(docs){
+		  	var len = docs.length;
+		  	for (var i = 0; i < len; i++){
+		  		if(docs[i]['content_id'] && docs[i]['content_type']){
+		  			var c_id = docs[i]['content_id'];
+		  			var c_type = docs[i]['content_type'];
+		  			if(c_type == 1){
+
+		  			}else if(c_type == 2){
+
+		  			}else if(c_type == 3){
+
+		  			}else if(c_type == 4){
+
+		  			}else if(c_type == 5){
+		  				
+		  			}
+		  				
+		  		}	
+		  	}
+		  });
+
 		  socket.on('new message', function(data){
             console.log('new message');
 

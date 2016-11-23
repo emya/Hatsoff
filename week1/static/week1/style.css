@@ -112,12 +112,25 @@ a {
    /*
    float: right;
    min-width: 200px;
-   */
+   
    padding-right: 20px;
+    */
 }
 
 #header #header-right .loginModal {
    color: white;
+    
+    padding: 1em;
+}
+
+
+#header #header-right .loginModal:hover {
+   color: white;
+   border:1px; 
+   border-style:solid; 
+   border-color:#FFFFFF; 
+    
+    padding: 1em;
 }
 
 #header #header-right #header-top {

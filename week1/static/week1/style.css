@@ -76,17 +76,29 @@ a {
    width: 130px;
 }
 
+@font-face {
+    font-family: Asap;
+    src: url('/week1/media/fonts/asap/Asap-Regular.otf');
+}
+
 #header #header-menus {
    display: inline-block;
    width: 800px;
    line-height: 100px;
-   /*
-   min-width: 600px;
+   font-family: Asap;
+   /*min-width: 600px;
    width: calc(100% - 300px);
    */
    text-align: center;
 }
-
+#header #header-menus a {
+   text-decoration: none;
+   vertical-align: middle;
+   color: white;
+   padding: 0 10px;
+    
+   font-family: Asap;
+}
 #header #header-right {
    display: inline-block;
    width: 200px;
@@ -155,14 +167,16 @@ img.icons_img {
    background-color: #d5a6bd;
    border-radius: 5px;
 }
-
+/*
 #header #header-menus a {
    text-decoration: none;
    vertical-align: middle;
    color: white;
    padding: 0 10px;
+    
+   font-family: Asap;
 }
-
+*/
 #myModal {
    display: none;
 }
@@ -257,6 +271,7 @@ img.icons_img {
 
 #body table {
 }
+
 
 #about {
    margin: 30px;

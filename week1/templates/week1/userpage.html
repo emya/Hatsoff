@@ -102,7 +102,7 @@
          <li>Follow &nbsp<span id="followNum"></span></li>
 	 	<li><div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div></li>
 	 	<li><div class="popupFollow" onclick="popFollow()">Follow&nbsp<span id="followNum"></br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div></li-->
-		<li><div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div></li>
+		<!--li><div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div></li-->
 		<!--li><div class="followstatus"><div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum"></span></div></div></li-->
 		<li><div id="hatsoff-profile"></div></li>
 		<li><div id="follow-profile"></div></li>
@@ -163,7 +163,8 @@
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
+					    <div id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
 					    <div class="followstatus"></div>
 					    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
 					    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
@@ -228,7 +229,8 @@
 					    </ul>
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
+					    <div id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
 					    <div class="followstatus"></div>
 					    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
 					    <div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
@@ -368,11 +370,12 @@
             </div>
         <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-		<div class="popupHatsoff" onclick="hatsoffFunction(2,1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+		<!--div class="popupHatsoff" onclick="hatsoffFunction(2,1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
         <!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 	    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div-->
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>
 		<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
+		<div id="hatsoffstatus_upcoming"></div>
 		<div class="followstatus"></div>
 	    <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
@@ -413,6 +416,7 @@
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
 
+	      /*
 	      socket.on('number user thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;
               });
@@ -421,7 +425,6 @@
                   document.getElementById("hatsoffNum").innerHTML = count;
               });
 
-	      /*
 	      socket.on('number user follow', function(count){
                   document.getElementById("followNum").innerHTML = count;
               });
@@ -751,13 +754,20 @@
 		  	}
 		  });
 
-		  socket.on('hatsoff status', function(docs){
+		  socket.on('hatsoff status', function(data){
+		  	var docs = data.docs;
+		  	var count = data.count;
 		  	var len = docs.length;
 		  	var flag1 = false;
 		  	var flag2 = false;
 		  	var flag3 = false;
 		  	var flag4 = false;
 		  	var flag5 = false;
+		  	var p_list = [];
+		  	for (var i = 0; i < 10; i++){
+		  		p_list.push(false);
+		  	}
+
 		  	for (var i = 0; i < len; i++){
 		  		if(docs[i]['content_id'] && docs[i]['content_type']){
 		  			var c_id = docs[i]['content_id'];
@@ -765,23 +775,59 @@
 		  			if(c_type == 1){//community post
 
 		  			}else if(c_type == 2){//upcoming work
+		  				var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+		  				elemprofile.innerHTML = '';
+				  		$('#hatsoffstatus_upcoming').append($('<div class="popupHatsoff" onclick="hatsoffedFunction()"><img src="{% static 'images/grey_hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tipped off your hat</span></div>'));
+				  		flag2 = true;
 
 		  			}else if(c_type == 3){//portfolio
+		  				var c = parseInt(c_id);
+			            if(!isNaN(c)){
+		  					var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
+		  					if(elemprofile){
+			  					elemprofile.innerHTML = '';
+					  			$('#hatsoffstatus_portfolio_'+c).append($('<div class="popupHatsoff" onclick="hatsoffedFunction()"><img src="{% static 'images/grey_hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tipped off your hat</span></div>'));
+					  			p_list[c-1] = true;
+		  					}
+			            }
+				  		flag3 = true;
 
 		  			}else if(c_type == 4){//shared post
 
 		  			}else if(c_type == 5){//profile
 		  				var elemprofile = document.getElementById("hatsoff-profile");
 		  				elemprofile.innerHTML = '';
-				  		$('#hatsoff-profile').append($('<div class="popupHatsoff" onclick="hatsoffedFunction()"><img src="{% static 'images/grey_hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tipped off your hat</span><span id="hatsoffNum"></span></div>'));
+				  		$('#hatsoff-profile').append($('<div class="popupHatsoff" onclick="hatsoffedFunction()"><img src="{% static 'images/grey_hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tipped off your hat</span><span id="hatsoffNum">'+count+'</span></div>'));
 				  		flag5 = true;
 		  			}
 		  				
 		  		}	
 		  	}
 
+		  	if(flag2 == false){
+		  		var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+		  		elemprofile.innerHTML = '';
+		  		$('#hatsoffstatus_upcoming').append($('<div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span></div>'));
+		  	}
+
+		  	//flag3
+		  	for (var i = 0; i < 10; i++){
+		  		if (p_list[i] == false){
+		  			var c = i+1;
+		  			var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
+		  			if (elemprofile){
+		  				elemprofile.innerHTML = '';
+				  		$('#hatsoffstatus_portfolio_'+c).append($('<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>'));
+
+		  			}
+
+		  		}
+		  	}
+
 		  	if(flag5 == false){
-		  		$('#hatsoff-profile').append($('<div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></div>'));
+		  		var elemprofile = document.getElementById("hatsoff-profile");
+		  		elemprofile.innerHTML = '';
+		  		$('#hatsoff-profile').append($('<div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum">'+count+'</span></div>'));
 		  	}
 		  });
 

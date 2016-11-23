@@ -2148,3 +2148,15 @@ hr .solid-divider{
    color: white;
    display:inline;
 }
+
+#hatsoff-profile{
+   display:inline;
+}
+
+#hatsoffstatus_portfolio_1, #hatsoffstatus_portfolio_2, #hatsoffstatus_portfolio_3, #hatsoffstatus_portfolio_4, #hatsoffstatus_portfolio_5, #hatsoffstatus_portfolio_6, #hatsoffstatus_portfolio_7, #hatsoffstatus_portfolio_8, #hatsoffstatus_portfolio_9, #hatsoffstatus_portfolio_10{
+   display:inline;
+}
+
+#hatsoffstatus_upcoming{
+   display:inline;
+}

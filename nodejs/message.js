@@ -683,10 +683,12 @@ io.on('connection', function(socket){
       socket.emit('number user thanks', count);
     }); 
 
+    /*
     HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
       if (err) throw err;
       socket.emit('number user hatsoff', count);
     }); 
+    */
 
     FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(err, count){
       if (err) throw err;
@@ -752,11 +754,14 @@ io.on('connection', function(socket){
       });
     }); 
 
-    HatsoffPost.find({'user.uid':socket.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
-      if(error) throw error;
-      console.log('hatsoff status:'+docs);
-      socket.emit('hatsoff status', docs);
-    }); 
+    HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
+      if (err) throw err;
+      HatsoffPost.find({'user.uid':socket.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
+        if(error) throw error;
+        console.log('hatsoff status:'+docs);
+        socket.emit('hatsoff status', {docs:docs, count:count});
+      }); 
+    });
 
     /***
     var query_cp = CommunityPost.find({'user.uid':data.to_uid});

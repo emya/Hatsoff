@@ -119,18 +119,18 @@ a {
 
 #header #header-right .loginModal {
    color: white;
-    
-    padding: 1em;
+   font-family: Asap;
+   padding: 1em;
 }
 
 
 #header #header-right .loginModal:hover {
    color: white;
+   font-family: Asap;
    border:1px; 
    border-style:solid; 
    border-color:#FFFFFF; 
-    
-    padding: 1em;
+   padding: 1em;
 }
 
 #header #header-right #header-top {

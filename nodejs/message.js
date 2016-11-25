@@ -683,10 +683,12 @@ io.on('connection', function(socket){
       socket.emit('number user thanks', count);
     }); 
 
+    /*
     HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
       if (err) throw err;
       socket.emit('number user hatsoff', count);
     }); 
+    */
 
     FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(err, count){
       if (err) throw err;
@@ -752,6 +754,14 @@ io.on('connection', function(socket){
       });
     }); 
 
+    HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
+      if (err) throw err;
+      HatsoffPost.find({'user.uid':socket.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
+        if(error) throw error;
+        console.log('hatsoff status:'+docs);
+        socket.emit('hatsoff status', {docs:docs, count:count});
+      }); 
+    });
 
     /***
     var query_cp = CommunityPost.find({'user.uid':data.to_uid});
@@ -970,7 +980,35 @@ io.on('connection', function(socket){
                       callback(null, post);
                     });
                  },
-                 function(post){
+                 function(post, callback){
+                    //CommunityMember.findOne({ uid : uid }).lean().exec(function(err, post){
+                    var uid1, uid2, action_user;
+                    if (socket.uid < uid){
+                      uid1 = socket.uid;
+                      uid2 = uid; 
+                      action_user = 1;
+                    }else{
+                      uid2 = socket.uid;
+                      uid1 = uid; 
+                      action_user = 2;
+                    }
+
+                    FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
+                      var fstatus = 0;
+                      if (result){
+                        if(result.status == 2){
+                          fstatus = 1;
+                        }else if (result.status == 1 && uid1 == socket.uid && result.action_user == 1){
+                          fstatus = 1;
+                        }else if (result.status == 1 && uid2 == socket.uid && result.action_user == 2){
+                          fstatus = 1;
+                        }
+
+                      }
+                      callback(null, post, fstatus);
+                    });
+                 },
+                 function(post, fstatus){
                    console.log("second:"+uid);
                    if (post != null){
                       console.log("::::::::::::::::::::::not null:::::::::::::::::");
@@ -979,9 +1017,11 @@ io.on('connection', function(socket){
                       console.log(obj);
                       var f = obj["friends"];
                       doc.set('friends', f, {strict: false});
+                      doc.set('fstatus', fstatus, {strict: false});
                       console.log("friend doooooooooooooc:"+doc);
                       newdocs.push(doc);
                    }else{
+                      doc.set('fstatus', fstatus, {strict: false});
                       newdocs.push(doc);
                    }
                    //console.log("****newdocs****:"+newdocs);

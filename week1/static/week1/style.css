@@ -76,29 +76,66 @@ a {
    width: 130px;
 }
 
+@font-face {
+    font-family: Cabin;
+    src: url('/week1/media/fonts/cabin-v1.5/Cabin-Regular-TTF.ttf');
+}
+
+@font-face {
+    font-family: Asap;
+    src: url('/week1/media/fonts/asap/Asap-Regular.otf');
+}
+
 #header #header-menus {
    display: inline-block;
    width: 800px;
    line-height: 100px;
-   /*
-   min-width: 600px;
+   font-family: Asap;
+   /*min-width: 600px;
    width: calc(100% - 300px);
    */
    text-align: center;
 }
+#header #header-menus a {
+   text-decoration: none;
+   vertical-align: middle;
+   color: white;
+   padding: 0 10px;
+    
+   font-family: Asap;
+}
 
+#header #header-menus a:hover {
+    border:1px; 
+    border-style:solid; 
+    border-color:#FFFFFF; 
+    padding: 1em;
+}
 #header #header-right {
    display: inline-block;
    width: 200px;
    /*
    float: right;
    min-width: 200px;
-   */
+   
    padding-right: 20px;
+    */
 }
 
 #header #header-right .loginModal {
    color: white;
+   font-family: Asap;
+   padding: 1em;
+}
+
+
+#header #header-right .loginModal:hover {
+   color: white;
+   font-family: Asap;
+   border:1px; 
+   border-style:solid; 
+   border-color:#FFFFFF; 
+   padding: 1em;
 }
 
 #header #header-right #header-top {
@@ -155,14 +192,16 @@ img.icons_img {
    background-color: #d5a6bd;
    border-radius: 5px;
 }
-
+/*
 #header #header-menus a {
    text-decoration: none;
    vertical-align: middle;
    color: white;
    padding: 0 10px;
+    
+   font-family: Asap;
 }
-
+*/
 #myModal {
    display: none;
 }
@@ -257,6 +296,7 @@ img.icons_img {
 
 #body table {
 }
+
 
 #about {
    margin: 30px;
@@ -1835,7 +1875,8 @@ hr .solid-divider{
     position: fixed;
     right: 70px;
     width: 300px;
-    font-family: 'Open Sans', sans-serif;
+/*    font-family: 'Open Sans', sans-serif; */
+    font-family: Cabin;
 }
 .round.hollow {
     margin: 40px 0 0;
@@ -1848,7 +1889,8 @@ hr .solid-divider{
     font-size: 23px;
     padding: 10px 21px;
     text-decoration: none;
-    font-family: 'Open Sans', sans-serif;
+/*    font-family: 'Open Sans', sans-serif; */
+    font-family: Cabin;
 }
 .round.hollow a:hover {
     border: 2px solid #000;
@@ -1870,7 +1912,8 @@ hr .solid-divider{
     font-size: 21px;
     padding: 7px 10px;
     width: 100%;
-     font-family: Oswald;
+    /* font-family: Oswald;*/
+    font-family: Cabin;
 }
 .bg_none i {
     border: 1px solid #ff6701;
@@ -2146,5 +2189,17 @@ hr .solid-divider{
 .following {
    background-color:#8e7cc3;
    color: white;
+   display:inline;
+}
+
+#hatsoff-profile{
+   display:inline;
+}
+
+#hatsoffstatus_portfolio_1, #hatsoffstatus_portfolio_2, #hatsoffstatus_portfolio_3, #hatsoffstatus_portfolio_4, #hatsoffstatus_portfolio_5, #hatsoffstatus_portfolio_6, #hatsoffstatus_portfolio_7, #hatsoffstatus_portfolio_8, #hatsoffstatus_portfolio_9, #hatsoffstatus_portfolio_10{
+   display:inline;
+}
+
+#hatsoffstatus_upcoming{
    display:inline;
 }

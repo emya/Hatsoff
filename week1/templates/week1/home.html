@@ -26,8 +26,10 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
+        
+        <table width="300"><tr><td width="200">
         <ul style="list-style-type:none">
-			<a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+			
            <li>Skills:
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
@@ -60,17 +62,41 @@
            &nbsp{{profile.skill10}}
            {% endif %}
            </li>
-	        <a href="{% url 'week1:edit_personalinfo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></i></a>
-				<li>City: {{profile.city}}</li>
-				<li>Work at: {{profile.worksAt}}</li>
-				<li>Education: {{profile.education}}</li>
-				<li>Language: {{profile.language}}</li>
-
-	        <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-            	<li>Website: {{ profile.weburl }}</li>
-
-	        <a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-				<li>Interested in: 
+            </ul>
+            </td>
+            <td valign="top">
+                <a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                    <ul style="list-style-type:none">
+                        <li>City: {{profile.city}}</li>
+                        <li>Work at: {{profile.worksAt}}</li>
+                        <li>Education: {{profile.education}}</li>
+                        <li>Language: {{profile.language}}</li>
+                    </ul>
+                </td>
+                
+                <td valign="top">  
+                    <a href="{% url 'week1:edit_personalinfo' %}" text-align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true" ></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul>
+                    <li>Website: {{ profile.weburl }} </li>
+                        </ul>
+                </td>
+                <td valign="top">
+                    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul>
+                        <li>Interested in: 
 				{% if profile.interestproject == 1%}
 				  Side projects
 				{% endif %}
@@ -87,13 +113,23 @@
 				  Full-time projects
 				{% endif %}
 				</li>
-				<li>Want to explore: {{profile.explore}}</li>
-				<li>Hobby: {{profile.hobby}}</li>
-				<li>Favorite quote: {{profile.fQuote}}</li>
-				<li>Films I love: {{profile.fFilm}}</li>
-				<li>Books I love: {{profile.fBook}}</li>
-				<li>Lived in: {{profile.cities}}</li>
-        </ul>
+                            
+                        <li>Want to explore: {{profile.explore}}</li>
+
+                        <li>Hobby: {{profile.hobby}}</li>
+                        <li>Favorite quote: {{profile.fQuote}}</li>
+                        <li>Films I love: {{profile.fFilm}}</li>
+                        <li>Books I love: {{profile.fBook}}</li>
+                        <li>Lived in: {{profile.cities}}</li>
+                        </ul>
+                </td>
+                <td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
+                </td>
+            </tr>
+            </table>
+            
+            	
+	        
 	</div>
 	<!--div class="home-step-out">
 	    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
@@ -116,7 +152,7 @@
     <div id="home-secondcolumn">
 	<div class="home-step">
         
-		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" align="right"></i></a>
         <br>
 		{% if profile.photo %}
 	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
@@ -138,8 +174,9 @@
 	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
-	 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
-	 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
+		 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
+		 <li><a href="">Collaborate</a></li>
+		 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
        </ul>
 
        <!--div class="home-bottom">
@@ -386,8 +423,8 @@
 	        <li>Comment:{{upcoming.comment}}</li>
 	      </ul>
               <ul>
-	        <li><span style="font-weight: bold;">Looking for</span>
-                    <br>&nbsp{{upcoming.collaborators}}</br></li>
+	        <h4 align="center">Looking for</h4>
+            <li>Collaborators:{{upcoming.collaborators}}</li>
 	        <li>Skills:
 	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
 	           {{ upcoming.collaborator_skill1 }}

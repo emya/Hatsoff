@@ -294,15 +294,15 @@
             </script>
 
             <h3>What’s Next</h3>
-	    {% if upcoming %}
-	        {% if upcoming.image %}
-	            <img src="{{ upcoming.image.url }}" class="maincontent">
-	        {% else %}
-	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
-	        {% endif %}
-	    {% else %}
+		    {% if upcoming %}
+		        {% if upcoming.image %}
+		            <img src="{{ upcoming.image.url }}" class="maincontent">
+		        {% else %}
+		            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
+		        {% endif %}
+		    {% else %}
 	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	    {% endif %}
+	   		{% endif %}
 
 	    {% if upcoming %}
             <div class="description-wrapper">
@@ -548,7 +548,10 @@
 		     var elemprofile = document.getElementById("follow-profile");
 		  	 var elem = document.getElementsByClassName("followstatus");
 		  	 elemprofile.innerHTML = '';
-		  	 elem.innerHTML = '';
+
+		  	 for(var i = 0; i < elem.length; i++){
+		  	 	elem[i].innerHTML = '';
+		  	 }
 		  	 $('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  	 $('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+count+'</span>'));
 	      }
@@ -808,8 +811,11 @@
 
 		  	if(flag2 == false){
 		  		var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-		  		elemprofile.innerHTML = '';
-		  		$('#hatsoffstatus_upcoming').append($('<div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span></div>'));
+		  		if(elemprofile){
+		  			elemprofile.innerHTML = '';
+		  			$('#hatsoffstatus_upcoming').append($('<div class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span></div>'));
+
+		  		}
 		  	}
 
 		  	//flag3

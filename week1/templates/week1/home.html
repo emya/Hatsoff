@@ -174,8 +174,9 @@
 	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/hat.png'%}" class="icons-img"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
-	 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
-	 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
+		 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
+		 <li><a href="">Collaborate</a></li>
+		 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
        </ul>
 
        <!--div class="home-bottom">
@@ -422,8 +423,8 @@
 	        <li>Comment:{{upcoming.comment}}</li>
 	      </ul>
               <ul>
-	        <li><span style="font-weight: bold;">Looking for</span>
-                    <br>&nbsp{{upcoming.collaborators}}</br></li>
+	        <h4 align="center">Looking for</h4>
+            <li>Collaborators:{{upcoming.collaborators}}</li>
 	        <li>Skills:
 	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
 	           {{ upcoming.collaborator_skill1 }}

@@ -27,10 +27,13 @@
       
 	<div class="home-step">
         
-        <table width="300"><tr><td width="200">
-        <ul style="list-style-type:none">
-			
-           <li>Skills:
+        <table width="300"><tr><td width="10"></td>
+            <td width="120" valign="top">
+                
+                <div  id="tableLabel">
+			     Skills:
+                </div>
+            </td><td>
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
            {% endif %}
@@ -61,8 +64,7 @@
            {% if profile.skill10 and profile.skill10 != ""%}	
            &nbsp{{profile.skill10}}
            {% endif %}
-           </li>
-            </ul>
+          
             </td>
             <td valign="top">
                 <a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
@@ -70,33 +72,105 @@
             </tr>
             <tr>
                 <td>
-                    
-                    <ul style="list-style-type:none">
-                        <li>City: {{profile.city}}</li>
-                        <li>Work at: {{profile.worksAt}}</li>
-                        <li>Education: {{profile.education}}</li>
-                        <li>Language: {{profile.language}}</li>
-                    </ul>
+                <br>
                 </td>
-                
+            </tr>
+            <tr><td width="10"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    City:
+                    </div>
+               </td>
+                <td>
+                     {{profile.city}}
+                </td>
                 <td valign="top">  
                     <a href="{% url 'week1:edit_personalinfo' %}" text-align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true" ></i></a>
                 </td>
             </tr>
             <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Work at: 
+                    </div>
+                </td>
+                    
                 <td>
-                    <ul>
-                    <li>Website: {{ profile.weburl }} </li>
-                        </ul>
+                {{profile.worksAt}}
+                </td>
+                      
+                <td valign="top">  
+                    
+                </td>
+            </tr>      
+            <tr><td width="20"></td>
+                <td valign="top">
+                    <div  id="tableLabel">
+                    Education:
+                    </div>
+               </td>
+                <td>
+                     {{profile.education}}
+                </td>
+                <td valign="top">  
+                   
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Language:
+                    </div>
+                </td>
+                <td>{{profile.language}}
+                </td>
+                <td valign="top">  
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            
+            <tr>
+                <td>
+                <br>
+                </td>
+            </tr>
+            <tr><td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                        Website:
+                    </div>
+                    
+                </td>
+                <td>
+                     {{ profile.weburl }} 
                 </td>
                 <td valign="top">
                     <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
                 </td>
             </tr>
+            
             <tr>
                 <td>
-                    <ul>
-                        <li>Interested in: 
+                <br>
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                Interested in: 
+                    </div>
+                </td>
+                <td>
+                    
 				{% if profile.interestproject == 1%}
 				  Side projects
 				{% endif %}
@@ -112,20 +186,108 @@
 				{% if profile.interestproject == 4 %}  
 				  Full-time projects
 				{% endif %}
-				</li>
-                            
-                        <li>Want to explore: {{profile.explore}}</li>
-
-                        <li>Hobby: {{profile.hobby}}</li>
-                        <li>Favorite quote: {{profile.fQuote}}</li>
-                        <li>Films I love: {{profile.fFilm}}</li>
-                        <li>Books I love: {{profile.fBook}}</li>
-                        <li>Lived in: {{profile.cities}}</li>
-                        </ul>
                 </td>
-                <td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
+				<td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Want to explore: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.explore}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Hobby: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.hobby}}
+                </td>
+                <td>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Favorite quote: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.fQuote}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Films I love: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.fFilm}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Books I love: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.fBook}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Lived in: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.cities}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
             </table>
             
             	

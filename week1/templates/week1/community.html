@@ -220,12 +220,13 @@
 </div>
 
 <div class="suggested">
-  <div class="suggested_project">
-    Suggested Community Posts 
-  </div>
-  <div class="suggested_collaborators">
-    Suggested Collaborators
-  </div>
+  Suggested Projects
+  <ul id="suggested_project">
+  </ul>
+
+  Suggested Collaborators
+  <ul id="suggested_collaborators">
+  </ul>
 </div>
 
 
@@ -562,12 +563,33 @@
                  }
 	      }
 	  });
+  
+    socket.on('three collaborators need you', function(docs){
+      for(var i=0; i < docs.length; i++){
+        console.log("top collaborators:"+docs[i].user_id);
+        var uid = docs[i].user_id;
+        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var n  = users.indexOf(uid);
+        if ( n != -1 ){
+          $('#suggested_collaborators').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a></li>'));
+        }else{
+          $('#suggested_collaborators').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile"></a></li>'));
+
+        }
+      }
+    });
         
-          /**
+    socket.on('three community posts need you', function(docs){
+      for(var i=0; i < docs.length; i++){
+        console.log("top community posts:"+docs[i]._id);
+      }
+    });
+
+    /**
 	  socket.on('whisper', function(data){
 	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
-          });
-          **/
+    });
+    **/
     </script>
 </div>
 

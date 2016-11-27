@@ -102,7 +102,7 @@ a {
    color: white;
    padding: 0 10px;
     
-    border-radius: 10px;
+   border-radius: 10px;
    font-family: Asap;
 }
 
@@ -476,7 +476,7 @@ to here
 
 #home-main {
    display: inline-block;
-   width: 900px;
+   width: 1100px;
    padding: 20px;
 }
 
@@ -1673,6 +1673,12 @@ input[type="file"]{
 
 .community-container {
     width: 800px;
+    float: left;
+}
+
+.suggested {
+    width: 200px;
+    float: right;
 }
 
 .well-sm {

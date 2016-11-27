@@ -280,6 +280,61 @@ io.on('connection', function(socket){
       socket.emit('update community post', docs);
     }); 
 
+
+    db.serialize(function() {
+      db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
+        if(err){
+          console.log(err);
+        }
+        else {
+          if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
+            var skillls = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+            console.log("skillls:"+skillls);
+            var newdocs = [];
+            var query = CommunityPost.find({});
+            query.sort('-created').limit(50).exec(function(err, docs){
+              if (err) throw err;
+
+              var len = docs.length;
+              var curIdx = 0;
+              async.each(docs, function(doc){
+
+                if(doc.skillls && doc.skillls.length != 0){
+                  for (var j = 0; j < doc.skillls.length; j++) {
+                    var item = doc.skillls[j];  // Calling myNodeList.item(i) isn't necessary in JavaScript
+                    //console.log("item:"+item);
+                    if (item != "" && skillls.indexOf(item) != -1 ){
+                      console.log("push");
+                      newdocs.push(doc);
+                    }
+                  }
+                }
+                curIdx += 1;
+                if (len == curIdx){
+                  console.log("newdocs:"+newdocs.length);
+                  console.log("newdocs:"+newdocs);
+                  socket.emit('three community posts need you', newdocs);
+                }
+              });
+            });
+
+            //var uids = [];
+            var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
+            var liststr = "("+skillls.join(",")+")";
+            console.log(liststr);
+            db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND (skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5 in "+tuplestr+" or skill6 in "+tuplestr+" or skill7 in "+tuplestr+" or skill8 in "+tuplestr+" or skill9 in "+tuplestr+" or skill10 in "+tuplestr+") limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
+            //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
+              socket.emit('three collaborators need you', rows);
+              console.log("collaborators"+rows);
+            });
+          } 
+        }
+      });
+
+
+    });
+
+
   });
 
   socket.on('join community post', function(data){
@@ -331,15 +386,13 @@ io.on('connection', function(socket){
                   console.log("newdocs:"+newdocs);
                   socket.emit('update community post needs you', newdocs);
                 }
-
               });
-
             });
           } 
         }
-        
       });
     });
+
   });
 
 

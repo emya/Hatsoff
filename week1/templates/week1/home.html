@@ -312,22 +312,37 @@
     </div>
 
     <div id="home-secondcolumn">
-	<div class="home-step">
-        
-		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" align="right"></i></a>
-        <br>
-		{% if profile.photo %}
-	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
-		{% else %}
-		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
-		{% endif %}
-        
+        <div class="home-step">
+            <table>
+                <tr>
+                    <td width="10px">
+                    </td>
+                    <td>
+                    <br>
+                    {% if profile.photo %}
+                        <img src="{{ profile.photo.url }}" class="mainprofile">
+                    {% else %}
+                        <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
+                    {% endif %}
+                    </td>
+                    <td valign="top">
+                        <a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" align="right"></i></a>
+                    </td>
+                 </tr>
+            </table>
         </div>
-	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
-           <p>{{profile.describe}}</p>
-	    
+        <div class="home-step-out">
+            <table>
+                <tr>
+                    <td width="20px"></td>
+                    <td width="250px" >
+                        <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
+                            <h4 halign="center">{{profile.profession}}</h4>
+                            <p halign="center">{{profile.describe}}</p>
+                    </td>
+                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
+                </tr>
+            </table>
         </div>
     </div>
 

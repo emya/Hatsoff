@@ -387,7 +387,9 @@
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+					<div class="right">
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	                </div>
                     <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
@@ -408,12 +410,14 @@
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                         {% endif %}
 
-					    <ul style="list-style-type:none; padding-left:0px;">
-						<li>Title:{{showcase.title}}</li>
-						<li>Description of work:{{showcase.describe}}</li>
-						<li>Your role:{{showcase.role}}</li>
-						<li>Year of completion:{{showcase.completion}}</li>
-					    </ul>
+                        <div class="description-wrapper">
+						    <ul style="list-style-type:none; padding-left:0px;">
+							<li>Title:{{showcase.title}}</li>
+							<li>Description of work:{{showcase.describe}}</li>
+							<li>Your role:{{showcase.role}}</li>
+							<li>Year of completion:{{showcase.completion}}</li>
+						    </ul>
+						</div>
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
@@ -424,7 +428,7 @@
 
                         <hr class="divider"/>
 
-                        <div class="well well-smm">
+                        <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -486,7 +490,10 @@
 			    <blockquote>
 			    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+					<div class="right">
+	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	                </div>
+
                     <br>
  					    {% if showcase.image or showcase.youtube %}
 						{% if showcase.image %}
@@ -499,12 +506,15 @@
 					    {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 					    {% endif %}
-					    <ul style="list-style-type:none; padding-left:0px;">
-						<li>Title:{{showcase.title}}</li>
-						<li>Description of work:{{showcase.describe}}</li>
-						<li>Your role:{{showcase.role}}</li>
-						<li>Year of completion:{{showcase.completion}}</li>
-					    </ul>
+
+                        <div class="description-wrapper">
+						    <ul style="list-style-type:none; padding-left:0px;">
+							<li>Title:{{showcase.title}}</li>
+							<li>Description of work:{{showcase.describe}}</li>
+							<li>Your role:{{showcase.role}}</li>
+							<li>Year of completion:{{showcase.completion}}</li>
+						    </ul>
+						</div>
 
 						<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
@@ -517,7 +527,7 @@
 
                         <hr class="divider"/>
 
-                        <div class="well well-smm">
+                        <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -579,7 +589,10 @@
 
         <h3>What’s Next</h3>
         
-	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+        <div class="right">
+	    	<a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	    </div>
+
         <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
@@ -667,7 +680,7 @@
 
             <hr class="divider"/>
              
-           <div class="well well-smm">
+           <div class="well well-mm">
             <ul id="upcomingComment" style="list-style-type:none;">
             	
             </ul>
@@ -1407,9 +1420,6 @@
 
 
 	</script>
-	<div id="message-board">
-        </div>
-
     
 	<!--div id="thanks-hatsoff">
 	    <h4>Thanks - Hats off</h4>
@@ -1442,7 +1452,6 @@
             </div>
 	</div-->
 
-    </div>
 
 <div class="timeline-container">
     <h3>Activity</h3>

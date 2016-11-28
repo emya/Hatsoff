@@ -498,6 +498,7 @@ to here
 
 #home-main-center {
    width: 700px;
+   margin: 10px 160px;
    text-align: center;
 }
 
@@ -1677,7 +1678,7 @@ input[type="file"]{
 }
 
 .suggested {
-    width: 200px;
+    width: 250px;
     float: right;
 }
 
@@ -1784,6 +1785,7 @@ input[type="file"]{
 }
 blockquote {
    padding: 0 !important;
+   font-size: 14px !important;
 }
 blockquote:before {
    padding: 0 !important;
@@ -2215,4 +2217,10 @@ hr .solid-divider{
 
 #hatsoffstatus_upcoming{
    display:inline;
+}
+
+.right {
+    text-align: right;
+    float: right;
+    padding-right: 50px;
 }

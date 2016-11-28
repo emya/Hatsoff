@@ -155,12 +155,14 @@
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                         {% endif %}
 
-					    <ul style="list-style-type:none; padding-left:0px;">
-						<li>Title:{{showcase.title}}</li>
-						<li>Description of work:{{showcase.describe}}</li>
-						<li>Your role:{{showcase.role}}</li>
-						<li>Year of completion:{{showcase.completion}}</li>
-					    </ul>
+                        <div class="description-wrapper">
+						    <ul style="list-style-type:none; padding-left:0px;">
+							<li>Title:{{showcase.title}}</li>
+							<li>Description of work:{{showcase.describe}}</li>
+							<li>Your role:{{showcase.role}}</li>
+							<li>Year of completion:{{showcase.completion}}</li>
+						    </ul>
+						</div>
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
@@ -222,12 +224,14 @@
                         {% endif %}
 
 
-					    <ul style="list-style-type:none; padding-left:0px;">
-						<li>Title:{{showcase.title}}</li>
-						<li>Description of work:{{showcase.describe}}</li>
-						<li>Your role:{{showcase.role}}</li>
-						<li>Year of completion:{{showcase.completion}}</li>
-					    </ul>
+                        <div class="description-wrapper">
+						    <ul style="list-style-type:none; padding-left:0px;">
+							<li>Title:{{showcase.title}}</li>
+							<li>Description of work:{{showcase.describe}}</li>
+							<li>Your role:{{showcase.role}}</li>
+							<li>Year of completion:{{showcase.completion}}</li>
+						    </ul>
+					    </div>
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
@@ -277,7 +281,7 @@
 
 
 	<div class="home-step">
-            <script>
+        <script>
 		function show_upcoming(){
                     console.log('show more!');
 		    $('#upcomingComment').show();
@@ -291,9 +295,9 @@
 		    $('#upcoming_hide').hide();
 		    $('#upcoming_show').show();
 		};
-            </script>
+        </script>
 
-            <h3>What’s Next</h3>
+        <h3>What’s Next</h3>
 		    {% if upcoming %}
 		        {% if upcoming.image %}
 		            <img src="{{ upcoming.image.url }}" class="maincontent">
@@ -1269,7 +1273,6 @@
     </div>
     </div>
 </div-->
-    </div>
 
 <div class="timeline-container">
     <h3>Activity</h3>

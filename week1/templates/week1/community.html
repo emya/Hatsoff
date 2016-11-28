@@ -30,7 +30,7 @@
 
 <div class="community-container">
   <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-8 col-md-offset-1">
         <div class="well well-sm">
           <form class="form-horizontal" action="" method="">
            
@@ -71,7 +71,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 col-md-offset-3" style="text-align: center;">
+    <div class="col-md-8 col-md-offset-1" style="text-align: center;">
       <a href="{% url 'week1:community_needyou' %}"><h4>Projects that need your help</h4></a>
     </div>
   </div>
@@ -79,7 +79,7 @@
 
 
   <div class="row">
-    <div class="col-sm-10 col-sm-offset-3" id="logout">
+    <div class="col-sm-8 col-sm-offset-1" id="logout">
         <div class="comment-tabs">
             <div class="tab-content">
                 <div class="tab-pane active" id="comments-logout">                
@@ -223,10 +223,17 @@
   Suggested Projects
   <ul id="suggested_project">
   </ul>
+  <a href="{% url 'week1:community_needyou' %}"><h4>View more</h4></a>
 
-  Suggested Collaborators
-  <ul id="suggested_collaborators">
+  Collaborators who may need you
+  <ul id="collaborators_needyou">
   </ul>
+  <a href="{% url 'week1:community_needyou' %}"><h4>View more</h4></a>
+
+  Collaborators you may need 
+  <ul id="collaborators_youneed">
+  </ul>
+  <a href="{% url 'week1:community_needyou' %}"><h4>View more</h4></a>
 </div>
 
 
@@ -571,9 +578,24 @@
         var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
         var n  = users.indexOf(uid);
         if ( n != -1 ){
-          $('#suggested_collaborators').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a></li>'));
+          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a></li>'));
         }else{
-          $('#suggested_collaborators').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile"></a></li>'));
+          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile"></a></li>'));
+
+        }
+      }
+    });
+
+    socket.on('three collaborators you need', function(docs){
+      for(var i=0; i < docs.length; i++){
+        console.log("top collaborators:"+docs[i].user_id);
+        var uid = docs[i].user_id;
+        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var n  = users.indexOf(uid);
+        if ( n != -1 ){
+          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a></li>'));
+        }else{
+          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile"></a></li>'));
 
         }
       }
@@ -582,6 +604,11 @@
     socket.on('three community posts need you', function(docs){
       for(var i=0; i < docs.length; i++){
         console.log("top community posts:"+docs[i]._id);
+        var c_id = docs[i]._id;
+        var tag = docs[i].tag;
+        var uid = docs[i].user.uid;
+        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+        $('#suggested_project').append($('<li class="media"><a href="'+post_link+'"><p>'+docs[i].content+'</p></a></li>'));
       }
     });
 

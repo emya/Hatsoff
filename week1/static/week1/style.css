@@ -2237,6 +2237,7 @@ hr .solid-divider{
     overflow: hidden;
     height: 150px;
     position: relative;
+    margin: 15px;
 }
 
 
@@ -2291,4 +2292,13 @@ hr .solid-divider{
 /* Scrollbars */
 .slide-content::-webkit-scrollbar {
   width: 5px;
+}
+
+#collaborators {
+  padding: 10px; 
+}
+
+.collaborator-img{
+   height: 150px;
+   width: 150px;
 }

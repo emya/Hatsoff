@@ -2194,6 +2194,7 @@ hr .solid-divider{
 }
 .img-circle {
     width: 80px;
+    margin: 10px;
 }
 .followstatus {
    display:inline;

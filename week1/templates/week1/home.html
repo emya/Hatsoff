@@ -27,10 +27,13 @@
       
 	<div class="home-step">
         
-        <table width="300"><tr><td width="200">
-        <ul style="list-style-type:none">
-			
-           <li>Skills:
+        <table width="300"><tr><td width="10"></td>
+            <td width="120" valign="top">
+                
+                <div  id="tableLabel">
+			     Skills:
+                </div>
+            </td><td>
            {% if profile.skill1 and profile.skill1 != ""%}	
            {{profile.skill1}}
            {% endif %}
@@ -61,8 +64,7 @@
            {% if profile.skill10 and profile.skill10 != ""%}	
            &nbsp{{profile.skill10}}
            {% endif %}
-           </li>
-            </ul>
+          
             </td>
             <td valign="top">
                 <a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
@@ -70,33 +72,105 @@
             </tr>
             <tr>
                 <td>
-                    
-                    <ul style="list-style-type:none">
-                        <li>City: {{profile.city}}</li>
-                        <li>Work at: {{profile.worksAt}}</li>
-                        <li>Education: {{profile.education}}</li>
-                        <li>Language: {{profile.language}}</li>
-                    </ul>
+                <br>
                 </td>
-                
+            </tr>
+            <tr><td width="10"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    City:
+                    </div>
+               </td>
+                <td>
+                     {{profile.city}}
+                </td>
                 <td valign="top">  
                     <a href="{% url 'week1:edit_personalinfo' %}" text-align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true" ></i></a>
                 </td>
             </tr>
             <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Work at: 
+                    </div>
+                </td>
+                    
                 <td>
-                    <ul>
-                    <li>Website: {{ profile.weburl }} </li>
-                        </ul>
+                {{profile.worksAt}}
+                </td>
+                      
+                <td valign="top">  
+                    
+                </td>
+            </tr>      
+            <tr><td width="20"></td>
+                <td valign="top">
+                    <div  id="tableLabel">
+                    Education:
+                    </div>
+               </td>
+                <td>
+                     {{profile.education}}
+                </td>
+                <td valign="top">  
+                   
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Language:
+                    </div>
+                </td>
+                <td>{{profile.language}}
+                </td>
+                <td valign="top">  
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            
+            <tr>
+                <td>
+                <br>
+                </td>
+            </tr>
+            <tr><td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                        Website:
+                    </div>
+                    
+                </td>
+                <td>
+                     {{ profile.weburl }} 
                 </td>
                 <td valign="top">
                     <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
                 </td>
             </tr>
+            
             <tr>
                 <td>
-                    <ul>
-                        <li>Interested in: 
+                <br>
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                Interested in: 
+                    </div>
+                </td>
+                <td>
+                    
 				{% if profile.interestproject == 1%}
 				  Side projects
 				{% endif %}
@@ -112,20 +186,108 @@
 				{% if profile.interestproject == 4 %}  
 				  Full-time projects
 				{% endif %}
-				</li>
-                            
-                        <li>Want to explore: {{profile.explore}}</li>
-
-                        <li>Hobby: {{profile.hobby}}</li>
-                        <li>Favorite quote: {{profile.fQuote}}</li>
-                        <li>Films I love: {{profile.fFilm}}</li>
-                        <li>Books I love: {{profile.fBook}}</li>
-                        <li>Lived in: {{profile.cities}}</li>
-                        </ul>
                 </td>
-                <td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
+				<td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Want to explore: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.explore}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Hobby: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.hobby}}
+                </td>
+                <td>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Favorite quote: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.fQuote}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Films I love: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.fFilm}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Books I love: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.fBook}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div  id="tableLabel">
+                    Lived in: 
+                    </div>
+                </td>
+                <td>
+                    {{profile.cities}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
             </table>
             
             	
@@ -150,22 +312,37 @@
     </div>
 
     <div id="home-secondcolumn">
-	<div class="home-step">
-        
-		<a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" align="right"></i></a>
-        <br>
-		{% if profile.photo %}
-	 	    <img src="{{ profile.photo.url }}" class="mainprofile">
-		{% else %}
-		    <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
-		{% endif %}
-        
+        <div class="home-step">
+            <table>
+                <tr>
+                    <td width="10px">
+                    </td>
+                    <td>
+                    <br>
+                    {% if profile.photo %}
+                        <img src="{{ profile.photo.url }}" class="mainprofile">
+                    {% else %}
+                        <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
+                    {% endif %}
+                    </td>
+                    <td valign="top">
+                        <a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" align="right"></i></a>
+                    </td>
+                 </tr>
+            </table>
         </div>
-	<div class="home-step-out">
-	    <a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-            <h3>{{user.first_name}}&nbsp{{user.last_name}}</h3> <h4>{{profile.profession}}</h4>
-           <p>{{profile.describe}}</p>
-	    
+        <div class="home-step-out">
+            <table>
+                <tr>
+                    <td width="20px"></td>
+                    <td width="250px" >
+                        <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
+                            <h4 halign="center">{{profile.profession}}</h4>
+                            <p halign="center">{{profile.describe}}</p>
+                    </td>
+                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -210,7 +387,9 @@
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+					<div class="right-edit">
+	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	                </div>
                     <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
@@ -231,12 +410,14 @@
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                         {% endif %}
 
-					    <ul style="list-style-type:none; padding-left:0px;">
-						<li>Title:{{showcase.title}}</li>
-						<li>Description of work:{{showcase.describe}}</li>
-						<li>Your role:{{showcase.role}}</li>
-						<li>Year of completion:{{showcase.completion}}</li>
-					    </ul>
+                        <div class="description-wrapper">
+						    <ul style="list-style-type:none; padding-left:0px;">
+							<li>Title:{{showcase.title}}</li>
+							<li>Description of work:{{showcase.describe}}</li>
+							<li>Your role:{{showcase.role}}</li>
+							<li>Year of completion:{{showcase.completion}}</li>
+						    </ul>
+						</div>
 
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
@@ -247,7 +428,7 @@
 
                         <hr class="divider"/>
 
-                        <div class="well well-smm">
+                        <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -309,7 +490,10 @@
 			    <blockquote>
 			    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-caret-square-o-down" aria-hidden="true" align="right"></i></a>
+					<div class="right-edit">
+	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	                </div>
+
                     <br>
  					    {% if showcase.image or showcase.youtube %}
 						{% if showcase.image %}
@@ -322,12 +506,15 @@
 					    {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 					    {% endif %}
-					    <ul style="list-style-type:none; padding-left:0px;">
-						<li>Title:{{showcase.title}}</li>
-						<li>Description of work:{{showcase.describe}}</li>
-						<li>Your role:{{showcase.role}}</li>
-						<li>Year of completion:{{showcase.completion}}</li>
-					    </ul>
+
+                        <div class="description-wrapper">
+						    <ul style="list-style-type:none; padding-left:0px;">
+							<li>Title:{{showcase.title}}</li>
+							<li>Description of work:{{showcase.describe}}</li>
+							<li>Your role:{{showcase.role}}</li>
+							<li>Year of completion:{{showcase.completion}}</li>
+						    </ul>
+						</div>
 
 						<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
@@ -340,7 +527,7 @@
 
                         <hr class="divider"/>
 
-                        <div class="well well-smm">
+                        <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -367,7 +554,9 @@
                 {% endif %}
                 {% endfor %}
                 {% else %}
-	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <div class="right-edit">
+	            	<a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	            </div>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                 {% endif %}
                 </div>
@@ -402,7 +591,10 @@
 
         <h3>What’s Next</h3>
         
-	    <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+        <div class="right-edit">
+	    	<a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	    </div>
+
         <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
@@ -490,7 +682,7 @@
 
             <hr class="divider"/>
              
-           <div class="well well-smm">
+           <div class="well well-mm">
             <ul id="upcomingComment" style="list-style-type:none;">
             	
             </ul>
@@ -1230,9 +1422,6 @@
 
 
 	</script>
-	<div id="message-board">
-        </div>
-
     
 	<!--div id="thanks-hatsoff">
 	    <h4>Thanks - Hats off</h4>
@@ -1265,7 +1454,6 @@
             </div>
 	</div-->
 
-    </div>
 
 <div class="timeline-container">
     <h3>Activity</h3>

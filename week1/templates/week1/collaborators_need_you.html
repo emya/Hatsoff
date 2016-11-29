@@ -41,9 +41,9 @@
     <script>
       var socket = io.connect("{{nodejs_url}}");
       socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-      socket.emit('at collaborators you need', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+      socket.emit('at collaborators need you', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
-      socket.on('get collaborators you need', function(docs){
+      socket.on('get collaborators need you', function(docs){
         for (var i = 0; i < docs.length; i++){
           var uid = docs[i].user_id;
           var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);

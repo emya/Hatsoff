@@ -465,6 +465,40 @@ io.on('connection', function(socket){
 
   });
 
+  socket.on('at collaborators need you', function(data){
+
+      db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
+        if(err){
+          console.log(err);
+        }
+        else {
+          if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
+            var skillls_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+            console.log("skillls:"+skillls);
+            var skillls = [];
+            for (var i = 0; i < 10; i++){
+              if (skillls_empty[i] == ""){
+                skillls.push(skillls_empty[0])
+              }else{
+                skillls.push(skillls_empty[i])
+              }
+            }
+            var newdocs = [];
+
+            //var uids = [];
+            var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
+            var liststr = "("+skillls.join(",")+")";
+            console.log(liststr);
+            db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM auth_user, week1_profile, week1_upcomingwork WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND week1_profile.user_id=week1_upcomingwork.user_id AND (week1_upcomingwork.collaborator_skill1 in "+tuplestr+" or week1_upcomingwork.collaborator_skill2 in "+tuplestr+" or week1_upcomingwork.collaborator_skill3 in "+tuplestr+" or week1_upcomingwork.collaborator_skill4 in "+tuplestr+" or week1_upcomingwork.collaborator_skill5 in "+tuplestr+" or week1_upcomingwork.collaborator_skill6 in "+tuplestr+" or week1_upcomingwork.collaborator_skill7 in "+tuplestr+" or week1_upcomingwork.collaborator_skill8 in "+tuplestr+" or week1_upcomingwork.collaborator_skill9 in "+tuplestr+" or week1_upcomingwork.collaborator_skill10 in "+tuplestr+") GROUP BY week1_profile.user_id ", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
+            //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
+              socket.emit('get collaborators need you', rows);
+              console.log("collaborators"+rows);
+            });
+          } 
+        }
+      });
+
+  });
 
   socket.on('at folder', function(data){
     var query = CollaboratePost.find({'to_uid':socket.uid});

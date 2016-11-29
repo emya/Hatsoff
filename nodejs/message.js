@@ -414,6 +414,10 @@ io.on('connection', function(socket){
 
   });
 
+  socket.on('at collaborators you need', function(data){
+    console.log('at community needs you');
+  });
+
 
   socket.on('at folder', function(data){
     var query = CollaboratePost.find({'to_uid':socket.uid});

@@ -387,7 +387,7 @@
 				<blockquote>
 				    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-					<div class="right">
+					<div class="right-edit">
 	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 	                </div>
                     <br><br><br>
@@ -490,7 +490,7 @@
 			    <blockquote>
 			    <!--div class="row">
 					<div class="col-sm-8 col-sm-offset-2"-->
-					<div class="right">
+					<div class="right-edit">
 	                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 	                </div>
 
@@ -554,7 +554,9 @@
                 {% endif %}
                 {% endfor %}
                 {% else %}
-	            <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <div class="right-edit">
+	            	<a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	            </div>
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                 {% endif %}
                 </div>
@@ -589,7 +591,7 @@
 
         <h3>What’s Next</h3>
         
-        <div class="right">
+        <div class="right-edit">
 	    	<a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 	    </div>
 

@@ -295,7 +295,8 @@ io.on('connection', function(socket){
             query.sort('-created').limit(50).exec(function(err, docs){
               if (err) throw err;
 
-              var len = docs.length;
+              var fixed_len = 3;
+              var len = (fixed_len < docs.length) ? fixed_len: docs.length;
               var curIdx = 0;
               async.each(docs, function(doc){
 
@@ -416,6 +417,26 @@ io.on('connection', function(socket){
 
   socket.on('at collaborators you need', function(data){
     console.log('at community needs you');
+
+    db.each("SELECT collaborator_skill1, collaborator_skill2, collaborator_skill3, collaborator_skill4, collaborator_skill5, collaborator_skill6, collaborator_skill7, collaborator_skill8, collaborator_skill9, collaborator_skill10 FROM week1_upcomingwork where user_id=? limit 1", socket.uid, function(err, row) {
+        if(err){
+          console.log(err);
+        }
+        else{
+          if (row.collaborator_skill1 != "" || row.collaborator_skill2 != "" || row.collaborator_skill3 !="" || row.collaborator_skill4 != "" || row.collaborator_skill5 != "" || row.collaborator_skill6 != "" || row.collaborator_skill7 !="" || row.collaborator_skill8 != "" || row.collaborator_skill9 != "" || row.collaborator_skill10 != "" ){
+            var skillls = [row.collaborator_skill1, row.collaborator_skill2, row.collaborator_skill3, row.collaborator_skill4, row.collaborator_skill5, row.collaborator_skill6, row.collaborator_skill7, row.collaborator_skill8, row.collaborator_skill9, row.collaborator_skill10];
+            var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
+            var liststr = "("+skillls.join(",")+")";
+            console.log(liststr);
+            db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND (week1_profile.skill1 in "+tuplestr+" or week1_profile.skill2 in "+tuplestr+" or week1_profile.skill3 in "+tuplestr+" or week1_profile.skill4 in "+tuplestr+" or week1_profile.skill5 in "+tuplestr+" or week1_profile.skill6 in "+tuplestr+" or week1_profile.skill7 in "+tuplestr+" or week1_profile.skill8 in "+tuplestr+" or week1_profile.skill9 in "+tuplestr+" or week1_profile.skill10 in "+tuplestr+")", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
+            //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
+              socket.emit('get collaborators you need', rows);
+              console.log("collaborators you need"+rows);
+            });
+          }
+        }
+      });
+
   });
 
 

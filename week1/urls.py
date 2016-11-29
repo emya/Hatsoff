@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^community/$', views.community, name='community'),
     url(r'^community/post/$', views.community_post, name='community_post'),
     url(r'^community/needs/you/$', views.community_needyou, name='community_needyou'),
+    url(r'^collaborators/you/need/$', views.collaborators_you_need, name='collaborators_you_need'),
     url(r'^notification/$', views.notification, name='notification'),
     url(r'^edit/personalinfomation/$', views.home_edit_personalinfo, name='edit_personalinfo'),
     url(r'^edit/funfact/$', views.home_edit_funfact, name='edit_funfact'),

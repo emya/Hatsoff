@@ -500,6 +500,15 @@ io.on('connection', function(socket){
 
   });
 
+  socket.on('at talent list', function(data){
+    var query = data.query;
+    console.log("query:"+query);
+    db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM auth_user, week1_profile WHERE (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) AND week1_profile.user_id=auth_user.id GROUP BY week1_profile.user_id ", [query, query, query, query, query, query, query, query, query, query], function(err, rows){
+      socket.emit('get talent list', rows);
+      console.log("talent "+rows);
+    });
+  });
+
   socket.on('at folder', function(data){
     var query = CollaboratePost.find({'to_uid':socket.uid});
       query.sort('-created').limit(30).exec(function(err, collaboratedocs){

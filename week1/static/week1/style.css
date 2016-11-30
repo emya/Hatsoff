@@ -260,6 +260,14 @@ img.icons_img {
    padding: 10px 20px;
 }
 
+#body-left .paragraph table {
+   border-spacing: 50px;
+}
+
+#body-left .paragraph td {
+   padding: 20px !important;
+}
+
 #hometop {
    text-align: center;
 }
@@ -297,7 +305,12 @@ img.icons_img {
    padding: 20px;
 }
 
-#body table {
+.paragraph table {
+   border-spacing: 50px;
+}
+
+.paragraph td {
+   padding: 30px !important;
 }
 
 

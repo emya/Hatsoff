@@ -588,6 +588,10 @@ img.notification_img {
    width: 150px;
 }
 
+#home-main #home-thirdcolumn li {
+   margin: 0 0 5px 0;
+}
+
 #home-main #home-thirdcolumn .home-bottom {
    position: fixed;
    bottom: 0;

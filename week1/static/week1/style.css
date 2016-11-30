@@ -60,7 +60,7 @@ a {
    display: inline-block;
     
    float: left;
-   width: 50px;
+   width:130px; 
    /*line-height: 100px;*/
 }
 
@@ -88,7 +88,7 @@ a {
 
 #header #header-menus {
    display: inline-block;
-   width: 800px;
+   width:750px; 
    line-height: 100px;
    font-family: Asap;
    /*min-width: 600px;
@@ -260,6 +260,14 @@ img.icons_img {
    padding: 10px 20px;
 }
 
+#body-left .paragraph table {
+   border-spacing: 50px;
+}
+
+#body-left .paragraph td {
+   padding: 20px !important;
+}
+
 #hometop {
    text-align: center;
 }
@@ -297,7 +305,12 @@ img.icons_img {
    padding: 20px;
 }
 
-#body table {
+.paragraph table {
+   border-spacing: 50px;
+}
+
+.paragraph td {
+   padding: 30px !important;
 }
 
 
@@ -586,6 +599,10 @@ img.notification_img {
    display: inline-block;
    vertical-align: top;
    width: 150px;
+}
+
+#home-main #home-thirdcolumn li {
+   margin: 0 0 5px 0;
 }
 
 #home-main #home-thirdcolumn .home-bottom {

@@ -422,7 +422,7 @@
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
-					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followeing</br></span></div>
+					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
               			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
@@ -778,15 +778,33 @@
 	      }
 
 	      function popLike(){
-			 var popup = document.getElementById('likePop');
-			 popup.classList.toggle('show');
+
+	        var popHatsoff = document.getElementById("hatsoffPop");
+			if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			}
+
+			var popFollow = document.getElementById("followPop");
+			if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			}
+
+			var popShared = document.getElementById("sharedPop");
+			if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			}
+
+			var popup = document.getElementById('likePop');
+			popup.style.visibility = "visible";
+			//popup.classList.toggle('show');
 	      }
 
-
+	      /*
 	      function popShare(){
 			 var popup = document.getElementById('sharePop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function shareFunction(c_type, c_id){
 			 console.log('uid on share:'+c_type+':'+c_id);
@@ -800,8 +818,24 @@
 	      }
 
 	      function popShared(){
+	      	 var popHatsoff = document.getElementById("hatsoffPop");
+			 if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			 }
+
+			 var popFollow = document.getElementById("followPop");
+			 if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('sharedPop');
-			 popup.classList.toggle('show');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function popThanks(){
@@ -821,10 +855,12 @@
 			 popup.classList.toggle('show');
 	      }
 
+	      /*
 	      function popHatsoff(){
 			 var popup = document.getElementById('hatsoffPop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
@@ -833,18 +869,36 @@
 	      }
 
 	      function popGavehatsoff(){
-			 var popup = document.getElementById('gavehatsoffPop');
-			 popup.classList.toggle('show');
+	      	 var popFollow = document.getElementById("followPop");
+			 if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			 }
+
+			 var popShared = document.getElementById("sharedPop");
+			 if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
+			 var popup = document.getElementById('hatsoffPop');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
+	      /*
 	      function popFollow(){
 			 var popup = document.getElementById('followPop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function followFunction(){
 			 console.log('follow!');
-			 popFollow();
+			 popFollowed();
 		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
 	      }
 
@@ -860,59 +914,25 @@
           }
 
 	      function popFollowed(){
-			 var popup = document.getElementById('followedPop');
-			 popup.classList.toggle('show');
+			var popHatsoff = document.getElementById("hatsoffPop");
+			 if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			 }
+
+			 var popShared = document.getElementById("sharedPop");
+			 if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
+			 var popup = document.getElementById('followPop');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
-
-          var p_id = 1
-    	  function changeContent(number, length){
-                    console.log('Click!'+number);
-                    if( p_id != number ){
-	                //socket.emit('change portfolio', {uid:{{user.id}}, p_id:number});
-	                socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
-                    }
-
-                    for (var i = 0; i < length; i++){
-		        $('#'+i).show().siblings('div').hide();
-		  }
-
-		  $('#'+number).show().siblings('div').hide();
-            p_id = number;
-
-            var h = document.getElementById('portfolio_hide');
-            var s = document.getElementById('portfolio_show');
-		    if (h.style.display == 'block'){
-		        h.style.display = 'none';
-		    }
-		    s.style.display = 'block';
-                    hide_portfolio(number);
-
-	      };
-
-	      function show_portfolio(number, length){
-            console.log('show more!');
-            for (var i = 0; i < length; i++){
-		        $('#portfolioComment_'+i).hide();
-		    }
-		    $('#portfolioComment_'+number).show();
-            var h = document.getElementById('portfolio_hide');
-            var s = document.getElementById('portfolio_show');
-		    if (s.style.display == 'block'){
-		        s.style.display = 'none';
-		    }
-		    h.style.display = 'block';
-	      };
-
-	      function hide_portfolio(number){
-            console.log('hide more!');
-		    $('#portfolioComment_'+number).hide();
-            var h = document.getElementById('portfolio_hide');
-            var s = document.getElementById('portfolio_show');
-		    if (h.style.display == 'block'){
-		        h.style.display = 'none';
-		    }
-		    s.style.display = 'block';
-	      };
 
           // For portfolio
           function submitPForm(number){

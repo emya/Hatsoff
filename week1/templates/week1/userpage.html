@@ -460,6 +460,7 @@
 
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
+
 		    popLike();
             if (c_type == 2){
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
@@ -472,8 +473,25 @@
 	      }
 
 	      function popLike(){
-			 var popup = document.getElementById('likePop');
-			 popup.classList.toggle('show');
+
+		    var popHatsoff = document.getElementById("hatsoffPop");
+			if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			}
+
+			var popFollow = document.getElementById("followPop");
+			if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			}
+
+			var popShared = document.getElementById("sharedPop");
+			if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			}
+
+			var popup = document.getElementById('likePop');
+			popup.style.visibility = "visible";
+			//popup.classList.toggle('show');
 	      }
 
 	      function popShare(){
@@ -483,6 +501,7 @@
 
 	      function shareFunction(c_type, c_id){
 			 console.log('uid on share:'+c_type+':'+c_id);
+
 			 popShared();
              if (c_type == 2){
 		         socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
@@ -493,8 +512,25 @@
 	      }
 
 	      function popShared(){
+	      	 var popHatsoff = document.getElementById("hatsoffPop");
+			 if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			 }
+
+			 var popFollow = document.getElementById("followPop");
+			 if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('sharedPop');
-			 popup.classList.toggle('show');
+			 console.log("popup shared!");
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function popThanks(){
@@ -514,20 +550,42 @@
 			 popup.classList.toggle('show');
 	      }
 
+          /*
 	      function popHatsoff(){
 			 var popup = document.getElementById('hatsoffPop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
+
+			 
 			 popGavehatsoff();
 			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 	      }
 
 	      function popGavehatsoff(){
+	      	 console.log("popup hatsoff");
+
+			 var popFollow = document.getElementById("followPop");
+			 if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			 }
+
+			 var popShared = document.getElementById("sharedPop");
+			 if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('hatsoffPop');
-			 popup.classList.toggle('show');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function hatsoffedFunction(){
@@ -535,13 +593,16 @@
 			 popGavehatsoff();
 		  }
 
+		  /*
 	      function popFollow(){
 			 var popup = document.getElementById('followPop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function followFunction(){
 			 console.log('follow!');
+
 			 popFollowed();
 		     socket.emit('give follow', {to_uid:{{t_user.id}}, uid:{{user.id}}});
 
@@ -561,8 +622,24 @@
 	      }
 
 	      function popFollowed(){
+	      	 var popHatsoff = document.getElementById("hatsoffPop");
+			 if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			 }
+
+			 var popShared = document.getElementById("sharedPop");
+			 if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('followPop');
-			 popup.classList.toggle('show');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function collaborateFunction(c_type, c_id){
@@ -573,77 +650,14 @@
 		    document.getElementById('status_message').value = 'Hello I\'m interested in Collaborating.';
           }
 
+          /*
           function popCollaborate(){
             var popup = document.getElementById('collaboratePop');
             popup.classList.toggle('show');
           }
+          */
 
-          var p_id = 1
-    	  function changeContent(number, length){
-                console.log('Click!'+number);
-	            //socket.emit('change portfolio', {uid:{{user.id}}, to_uid:{{t_user.id}}, p_id:number});
-                if( p_id != number ){
-	               socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
-                }
-
-                for (var i = 1; i <= length; i++){
-		           $('#'+i).show().siblings('div').hide();
-		        }
-			    $('#'+number).show().siblings('div').hide();
-	               p_id = number;
-
-	               var h = document.getElementById('portfolio_hide');
-	               var s = document.getElementById('portfolio_show');
-			    if (h.style.display == 'block'){
-			        h.style.display = 'none';
-			    }
-			    s.style.display = 'block';
-	            hide_portfolio(number);
-	      };
-
-	      function show_portfolio(number, length){
-                console.log('show more!');
-                for (var i = 1; i <= length; i++){
-		            $('#portfolioComment_'+i).hide();
-		        }
-			    $('#portfolioComment_'+number).show();
-	            var h = document.getElementById('portfolio_hide');
-	            var s = document.getElementById('portfolio_show');
-			    if (s.style.display == 'block'){
-			        s.style.display = 'none';
-			    }
-			    h.style.display = 'block';
-                    /***
-		    if ($('#portfolio_hide').style.display == 'block'){
-		        $('#portfolio_hide').style.display = 'none';
-		    }
-		    $('#portfolio_show').style.display = 'block';
-                    **/
-                    /***
-		    $('#portfolio_hide').show();
-		    $('#portfolio_show').hide();
-                    ***/
-	      };
-
-	      function hide_portfolio(number){
-            console.log('hide more!');
-		    $('#portfolioComment_'+number).hide();
-            var h = document.getElementById('portfolio_hide');
-            var s = document.getElementById('portfolio_show');
-		    if (h.style.display == 'block'){
-		        h.style.display = 'none';
-		    }
-		    s.style.display = 'block';
-                    /*** 
-		    $('#portfolioComment_'+number).hide();
-		    if ($('#portfolio_show').style.display == 'block'){
-		        $('#portfolio_show').style.display = 'none';
-                    }
-		    $('#portfolio_block').style.display = 'block';
-                    ***/
-	      };
-
-              // For portfolio
+          // For portfolio
 		  function submitShowcaseComment(number){
             console.log('form submit portfolio'+number);
             var post_val = $('#c_portfolio_'+number).val();

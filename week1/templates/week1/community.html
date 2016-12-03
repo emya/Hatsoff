@@ -270,10 +270,12 @@
           var users = [{% for u in users %} {{ u }} ,{% endfor %}];
           var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
+          /*
           function popShare(){
 	          var popup = document.getElementById('sharePop');
             popup.classList.toggle('show');
 	        }
+          */
 
           function shareFunction(uid, c_id){
             console.log('uid on share:'+uid+':'+c_id);
@@ -282,8 +284,29 @@
           }
 
           function popShared(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+              popHatsoff.style.visibility = "hidden";
+            }
+
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+              popLike.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
 	          var popup = document.getElementById('sharedPop');
-            popup.classList.toggle('show');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
 	        }
 
           function popShareSkill(){
@@ -309,8 +332,29 @@
           }
 
           function popHatsoff(){
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+              popShared.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+              popLike.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
 	          var popup = document.getElementById('hatsoffPop');
-            popup.classList.toggle('show');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
 	        }
 
           function thanksFunction(uid){
@@ -331,8 +375,29 @@
           }
 
           function popFollow(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+             popHatsoff.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+             popShared.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+             popLike.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
 	          var popup = document.getElementById('followPop');
-            popup.classList.toggle('show');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
 	        }
 
           function likeFunction(uid, c_id){
@@ -342,8 +407,29 @@
           }
 
           function popLike(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+              popHatsoff.style.visibility = "hidden";
+            }
+
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+              popShared.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
 	          var popup = document.getElementById('likePop');
-            popup.classList.toggle('show');
+            popup.style.visibility = "visible";
+            //popup.classList.toggle('show');
 	        }
 
 
@@ -354,8 +440,29 @@
           }
 
           function popCollaborate(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+              popHatsoff.style.visibility = "hidden";
+            }
+
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+              popShared.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+             popLike.style.visibility = "hidden";
+            }
+
             var popup = document.getElementById('collaboratePop');
-            popup.classList.toggle('show');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
           }
 
           function replyFunction(uid, c_id){

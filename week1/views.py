@@ -1327,6 +1327,7 @@ def community(request):
     allusers = list(User.objects.all())
 
     users = []
+    usernames = []
     userphoto = []
     for u in allusers:
         print "uid", u.id
@@ -1334,11 +1335,11 @@ def community(request):
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
             print "prof", prof, type(prof)
         except Profile.DoesNotExist:
-            prof = None
+            prof = "None"
 
-        if prof != None:
-            users.append(u.id)
-            userphoto.append(str(prof))
+        usernames.append([u.first_name, u.last_name])
+        users.append(u.id)
+        userphoto.append(str(prof))
 
     uid = request.user.id
     folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=1, status=0) | Q(user_one_id=uid, status=1))
@@ -1352,7 +1353,7 @@ def community(request):
     currentuser = User.objects.get(id=uid, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'userphoto':userphoto, 'users':users, 'folderusers':folderusers})
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'username':usernames, 'userphoto':userphoto, 'users':users, 'folderusers':folderusers})
     return render_to_response('week1/community.html', variables, )
 
 @login_required

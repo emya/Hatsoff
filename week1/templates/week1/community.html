@@ -35,7 +35,7 @@
             <!-- Post body -->
             <div class="form-group">
               <div class="col-md-9">
-                <textarea class="form-control" id="p" autocomplete="off" name="message" placeholder="Please enter your communtiy post here..." rows="3" style="width:680px;"></textarea>
+                <textarea class="form-control" id="p" autocomplete="off" name="message" placeholder="Enter your message to the community here..." rows="3" style="width:680px;"></textarea>
               </div>
             </div>
 
@@ -257,7 +257,8 @@
           socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
           /***to here***/
 
-          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var users = [{% for u in users %} "{{ u }}" ,{% endfor %}];
+          var names = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
           var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
           /*
@@ -423,11 +424,108 @@
 	        }
 
 
+          /*
           function collaborateFunction(uid, c_id){
             console.log('uid on like:'+uid+':'+c_id);
             popCollaborate();
             socket.emit('give collaborate', {to_uid:uid, uid:{{user.id}}, c_id:c_id, c_type:1});
           }
+          */
+
+          function collaborateFunction(uid, c_id){
+            console.log('uid on like:'+uid+':'+c_id);
+            //popCollaborate();
+            socket.emit('give collaborate', {to_uid:uid, uid:{{user.id}}, c_id:c_id, c_type:1});
+            $('#qnimate').addClass('popup-box-on');
+            var index = users.indexOf(uid);
+            /*
+            console.log("index:"+index);
+            console.log("uid  :"+uid+" "+typeof uid);
+            console.log("users:"+users);
+            console.log("name :"+names[index]);
+            */
+            document.getElementById('status_message').value = 'Hello I\'m interested in Collaborating.';
+            var elements = document.getElementsByClassName('popup-head-left pull-left');
+            elements[0].innerHTML = names[index][0]+'&nbsp'+names[index][1];
+            socket.emit('get message', {to_uid:uid})
+
+            var elems = document.getElementsByClassName('btn-footer');
+            elems[0].innerHTML = '<button class="btn btn-primary btn-lg pull-right" onclick="sendMessage('+uid+')">Send </button>';
+          }
+
+          function sendMessage(uid){
+            console.log('send message');
+            var post_val = $('#status_message').val();
+                    
+            if (post_val.length != 0){
+              console.log('if:'+post_val);
+              socket.emit('send message', {msg:post_val, to_uid:uid, uid:{{user.id}} });
+            }
+            $('#status_message').val('');
+            return false;
+          }
+
+          function getMessage(){
+            console.log('get message');
+        //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
+          }
+
+          socket.on('set message', function(data){
+            console.log('set message');
+            console.log(data['_id']);
+
+            if(data){
+              if(data['messages']){
+                for (var i=0; i < data['messages'].length; i++){
+                  if (data['messages'][i]['content']){
+                    var n  = users.indexOf(data['messages'][i]['uid'].toString());
+                    console.log("n:"+n);
+                    if(data['messages'][i]['uid'] == {{user.id}}){
+                      if (n != -1){
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+                      }else{
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+                      }
+                    }else{
+                      if ( n != -1){
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+                      }else{
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+                      }
+                    }
+                  }
+
+                }
+
+              }
+
+            }
+
+        });
+
+          socket.on('new message', function(data){
+            console.log('new message');
+
+            var n  = users.indexOf(data.uid.toString());
+            if(data.uid == {{user.id}}){
+              if (n != -1){
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+              }else{
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+              }
+
+            }else{
+              if (n != -1){
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+              }else{
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+              }
+
+            }
+
+      });
 
           function popCollaborate(){
             var popHatsoff = document.getElementById("hatsoffPop");
@@ -567,7 +665,7 @@
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
               //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
               var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>';
-              var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+              var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
               var skillls = "";
 
@@ -630,7 +728,7 @@
                         //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
                         var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
                         var skillls = "";
-                        var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
 
                         if (docs[i]['skillls']){
@@ -728,6 +826,31 @@
     });
     **/
     </script>
+</div>
+
+<div class="popup-box chat-popup" id="qnimate">
+        <div class="popup-head">
+        <div class="popup-head-left pull-left">
+          
+        </div>
+
+          <div class="popup-head-right pull-right">
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">x</button>
+          </div>
+          </div>
+        <div class="popup-messages">
+        
+          <div class="direct-chat-messages" id="chat_room">
+          
+          </div>
+      
+        </div>
+      <div class="popup-messages-footer">
+        <textarea id="status_message" placeholder="Type a message..." rows="20" cols="40" name="message"></textarea>
+        <div class="btn-footer">
+          <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
+        </div>
+      </div>
 </div>
 
 

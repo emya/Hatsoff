@@ -460,6 +460,7 @@
 
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
+
 		    popLike();
             if (c_type == 2){
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
@@ -472,8 +473,25 @@
 	      }
 
 	      function popLike(){
-			 var popup = document.getElementById('likePop');
-			 popup.classList.toggle('show');
+
+		    var popHatsoff = document.getElementById("hatsoffPop");
+			if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			}
+
+			var popFollow = document.getElementById("followPop");
+			if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			}
+
+			var popShared = document.getElementById("sharedPop");
+			if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			}
+
+			var popup = document.getElementById('likePop');
+			popup.style.visibility = "visible";
+			//popup.classList.toggle('show');
 	      }
 
 	      function popShare(){
@@ -483,6 +501,7 @@
 
 	      function shareFunction(c_type, c_id){
 			 console.log('uid on share:'+c_type+':'+c_id);
+
 			 popShared();
              if (c_type == 2){
 		         socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
@@ -493,8 +512,25 @@
 	      }
 
 	      function popShared(){
+	      	 var popHatsoff = document.getElementById("hatsoffPop");
+			 if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			 }
+
+			 var popFollow = document.getElementById("followPop");
+			 if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('sharedPop');
-			 popup.classList.toggle('show');
+			 console.log("popup shared!");
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function popThanks(){
@@ -514,20 +550,42 @@
 			 popup.classList.toggle('show');
 	      }
 
+          /*
 	      function popHatsoff(){
 			 var popup = document.getElementById('hatsoffPop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
+
+			 
 			 popGavehatsoff();
 			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 	      }
 
 	      function popGavehatsoff(){
+	      	 console.log("popup hatsoff");
+
+			 var popFollow = document.getElementById("followPop");
+			 if(popFollow != null){
+			 	popFollow.style.visibility = "hidden";
+			 }
+
+			 var popShared = document.getElementById("sharedPop");
+			 if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('hatsoffPop');
-			 popup.classList.toggle('show');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function hatsoffedFunction(){
@@ -535,13 +593,16 @@
 			 popGavehatsoff();
 		  }
 
+		  /*
 	      function popFollow(){
 			 var popup = document.getElementById('followPop');
 			 popup.classList.toggle('show');
 	      }
+	      */
 
 	      function followFunction(){
 			 console.log('follow!');
+
 			 popFollowed();
 		     socket.emit('give follow', {to_uid:{{t_user.id}}, uid:{{user.id}}});
 
@@ -561,8 +622,24 @@
 	      }
 
 	      function popFollowed(){
+	      	 var popHatsoff = document.getElementById("hatsoffPop");
+			 if(popHatsoff != null){
+			 	popHatsoff.style.visibility = "hidden";
+			 }
+
+			 var popShared = document.getElementById("sharedPop");
+			 if(popShared != null){
+			 	popShared.style.visibility = "hidden";
+			 }
+
+			 var popLike = document.getElementById("likePop");
+			 if(popLike != null){
+			 	popLike.style.visibility = "hidden";
+			 }
+
 			 var popup = document.getElementById('followPop');
-			 popup.classList.toggle('show');
+			 popup.style.visibility = "visible";
+			 //popup.classList.toggle('show');
 	      }
 
 	      function collaborateFunction(c_type, c_id){
@@ -573,77 +650,14 @@
 		    document.getElementById('status_message').value = 'Hello I\'m interested in Collaborating.';
           }
 
+          /*
           function popCollaborate(){
             var popup = document.getElementById('collaboratePop');
             popup.classList.toggle('show');
           }
+          */
 
-          var p_id = 1
-    	  function changeContent(number, length){
-                console.log('Click!'+number);
-	            //socket.emit('change portfolio', {uid:{{user.id}}, to_uid:{{t_user.id}}, p_id:number});
-                if( p_id != number ){
-	               socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
-                }
-
-                for (var i = 1; i <= length; i++){
-		           $('#'+i).show().siblings('div').hide();
-		        }
-			    $('#'+number).show().siblings('div').hide();
-	               p_id = number;
-
-	               var h = document.getElementById('portfolio_hide');
-	               var s = document.getElementById('portfolio_show');
-			    if (h.style.display == 'block'){
-			        h.style.display = 'none';
-			    }
-			    s.style.display = 'block';
-	            hide_portfolio(number);
-	      };
-
-	      function show_portfolio(number, length){
-                console.log('show more!');
-                for (var i = 1; i <= length; i++){
-		            $('#portfolioComment_'+i).hide();
-		        }
-			    $('#portfolioComment_'+number).show();
-	            var h = document.getElementById('portfolio_hide');
-	            var s = document.getElementById('portfolio_show');
-			    if (s.style.display == 'block'){
-			        s.style.display = 'none';
-			    }
-			    h.style.display = 'block';
-                    /***
-		    if ($('#portfolio_hide').style.display == 'block'){
-		        $('#portfolio_hide').style.display = 'none';
-		    }
-		    $('#portfolio_show').style.display = 'block';
-                    **/
-                    /***
-		    $('#portfolio_hide').show();
-		    $('#portfolio_show').hide();
-                    ***/
-	      };
-
-	      function hide_portfolio(number){
-            console.log('hide more!');
-		    $('#portfolioComment_'+number).hide();
-            var h = document.getElementById('portfolio_hide');
-            var s = document.getElementById('portfolio_show');
-		    if (h.style.display == 'block'){
-		        h.style.display = 'none';
-		    }
-		    s.style.display = 'block';
-                    /*** 
-		    $('#portfolioComment_'+number).hide();
-		    if ($('#portfolio_show').style.display == 'block'){
-		        $('#portfolio_show').style.display = 'none';
-                    }
-		    $('#portfolio_block').style.display = 'block';
-                    ***/
-	      };
-
-              // For portfolio
+          // For portfolio
 		  function submitShowcaseComment(number){
             console.log('form submit portfolio'+number);
             var post_val = $('#c_portfolio_'+number).val();
@@ -1045,6 +1059,13 @@
 						  var n  = users.indexOf(uid);
                           var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
                           var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                          var created = sharedocs[i_share]['created'];
+			              var colonIndex = created.indexOf(":");
+                          var date = created.substring(0, colonIndex-3);
+                          var datels = date.split('-');
+                          var mm = datels[1];
+                          var dd = datels[2];
+                          var yy = datels[0];
 
                           var tag = (content['tag']) ? content['tag'] : 0;
 						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -1062,7 +1083,7 @@
 	                          }
                           }
 			                          
-						  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+						  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
 						  	//<div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 						  if (content['replys']) {
 	                           var rdocs = content['replys'];
@@ -1093,6 +1114,13 @@
 						  var n  = users.indexOf(uid);
                           var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
                           var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                          var created = communitydocs[i_community]['created'];
+			              var colonIndex = created.indexOf(":");
+                          var date = created.substring(0, colonIndex-3);
+                          var datels = date.split('-');
+                          var mm = datels[1];
+                          var dd = datels[2];
+                          var yy = datels[0];
 
                           var tag = (content['tag']) ? content['tag'] : 0;
 						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -1111,7 +1139,7 @@
                           }
 
 
-						  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+						  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
 						  //$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 
 						  if (content['replys']) {
@@ -1145,6 +1173,13 @@
 						var n  = users.indexOf(uid);
                         var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
                         var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var created = sharedocs[i_share]['created'];
+			            var colonIndex = created.indexOf(":");
+                        var date = created.substring(0, colonIndex-3);
+                        var datels = date.split('-');
+                        var mm = datels[1];
+                        var dd = datels[2];
+                        var yy = datels[0];
 
                         var tag = (content['tag']) ? content['tag'] : 0;
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -1162,7 +1197,7 @@
 	                        }
                         }
 			                          
-					    $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+					    $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
 
 					    if (content['replys']) {
 	                           var rdocs = content['replys'];
@@ -1195,6 +1230,13 @@
 						var n  = users.indexOf(uid);
                         var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
                         var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var created = communitydocs[i_community]['created'];
+			            var colonIndex = created.indexOf(":");
+                        var date = created.substring(0, colonIndex-3);
+                        var datels = date.split('-');
+                        var mm = datels[1];
+                        var dd = datels[2];
+                        var yy = datels[0];
 
                         var tag = (content['tag']) ? content['tag'] : 0;
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -1212,7 +1254,7 @@
 	                        }
                         }
 
-						$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+						$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">'+'{{t_user.first_name}}'+'&nbsp'+'{{t_user.last_name}}'+' posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
 
 						if (content['replys']) {
 	                           var rdocs = content['replys'];

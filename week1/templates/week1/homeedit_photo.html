@@ -6,14 +6,26 @@
 <div id="home-edit">
 
 <form action="" class="" method="POST" class="step-form" enctype="multipart/form-data">{% csrf_token %}
-        <br>{{form.photo.label_tag}}</br> <!--{{form.photo}}<br/-->
+        <br>{{form.photo.label_tag}}</br>
         <input id="id_photo" type="file" name="photo"><br/>
-        <img id="blah" src="#" alt="your image" class="maincontent"/><br/>
-         <div class="submit-wrapper">
+        <div class="image-container">
+            <img id="blah" src="#" alt="your image" class="maincontent" />
+        </div>
+
+        <!-- new upload feature
+        <div class="show-image">
+          <img src="#" id="blah" alt="your image" class="maincontent" />
+          <input class="the-buttons" id="id_photo" type="file" name="photo" />
+          <input class="the-buttons" type="button" value=" Upload photo " />
+        </div>
+        -->
+
+        <br/>
+        <div class="submit-wrapper">
 			<input type="submit" value="Update" class="step-submit" />
 			<input type="hidden" name="next" value="home.html">
 	        <a href="{% url 'week1:home' %}">Back to Home</a>
-         </div>
+        </div>
 </form>
 
 </div>

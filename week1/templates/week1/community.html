@@ -4,29 +4,19 @@
 {% load staticfiles %}
 
 
-<!--div id="home-friends">
+<div id="body-home">
 
-<h4>Folder</h4>
-<ul style="list-style-type:none">
-{% if folderusers %}
-   {% for u in folderusers %}
-        {% if u.photo %}
-	   <li><img src="{{ u.photo.url }}" width="50px"></li>
-        {% else %}
-	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
-        {% endif %}
-   {% endfor %}
-{% endif %}
-</ul>
-</div-->
-
-<div id="home-main">
+<div id="home-friends">
+</div>
 
 <script type="text/javascript">
   $(document).ready(function() {
     $("#myTags").tagit();
   });
 </script> 
+
+<!--div class="community-container"-->
+<div id="home-main">
 
 <div class="community-container">
   <div class="row">

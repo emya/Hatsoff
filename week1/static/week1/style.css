@@ -41,6 +41,7 @@ a {
    width: 100%;
    background-color: #ac4f7d;
    border-bottom: 3px solid #4a86e8;
+   z-index: 3;
 }
 
 #header {
@@ -220,6 +221,9 @@ img.icons_img {
 
 #footer {
    /*margin-bottom: -50px;*/
+   position: relative;
+   bottom: 0;
+   left: 0;
    height: 200px;
    line-height: 150px;
    width: 1100px;
@@ -481,15 +485,23 @@ to here
 
 #home-friends {
    display: inline-block;
-   width: 200px;
+   width: 150px;
    padding: 20px;
    vertical-align: top;
+   float: left;
    text-align: center;
+   background-color: #C0C0C0;
+   min-height: 100%;
+   position: fixed;
+   top: 0;
+   display: block;
+   z-index: -1;
 }
 
 #home-main {
    display: inline-block;
-   width: 1100px;
+   float: right;
+   width: 950px;
    padding: 20px;
 }
 
@@ -1690,12 +1702,13 @@ input[type="file"]{
 .custom-input-file:hover .uploadPhoto { display: block; }
 
 .community-container {
-    width: 800px;
+    width: 700px;
     float: left;
 }
 
 .suggested {
-    width: 250px;
+    width: 150px;
+    padding-left: 20px;
     float: right;
 }
 

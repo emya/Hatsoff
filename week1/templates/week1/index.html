@@ -100,11 +100,11 @@
                         <ul class="nav nav-tabs">
                             {% if p_type %}
                                 {% if p_type == 0 %}
-				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
-				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                    				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                    				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
                                 {% else %}
-				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li>
-				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                    				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                    				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
                                 {% endif %}
                             {% else %}
                             <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
@@ -143,11 +143,11 @@
 				    </div>
 
 				    <div class="row">
-					<a href="{% url 'week1:reset' %}">Forgot password?</a>
-					<div class="login-wrapper">
-					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
-					</div>
-					<input type="hidden" name="next" value="/home/" />
+    					<a href="{% url 'week1:reset' %}">Forgot password?</a>
+    					<div class="login-wrapper">
+    					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
+    					</div>
+    					<input type="hidden" name="next" value="/home/" />
 				    </div>
                                 </form>
                             </div>

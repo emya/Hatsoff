@@ -453,6 +453,10 @@
             elems[0].innerHTML = '<button class="btn btn-primary btn-lg pull-right" onclick="sendMessage('+uid+')">Send </button>';
           }
 
+          function closeChat(){
+            $('#qnimate').removeClass('popup-box-on');
+          }
+
           function sendMessage(uid){
             console.log('send message');
             var post_val = $('#status_message').val();
@@ -513,7 +517,6 @@
                 $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
               }else{
                 $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
-
               }
 
             }else{
@@ -835,7 +838,7 @@
         </div>
 
           <div class="popup-head-right pull-right">
-            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">x</button>
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button" onclick="closeChat()">x</button>
           </div>
           </div>
         <div class="popup-messages">

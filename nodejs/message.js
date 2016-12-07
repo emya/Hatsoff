@@ -292,8 +292,12 @@ io.on('connection', function(socket){
         query2.sort('-created').limit(30).exec(function(err2, sharedocs){
           if (err2) throw err2;
 
-          console.log('share history'+sharedocs);
-          socket.emit('update community post', {sharedocs:sharedocs, likedocs:likedocs, docs:docs});
+          var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+          query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
+            if (err3) throw err3;
+
+            socket.emit('update community post', {sharedocs:sharedocs, likedocs:likedocs, hatsoffdocs:hatsoffdocs, docs:docs});
+          });
         });
       });
     }); 

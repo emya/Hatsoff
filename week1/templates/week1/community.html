@@ -706,8 +706,10 @@
               var docs = data.docs;
               var sharedocs = data.sharedocs;
               var likedocs = data.likedocs;
+              var hatsoffdocs = data.hatsoffdocs;
               var sharels = [];
               var likels = [];
+              var hatsoffls = [];
 
               for (var i=0; i < sharedocs.length; i++){
                 sharels.push(sharedocs[i]['content_id']);
@@ -715,9 +717,13 @@
               for (var i=0; i < likedocs.length; i++){
                 likels.push(likedocs[i]['content_id']);
               }
+              for (var i=0; i < hatsoffdocs.length; i++){
+                hatsoffls.push(hatsoffdocs[i]['content_id']);
+              }
 
               console.log("sharels:"+sharels);
               console.log("likels :"+likels);
+              console.log("hatsoffls :"+hatsoffls);
 
               for(var i=0; i < docs.length; i++){
                  if (docs[i]['user'] && docs[i]['user']['uid']) {
@@ -735,7 +741,6 @@
 			                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
                         var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-                        var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
                         //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
                         var thanks = '';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
@@ -753,6 +758,14 @@
                           share = '<div class="popupShare">Shared &nbsp</div>';
                         }else{
                           share = '<div class="popupShare" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
+                        }
+
+                        var hatsoff = '';
+                        if (hatsoffls.indexOf(c_id) != -1){
+                          hatsoff = '<div class="popupHatsoff"><img src="{% static 'images/grey_hat.png'%}"></div>';
+                        }else{
+                          hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
+
                         }
                         //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
                         var shareskill = '';

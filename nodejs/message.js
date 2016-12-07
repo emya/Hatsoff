@@ -274,11 +274,31 @@ io.on('connection', function(socket){
   socket.on('join community', function(data){
     console.log('join community');
     var query = CommunityPost.find({});
+    /*
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       console.log('join community');
       socket.emit('update community post', docs);
     }); 
+    */
+
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+      query1.sort('-created').limit(30).exec(function(err1, likedocs){
+        if (err1) throw err1;
+
+        var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+        query2.sort('-created').limit(30).exec(function(err2, sharedocs){
+          if (err2) throw err2;
+
+          console.log('share history'+sharedocs);
+          socket.emit('update community post', {sharedocs:sharedocs, likedocs:likedocs, docs:docs});
+        });
+      });
+    }); 
+
+   
 
 
     db.serialize(function() {

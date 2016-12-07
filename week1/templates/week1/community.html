@@ -702,7 +702,23 @@
               }
         	  });
                 
-        	  socket.on('update community post', function(docs){
+        	  socket.on('update community post', function(data){
+              var docs = data.docs;
+              var sharedocs = data.sharedocs;
+              var likedocs = data.likedocs;
+              var sharels = [];
+              var likels = [];
+
+              for (var i=0; i < sharedocs.length; i++){
+                sharels.push(sharedocs[i]['content_id']);
+              }
+              for (var i=0; i < likedocs.length; i++){
+                likels.push(likedocs[i]['content_id']);
+              }
+
+              console.log("sharels:"+sharels);
+              console.log("likels :"+likels);
+
               for(var i=0; i < docs.length; i++){
                  if (docs[i]['user'] && docs[i]['user']['uid']) {
 			                  var uid = docs[i]['user']['uid'];
@@ -723,11 +739,24 @@
                         //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
                         var thanks = '';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
-                        var like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+
+                        console.log("c_id:"+c_id);
+                        var like = '';
+                        if (likels.indexOf(c_id) != -1){
+                          like = '<div class="popupLike">Liked &nbsp</div>';
+                        }else{
+                          like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+                        }
+
+                        var share = '';
+                        if (sharels.indexOf(c_id) != -1){
+                          share = '<div class="popupShare">Shared &nbsp</div>';
+                        }else{
+                          share = '<div class="popupShare" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
+                        }
                         //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
                         var shareskill = '';
                         var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
-                        var share = '<div class="popupShare" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
                         //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
                         var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
                         var skillls = "";

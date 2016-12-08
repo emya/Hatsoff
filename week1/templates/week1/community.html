@@ -272,6 +272,8 @@
             console.log('uid on share:'+uid+':'+c_id);
             popShared();
 	          socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+            var share = document.getElementById("share_"+c_id);
+            share.innerHTML = "Shared &nbsp";
           }
 
           function popShared(){
@@ -395,6 +397,8 @@
             console.log('uid on like:'+uid+':'+c_id);
             popLike();
 	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+            var like = document.getElementById("like_"+c_id);
+            like.innerHTML = "Liked &nbsp";
           }
 
           function popLike(){
@@ -748,16 +752,16 @@
                         console.log("c_id:"+c_id);
                         var like = '';
                         if (likels.indexOf(c_id) != -1){
-                          like = '<div class="popupLike">Liked &nbsp</div>';
+                          like = '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
                         }else{
-                          like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+                          like = '<div class="popupLike" id="like_'+c_id+'" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
                         }
 
                         var share = '';
                         if (sharels.indexOf(c_id) != -1){
-                          share = '<div class="popupShare">Shared &nbsp</div>';
+                          share = '<div class="popupShare" id="share_'+c_id+'">Shared &nbsp</div>';
                         }else{
-                          share = '<div class="popupShare" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
+                          share = '<div class="popupShare" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
                         }
 
                         var hatsoff = '';

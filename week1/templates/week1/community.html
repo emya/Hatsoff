@@ -322,6 +322,8 @@
             console.log('uid on hatsoff:'+uid);
             popHatsoff();
 	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}, content_type:1, content_id:c_id});
+            var hatsoff = document.getElementById("hatsoff_"+c_id);
+            hatsoff.innerHTML = '<img src="{% static 'images/hat.png'%}">';
           }
 
           function popHatsoff(){
@@ -766,9 +768,9 @@
 
                         var hatsoff = '';
                         if (hatsoffls.indexOf(c_id) != -1){
-                          hatsoff = '<div class="popupHatsoff"><img src="{% static 'images/grey_hat.png'%}"></div>';
+                          hatsoff = '<div class="popupHatsoff" id="hatsoff_'+c_id+'"><img src="{% static 'images/hat.png'%}"></div>';
                         }else{
-                          hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
+                          hatsoff = '<div class="popupHatsoff" id="hatsoff_'+c_id+'" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/grey_hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
 
                         }
                         //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';

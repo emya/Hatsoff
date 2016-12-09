@@ -55,6 +55,8 @@ var communitySchema = mongoose.Schema({
   replys: [replySchema],
   skillls: [String],
   tag: Number,//1: Yes, -1: No
+  sharedBy: Number,
+  content_id: String,
   created: {type: Date, default:Date.now}
 });
 
@@ -1719,6 +1721,25 @@ io.on('connection', function(socket){
         console.log('saved notification:');
       }
     });
+
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+         var newPost = new CommunityPost({content:post.content, user:{uid:post.user.uid, first_name:post.user.first_name, last_name:post.user.last_name}, tag:post.tag, skillls:post.skillls, sharedBy:socket.uid, content_id:data.c_id});
+         newPost.save(function(error, newpost){
+            if (error) {
+              console.log(error);
+            } else{
+              console.log('saved:'+newpost);
+              //io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+            }
+         });
+      }
+    });
+
+   
+
   });
 
 

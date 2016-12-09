@@ -3,25 +3,9 @@
 {% block content %}
 {% load staticfiles %}
 
-<div id="body-home">
-
-<div id="home-friends">
-<!--h4>Folder</h4>
-<ul style="list-style-type:none">
-{% if folderusers %}
-   {% for u in folderusers %}
-        {% if u.photo %}
-	   <li><img src="{{ u.photo.url }}" width="50px"></li>
-        {% else %}
-	   <li><img src="{% static 'images/profileimage.png'%}" width="50px"></li>
-        {% endif %}
-   {% endfor %}
-{% endif %}
-</ul-->
-</div>
+<!--div id="body-home"-->
 
 <div id="home-main">
-
     
     <div id="home-firstcolumn">
       
@@ -413,7 +397,7 @@
 	                        <form class="form-horizontal" action="">
 		                        <div class="form-group">
 			                        <div class="col-md-9">
-			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
@@ -478,7 +462,7 @@
 	                        <form class="form-horizontal" action="">
 		                        <div class="form-group">
 			                        <div class="col-md-9">
-			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
@@ -633,7 +617,7 @@
 	            <form class="form-horizontal" action="">
 	                <div class="form-group">
 	                    <div class="col-md-9">
-	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
 	                    </div>
 	                </div>
 	                <div class="form-group">
@@ -1118,8 +1102,6 @@
 		        var thanks = '';
 				var follow = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>';
 
-                console.log('update share length:'+len_share);
-
                 while (i_share < len_share || i_community < len_community){
                     if (i_share < len_share && i_community < len_community){
                        
@@ -1142,7 +1124,6 @@
                           var mm = datels[1];
                           var dd = datels[2];
                           var yy = datels[0];
-                          console.log("t-share:"+t_share);
 
 						  var n  = users.indexOf(uid);
                           var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
@@ -1168,7 +1149,6 @@
 						  	//<div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
 						  if (content['replys']) {
 	                           var rdocs = content['replys'];
-	                           console.log('replys');
 	                           for(var j=0; j < rdocs.length; j++){
 	                              if (rdocs[j]['user']['uid']){
 	                      			var ruid = rdocs[j]['user']['uid']

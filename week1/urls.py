@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^profile/(?P<uid>\d+)/$', views.get_profile, name='get_profile'),
     url(r'^community/$', views.community, name='community'),
     url(r'^community/post/$', views.community_post, name='community_post'),
+    url(r'^community/members/$', views.community_members, name='community_members'),
     url(r'^community/needs/you/$', views.community_needyou, name='community_needyou'),
     url(r'^collaborators/you/need/$', views.collaborators_you_need, name='collaborators_you_need'),
     url(r'^collaborators/need/you/$', views.collaborators_need_you, name='collaborators_need_you'),

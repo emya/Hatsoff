@@ -55,6 +55,8 @@ var communitySchema = mongoose.Schema({
   replys: [replySchema],
   skillls: [String],
   tag: Number,//1: Yes, -1: No
+  sharedBy: Number,
+  content_id: String,
   created: {type: Date, default:Date.now}
 });
 
@@ -271,14 +273,65 @@ io.on('connection', function(socket){
      updatechatUids();
   });
 
+  socket.on('at community members', function(data){
+    CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+      if(!result){
+        console.log("no results");
+      }else{
+        console.log(result);
+        console.log(typeof result);
+        var friends = result.friends;
+        var tuplestr = "(";
+        for (var i = 0; i < friends.length; i++){
+          tuplestr += "?,";
+        }
+        tuplestr = tuplestr.substring(0, tuplestr.length - 1);
+        tuplestr += ")";
+
+        var liststr = "("+friends.join(",")+")";
+        console.log(friends.length);
+        console.log(liststr);
+        db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM auth_user, week1_profile WHERE week1_profile.user_id==auth_user.id AND week1_profile.user_id in "+tuplestr, friends, function(err, rows){
+          //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
+          socket.emit('get community members', rows);
+          console.log("collaborators"+rows);
+        });
+      }
+    });
+  });
+
   socket.on('join community', function(data){
     console.log('join community');
     var query = CommunityPost.find({});
+    /*
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       console.log('join community');
       socket.emit('update community post', docs);
     }); 
+    */
+
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+      query1.sort('-created').limit(30).exec(function(err1, likedocs){
+        if (err1) throw err1;
+
+        var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+        query2.sort('-created').limit(30).exec(function(err2, sharedocs){
+          if (err2) throw err2;
+
+          var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+          query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
+            if (err3) throw err3;
+
+            socket.emit('update community post', {sharedocs:sharedocs, likedocs:likedocs, hatsoffdocs:hatsoffdocs, docs:docs});
+          });
+        });
+      });
+    }); 
+
+   
 
 
     db.serialize(function() {
@@ -1695,6 +1748,25 @@ io.on('connection', function(socket){
         console.log('saved notification:');
       }
     });
+
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+         var newPost = new CommunityPost({content:post.content, user:{uid:post.user.uid, first_name:post.user.first_name, last_name:post.user.last_name}, tag:post.tag, skillls:post.skillls, sharedBy:socket.uid, content_id:data.c_id});
+         newPost.save(function(error, newpost){
+            if (error) {
+              console.log(error);
+            } else{
+              console.log('saved:'+newpost);
+              //io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+            }
+         });
+      }
+    });
+
+   
+
   });
 
 

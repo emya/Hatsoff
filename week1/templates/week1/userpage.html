@@ -4,9 +4,6 @@
 {% load staticfiles %}
 
 
-<div id="home-friends">
-</div>
-
 <div id="home-main">
     
     <div id="home-firstcolumn">
@@ -90,7 +87,8 @@
 	{% endif %}
         </div>
 	<div class="home-step-out">
-            <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}, {{target_profile.profession}}</h3>
+            <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}</h3>
+            <h4> {{target_profile.profession}}</h4>
             <p>{{target_profile.describe}}</p>
         </div>
     </div>
@@ -186,7 +184,7 @@
 	                        <form class="form-horizontal" action="">
 		                        <div class="form-group">
 			                        <div class="col-md-9">
-			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
@@ -251,7 +249,7 @@
 	                        <form class="form-horizontal" action="">
 		                        <div class="form-group">
 			                        <div class="col-md-9">
-			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
 			                        </div>
 			                    </div>
 			                    <div class="form-group">
@@ -396,7 +394,7 @@
             <form class="form-horizontal" action="">
                 <div class="form-group">
                     <div class="col-md-9">
-                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea>
+                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
                     </div>
                 </div>
                 <div class="form-group">

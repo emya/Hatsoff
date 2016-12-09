@@ -1,4 +1,4 @@
-a {
+#home-main a {
    text-decoration: none;
    color: black;
 }
@@ -486,16 +486,37 @@ to here
 #home-friends {
    display: inline-block;
    width: 150px;
-   padding: 20px;
    vertical-align: top;
    float: left;
-   text-align: center;
    background-color: #C0C0C0;
+   color: white;
    min-height: 100%;
    position: fixed;
    top: 0;
    display: block;
-   z-index: -1;
+}
+
+#left-logo{
+   height: 103px;
+   background-color: #ac4f7d;
+   border-bottom: 3px solid #4a86e8;
+}
+
+#selection{
+   padding:20px;
+   margin-top: 20px;
+}
+
+#selection ul {
+   padding-left: 0px;
+}
+
+#selection li {
+   margin: 0 0 25px 0;
+}
+
+#selection a {
+   color: white;
 }
 
 #home-main {
@@ -523,7 +544,7 @@ to here
 
 #home-main-center {
    width: 700px;
-   margin: 10px 160px;
+   margin: 50px 160px;
    text-align: center;
 }
 

@@ -77,6 +77,25 @@
 </div>
 
 <div id="body">
+<div id="home-friends">
+
+    <div id="left-logo">
+    	<a href="{% url 'week1:index' %}">
+        	<img src="{% static 'images/matchHat.png'%}" width="150px" height="100px">
+        </a>
+    </div>
+
+    <div id="selection">
+		<ul style="list-style-type:none">
+		    <li><a href="{% url 'week1:community_members' %}">COMMUNITY MEMBERS</a></li>
+		    <li>PROJECTS</li>
+		    <li>Projects you took</li>
+		    <li><a href="{% url 'week1:community_needyou' %}" >Suggested projects</a></li>
+		    <li><a href="{% url 'week1:collaborators_need_you' %}">Collaborators who may need you</a></li>
+		    <li><a href="{% url 'week1:collaborators_you_need' %}">Collaborators you may need</a></li>
+		</ul>
+	</div>
+</div>
 {% block content %}
 {% endblock %}
 </div>
@@ -95,3 +114,4 @@
 </div-->
 </body>
 </html>
+

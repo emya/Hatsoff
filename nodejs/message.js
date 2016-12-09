@@ -273,6 +273,33 @@ io.on('connection', function(socket){
      updatechatUids();
   });
 
+  socket.on('at community members', function(data){
+    CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+      if(!result){
+        console.log("no results");
+      }else{
+        console.log(result);
+        console.log(typeof result);
+        var friends = result.friends;
+        var tuplestr = "(";
+        for (var i = 0; i < friends.length; i++){
+          tuplestr += "?,";
+        }
+        tuplestr = tuplestr.substring(0, tuplestr.length - 1);
+        tuplestr += ")";
+
+        var liststr = "("+friends.join(",")+")";
+        console.log(friends.length);
+        console.log(liststr);
+        db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM auth_user, week1_profile WHERE week1_profile.user_id==auth_user.id AND week1_profile.user_id in "+tuplestr, friends, function(err, rows){
+          //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
+          socket.emit('get community members', rows);
+          console.log("collaborators"+rows);
+        });
+      }
+    });
+  });
+
   socket.on('join community', function(data){
     console.log('join community');
     var query = CommunityPost.find({});

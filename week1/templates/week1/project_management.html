@@ -6,7 +6,6 @@
 
 <div id="home-main">
 
-<h4>Collaborators you may need</h4>
   <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
 
       <h3>{{upcoming.title}}</h3>
@@ -25,69 +24,23 @@
       {% if upcoming %}
       <div class="description-wrapper">
         <ul>
-          <li>Description of your upcoming work:{{upcoming.describe}}</li>
+          <li>Description of the project:{{upcoming.describe}}</li>
           <li>Your role:{{upcoming.role}}</li>
           <li>Status:{{upcoming.status}}</li>
           <li>Comment:{{upcoming.comment}}</li>
         </ul>
 
         <ul>
-          <h4 align="center">Looking for</h4>
-          <li>Collaborators:{{upcoming.collaborators}}</li>
-          <li>Skills:
-             {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}  
-             {{ upcoming.collaborator_skill1 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill2 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill3 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill4 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill5 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill6 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill7 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill8 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill9 }}
-             {% endif %}
-             {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}  
-             &nbsp{{ upcoming.collaborator_skill10 }}
-             {% endif %}
-          </li>
-          <li>Preferred city location of collaborator:{{upcoming.preferred_city}}</li>
           <li>Start date:{{upcoming.targetstartdate}}</li>
           <li>End date:{{upcoming.targetfinishdate}}</li>
-          <li>How often to work with collaborator:{{upcoming.often}}</li>
-          <li>How to give back to collaborator:
-          {% if upcoming.give_back == 1 %}
-          Paid compensation
-          {% endif %}
-
-          {% if upcoming.give_back == 2 %}
-          Exchange  of skills/services
-          {% endif %}
-
-          {% if upcoming.give_back == 3 %}
-          Negotiable
-          {% endif %}
-          </li>
-          <li>Funding:{{upcoming.fund}}</li>
-          <li>Comment:{{upcoming.comment_help}}</li>
         </ul>
+
       </div>
       {% endif %}
+
+      <h4>Project owner</h4>
+      <h4>Collaborators</h4>
+      <h4>Link to document</h4>
 
   </div>
 </div>

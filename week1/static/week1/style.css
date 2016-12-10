@@ -1,3 +1,9 @@
+ul{
+   padding:10px;
+   list-style-type:none;
+   text-align:left;
+}
+
 #home-main a {
    text-decoration: none;
    color: black;

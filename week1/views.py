@@ -299,6 +299,27 @@ def home(request):
 
     return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'folderusers':folderusers, 'users':users, 'userphoto':userphoto, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
 
+@login_required
+def project_management(request):
+    media_url = settings.MEDIA_URL
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    uid = request.user.id
+    query = request.GET.get('search_query', None)
+    
+    if query != None:
+        print "query", query
+        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=uid, username=request.user.username)
+
+    try:
+        upcomingwork = UpcomingWork.objects.get(user=currentuser, number=1)
+    except UpcomingWork.DoesNotExist:
+        upcomingwork = None
+
+    return render_to_response('week1/project_management.html', {'user':currentuser, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
+
+
 def signup_success(request):
     return render_to_response('week1/success_signup.html')
 

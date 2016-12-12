@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^community/needs/you/$', views.community_needyou, name='community_needyou'),
     url(r'^collaborators/you/need/$', views.collaborators_you_need, name='collaborators_you_need'),
     url(r'^collaborators/need/you/$', views.collaborators_need_you, name='collaborators_need_you'),
+    url(r'^project/management/$', views.project_management, name='project_management'),
     url(r'^notification/$', views.notification, name='notification'),
     url(r'^edit/personalinfomation/$', views.home_edit_personalinfo, name='edit_personalinfo'),
     url(r'^edit/funfact/$', views.home_edit_funfact, name='edit_funfact'),

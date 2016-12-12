@@ -9,6 +9,7 @@
 
      <div id="step-right">
         <h3>Update your URL</h3>
+         <p>(Make sure your URL starts with http:// or https:// as appropriate.)</p>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
             <br>{{form.weburl.label_tag}}</br> {{form.weburl}}<br/>
 	    <div class="submit-wrapper">

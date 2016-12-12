@@ -1,3 +1,9 @@
+ul{
+   padding:10px;
+   list-style-type:none;
+   text-align:left;
+}
+
 #home-main a {
    text-decoration: none;
    color: black;
@@ -1733,10 +1739,19 @@ input[type="file"]{
     float: right;
 }
 
+.well{
+    /*
+    background-image: linear-gradient(to bottom, white 0, white 100%);
+    */
+}
+
 .well-sm {
     width: 700px;
-    background-color: #d9ead3;
-    border-color: #d9ead3;
+    background-image: linear-gradient(to bottom, #F5F5F5 0, #F5F5F5 100%);
+    /*
+    background-color: #e8e8e8 !important;
+    */
+    border-color: #F5F5F5;
 }
 
 .well-ss {
@@ -1749,12 +1764,16 @@ input[type="file"]{
 
 .well-smm {
     width: 620px;
+    background-image: linear-gradient(to bottom, #F5F5F5 0, #F5F5F5 100%);
 }
 
 .well-lg {
     padding: 24px;
-    background-color: #d9ead3;
-    border-color: #d9ead3;
+    /*
+    background-color: #e8e8e8;
+    */
+    background-image: linear-gradient(to bottom, white 0, white 100%);
+    border-color: #e8e8e8;
     border-radius: 6px;
 }
 

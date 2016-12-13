@@ -37,7 +37,7 @@
             tagLimit          : 10,   // Max number of tags allowed (null for unlimited).
 
             // Used for autocomplete, unless you override `autocomplete.source`.
-            availableTags     : { "Advertising" , "Advertisement management", "Archery", "Acoustic"
+            availableTags     : [ "Advertising" , "Advertisement management", "Archery", "Acoustic"
 , "Animation", "Ad Targeting", "Adobe Premiere", "Adobe Photoshop"
 , "Aikido", "Administration", "Abstract Painting", "Accounting"
 , "Audio Transcription", "Account Resolution", "Accounting Policy", "Art Collage"
@@ -220,7 +220,7 @@
 , "Quantitative Analysis", "Quantitative Analyses", "Quantitative Modeling", "Quantative Risk"
 , "Quality Patient Care", "Quality Of Care", "Quality Control", "Quantification"
 , "Quantitative Risk Analysis", "Quantitative Finance", "Quantitative Data", "Quantum Theory"
-, ""Quality, Health, Safety, and Environment"", "Quality Inspection", "Quality Investigations", "Quality Assurance"
+, "Quality, Health, Safety, and Environment", "Quality Inspection", "Quality Investigations", "Quality Assurance"
 , "Quality System", "Quality Improvement", "Quantitative Research", "Research"
 , "Radiation", "Real Estate", "Real Estate Investor", "Recording"
 , "Refinancing", "Relationship Development", "Research Computing", "Risk Analysis"
@@ -284,7 +284,7 @@
 , "YouTube Content Creation", "YouTube Creator Management", "Yoga", "Yoga Instruction"
 , "Yatching", "Youth Advocacy", "Youth Activism", "Youth Outreach"
 , "Youth Leadership Training", "Youth Programming", "360 Audio Recording", "Zumba"
-},
+],
 
             // Use to override or add any options to the autocomplete widget.
             //

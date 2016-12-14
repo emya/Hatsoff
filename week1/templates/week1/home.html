@@ -355,7 +355,13 @@
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
-						    <img src="{{ showcase.image.url }}" class="maincontent">
+							{% if showcase.image %}
+								{% if '.pdf' in showcase.image.url %}
+							    <embed src="{{ showcase.image.url }}" width="300px" height="450px" />
+							    {% else %}
+							    <img src="{{ showcase.image.url }}" class="maincontent">
+							    {% endif %}
+							{% endif %}
 						{% endif %}
 
 						{% if showcase.video %}
@@ -423,13 +429,18 @@
 
                     <br>
  					    {% if showcase.image or showcase.youtube %}
-						{% if showcase.image %}
-						    <img src="{{ showcase.image.url }}" class="maincontent">
-						{% endif %}
+							{% if showcase.image %}
+								{% if '.pdf' in showcase.image.url %}
+							    <embed src="{{ showcase.image.url }}" width="300px" height="450px" />
+							    {% else %}
+							    <img src="{{ showcase.image.url }}" class="maincontent">
+							    {% endif %}
+							{% endif %}
 
-						{% if showcase.youtube %}
-						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
-						{% endif %}
+							{% if showcase.youtube %}
+							   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+							{% endif %}
+
 					    {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 					    {% endif %}
@@ -525,7 +536,16 @@
         <br>
 	    {% if upcoming %}
 	        {% if upcoming.image %}
-	            <img src="{{ upcoming.image.url }}" class="maincontent">
+
+	        	{% if upcoming.image %}
+					{% if '.pdf' in upcoming.image.url %}
+					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
+					{% else %}
+					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
+					    <!--img src="{{ upcoming.image.url }}" class="maincontent"-->
+					{% endif %}
+				{% endif %}
+
 	        {% else %}
 	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 	        {% endif %}

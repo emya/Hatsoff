@@ -205,7 +205,11 @@
                         {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
+							{% if showcase.image.url.endswith(".pdf") %}
+						    <embed src="{{ showcase.image.url }}" width="300px" height="400px" />
+						    {% else %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
+						    {% endif %}
 						{% endif %}
 
 						{% if showcase.video %}

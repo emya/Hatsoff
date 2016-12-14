@@ -9,26 +9,28 @@
 
      <div id="step-right">
         <h3>Update your past work</h3>
-	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
-            <br>{{form.image.label_tag}}</br>
-                <input id="id_image" type="file" name="image"><br/>
-                <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
-            <!--br>{{form.video.label_tag}}</br> {{form.video}}<br/-->
-            <br>{{form.youtube.label_tag}}</br> {{form.youtube}}<br/>
-            <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
-            <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
-            <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
-	    <div class="submit-wrapper">
-               {% if num_show and num_show == 10 %}
-	           <input type="submit" value="Update" name="next" class="step-submit"/>
-                   <input type="hidden" name="next" value="home.html">
-               {% else %}
-	           <input type="submit" value="Save and Add more" name="more_case" class="step-submit-more"><input type="submit" value="Update" name="next" class="step-submit"/>
-               {% endif %}
-	        <a href="{% url 'week1:home' %}">Back to Home</a>
-            </div>
-	</form>
+    	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
+                <br>{{form.image.label_tag}}</br>
+                    <input id="id_image" type="file" name="image"><br/>
+                    <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
+                    <!--embed id="blah" src="#" alt="your image" class="maincontent" /><br/-->
+                <!--br>{{form.video.label_tag}}</br> {{form.video}}<br/-->
+                <br>{{form.youtube.label_tag}}</br> {{form.youtube}}<br/>
+                <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
+                <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
+                <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
+
+    	        <div class="submit-wrapper">
+                   {% if num_show and num_show == 10 %}
+    	           <input type="submit" value="Update" name="next" class="step-submit"/>
+                       <input type="hidden" name="next" value="home.html">
+                   {% else %}
+    	           <input type="submit" value="Save and Add more" name="more_case" class="step-submit-more"><input type="submit" value="Update" name="next" class="step-submit"/>
+                   {% endif %}
+    	           <a href="{% url 'week1:home' %}">Back to Home</a>
+                </div>
+    	</form>
      </div>
 
 </div>
@@ -37,12 +39,14 @@
 window.onload = function (){
     {% if form.instance.image %}
         $('#blah').attr('src', "{{form.instance.image.url}}");
+        console.log("instance image:"+"{{form.instance.image.url}}");
     {% else %}
         $('#blah').attr('src', "{% static 'images/empty_showcase.png' %}");
     {% endif %}
 };
 
 function readURL(input) {
+    console.log("read URL");
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 

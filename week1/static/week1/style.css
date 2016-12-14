@@ -549,8 +549,8 @@ to here
 }
 
 #home-main-center {
-   width: 700px;
-   margin: 50px 160px;
+   width: 820px;
+   margin: 20px 20px;
    text-align: center;
 }
 
@@ -608,7 +608,7 @@ to here
 
 #home-main #home-firstcolumn {
    display: inline-block;
-   width: 380px;
+   width: 420px;
 }
 
 #home-main #home-firstcolumn #tableLabel{
@@ -618,11 +618,11 @@ color: lightslategrey;
 #home-main #home-secondcolumn {
    display: inline-block;
    vertical-align: top;
-   width: 350px;
+   width: 290px;
 }
 
 #body img.mainprofile {
-   width: 300px;
+   width: 200px;
 }
 
 #body img.maincontent {

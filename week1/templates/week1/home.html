@@ -10,7 +10,7 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
-        
+        <br>
         <table width="300"><tr><td width="10"></td>
             <td width="120" valign="top">
                 
@@ -291,7 +291,7 @@
                     {% if profile.photo %}
                         <img src="{{ profile.photo.url }}" class="mainprofile">
                     {% else %}
-                        <img src="{% static 'images/profileimage.png'%}" class="mainprofile">
+                        <img src="{% static 'images/profileimage.png'%}" class="mainprofile" width="180">
                     {% endif %}
                     </td>
                     <td valign="top">
@@ -326,7 +326,7 @@
        </ul>
 
     </div>
-
+<hr>
 <div id="home-main-center">
 
 <!--div class="portfolio-container"-->
@@ -351,7 +351,6 @@
 					<div class="right-edit">
 	                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
 	                </div>
-                    <br><br><br>
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
@@ -366,7 +365,7 @@
 
 						{% if showcase.video %}
 						    <video controls id="video">
-						        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"></source>
+						        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
 						    </video>
 						{% endif %}
 
@@ -388,11 +387,11 @@
 
                         <hr class="divider"/>
 
-					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
- 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
-					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
-              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
+ 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
+					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
+              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
 
                         <div class="well well-mm">
@@ -456,14 +455,14 @@
 
                         <hr class="divider"/>
 
-						<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
+						<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
  						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
 					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
- 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
-					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
-              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+ 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
+					    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
+					    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
+              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
                         <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">

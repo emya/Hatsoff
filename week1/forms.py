@@ -145,11 +145,23 @@ class Step5(forms.ModelForm):
         }
     def clean(self):
         cleaned_data = self.cleaned_data
+        if 'youtube' in cleaned_data:
+            youtube = cleaned_data.get('youtube') 
+            if youtube !="" and "www.youtube.com" in youtube:
+                if "watch?v=" in youtube:
+                    embedyoutube = youtube.replace("watch?v=", "embed/")
+                    cleaned_data['youtube'] = embedyoutube
+            else:
+                raise forms.ValidationError(_("Please enter a valid youtube URL."))
+
+        return cleaned_data
+        """ 
         if 'video' in self.cleaned_data:
             video = self.cleaned_data['video'] 
             if video and not video.name.endswith('.mp4'):
                 raise forms.ValidationError(_("Please choose mp4 file."))
-        return cleaned_data
+        """
+        
 
 class Step6(forms.ModelForm):
     class Meta:

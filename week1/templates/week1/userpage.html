@@ -143,11 +143,20 @@
 					    {% if showcase.image or showcase.youtube %}
 
 						{% if showcase.image %}
+							<div class="display-image">
+							{% if showcase.image.url.endswith(".pdf") %}
+						    <embed src="{{ showcase.image.url }}" width="300px" height="400px" />
+						    {% else %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
+						    {% endif %}
+						    </div>
 						{% endif %}
 
 						{% if showcase.youtube %}
-						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+							<div class="display-image">
+						   		<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+						   	</div>
+						   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
 						{% endif %}
                         {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
@@ -162,6 +171,8 @@
 						    </ul>
 						</div>
 
+                        <hr class="divider"/>
+
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
@@ -174,9 +185,7 @@
 					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
 					    <div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
-                        <hr class="divider"/>
-
-                         <div class="well well-smm">
+                         <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -205,7 +214,15 @@
                         {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
+
+						   	<div class="display-image">
+							{% if showcase.image.url.endswith(".pdf") %}
+						    <embed src="{{ showcase.image.url }}" width="300px" height="400px" />
+						    {% else %}
 						    <img src="{{ showcase.image.url }}" class="maincontent">
+						    {% endif %}
+						    </div>
+
 						{% endif %}
 
 						{% if showcase.video %}
@@ -215,7 +232,10 @@
 						{% endif %}
 
 						{% if showcase.youtube %}
-						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+							<div class="display-image">
+						   		<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+						   	</div>
+						   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
 						{% endif %}
                         {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
@@ -230,6 +250,9 @@
 							<li>Year of completion:{{showcase.completion}}</li>
 						    </ul>
 					    </div>
+
+                        <hr class="divider"/>
+
 					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
@@ -239,9 +262,7 @@
 					    <div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
 					    <div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
-                        <hr class="divider"/>
-
-                         <div class="well well-smm">
+                         <div class="well well-mm">
 	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 	                        	
 	                        </ul>
@@ -371,7 +392,10 @@
 	        <li>Comment:{{upcoming.comment_help}}</li>
 
 	      </ul>
-            </div>
+        </div>
+
+        <hr class="divider"/>
+
         <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 		<!--div class="popupHatsoff" onclick="hatsoffFunction(2,1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
@@ -383,10 +407,8 @@
 		<div class="followstatus"></div>
 	    <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
-            <hr class="divider"/>
 
-
-           <div class="well well-smm">
+           <div class="well well-mm">
             <ul id="upcomingComment" style="list-style-type:none;">
             	
             </ul>
@@ -405,8 +427,29 @@
             </form>
 
             </div>
-             
-            
+
+        {% else %}
+	    <div class="description-wrapper">
+              <ul>
+		        <li>Description of your upcoming work:</li>
+		        <li>Your role:</li>
+		        <li>Status:</li>
+		        <li>Comment:</li>
+	      	  </ul>
+
+              <ul>
+	        <h4 align="center">Looking for</h4>
+            <li>Collaborators:</li>
+	        <li>Skills:</li>
+	        <li>Preferred city location of collaborator:</li>
+	        <li>Start date:</li>
+	        <li>End date:</li>
+	        <li>How often to work with collaborator:</li>
+	        <li>How to give back to collaborator:</li>
+	        <li>Funding:</li>
+	        <li>Comment:</li>
+	      </ul>
+	    </div>
 
 	    {% endif %}
 	</div>

@@ -355,11 +355,17 @@
 
 						{% if showcase.image %}
 							{% if showcase.image %}
+						   	<div class="display-image">
 								{% if '.pdf' in showcase.image.url %}
-							    <embed src="{{ showcase.image.url }}" width="300px" height="450px" />
+							    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
+							    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
+							    </object>
 							    {% else %}
-							    <img src="{{ showcase.image.url }}" class="maincontent">
+							    <object data="{{ showcase.image.url }}" width="350px" />
+							    </object>
+							    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
 							    {% endif %}
+						   	</div>
 							{% endif %}
 						{% endif %}
 
@@ -370,8 +376,12 @@
 						{% endif %}
 
 						{% if showcase.youtube %}
-						   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+						   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
+						   <div class="display-image">
+						   <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+						   </div>
 						{% endif %}
+
                         {% else %}
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                         {% endif %}
@@ -430,14 +440,21 @@
  					    {% if showcase.image or showcase.youtube %}
 							{% if showcase.image %}
 								{% if '.pdf' in showcase.image.url %}
-							    <embed src="{{ showcase.image.url }}" width="300px" height="450px" />
+							    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
+							    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
+							    </object>
+
 							    {% else %}
-							    <img src="{{ showcase.image.url }}" class="maincontent">
+							    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
+							    <object data="{{ showcase.image.url }}" width="350px" />
+							    </object>
 							    {% endif %}
 							{% endif %}
 
 							{% if showcase.youtube %}
-							   <object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object>
+								<div class="display-image">
+						   			<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+						   		</div>
 							{% endif %}
 
 					    {% else %}

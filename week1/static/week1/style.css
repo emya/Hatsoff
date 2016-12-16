@@ -2412,3 +2412,7 @@ hr .solid-divider{
    background-color: white;
    color: black;
 }
+
+.display-image{
+   padding: 20px;
+}

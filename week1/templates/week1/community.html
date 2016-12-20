@@ -265,7 +265,7 @@
 
           function shareFunction(uid, c_id){
             console.log('uid on share:'+uid+':'+c_id);
-            popShared();
+            //popShared();
 	          socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
             var share = document.getElementById("share_"+c_id);
             share.innerHTML = "Shared &nbsp";

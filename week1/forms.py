@@ -62,9 +62,9 @@ class LoginForm(forms.Form):
 class Step1(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('photo', 'profession', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
+        fields = ('photo', 'profession1', 'profession2', 'profession3', 'profession4', 'profession5', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
         labels = {
-            'profession': _('Profession'),
+            'profession1': _('Profession (up to 5)'),
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
             'education': _('Education (School and degree)'),
@@ -214,13 +214,13 @@ class Step7(forms.ModelForm):
 class ProfessionForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('profession', 'describe',)
+        fields = ('profession1', 'profession2', 'profession3', 'profession4', 'profession5', 'describe',)
         widgets = {
             'describe': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
         }
         labels = {
             'describe': _('Describe yourself'),
-            'profession': _('Profession'),
+            'profession1': _('Profession (up to 5)'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

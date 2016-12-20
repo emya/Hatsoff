@@ -34,7 +34,7 @@
             placeholderText   : null,   // Sets `placeholder` attr on input field.
             readOnly          : false,  // Disables editing.
             removeConfirmation: false,  // Require confirmation to remove tags.
-            tagLimit          : 10,   // Max number of tags allowed (null for unlimited).
+            tagLimit          : 5,   // Max number of tags allowed (null for unlimited).
 
             // Used for autocomplete, unless you override `autocomplete.source`.
             availableTags     : [ "Accountant" , "Account Manager", "Animator", "Android Developer"
@@ -556,7 +556,7 @@
             // Unless options.singleField is set, each tag has a hidden input field inline.
             if (!this.options.singleField) {
                 var escapedValue = label.html();
-                tag.append('<input type="hidden" value="' + escapedValue + '" name="' + this.options.fieldName + '" class="tagit-hidden-field" />');
+                tag.append('<input type="hidden" value="' + escapedValue + '" name="' + this.options.fieldName + '" class="tagit:when-hidden-field" />');
             }
 
             if (this._trigger('beforeTagAdded', null, {

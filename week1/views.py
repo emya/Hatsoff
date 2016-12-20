@@ -341,8 +341,35 @@ def step1(request):
     if request.method == 'POST':
         form = Step1(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
-            step = form.save()
+            step = form.save(commit=False)
             #step = form.save(commit=False)
+            print request.POST
+            tags = request.post.getlist('tags')
+            print "tags", tags
+
+            tagls = []
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 5:
+                for i in range(5-len(tagls)):
+                    tagls.append("")
+
+            step.profession1=tagls[0] 
+            step.profession2=tagls[1] 
+            step.profession3=tagls[2]
+            step.profession4=tagls[3]
+            step.profession5=tagls[4]
+
+            step.save()
 
             nextform = Step2(label_suffix="", instance=instance)
             return HttpResponseRedirect('/week1/step2/', {'form': nextform})
@@ -432,7 +459,7 @@ def step3(request):
                     obj.count += 1
                     obj.save()
                 except Profession.DoesNotExist:
-                    obj = Profession(skill=lowtag, count=1)
+                    obj = Profession.create(skill=lowtag, count=1)
                     obj.save()
 
             if len(tagls) != 10:
@@ -706,14 +733,50 @@ def home_edit_profession(request):
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
+    print "request:", request
     if request.method == "POST":
         form = ProfessionForm(request.POST, instance=instance, label_suffix="")
-
         if form.is_valid():
-            form.save()
+            profession = form.save(commit=False)
+
+            print "POST:", request.POST
+            print "valid:", form.is_valid()
+
+            print request.POST
+            tags = request.POST.getlist('tags')
+            print "tags", tags
+
+            tagls = []
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 5:
+                for i in range(5-len(tagls)):
+                    tagls.append("")
+
+            print "tagls", tagls
+            profession.profession1 = tagls[0]
+            profession.profession2 = tagls[1]
+            profession.profession3 = tagls[2]
+            profession.profession4 = tagls[3]
+            profession.profession5 = tagls[4]
+
+            profession.save()
 
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
+        else:
+            messages = []
+            messages.append(form.errors)
+            return render(request, 'week1/homeedit_profession.html', {'messages':messages, 'form':form})
 
     else:
         form = ProfessionForm(instance=instance, label_suffix="")
@@ -748,7 +811,7 @@ def home_edit_professionskills(request):
                     obj.count += 1
                     obj.save()
                 except Profession.DoesNotExist:
-                    obj = Profession(skill=lowtag, count=1)
+                    obj = Profession.objects.create(skill=lowtag, count=1)
                     obj.save()
 
             if len(tagls) != 10:

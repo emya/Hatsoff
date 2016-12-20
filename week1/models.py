@@ -50,7 +50,11 @@ class Showcase(models.Model):
     video = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
     youtube = models.URLField(null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
-    role = models.CharField(max_length=300, default='', blank=True)
+    role1 = models.CharField(max_length=300, default='', blank=True)
+    role2 = models.CharField(max_length=300, default='', blank=True)
+    role3 = models.CharField(max_length=300, default='', blank=True)
+    role4 = models.CharField(max_length=300, default='', blank=True)
+    role5 = models.CharField(max_length=300, default='', blank=True)
     completion = models.IntegerField(null=True, blank=True)#year of completion
     
 class UpcomingWork(models.Model):

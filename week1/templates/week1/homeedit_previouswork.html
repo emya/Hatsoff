@@ -20,7 +20,14 @@
                 <!--br>{{form.video.label_tag}}</br> {{form.video}}<br/-->
                 <br>{{form.youtube.label_tag}}</br> {{form.youtube}}<br/>
                 <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
-                <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
+                <br>{{form.role1.label_tag}}<!--/br>{{form.role}}<br/-->
+                <ul id="myTagProfessions">
+                    <li>{{ form.role1.value }}</li>
+                    <li>{{ form.role2.value }}</li>
+                    <li>{{ form.role3.value }}</li>
+                    <li>{{ form.role4.value }}</li>
+                    <li>{{ form.role5.value }}</li>
+                </ul>
                 <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
 
     	        <div class="submit-wrapper">
@@ -38,6 +45,11 @@
 </div>
 
 <script type="text/javascript">
+$(document).ready(function() {
+    $("#myTagProfessions").tagprofession();
+});
+
+
 window.onload = function (){
     {% if form.instance.image %}
         $('#blah').attr('src', "{{form.instance.image.url}}");

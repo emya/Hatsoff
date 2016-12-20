@@ -916,6 +916,31 @@ def home_edit_previouswork(request, num):
         form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             work = form.save(commit=False)
+            tags = request.POST.getlist('tags')
+
+            tagls = []
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 5:
+                for i in range(5-len(tagls)):
+                    tagls.append("")
+
+            print "tagls", tagls
+            work.role1 = tagls[0]
+            work.role2 = tagls[1]
+            work.role3 = tagls[2]
+            work.role4 = tagls[3]
+            work.role5 = tagls[4]
+
             work.number = num
             work.save()
 

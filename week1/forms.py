@@ -131,7 +131,7 @@ class Step4(forms.ModelForm):
 class Step5(forms.ModelForm):
     class Meta:
         model = Showcase
-        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role', 'completion')
+        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5','completion')
         widgets = {
         }
         labels = {
@@ -140,7 +140,7 @@ class Step5(forms.ModelForm):
             'video': _('Add Video (mp4)'),
             'youtube': _('Add URL link to Youtube'),
             'describe': _('Describe your work'),
-            'role': _('Your Role'),
+            'role1': _('Your Role'),
             'completion': _('Year of completion'),
         }
     def clean(self):

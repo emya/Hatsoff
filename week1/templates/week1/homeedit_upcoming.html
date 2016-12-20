@@ -1,4 +1,4 @@
-k{% extends 'week1/basehome.html'%}
+{% extends 'week1/basehome.html'%}
 
 {% block content %}
 {% load staticfiles %}
@@ -9,11 +9,12 @@ k{% extends 'week1/basehome.html'%}
 
      <div id="step-right">
         <h3>Update your form work</h3>
-	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+	       <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
             <script type="text/javascript">
                 $(document).ready(function() {
                     $("#myTags").tagit();
                     $("#myTagProfessions").tagprofession();
+                    $("#myTagCollaborators").tagcollaborator();
                 });
             </script> 
 
@@ -22,7 +23,9 @@ k{% extends 'week1/basehome.html'%}
                 <input id="id_image" type="file" name="image"><br/>
                 <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
             <br>{{form.describe.label_tag}}</br>{{form.describe}}<br/>
-            <br>{{form.role.label_tag}}</br>{{form.role}}<br/>
+            <br>{{form.role1.label_tag}}<!--/br>{{form.role}}<br/-->
+            <ul id="myTagProfessions">
+            </ul>
             <br>{{form.status.label_tag}}</br>{{form.status}}<br/>
             <br>Looking to get help from the community?</br>
                 <select name="get_help">
@@ -43,10 +46,12 @@ k{% extends 'week1/basehome.html'%}
                 {% endif %}
                 </select>
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
-            <br>{{form.collaborators.label_tag}}</br>{{form.collaborators}}<br/>
-            
-            <ul id="myTagProfessions">
+            <br>{{form.collaborator1.label_tag}}<!--/br>{{form.collaborators}}<br/-->
+            <ul id="myTagCollaborators">
             </ul>
+
+            <!--ul id="myTagProfessions">
+            </ul-->
 
             <br>
             <label>What kind of skills would your collaborator(s) need?</label>

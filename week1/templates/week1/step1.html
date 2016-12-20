@@ -37,7 +37,14 @@
 	    <!--table border="0" align="center" class="step-table">
             <div id="step-right-left">
                 <br>Display Name</br> <input type='text' name='displayname' value='{{ user.first_name }} {{user.last_name}}'><br/-->
-                <br>{{form.profession.label_tag}} <span style="color:red">*</span></br> {{form.profession}}<br/>
+                <br>{{form.profession1.label_tag}} <!-- span style="color:red">*</span -->
+                <ul id="myTagProfessions">
+                    <li>{{ form.profession1.value }}</li>
+                    <li>{{ form.profession2.value }}</li>
+                    <li>{{ form.profession3.value }}</li>
+                    <li>{{ form.profession4.value }}</li>
+                    <li>{{ form.profession5.value }}</li>
+                </ul>
                 <br>{{form.city.label_tag}}</br> {{form.city}}<br/>
                 <br>{{form.worksAt.label_tag}}</br> {{form.worksAt}}<br/>
                 <br>{{form.education.label_tag}}</br> {{form.education}}<br/>
@@ -65,6 +72,9 @@
 </div>
 
 <script type="text/javascript">
+$(document).ready(function() {
+  $("#myTagProfessions").tagprofession();
+});
 
 window.onload = function (){
   {% if form.instance.photo %}

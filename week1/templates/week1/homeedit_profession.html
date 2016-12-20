@@ -3,6 +3,12 @@
 {% block content %}
 {% load staticfiles %}
 
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $("#myTagProfessions").tagprofession();
+    });
+</script> 
+
 <div id="step">
      <div id="step-left">
      </div>
@@ -10,15 +16,25 @@
      <div id="step-right">
         <h3>Update your profession</h3>
         {{ form.errors }}
-	<form action="" method="POST" class="step-form">{% csrf_token %}
-            <br>{{form.profession.label_tag}}</br> {{form.profession}}<br/>
+	   <form action="" method="POST" class="step-form">{% csrf_token %}
+
+            <br>{{form.profession1.label_tag}} <!--{{form.profession}}<br/-->
+                <ul id="myTagProfessions">
+                    <li>{{ form.profession1.value }}</li>
+                    <li>{{ form.profession2.value }}</li>
+                    <li>{{ form.profession3.value }}</li>
+                    <li>{{ form.profession4.value }}</li>
+                    <li>{{ form.profession5.value }}</li>
+                </ul>
+
+
             <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
-	    <div class="submit-wrapper">
-		<input type="submit" value="Update" class="step-submit"/>
-		<input type="hidden" name="next" value="home.html">
-		<a href="{% url 'week1:home' %}">Back to Home</a>
-	    </div>
-	</form>
+    	    <div class="submit-wrapper">
+        		<input type="submit" value="Update" class="step-submit"/>
+        		<input type="hidden" name="next" value="home.html">
+        		<a href="{% url 'week1:home' %}">Back to Home</a>
+    	    </div>
+	   </form>
      </div>
 
 </div>

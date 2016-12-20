@@ -6,7 +6,12 @@ class Profile(models.Model):
     user = models.ForeignKey(User)
     photo = models.ImageField(upload_to='photoimg/', default='photoimg/profileimage.png', blank=True)
     displayname = models.CharField(max_length=100, default='', blank=True)
-    profession = models.CharField(max_length=200, default='', blank=False)
+    #profession = models.CharField(max_length=200, default='', blank=False)
+    profession1 = models.CharField(max_length=200, default='', blank=True)
+    profession2 = models.CharField(max_length=200, default='', blank=True)
+    profession3 = models.CharField(max_length=200, default='', blank=True)
+    profession4 = models.CharField(max_length=200, default='', blank=True)
+    profession5 = models.CharField(max_length=200, default='', blank=True)
     worksAt = models.CharField(max_length=100, default='', blank=True)
     city = models.CharField(max_length=100, default='', blank=True)
     education = models.CharField(max_length=200, default='', blank=True)
@@ -45,7 +50,11 @@ class Showcase(models.Model):
     video = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
     youtube = models.URLField(null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
-    role = models.CharField(max_length=300, default='', blank=True)
+    role1 = models.CharField(max_length=300, default='', blank=True)
+    role2 = models.CharField(max_length=300, default='', blank=True)
+    role3 = models.CharField(max_length=300, default='', blank=True)
+    role4 = models.CharField(max_length=300, default='', blank=True)
+    role5 = models.CharField(max_length=300, default='', blank=True)
     completion = models.IntegerField(null=True, blank=True)#year of completion
     
 class UpcomingWork(models.Model):
@@ -54,13 +63,21 @@ class UpcomingWork(models.Model):
     number = models.IntegerField()#1 to 10
     image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
-    role = models.CharField(max_length=300, default='', blank=True)
+    role1 = models.CharField(max_length=300, default='', blank=True)
+    role2 = models.CharField(max_length=300, default='', blank=True)
+    role3 = models.CharField(max_length=300, default='', blank=True)
+    role4 = models.CharField(max_length=300, default='', blank=True)
+    role5 = models.CharField(max_length=300, default='', blank=True)
     status = models.CharField(max_length=300, default='', blank=True)
     targetstartdate = models.DateTimeField(null=True, blank=True)#year of completion
     targetfinishdate = models.DateTimeField(300, null=True, blank=True)#year of completion
     comment = models.CharField(max_length=300, default='', blank=True)
     get_help = models.IntegerField(null=True, blank=True)#1: yes 2:Open to collaboration 3:no thanks
-    collaborators = models.CharField(max_length=300, default='', blank=True)
+    collaborator1 = models.CharField(max_length=300, default='', blank=True)
+    collaborator2 = models.CharField(max_length=300, default='', blank=True)
+    collaborator3 = models.CharField(max_length=300, default='', blank=True)
+    collaborator4 = models.CharField(max_length=300, default='', blank=True)
+    collaborator5 = models.CharField(max_length=300, default='', blank=True)
     collaborator_skill1 = models.CharField(max_length=300, default='', blank=True)
     collaborator_skill2 = models.CharField(max_length=300, default='', blank=True)
     collaborator_skill3 = models.CharField(max_length=300, default='', blank=True)
@@ -96,4 +113,7 @@ class Profession(models.Model):
     skill = models.CharField(max_length=30, blank=False, unique=True)
     count = models.IntegerField(null=True, default=0)
 
+class Skill(models.Model):
+    skill = models.CharField(max_length=30, blank=False, unique=True)
+    count = models.IntegerField(null=True, default=0)
     

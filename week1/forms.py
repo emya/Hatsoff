@@ -62,9 +62,9 @@ class LoginForm(forms.Form):
 class Step1(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('photo', 'profession', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
+        fields = ('photo', 'profession1', 'profession2', 'profession3', 'profession4', 'profession5', 'worksAt', 'city', 'education', 'birthyear', 'birthdate', 'language', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
         labels = {
-            'profession': _('Profession'),
+            'profession1': _('Profession (up to 5)'),
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
             'education': _('Education (School and degree)'),
@@ -131,7 +131,7 @@ class Step4(forms.ModelForm):
 class Step5(forms.ModelForm):
     class Meta:
         model = Showcase
-        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role', 'completion')
+        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5','completion')
         widgets = {
         }
         labels = {
@@ -140,7 +140,7 @@ class Step5(forms.ModelForm):
             'video': _('Add Video (mp4)'),
             'youtube': _('Add URL link to Youtube'),
             'describe': _('Describe your work'),
-            'role': _('Your Role'),
+            'role1': _('Your Role'),
             'completion': _('Year of completion'),
         }
     def clean(self):
@@ -166,20 +166,20 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role', 'status', 'targetstartdate', 'targetfinishdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'often', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
+        fields = ('title', 'image', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5', 'status', 'targetstartdate', 'targetfinishdate', 'comment', 'get_help', 'collaborator1', 'collaborator2', 'collaborator3', 'collaborator4', 'collaborator5', 'fund', 'comment_help', 'preferred_city', 'often', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
         widgets = {
         }
         labels = {
             'title': _('Title'),
             'image': _('Add Photo'),
             'describe': _('Describe your work'),
-            'role': _('Your Role'),
+            'role1': _('Your Role'),
             'status': _('Status of work (for eg: entering post-production phase)'),
             'targetstartdate': _('Start date'),
             'targetfinishdate': _('End date'),
             'Additional info?': _('Comment'),
             'often': _('How often would you like to work with your collaborator?  (eg. 3 hours per week)'),
-            'collaborators': _('What kind of collaborators are you seeking? (eg. Video editor)'),
+            'collaborator1': _('What kind of collaborators are you seeking? (eg. Video editor)'),
             'fund': _('Do you need to raise funds? If so how much and for what?'),
             'comment_help': _('Comments'),
             'preferred_city': _('Preferred city location of collaborator?'),
@@ -214,13 +214,13 @@ class Step7(forms.ModelForm):
 class ProfessionForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('profession', 'describe',)
+        fields = ('profession1', 'profession2', 'profession3', 'profession4', 'profession5', 'describe',)
         widgets = {
             'describe': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
         }
         labels = {
             'describe': _('Describe yourself'),
-            'profession': _('Profession'),
+            'profession1': _('Profession (up to 5)'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

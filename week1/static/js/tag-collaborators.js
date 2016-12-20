@@ -26,15 +26,15 @@
 */
 (function($) {
 
-    $.widget('ui.tagprofession', {
+    $.widget('ui.tagcollaborator', {
         options: {
             allowDuplicates   : false,
             caseSensitive     : true,
-            fieldName         : 'professiontags',
+            fieldName         : 'collaboratortags',
             placeholderText   : null,   // Sets `placeholder` attr on input field.
             readOnly          : false,  // Disables editing.
             removeConfirmation: false,  // Require confirmation to remove tags.
-            tagLimit          : 5,   // Max number of tags allowed (null for unlimited).
+            tagLimit          : 10,   // Max number of tags allowed (null for unlimited).
 
             // Used for autocomplete, unless you override `autocomplete.source`.
             availableTags     : [ "Accountant" , "Account Manager", "Animator", "Android Developer"

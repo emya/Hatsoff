@@ -306,7 +306,7 @@
                     <td width="20px"></td>
                     <td width="250px" >
                         <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
-                            <h4 halign="center">{{profile.profession}}</h4>
+                            <h4 halign="center">{{profile.profession1}} &nbsp {{profile.profession2}} &nbsp {{profile.profession3}} &nbsp {{profile.profession4}} &nbsp {{profile.profession5}}</h4>
                             <p halign="center">{{profile.describe}}</p>
                     </td>
                     <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
@@ -390,7 +390,7 @@
 						    <ul style="list-style-type:none; padding-left:0px;">
 							<li>Title:{{showcase.title}}</li>
 							<li>Description of work:{{showcase.describe}}</li>
-							<li>Your role:{{showcase.role}}</li>
+							<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
 							<li>Year of completion:{{showcase.completion}}</li>
 						    </ul>
 						</div>
@@ -465,7 +465,7 @@
 						    <ul style="list-style-type:none; padding-left:0px;">
 							<li>Title:{{showcase.title}}</li>
 							<li>Description of work:{{showcase.describe}}</li>
-							<li>Your role:{{showcase.role}}</li>
+							<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
 							<li>Year of completion:{{showcase.completion}}</li>
 						    </ul>
 						</div>
@@ -573,14 +573,14 @@
             <div class="description-wrapper">
               <ul>
 		        <li>Description of your upcoming work:{{upcoming.describe}}</li>
-		        <li>Your role:{{upcoming.role}}</li>
+				<li>Your role:{{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}</li>
 		        <li>Status:{{upcoming.status}}</li>
 		        <li>Comment:{{upcoming.comment}}</li>
 	      	  </ul>
 
               <ul>
 	        <h4 align="center">Looking for</h4>
-            <li>Collaborators:{{upcoming.collaborators}}</li>
+            <li>Collaborators:{{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}</li>
 	        <li>Skills:
 	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
 	           {{ upcoming.collaborator_skill1 }}
@@ -735,7 +735,7 @@
 
 	      function likeFunction(c_type, c_id){
 			  console.log('uid on like:'+c_type+':'+c_id);
-			  popLike();
+			  //popLike();
 	          if (c_type == 2){
 			      socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like upcoming');
@@ -777,7 +777,7 @@
 
 	      function shareFunction(c_type, c_id){
 			 console.log('uid on share:'+c_type+':'+c_id);
-			 popShared();
+			 //popShared();
              if (c_type == 2){
 		         socket.emit('share upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
              }else if (c_type == 3){

@@ -30,7 +30,7 @@
         options: {
             allowDuplicates   : false,
             caseSensitive     : true,
-            fieldName         : 'tags',
+            fieldName         : 'professiontags',
             placeholderText   : null,   // Sets `placeholder` attr on input field.
             readOnly          : false,  // Disables editing.
             removeConfirmation: false,  // Require confirmation to remove tags.

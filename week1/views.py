@@ -344,7 +344,7 @@ def step1(request):
             step = form.save(commit=False)
             #step = form.save(commit=False)
             print request.POST
-            tags = request.post.getlist('tags')
+            tags = request.post.getlist('professiontags')
             print "tags", tags
 
             tagls = []
@@ -743,7 +743,7 @@ def home_edit_profession(request):
             print "valid:", form.is_valid()
 
             print request.POST
-            tags = request.POST.getlist('tags')
+            tags = request.POST.getlist('professiontags')
             print "tags", tags
 
             tagls = []
@@ -916,7 +916,7 @@ def home_edit_previouswork(request, num):
         form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             work = form.save(commit=False)
-            tags = request.POST.getlist('tags')
+            tags = request.POST.getlist('professiontags')
 
             tagls = []
             for tag in tags:
@@ -980,6 +980,31 @@ def home_edit_newpreviouswork(request):
         if form.is_valid():
             print 'valid'
             work = form.save(commit=False)
+
+            tags = request.POST.getlist('professiontags')
+
+            tagls = []
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 5:
+                for i in range(5-len(tagls)):
+                    tagls.append("")
+
+            work.role1 = tagls[0]
+            work.role2 = tagls[1]
+            work.role3 = tagls[2]
+            work.role4 = tagls[3]
+            work.role5 = tagls[4]
+
             work.user = currentuser
             work.number = num_show+1
             work.save()
@@ -1019,9 +1044,35 @@ def home_edit_upcoming(request):
     instance = get_object_or_404(UpcomingWork, user=currentuser, number=1)
 
     if request.method == 'POST':
+        print "request POST:", request.POST
         form = Step6(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             work = form.save(commit=False)
+
+            ptags = request.POST.getlist('professiontags')
+
+            ptagls = []
+            for tag in ptags:
+                lowtag = tag.capitalize()
+                ptagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(ptagls) != 5:
+                for i in range(5-len(ptagls)):
+                    ptagls.append("")
+
+            work.role1 = ptagls[0]
+            work.role2 = ptagls[1]
+            work.role3 = ptagls[2]
+            work.role4 = ptagls[3]
+            work.role5 = ptagls[4]
+
             work.number = 1
             get_help = form.cleaned_data["get_help"]
             print "get_help", get_help, type(get_help)

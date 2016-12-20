@@ -63,7 +63,11 @@ class UpcomingWork(models.Model):
     number = models.IntegerField()#1 to 10
     image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
     describe = models.CharField(max_length=500, default='', blank=True)
-    role = models.CharField(max_length=300, default='', blank=True)
+    role1 = models.CharField(max_length=300, default='', blank=True)
+    role2 = models.CharField(max_length=300, default='', blank=True)
+    role3 = models.CharField(max_length=300, default='', blank=True)
+    role4 = models.CharField(max_length=300, default='', blank=True)
+    role5 = models.CharField(max_length=300, default='', blank=True)
     status = models.CharField(max_length=300, default='', blank=True)
     targetstartdate = models.DateTimeField(null=True, blank=True)#year of completion
     targetfinishdate = models.DateTimeField(300, null=True, blank=True)#year of completion

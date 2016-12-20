@@ -166,7 +166,7 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5', 'status', 'targetstartdate', 'targetfinishdate', 'comment', 'get_help', 'collaborators', 'fund', 'comment_help', 'preferred_city', 'often', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
+        fields = ('title', 'image', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5', 'status', 'targetstartdate', 'targetfinishdate', 'comment', 'get_help', 'collaborator1', 'collaborator2', 'collaborator3', 'collaborator4', 'collaborator5', 'fund', 'comment_help', 'preferred_city', 'often', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
         widgets = {
         }
         labels = {
@@ -179,7 +179,7 @@ class Step6(forms.ModelForm):
             'targetfinishdate': _('End date'),
             'Additional info?': _('Comment'),
             'often': _('How often would you like to work with your collaborator?  (eg. 3 hours per week)'),
-            'collaborators': _('What kind of collaborators are you seeking? (eg. Video editor)'),
+            'collaborator1': _('What kind of collaborators are you seeking? (eg. Video editor)'),
             'fund': _('Do you need to raise funds? If so how much and for what?'),
             'comment_help': _('Comments'),
             'preferred_city': _('Preferred city location of collaborator?'),

@@ -73,7 +73,11 @@ class UpcomingWork(models.Model):
     targetfinishdate = models.DateTimeField(300, null=True, blank=True)#year of completion
     comment = models.CharField(max_length=300, default='', blank=True)
     get_help = models.IntegerField(null=True, blank=True)#1: yes 2:Open to collaboration 3:no thanks
-    collaborators = models.CharField(max_length=300, default='', blank=True)
+    collaborator1 = models.CharField(max_length=300, default='', blank=True)
+    collaborator2 = models.CharField(max_length=300, default='', blank=True)
+    collaborator3 = models.CharField(max_length=300, default='', blank=True)
+    collaborator4 = models.CharField(max_length=300, default='', blank=True)
+    collaborator5 = models.CharField(max_length=300, default='', blank=True)
     collaborator_skill1 = models.CharField(max_length=300, default='', blank=True)
     collaborator_skill2 = models.CharField(max_length=300, default='', blank=True)
     collaborator_skill3 = models.CharField(max_length=300, default='', blank=True)
@@ -109,4 +113,7 @@ class Profession(models.Model):
     skill = models.CharField(max_length=30, blank=False, unique=True)
     count = models.IntegerField(null=True, default=0)
 
+class Skill(models.Model):
+    skill = models.CharField(max_length=30, blank=False, unique=True)
+    count = models.IntegerField(null=True, default=0)
     

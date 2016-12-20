@@ -598,7 +598,6 @@ def step6(request):
             print get_help
             if get_help == 1 or get_help == 2:
                 tagls = []
-                work.collaborators = form.cleaned_data["collaborators"]
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
                 tags = request.POST.getlist('tags')
@@ -628,7 +627,6 @@ def step6(request):
                 work.collaborator_skill9 = tagls[8] 
                 work.collaborator_skill10 = tagls[9] 
             else:
-                work.collaborators = ""
                 work.fund = ""
                 work.comment_help = ""
             #num_show = UpcomingWork.objects.filter(user=currentuser).count()
@@ -1077,7 +1075,6 @@ def home_edit_upcoming(request):
             get_help = form.cleaned_data["get_help"]
             print "get_help", get_help, type(get_help)
             if get_help == 1 or get_help == 2:
-                work.collaborators = form.cleaned_data["collaborators"]
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
                 tags = request.POST.getlist('tags')
@@ -1106,8 +1103,32 @@ def home_edit_upcoming(request):
                 work.collaborator_skill8 = tagls[7] 
                 work.collaborator_skill9 = tagls[8] 
                 work.collaborator_skill10 = tagls[9] 
+
+                ctags = request.POST.getlist('collaboratortags')
+
+                ctagls = []
+                for tag in ctags:
+                    lowtag = tag.capitalize()
+                    ctagls.append(lowtag)
+                    try:
+                        obj = Profession.objects.get(skill=lowtag)
+                        obj.count += 1
+                        obj.save()
+                    except Profession.DoesNotExist:
+                        obj = Profession.objects.create(skill=lowtag, count=1)
+                        obj.save()
+
+                if len(ctagls) != 5:
+                    for i in range(5-len(ctagls)):
+                        ctagls.append("")
+
+                work.collaborator1 = ctagls[0]
+                work.collaborator2 = ctagls[1]
+                work.collaborator3 = ctagls[2]
+                work.collaborator4 = ctagls[3]
+                work.collaborator5 = ctagls[4]
+
             else:
-                work.collaborators = ""
                 work.fund = ""
                 work.comment_help = ""
             work.save()

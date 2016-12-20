@@ -26,7 +26,7 @@
 */
 (function($) {
 
-    $.widget('ui.tagcollaborators', {
+    $.widget('ui.tagcollaborator', {
         options: {
             allowDuplicates   : false,
             caseSensitive     : true,

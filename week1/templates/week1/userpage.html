@@ -502,7 +502,7 @@
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
 
-		    popLike();
+		    //popLike();
             if (c_type == 2){
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like upcoming');
@@ -543,7 +543,7 @@
 	      function shareFunction(c_type, c_id){
 			 console.log('uid on share:'+c_type+':'+c_id);
 
-			 popShared();
+			 //popShared();
              if (c_type == 2){
 		         socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
              }else if (c_type == 3){

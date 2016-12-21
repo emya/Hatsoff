@@ -958,20 +958,20 @@ img.notification_img {
    min-height: 150px;
 }
 
-#folderWrap #message-left{
+#home-main #message-left{
    display: inline-block;
    width: 300px;
    vertical-align: top;
    padding: 50px;
 }
 
-#folderWrap #message-left .left-section{
+#home-main #message-left .left-section{
    min-height: 40px;
 }
 
-#folderWrap #message-center{
+#home-main #message-center{
    display: inline-block;
-   width: 750px;
+   width: 600px;
    vertical-align: top;
    padding: 50px;
 }

@@ -10,6 +10,7 @@
      <div id="step-right">
         <h3>Update your past work</h3>
     	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                {{ form.errors }}
                 <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
                 <br>{{form.image.label_tag}}</br>
                     <input id="id_image" type="file" name="image"><br/>

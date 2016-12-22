@@ -147,12 +147,16 @@ class Step5(forms.ModelForm):
         cleaned_data = self.cleaned_data
         if 'youtube' in cleaned_data:
             youtube = cleaned_data.get('youtube') 
-            if youtube !="" and "www.youtube.com" in youtube:
-                if "watch?v=" in youtube:
-                    embedyoutube = youtube.replace("watch?v=", "embed/")
-                    cleaned_data['youtube'] = embedyoutube
+            if youtube == "":
+                pass
+
             else:
-                raise forms.ValidationError(_("Please enter a valid youtube URL."))
+                if "www.youtube.com" in youtube:
+                    if "watch?v=" in youtube:
+                        embedyoutube = youtube.replace("watch?v=", "embed/")
+                        cleaned_data['youtube'] = embedyoutube
+                else:
+                    raise forms.ValidationError(_("Please enter a valid youtube URL."))
 
         return cleaned_data
         """ 

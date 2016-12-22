@@ -14,7 +14,7 @@
         <table width="300"><tr><td width="10"></td>
             <td width="120" valign="top">
                 
-                <div  id="tableLabel">
+                <div class="tableLabel">
 			     Skills:
                 </div>
             </td><td>
@@ -62,7 +62,7 @@
             <tr><td width="10"></td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     City:
                     </div>
                </td>
@@ -77,7 +77,7 @@
                 <td width="20"></td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Work at: 
                     </div>
                 </td>
@@ -92,7 +92,7 @@
             </tr>      
             <tr><td width="20"></td>
                 <td valign="top">
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Education:
                     </div>
                </td>
@@ -107,7 +107,7 @@
                 <td width="20"></td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Language:
                     </div>
                 </td>
@@ -127,7 +127,7 @@
             <tr><td width="20"></td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                         Website:
                     </div>
                     
@@ -149,7 +149,7 @@
                 <td width="20"></td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                 Interested in: 
                     </div>
                 </td>
@@ -179,7 +179,7 @@
                 </td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Want to explore: 
                     </div>
                 </td>
@@ -194,7 +194,7 @@
                 </td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Hobby: 
                     </div>
                 </td>
@@ -210,7 +210,7 @@
                 </td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Favorite quote: 
                     </div>
                 </td>
@@ -227,7 +227,7 @@
                 </td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Films I love: 
                     </div>
                 </td>
@@ -245,7 +245,7 @@
                 </td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Books I love: 
                     </div>
                 </td>
@@ -261,7 +261,7 @@
                 </td>
                 <td valign="top">
                     
-                    <div  id="tableLabel">
+                    <div class="tableLabel">
                     Lived in: 
                     </div>
                 </td>
@@ -354,7 +354,6 @@
 					    {% if showcase.image or showcase.video or showcase.youtube %}
 
 						{% if showcase.image %}
-							{% if showcase.image %}
 						   	<div class="display-image">
 								{% if '.pdf' in showcase.image.url %}
 							    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
@@ -366,7 +365,6 @@
 							    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
 							    {% endif %}
 						   	</div>
-							{% endif %}
 						{% endif %}
 
 						{% if showcase.video %}
@@ -386,14 +384,69 @@
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
                         {% endif %}
 
-                        <div class="description-wrapper">
-						    <ul style="list-style-type:none; padding-left:0px;">
+                        <table width="750">
+	                        <tr>
+				                <td width="50"></td>
+				                <td valign="top" class="tableTitle">
+				                    <div class="tableLabel">
+				                    Title: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.title}}
+				                </td>
+				                      
+				            </tr>     
+
+				            <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Description: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.describe}}
+				                </td>
+				                      
+				            </tr>
+
+				            <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Your role: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
+				                </td>
+				                      
+				            </tr>
+
+				            <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Year of completion: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.completion}}
+				                </td>
+				                      
+				            </tr>
+			            </table>
+						    <!--ul style="list-style-type:none; padding-left:0px;">
 							<li>Title:{{showcase.title}}</li>
 							<li>Description:{{showcase.describe}}</li>
 							<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
 							<li>Year of completion:{{showcase.completion}}</li>
-						    </ul>
-						</div>
+						    </ul-->
 
                         <hr class="divider"/>
 
@@ -461,14 +514,63 @@
 						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 					    {% endif %}
 
-                        <div class="description-wrapper">
-						    <ul style="list-style-type:none; padding-left:0px;">
-							<li>Title:{{showcase.title}}</li>
-							<li>Description:{{showcase.describe}}</li>
-							<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
-							<li>Year of completion:{{showcase.completion}}</li>
-						    </ul>
-						</div>
+					    <table width="750">
+	                        <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Title: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.title}}
+				                </td>
+				                      
+				            </tr>     
+
+				            <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Description: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.describe}}
+				                </td>
+				                      
+				            </tr>
+
+				            <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Your role: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
+				                </td>
+				                      
+				            </tr>
+
+				            <tr>
+				                <td width="50"></td>
+				                <td valign="top">
+				                    <div class="tableLabel">
+				                    Year of completion: 
+				                    </div>
+				                </td>
+				                    
+				                <td>
+				                {{showcase.completion}}
+				                </td>
+				                      
+				            </tr>
+			            </table>
 
                         <hr class="divider"/>
 
@@ -554,12 +656,14 @@
 	        {% if upcoming.image %}
 
 	        	{% if upcoming.image %}
+					<div class="display-image">
 					{% if '.pdf' in upcoming.image.url %}
 					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
 					{% else %}
 					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
 					    <!--img src="{{ upcoming.image.url }}" class="maincontent"-->
 					{% endif %}
+					</div>
 				{% endif %}
 
 	        {% else %}
@@ -570,7 +674,227 @@
 	    {% endif %}
 
 	    {% if upcoming %}
-            <div class="description-wrapper">
+	     	<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Title: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.title}}
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Description: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.describe}}
+				    </td>
+				                      
+				</tr>
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Your role: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}
+				    </td>
+				                      
+				</tr>
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Status:
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.status}}
+					</td>
+				                      
+				</tr>
+			</table>
+
+			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Collaborators: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Skills:
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
+				           {{ upcoming.collaborator_skill1 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill2 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill3 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill4 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill5 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill6 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill7 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill8 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill9 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill10 }}
+	           			{% endif %}
+					</td>
+				                      
+				</tr>
+
+			</table>
+
+			<table width="750">
+				<tr>
+					<td width="50"></td>
+					<td valign="top">
+					    <div class="tableLabel">
+					       Start date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetstartdate}}
+					</td>
+
+					<td valign="top">
+					    <div class="tableLabel">
+					       End date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetfinishdate}}
+					</td>
+				                      
+				</tr>     
+			</table>
+
+			<table width="750">
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       What I will offer: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{% if upcoming.give_back == 1 %}
+				        Paid compensation
+				        {% endif %}
+
+				        {% if upcoming.give_back == 2 %}
+				        Exchange  of skills/services
+				        {% endif %}
+
+				        {% if upcoming.give_back == 3 %}
+				        Negotiable
+				        {% endif %}
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{{upcoming.comment}}
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
+			<h4 align="center" class="tableLabel">Funding Status</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Funding I'm seeking: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{{upcoming.fund}}
+					</td>
+				                      
+				</tr>    
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{{upcoming.comment_help}}
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
+
+
+            <!--div class="description-wrapper">
               <ul>
 		        <li>Description:{{upcoming.describe}}</li>
 				<li>Your role:{{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}</li>
@@ -633,7 +957,7 @@
 	        <li>Funding:{{upcoming.fund}}</li>
 	        <li>Comment:{{upcoming.comment_help}}</li>
 	      </ul>
-	    </div>
+	    </div-->
 
         <hr class="divider"/>
 
@@ -668,7 +992,176 @@
             </div>
 
 	    {% else %}
-	    <div class="description-wrapper">
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Title: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Description: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				    </td>
+				                      
+				</tr>
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Your role: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				    </td>
+				                      
+				</tr>
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Status:
+				        </div>
+				    </td>
+				                    
+				    <td>
+					</td>
+				                      
+				</tr>
+			</table>
+
+			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Collaborators: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Skills:
+				        </div>
+				    </td>
+				                    
+				    <td>
+					</td>
+				                      
+				</tr>
+
+			</table>
+
+			<table width="750">
+				<tr>
+					<td width="50"></td>
+					<td valign="top">
+					    <div class="tableLabel">
+					       Start date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetstartdate}}
+					</td>
+
+					<td valign="top">
+					    <div class="tableLabel">
+					       End date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetfinishdate}}
+					</td>
+				                      
+				</tr>     
+			</table>
+
+			<table width="750">
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       What I will offer: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
+			<h4 align="center" class="tableLabel">Funding Status</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Funding I'm seeking: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>    
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
+	    <!--div class="description-wrapper">
               <ul>
 		        <li>Description:</li>
 		        <li>Your role:</li>
@@ -688,7 +1181,7 @@
 	        <li>Funding:</li>
 	        <li>Comment:</li>
 	      </ul>
-	    </div>
+	    </div-->
 	    {% endif %}
 
 

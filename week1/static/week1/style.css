@@ -611,8 +611,12 @@ to here
    width: 420px;
 }
 
-#home-main #home-firstcolumn #tableLabel{
-color: lightslategrey;
+#home-main .tableLabel{
+   color: lightslategrey;
+}
+
+#home-main .tableTitle{
+   width: 200px;
 }
 
 #home-main #home-secondcolumn {

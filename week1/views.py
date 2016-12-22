@@ -912,9 +912,12 @@ def home_edit_previouswork(request, num):
     num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
         form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
+        print "isvalid", form.is_valid()
+        print "POST", request.POST
         if form.is_valid():
             work = form.save(commit=False)
             tags = request.POST.getlist('professiontags')
+            print "tags", tags
 
             tagls = []
             for tag in tags:

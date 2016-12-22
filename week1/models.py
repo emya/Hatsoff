@@ -56,6 +56,16 @@ class Showcase(models.Model):
     role4 = models.CharField(max_length=300, default='', blank=True)
     role5 = models.CharField(max_length=300, default='', blank=True)
     completion = models.IntegerField(null=True, blank=True)#year of completion
+    tag1 = models.CharField(max_length=300, default='', blank=True)
+    tag2 = models.CharField(max_length=300, default='', blank=True)
+    tag3 = models.CharField(max_length=300, default='', blank=True)
+    tag4 = models.CharField(max_length=300, default='', blank=True)
+    tag5 = models.CharField(max_length=300, default='', blank=True)
+    tag6 = models.CharField(max_length=300, default='', blank=True)
+    tag7 = models.CharField(max_length=300, default='', blank=True)
+    tag8 = models.CharField(max_length=300, default='', blank=True)
+    tag9 = models.CharField(max_length=300, default='', blank=True)
+    tag10 = models.CharField(max_length=300, default='', blank=True)
     
 class UpcomingWork(models.Model):
     user = models.ForeignKey(User)

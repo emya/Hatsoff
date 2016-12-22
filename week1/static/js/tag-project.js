@@ -37,7 +37,7 @@
             tagLimit          : 10,   // Max number of tags allowed (null for unlimited).
 
             // Used for autocomplete, unless you override `autocomplete.source`.
-            availableTags     : [], 
+            availableTags     : ["Technology", "Art"], 
             // Use to override or add any options to the autocomplete widget.
             //
             // By default, autocomplete.source will map to availableTags,

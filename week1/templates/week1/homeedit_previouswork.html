@@ -10,6 +10,7 @@
      <div id="step-right">
         <h3>Update your past work</h3>
     	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                {{ form.errors }}
                 <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
                 <br>{{form.image.label_tag}}</br>
                     <input id="id_image" type="file" name="image"><br/>
@@ -28,6 +29,21 @@
                     <li>{{ form.role4.value }}</li>
                     <li>{{ form.role5.value }}</li>
                 </ul>
+
+                <br>{{form.tag1.label_tag}}<!--/br>{{form.role}}<br/-->
+                <ul id="myTagProjects">
+                    <li>{{ form.tag1.value }}</li>
+                    <li>{{ form.tag2.value }}</li>
+                    <li>{{ form.tag3.value }}</li>
+                    <li>{{ form.tag4.value }}</li>
+                    <li>{{ form.tag5.value }}</li>
+                    <li>{{ form.tag6.value }}</li>
+                    <li>{{ form.tag7.value }}</li>
+                    <li>{{ form.tag8.value }}</li>
+                    <li>{{ form.tag9.value }}</li>
+                    <li>{{ form.tag10.value }}</li>
+                </ul>
+
                 <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
 
     	        <div class="submit-wrapper">
@@ -47,6 +63,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $("#myTagProfessions").tagprofession();
+    $("#myTagProjects").tagproject();
 });
 
 

@@ -344,7 +344,7 @@ def step1(request):
             step = form.save(commit=False)
             #step = form.save(commit=False)
             print request.POST
-            tags = request.post.getlist('professiontags')
+            tags = request.POST.getlist('professiontags')
             print "tags", tags
 
             tagls = []
@@ -912,9 +912,12 @@ def home_edit_previouswork(request, num):
     num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
         form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
+        print "isvalid", form.is_valid()
+        print "POST", request.POST
         if form.is_valid():
             work = form.save(commit=False)
             tags = request.POST.getlist('professiontags')
+            print "tags", tags
 
             tagls = []
             for tag in tags:
@@ -938,6 +941,37 @@ def home_edit_previouswork(request, num):
             work.role3 = tagls[2]
             work.role4 = tagls[3]
             work.role5 = tagls[4]
+
+            projecttags = request.POST.getlist('projecttags')
+            print "tags", projecttags
+
+            tagls = []
+            for tag in projecttags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 10:
+                for i in range(10-len(tagls)):
+                    tagls.append("")
+
+            print "tagls", tagls
+            work.tag1 = tagls[0]
+            work.tag2 = tagls[1]
+            work.tag3 = tagls[2]
+            work.tag4 = tagls[3]
+            work.tag5 = tagls[4]
+            work.tag6 = tagls[5]
+            work.tag7 = tagls[6]
+            work.tag8 = tagls[7]
+            work.tag9 = tagls[8]
+            work.tag10 = tagls[9]
 
             work.number = num
             work.save()
@@ -1002,6 +1036,37 @@ def home_edit_newpreviouswork(request):
             work.role3 = tagls[2]
             work.role4 = tagls[3]
             work.role5 = tagls[4]
+
+            projecttags = request.POST.getlist('projecttags')
+            print "tags", projecttags
+
+            tagls = []
+            for tag in projecttags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
+
+            if len(tagls) != 10:
+                for i in range(10-len(tagls)):
+                    tagls.append("")
+
+            print "tagls", tagls
+            work.tag1 = tagls[0]
+            work.tag2 = tagls[1]
+            work.tag3 = tagls[2]
+            work.tag4 = tagls[3]
+            work.tag5 = tagls[4]
+            work.tag6 = tagls[5]
+            work.tag7 = tagls[6]
+            work.tag8 = tagls[7]
+            work.tag9 = tagls[8]
+            work.tag10 = tagls[9]
 
             work.user = currentuser
             work.number = num_show+1

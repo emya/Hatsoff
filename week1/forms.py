@@ -131,7 +131,7 @@ class Step4(forms.ModelForm):
 class Step5(forms.ModelForm):
     class Meta:
         model = Showcase
-        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5','completion')
+        fields = ('title', 'image', 'video', 'youtube', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9', 'tag10', 'completion')
         widgets = {
         }
         labels = {
@@ -141,18 +141,23 @@ class Step5(forms.ModelForm):
             'youtube': _('Add URL link to Youtube'),
             'describe': _('Describe your work'),
             'role1': _('Your Role'),
+            'tag1': _('Tags'),
             'completion': _('Year of completion'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data
         if 'youtube' in cleaned_data:
             youtube = cleaned_data.get('youtube') 
-            if youtube !="" and "www.youtube.com" in youtube:
-                if "watch?v=" in youtube:
-                    embedyoutube = youtube.replace("watch?v=", "embed/")
-                    cleaned_data['youtube'] = embedyoutube
+            if youtube == "":
+                pass
+
             else:
-                raise forms.ValidationError(_("Please enter a valid youtube URL."))
+                if "www.youtube.com" in youtube:
+                    if "watch?v=" in youtube:
+                        embedyoutube = youtube.replace("watch?v=", "embed/")
+                        cleaned_data['youtube'] = embedyoutube
+                else:
+                    raise forms.ValidationError(_("Please enter a valid youtube URL."))
 
         return cleaned_data
         """ 

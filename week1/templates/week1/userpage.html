@@ -9,87 +9,291 @@
     <div id="home-firstcolumn">
       
 	<div class="home-step">
-	    <div class="info-panel">
-	        <ul style="list-style-type:none">
-	         	<li>Skills:
-	           {% if target_profile.skill1 and target_profile.skill1 != ""%}	
-	           {{target_profile.skill1}}
-	           {% endif %}
-	           {% if target_profile.skill2 and target_profile.skill2 != ""%}	
-	           &nbsp{{target_profile.skill2}}
-	           {% endif %}
-	           {% if target_profile.skill3 and target_profile.skill3 != ""%}	
-	           &nbsp{{target_profile.skill3}}
-	           {% endif %}
-	           {% if target_profile.skill4 and target_profile.skill4 != ""%}	
-	           &nbsp{{target_profile.skill4}}
-	           {% endif %}
-	           {% if target_profile.skill5 and target_profile.skill5 != ""%}	
-	           &nbsp{{target_profile.skill5}}
-	           {% endif %}
-	           {% if target_profile.skill6 and target_profile.skill6 != ""%}	
-	           &nbsp{{target_profile.skill6}}
-	           {% endif %}
-	           {% if target_profile.skill7 and target_profile.skill7 != ""%}	
-	           &nbsp{{target_profile.skill7}}
-	           {% endif %}
-	           {% if target_profile.skill8 and target_profile.skill8 != ""%}	
-	           &nbsp{{target_profile.skill8}}
-	           {% endif %}
-	           {% if target_profile.skill9 and target_profile.skill9 != ""%}	
-	           &nbsp{{target_profile.skill9}}
-	           {% endif %}
-	           {% if target_profile.skill10 and target_profile.skill10 != ""%}	
-	           &nbsp{{target_profile.skill10}}
-	           {% endif %}
-	           </li>
-				<li>City:{{target_profile.city}}</li>
-				<li>Work at/as:{{target_profile.worksAt}}</li>
-				<li>Education:{{target_profile.education}}</li>
-				<li>Language:{{target_profile.language}}</li>
-	            <li>Website:{{ target_profile.weburl }}</li>
-				<li>Interested in: 
-					{% if target_profile.interestproject == 1%}
-					  Side projects
-					{% endif %}
+	   <br>
+        <table width="300"><tr><td width="10"></td>
+            <td width="120" valign="top">
+                
+                <div class="tableLabel">
+			     Skills:
+                </div>
+            </td><td>
+           {% if target_profile.skill1 and target_profile.skill1 != ""%}	
+           {{target_profile.skill1}}
+           {% endif %}
+           {% if target_profile.skill2 and target_profile.skill2 != ""%}	
+           &nbsp{{target_profile.skill2}}
+           {% endif %}
+           {% if target_profile.skill3 and target_profile.skill3 != ""%}	
+           &nbsp{{target_profile.skill3}}
+           {% endif %}
+           {% if target_profile.skill4 and target_profile.skill4 != ""%}	
+           &nbsp{{target_profile.skill4}}
+           {% endif %}
+           {% if target_profile.skill5 and target_profile.skill5 != ""%}	
+           &nbsp{{target_profile.skill5}}
+           {% endif %}
+           {% if target_profile.skill6 and target_profile.skill6 != ""%}	
+           &nbsp{{target_profile.skill6}}
+           {% endif %}
+           {% if target_profile.skill7 and target_profile.skill7 != ""%}	
+           &nbsp{{target_profile.skill7}}
+           {% endif %}
+           {% if target_profile.skill8 and target_profile.skill8 != ""%}	
+           &nbsp{{target_profile.skill8}}
+           {% endif %}
+           {% if target_profile.skill9 and target_profile.skill9 != ""%}	
+           &nbsp{{target_profile.skill9}}
+           {% endif %}
+           {% if target_profile.skill10 and target_profile.skill10 != ""%}	
+           &nbsp{{target_profile.skill10}}
+           {% endif %}
+          
+            </td>
+            </tr>
+            <tr>
+                <td>
+                <br>
+                </td>
+            </tr>
+            <tr><td width="10"></td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    City:
+                    </div>
+               </td>
+                <td>
+                     {{target_profile.city}}
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Work at: 
+                    </div>
+                </td>
+                    
+                <td>
+                {{target_profile.worksAt}}
+                </td>
+                      
+                <td valign="top">  
+                    
+                </td>
+            </tr>      
+            <tr><td width="20"></td>
+                <td valign="top">
+                    <div class="tableLabel">
+                    Education:
+                    </div>
+               </td>
+                <td>
+                     {{target_profile.education}}
+                </td>
+                <td valign="top">  
+                   
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Language:
+                    </div>
+                </td>
+                <td>{{target_profile.language}}
+                </td>
+                <td valign="top">  
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            
+            <tr>
+                <td>
+                <br>
+                </td>
+            </tr>
+            <tr><td width="20"></td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                        Website:
+                    </div>
+                    
+                </td>
+                <td>
+                     {{ target_profile.weburl }} 
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                <br>
+                </td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                Interested in: 
+                    </div>
+                </td>
+                <td>
+                    
+				{% if target_profile.interestproject == 1%}
+				  Side projects
+				{% endif %}
 
-					{% if target_profile.interestproject == 2 %}  
-					  Short term projects
-					{% endif %}
+				{% if target_profile.interestproject == 2 %}  
+				  Short term projects
+				{% endif %}
 
-					{% if target_profile.interestproject == 3 %}  
-					  Long term projects
-					{% endif %}
+				{% if target_profile.interestproject == 3 %}  
+				  Long term projects
+				{% endif %}
 
-					{% if target_profile.interestproject == 4 %}  
-					  Full-time projects
-					{% endif %}
-				</li>
+				{% if target_profile.interestproject == 4 %}  
+				  Full-time projects
+				{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Want to explore: 
+                    </div>
+                </td>
+                <td>
+                    {{target_profile.explore}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Hobby: 
+                    </div>
+                </td>
+                <td>
+                    {{target_profile.hobby}}
+                </td>
+                <td>
+                </td>
+            </tr>
 
-	            <li>Want to explore: {{target_profile.explore}}</li>
-				<li>Hobby: {{target_profile.hobby}}</li>
-				<li>Favorite quote: {{target_profile.fQuote}}</li>
-				<li>Films I love: {{target_profile.fFilm}}</li>
-				<li>Books I love: {{target_profile.fBook}}</li>
-				<li>Lived in: {{target_profile.cities}}</li>
-	    	</ul>
-		</div>
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Favorite quote: 
+                    </div>
+                </td>
+                <td>
+                    {{target_profile.fQuote}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Films I love: 
+                    </div>
+                </td>
+                <td>
+                    {{target_profile.fFilm}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Books I love: 
+                    </div>
+                </td>
+                <td>
+                    {{target_profile.fBook}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                </td>
+                <td valign="top">
+                    
+                    <div class="tableLabel">
+                    Lived in: 
+                    </div>
+                </td>
+                <td>
+                    {{target_profile.cities}}
+                </td>
+                <td>
+                </td>
+            </tr>
+            
+            </table> 
 	</div>
 
     </div>
 
     <div id="home-secondcolumn">
-	<div class="home-step">
-	{% if target_profile.photo %}
-	    <img src="{{ target_profile.photo.url }}" class="maincontent">
-	{% else %}
-	    <img src="{% static 'images/profileimage.png'%}" class="maincontent">
-	{% endif %}
-        </div>
-	<div class="home-step-out">
-            <h3>{{t_user.first_name}}&nbsp{{t_user.last_name}}</h3>
-            <h4 halign="center">{{target_profile.profession1}} &nbsp {{target_profile.profession2}} &nbsp {{target_profile.profession3}} &nbsp {{target_profile.profession4}} &nbsp {{target_profile.profession5}}</h4>
-            <p>{{target_profile.describe}}</p>
+		<div class="home-step">
+			<table>
+                <tr>
+                    <td width="10px">
+                    </td>
+                    <td>
+                    <br>
+                    {% if target_profile.photo %}
+                        <img src="{{ target_profile.photo.url }}" class="mainprofile">
+                    {% else %}
+                        <img src="{% static 'images/profileimage.png'%}" class="mainprofile" width="180">
+                    {% endif %}
+                    </td>
+                 </tr>
+        	</table>	
+    	</div>
+		<div class="home-step-out">
+	 		<table>
+                <tr>
+                    <td width="20px"></td>
+                    <td width="250px" >
+                        <h3 halign="center">{{t_user.first_name}}&nbsp{{t_user.last_name}}</h3> 
+                            <h4 halign="center">{{target_profile.profession1}} &nbsp {{target_profile.profession2}} &nbsp {{target_profile.profession3}} &nbsp {{target_profile.profession4}} &nbsp {{target_profile.profession5}}</h4>
+                            <p halign="center">{{target_profile.describe}}</p>
+                    </td>
+                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
+                </tr>
+        	</table>
         </div>
     </div>
 
@@ -127,182 +331,398 @@
 
 <div id="home-main-center">
 
-<div class="home-step">
+	<div class="home-step">
         <h3>Portfolio</h3>
-            <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
+           <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
                 <!-- Carousel Slides / Quotes -->
                 <div class="carousel-inner text-center">
 
-                    <!-- Quote 1 -->
-		    {% if showcases %}
-			{% for showcase in showcases %}
-			    {% if forloop.counter == 1 %}
-			    <div class="item active">
-				<blockquote>
+	                    <!-- Quote 1 -->
+			    {% if showcases %}
+					{% for showcase in showcases %}
+				    {% if forloop.counter == 1 %}
+				    <div class="item active">
+	                    
+	                    
+					<blockquote>
+					    <!--div class="row">
+						<div class="col-sm-8 col-sm-offset-2"-->
+						    {% if showcase.image or showcase.video or showcase.youtube %}
 
-					    {% if showcase.image or showcase.youtube %}
+							{% if showcase.image %}
+							   	<div class="display-image">
+									{% if '.pdf' in showcase.image.url %}
+								    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
+								    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
+								    </object>
+								    {% else %}
+								    <object data="{{ showcase.image.url }}" width="350px" />
+								    </object>
+								    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
+								    {% endif %}
+							   	</div>
+							{% endif %}
 
-						{% if showcase.image %}
+							{% if showcase.video %}
+							    <video controls id="video">
+							        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
+							    </video>
+							{% endif %}
+
+							{% if showcase.youtube %}
+							   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
+							   <div class="display-image">
+							   <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+							   </div>
+							{% endif %}
+
+	                        {% else %}
 							<div class="display-image">
-							{% if '.pdf' in showcase.image.url %}
-						    <embed src="{{ showcase.image.url }}" width="300px" height="400px" />
-						    {% else %}
-						    <img src="{{ showcase.image.url }}" class="maincontent">
-						    {% endif %}
-						    </div>
-						{% endif %}
+								<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+							</div>
+	                        {% endif %}
 
-						{% if showcase.youtube %}
-							<div class="display-image">
-						   		<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-						   	</div>
-						   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
-						{% endif %}
-                        {% else %}
-						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-                        {% endif %}
+	                        <table width="750">
+		                        <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Title: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.title}}
+					                </td>
+					                      
+					            </tr>     
 
-                        <div class="description-wrapper">
-						    <ul style="list-style-type:none; padding-left:0px;">
-							<li>Title:{{showcase.title}}</li>
-							<li>Description of work:{{showcase.describe}}</li>
-							<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
-							<li>Year of completion:{{showcase.completion}}</li>
-						    </ul>
-						</div>
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Description: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.describe}}
+					                </td>
+					                      
+					            </tr>
 
-                        <hr class="divider"/>
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Your role: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
+					                </td>
+					                      
+					            </tr>
 
-					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
- 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
-					    <div id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
-					    <div class="followstatus"></div>
-					    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
-					    <div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-					    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div-->
-					    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>
-					    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
-					    <div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Year of completion: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.completion}}
+					                </td>
+					                      
+					            </tr>
 
-                         <div class="well well-mm">
-	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-	                        	
-	                        </ul>
+					             <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Tags: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
+					                </td>
+					                      
+					            </tr>
+				            </table>
+							    <!--ul style="list-style-type:none; padding-left:0px;">
+								<li>Title:{{showcase.title}}</li>
+								<li>Description:{{showcase.describe}}</li>
+								<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
+								<li>Year of completion:{{showcase.completion}}</li>
+							    </ul-->
 
-	                        <form class="form-horizontal" action="">
-		                        <div class="form-group">
-			                        <div class="col-md-9">
-			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-			                        </div>
-			                    </div>
-			                    <div class="form-group">
-			                        <div class="col-md-12 text-right">
-			                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+	                        <hr class="divider"/>
+
+						    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
+	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
+						    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
+						    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
+	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
+
+
+	                        <div class="well well-mm">
+		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+		                        	
+		                        </ul>
+
+		                        <form class="form-horizontal" action="">
+			                        <div class="form-group">
+				                        <div class="col-md-9">
+				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                        <div class="col-md-12 text-right">
+				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+			                        	</div>
 		                        	</div>
-	                        	</div>
-	                        </form>
+		                        </form>
 
-                        </div>
-					
-				</blockquote>
-			    </div>
+	                        </div>
+
+					</blockquote>
+				    </div>
+
+	                {% else %}
+				    <div class="item">
+				    <blockquote>
+				    <!--div class="row">
+						<div class="col-sm-8 col-sm-offset-2"-->
+						<div class="right-edit">
+		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+		                </div>
+
+	                    <br>
+	 					    {% if showcase.image or showcase.youtube %}
+								{% if showcase.image %}
+									{% if '.pdf' in showcase.image.url %}
+								    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
+								    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
+								    </object>
+
+								    {% else %}
+								    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
+								    <object data="{{ showcase.image.url }}" width="350px" />
+								    </object>
+								    {% endif %}
+								{% endif %}
+
+								{% if showcase.youtube %}
+									<div class="display-image">
+							   			<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+							   		</div>
+								{% endif %}
+
+						    {% else %}	
+						    <div class="display-image">
+								<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+							</div>
+						    {% endif %}
+
+						    <table width="750">
+		                        <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Title: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.title}}
+					                </td>
+					                      
+					            </tr>     
+
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Description: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.describe}}
+					                </td>
+					                      
+					            </tr>
+
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Your role: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
+					                </td>
+					                      
+					            </tr>
+
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Year of completion: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.completion}}
+					                </td>
+					                      
+					            </tr>
+
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Tags: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
+					                </td>
+					                      
+					            </tr>
+				            </table>
+
+	                        <hr class="divider"/>
+
+							<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
+	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
+						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
+	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
+						    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
+						    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
+	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
+
+	                        <div class="well well-mm">
+		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+		                        	
+		                        </ul>
+
+		                        <form class="form-horizontal" action="">
+			                        <div class="form-group">
+				                        <div class="col-md-9">
+				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                        <div class="col-md-12 text-right">
+				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+			                        	</div>
+		                        	</div>
+		                        </form>
+
+	                        </div>
+	                                            
+						<!--/div>
+					</div-->
+					</blockquote>
+				    </div>
+	                {% endif %}
+	                {% endfor %}
                 {% else %}
-			    <div class="item">
-			    <blockquote>
+					<div class="display-image">
+		            	<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+		            </div>
 
-                        {% if showcase.image or showcase.video or showcase.youtube %}
+		            <table width="750">
+		                        <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Title: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                </td>
+					                      
+					            </tr>     
 
-						{% if showcase.image %}
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Description: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                </td>
+					                      
+					            </tr>
 
-						   	<div class="display-image">
-							{% if '.pdf' in showcase.image.url %}
-						    <embed src="{{ showcase.image.url }}" width="300px" height="400px" />
-						    {% else %}
-						    <img src="{{ showcase.image.url }}" class="maincontent">
-						    {% endif %}
-						    </div>
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Your role: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                </td>
+					                      
+					            </tr>
 
-						{% endif %}
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Year of completion: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                </td>
+					                      
+					            </tr>
 
-						{% if showcase.video %}
-						    <video controls id="video">
-						        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4"></source>
-						    </video>
-						{% endif %}
-
-						{% if showcase.youtube %}
-							<div class="display-image">
-						   		<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-						   	</div>
-						   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
-						{% endif %}
-                        {% else %}
-						<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-                        {% endif %}
-
-
-                        <div class="description-wrapper">
-						    <ul style="list-style-type:none; padding-left:0px;">
-							<li>Title:{{showcase.title}}</li>
-							<li>Description of work:{{showcase.describe}}</li>
-							<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
-							<li>Year of completion:{{showcase.completion}}</li>
-						    </ul>
-					    </div>
-
-                        <hr class="divider"/>
-
-					    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
- 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-					    <!--div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
-					    <div id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
-					    <div class="followstatus"></div>
-					    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
-					    <div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
-					    <div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
-
-                         <div class="well well-mm">
-	                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-	                        	
-	                        </ul>
-
-	                        <form class="form-horizontal" action="">
-		                        <div class="form-group">
-			                        <div class="col-md-9">
-			                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-			                        </div>
-			                    </div>
-			                    <div class="form-group">
-			                        <div class="col-md-12 text-right">
-			                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
-		                        	</div>
-	                        	</div>
-	                        </form>
-
-                        </div>
-                                            
-                  
-				</blockquote>
-			    </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-                    {% endif %}
+					            <tr>
+					                <td width="50"></td>
+					                <td valign="top" class="tableTitle">
+					                    <div class="tableLabel">
+					                    Tags: 
+					                    </div>
+					                </td>
+					                    
+					                <td>
+					                </td>
+					                      
+					            </tr>
+				            </table>
+                {% endif %}
                 </div>
 
                 <!-- Carousel Buttons Next/Prev -->
+                <!--a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a-->
                 <a data-slide="prev" href="#quote-carousel" class="carousel-control left">&lsaquo;</a>
                 <a data-slide="next" href="#quote-carousel" class="carousel-control right">&rsaquo;</a>
-            </div>
-    </div>
+            </div> 
+ 	</div>
 
 
 	<div class="home-step">
         <script>
 		function show_upcoming(){
-                    console.log('show more!');
 		    $('#upcomingComment').show();
 		    $('#upcoming_hide').show();
 		    $('#upcoming_show').hide();
@@ -316,142 +736,459 @@
 		};
         </script>
 
-        <h3>What’s Next</h3>
-		    {% if upcoming %}
-		        {% if upcoming.image %}
-		            <img src="{{ upcoming.image.url }}" class="maincontent">
-		        {% else %}
-		            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent"></li>
-		        {% endif %}
-		    {% else %}
-	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	   		{% endif %}
+        <h3>Upcoming Project</h3>
+
+        <br>
+	    {% if upcoming %}
+	        {% if upcoming.image %}
+
+	        	{% if upcoming.image %}
+					<div class="display-image">
+					{% if '.pdf' in upcoming.image.url %}
+					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
+					{% else %}
+					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
+					    <!--img src="{{ upcoming.image.url }}" class="maincontent"-->
+					{% endif %}
+					</div>
+				{% endif %}
+
+	        {% else %}
+			<div class="display-image">
+	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+	        </div>
+	        {% endif %}
+	    {% else %}
+			<div class="display-image">
+	        	<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+	        </div>
+	    {% endif %}
 
 	    {% if upcoming %}
-            <div class="description-wrapper">
-              <ul style="list-style-type:none">
-		        <li>Description of your upcoming work:{{upcoming.describe}}</li>
-				<li>Your role:{{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}</li>
-		        <li>Status:{{upcoming.status}}</li>
-		        <li>Comment:{{upcoming.comment}}</li>
-	      	  </ul>
-              <ul>
+	     	<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Title: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.title}}
+					</td>
+				                      
+				</tr>     
 
-            <h4 align="center">Looking for</h4>
-            <li>Collaborators:{{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}</li>
-	        <li>Skills:
-	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
-	           {{ upcoming.collaborator_skill1 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill2 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill3 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill4 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill5 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill6 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill7 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill8 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill9 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill10 }}
-	           {% endif %}
-	        </li>
-	        <li>Preferred city location of collaborator:{{upcoming.preferred_city}}</li>
-	        <li>Start date:{{upcoming.targetstartdate}}</li>
-	        <li>End date:{{upcoming.targetfinishdate}}</li>
-	        <li>How often to work with collaborator:{{upcoming.often}}</li>
-	        <li>How to give back to collaborator:
-	        {% if upcoming.give_back == 1 %}
-	        Paid compensation
-	        {% endif %}
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Description: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.describe}}
+				    </td>
+				                      
+				</tr>
 
-	        {% if upcoming.give_back == 2 %}
-	        Exchange  of skills/services
-	        {% endif %}
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Your role: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}
+				    </td>
+				                      
+				</tr>
 
-	        {% if upcoming.give_back == 3 %}
-	        Negotiable
-	        {% endif %}
-	        </li>
-	        <li>Funding:{{upcoming.fund}}</li>
-	        <li>Comment:{{upcoming.comment_help}}</li>
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Status:
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.status}}
+					</td>
+				                      
+				</tr>
+			</table>
 
-	      </ul>
-        </div>
+			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Collaborators: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Skills:
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
+				           {{ upcoming.collaborator_skill1 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill2 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill3 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill4 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill5 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill6 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill7 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill8 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill9 }}
+				        {% endif %}
+				        {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
+				           &nbsp{{ upcoming.collaborator_skill10 }}
+	           			{% endif %}
+					</td>
+				                      
+				</tr>
+
+			</table>
+
+			<table width="750">
+				<tr>
+					<td width="50"></td>
+					<td valign="top">
+					    <div class="tableLabel">
+					       Start date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetstartdate}}
+					</td>
+
+					<td valign="top">
+					    <div class="tableLabel">
+					       End date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetfinishdate}}
+					</td>
+				                      
+				</tr>     
+			</table>
+
+			<table width="750">
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       What I will offer: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{% if upcoming.give_back == 1 %}
+				        Paid compensation
+				        {% endif %}
+
+				        {% if upcoming.give_back == 2 %}
+				        Exchange  of skills/services
+				        {% endif %}
+
+				        {% if upcoming.give_back == 3 %}
+				        Negotiable
+				        {% endif %}
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{{upcoming.comment}}
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
+			<h4 align="center" class="tableLabel">Funding Status</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Funding I'm seeking: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{{upcoming.fund}}
+					</td>
+				                      
+				</tr>    
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+						{{upcoming.comment_help}}
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
 
         <hr class="divider"/>
 
         <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
-		<!--div class="popupHatsoff" onclick="hatsoffFunction(2,1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div-->
-        <!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(2, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-	    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div-->
-	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>
-		<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
-		<div id="hatsoffstatus_upcoming"></div>
-		<div class="followstatus"></div>
-	    <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
+		<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
+	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
+		<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
+        <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
+
+             
            <div class="well well-mm">
-            <ul id="upcomingComment" style="list-style-type:none;">
-            	
-            </ul>
+	            <ul id="upcomingComment" style="list-style-type:none;">
+	            	
+	            </ul>
 
-            <form class="form-horizontal" action="">
-                <div class="form-group">
-                    <div class="col-md-9">
-                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12 text-right">
-                    	<button class="btn btn-primary btn-lg" onclick="submitUpcomingComment()">Post</button>
-                	</div>
-            	</div>
-            </form>
+	            <form class="form-horizontal" action="">
+	                <div class="form-group">
+	                    <div class="col-md-9">
+	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <div class="col-md-12 text-right">
+	                    	<button class="btn btn-primary btn-lg" onclick="submitUpcomingComment()">Post</button>
+	                	</div>
+	            	</div>
+	            </form>
 
             </div>
 
-        {% else %}
-	    <div class="description-wrapper">
-              <ul>
-		        <li>Description of your upcoming work:</li>
-		        <li>Your role:</li>
-		        <li>Status:</li>
-		        <li>Comment:</li>
-	      	  </ul>
+	    {% else %}
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Title: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>     
 
-              <ul>
-	        <h4 align="center">Looking for</h4>
-            <li>Collaborators:</li>
-	        <li>Skills:</li>
-	        <li>Preferred city location of collaborator:</li>
-	        <li>Start date:</li>
-	        <li>End date:</li>
-	        <li>How often to work with collaborator:</li>
-	        <li>How to give back to collaborator:</li>
-	        <li>Funding:</li>
-	        <li>Comment:</li>
-	      </ul>
-	    </div>
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Description: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				    </td>
+				                      
+				</tr>
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				            Your role: 
+				        </div>
+				    </td>
+				                    
+				    <td>
+				    </td>
+				                      
+				</tr>
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Status:
+				        </div>
+				    </td>
+				                    
+				    <td>
+					</td>
+				                      
+				</tr>
+			</table>
+
+			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Collaborators: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+				    <td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Skills:
+				        </div>
+				    </td>
+				                    
+				    <td>
+					</td>
+				                      
+				</tr>
+
+			</table>
+
+			<table width="750">
+				<tr>
+					<td width="50"></td>
+					<td valign="top">
+					    <div class="tableLabel">
+					       Start date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetstartdate}}
+					</td>
+
+					<td valign="top">
+					    <div class="tableLabel">
+					       End date: 
+					    </div>
+					</td>
+					                    
+					<td>
+					    {{upcoming.targetfinishdate}}
+					</td>
+				                      
+				</tr>     
+			</table>
+
+			<table width="750">
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       What I will offer: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>     
+
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>  
+
+			</table>
+
+			<h4 align="center" class="tableLabel">Funding Status</h4>
+			<table width="750">
+	            <tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Funding I'm seeking: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>    
+				<tr>
+					<td width="50"></td>
+					<td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					       Comment: 
+					    </div>
+					</td>
+					                    
+					<td>
+					</td>
+				                      
+				</tr>  
+
+			</table>
 
 	    {% endif %}
+
+ 
 	</div>
 
 	<script src="{{nodejs_url}}/socket.io/socket.io.js"></script>

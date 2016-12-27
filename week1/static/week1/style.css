@@ -15,6 +15,7 @@ ul{
    min-height: 100%;
    /*padding: 20px;*/
    font-family: Cabin;
+   padding-top: 100px;
 }
 
 #body #body-left {
@@ -47,6 +48,8 @@ ul{
    width: 100%;
    background-color: #ac4f7d;
    border-bottom: 3px solid #4a86e8;
+   position: fixed;
+   top:0;
    z-index: 3;
 }
 

@@ -1303,7 +1303,7 @@ def results_friends(request, query):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'query':query, 'users':foundusers, 'skills':foundskills, 'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'query':q, 'users':foundusers, 'skills':foundskills, 'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 

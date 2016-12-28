@@ -15,6 +15,8 @@
                     $("#myTags").tagit();
                     $("#myTagProfessions").tagprofession();
                     $("#myTagCollaborators").tagcollaborator();
+                    $("#myTagProjects").tagproject();
+
                 });
             </script> 
 
@@ -27,6 +29,21 @@
             <ul id="myTagProfessions">
             </ul>
             <br>{{form.status.label_tag}}</br>{{form.status}}<br/>
+
+            <br>{{form.tag1.label_tag}}<!--/br>{{form.role}}<br/-->
+            <ul id="myTagProjects">
+                <li>{{ form.tag1.value }}</li>
+                <li>{{ form.tag2.value }}</li>
+                <li>{{ form.tag3.value }}</li>
+                <li>{{ form.tag4.value }}</li>
+                <li>{{ form.tag5.value }}</li>
+                <li>{{ form.tag6.value }}</li>
+                <li>{{ form.tag7.value }}</li>
+                <li>{{ form.tag8.value }}</li>
+                <li>{{ form.tag9.value }}</li>
+                <li>{{ form.tag10.value }}</li>
+            </ul>
+            
             <br>Looking to get help from the community?</br>
                 <select name="get_help">
                 {% if form.get_help.value == 1 %}
@@ -50,6 +67,7 @@
             <ul id="myTagCollaborators">
             </ul>
 
+            
             <!--ul id="myTagProfessions">
             </ul-->
 

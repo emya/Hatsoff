@@ -1136,6 +1136,28 @@ def home_edit_upcoming(request):
             work.role4 = ptagls[3]
             work.role5 = ptagls[4]
 
+            ptags = request.POST.getlist('projecttags')
+
+            ptagls = []
+            for tag in ptags:
+                lowtag = tag.capitalize()
+                ptagls.append(lowtag)
+
+            if len(ptagls) != 10:
+                for i in range(10-len(ptagls)):
+                    ptagls.append("")
+
+            work.tag1 = ptagls[0]
+            work.tag2 = ptagls[1]
+            work.tag3 = ptagls[2]
+            work.tag4 = ptagls[3]
+            work.tag5 = ptagls[4]
+            work.tag6 = ptagls[5]
+            work.tag7 = ptagls[6]
+            work.tag8 = ptagls[7]
+            work.tag9 = ptagls[8]
+            work.tag10 = ptagls[9]
+
             work.number = 1
             get_help = form.cleaned_data["get_help"]
             print "get_help", get_help, type(get_help)
@@ -1192,6 +1214,8 @@ def home_edit_upcoming(request):
                 work.collaborator3 = ctagls[2]
                 work.collaborator4 = ctagls[3]
                 work.collaborator5 = ctagls[4]
+
+                
 
             else:
                 work.fund = ""

@@ -141,7 +141,7 @@ class Step5(forms.ModelForm):
             'youtube': _('Add URL link to Youtube'),
             'describe': _('Describe your work'),
             'role1': _('Your Role'),
-            'tag1': _('Tags'),
+            'tag1': _('Keywords'),
             'completion': _('Year of completion'),
         }
     def clean(self):
@@ -171,7 +171,7 @@ class Step5(forms.ModelForm):
 class Step6(forms.ModelForm):
     class Meta:
         model = UpcomingWork
-        fields = ('title', 'image', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5', 'status', 'targetstartdate', 'targetfinishdate', 'comment', 'get_help', 'collaborator1', 'collaborator2', 'collaborator3', 'collaborator4', 'collaborator5', 'fund', 'comment_help', 'preferred_city', 'often', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10')
+        fields = ('title', 'image', 'describe', 'role1', 'role2', 'role3', 'role4', 'role5', 'status', 'targetstartdate', 'targetfinishdate', 'comment', 'get_help', 'collaborator1', 'collaborator2', 'collaborator3', 'collaborator4', 'collaborator5', 'fund', 'comment_help', 'preferred_city', 'often', 'time_commitment', 'give_back', 'collaborator_skill1', 'collaborator_skill2', 'collaborator_skill3', 'collaborator_skill4', 'collaborator_skill5', 'collaborator_skill6', 'collaborator_skill7', 'collaborator_skill8', 'collaborator_skill9', 'collaborator_skill10', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9', 'tag10')
         widgets = {
         }
         labels = {
@@ -190,6 +190,7 @@ class Step6(forms.ModelForm):
             'preferred_city': _('Preferred city location of collaborator?'),
             'time_commitment': _('Time commitment of project? (Dates, no. of hours per day etc)'),
             'give_back': _('How will you give back to your collaborator?'),
+            'tag1': _('Keywords')
         }
     def clean(self):
         cleaned_data = self.cleaned_data

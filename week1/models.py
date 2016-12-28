@@ -104,6 +104,16 @@ class UpcomingWork(models.Model):
     time_commitment = models.DateTimeField(null=True, blank=True)
     give_back = models.IntegerField(null=True, blank=True)
     comment_help = models.CharField(max_length=300, default='', blank=True)
+    tag1 = models.CharField(max_length=300, default='', blank=True)
+    tag2 = models.CharField(max_length=300, default='', blank=True)
+    tag3 = models.CharField(max_length=300, default='', blank=True)
+    tag4 = models.CharField(max_length=300, default='', blank=True)
+    tag5 = models.CharField(max_length=300, default='', blank=True)
+    tag6 = models.CharField(max_length=300, default='', blank=True)
+    tag7 = models.CharField(max_length=300, default='', blank=True)
+    tag8 = models.CharField(max_length=300, default='', blank=True)
+    tag9 = models.CharField(max_length=300, default='', blank=True)
+    tag10 = models.CharField(max_length=300, default='', blank=True)
 
 class Hatsoff(models.Model):
     user_one_id = models.IntegerField()

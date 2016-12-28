@@ -251,7 +251,7 @@ def home(request):
     
     if query != None:
         print "query", query
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=uid, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()
@@ -317,7 +317,7 @@ def project_management(request):
     
     if query != None:
         print "query", query
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=uid, username=request.user.username)
 
@@ -687,7 +687,7 @@ def home_edit_personalinfo(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
@@ -712,7 +712,7 @@ def home_edit_url(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
@@ -736,7 +736,7 @@ def home_edit_profession(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
@@ -797,7 +797,7 @@ def home_edit_professionskills(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
@@ -862,7 +862,7 @@ def home_edit_funfact(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
@@ -886,7 +886,7 @@ def home_edit_photo(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
@@ -914,7 +914,7 @@ def home_edit_previouswork(request, num):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Showcase, user=currentuser, number=num)
@@ -1012,7 +1012,7 @@ def home_edit_newpreviouswork(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_show = Showcase.objects.filter(user=currentuser).count()
@@ -1103,7 +1103,7 @@ def home_edit_upcoming(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = UpcomingWork.objects.filter(user=currentuser, number=1).count()
@@ -1288,11 +1288,12 @@ def reset(request):
     return render_to_response('week1/password_reset.html', variables, )
 
 @login_required
-def results_friends(request, query):
+def results_search(request, query):
+    print "query ", query
     newquery = request.GET.get('search_query', None)
     
     if newquery != None:
-        return HttpResponseRedirect('/week1/results/friends/'+newquery, {'query': newquery})
+        return HttpResponseRedirect('/week1/search/results/'+newquery, {'query': newquery})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     t = loader.get_template('week1/results_friends.html')
@@ -1322,7 +1323,7 @@ def talent_list(request, query):
     newquery = request.GET.get('search_query', None)
     
     if newquery != None:
-        return HttpResponseRedirect('/week1/results/friends/'+newquery, {'query': newquery})
+        return HttpResponseRedirect('/week1/search/results/'+newquery, {'query': newquery})
 
     media_url = settings.MEDIA_URL
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1340,7 +1341,7 @@ def hatsoff_list(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     """
     user1 = request.user.id
@@ -1405,7 +1406,7 @@ def thanks_list(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
@@ -1436,7 +1437,7 @@ def follow_list(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
@@ -1545,7 +1546,7 @@ def get_profile(request, uid):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1598,7 +1599,7 @@ def community(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1640,7 +1641,7 @@ def community_members(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1657,7 +1658,7 @@ def community_needyou(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1691,7 +1692,7 @@ def collaborators_you_need(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1725,7 +1726,7 @@ def collaborators_need_you(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1759,7 +1760,7 @@ def community_post(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     c_id = request.GET.get('c_id')
     print "c_id:", c_id
@@ -1793,7 +1794,7 @@ def notification(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
 
@@ -1826,7 +1827,7 @@ def folder(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
@@ -1865,7 +1866,7 @@ def add_folder(request, user2):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     user1 = request.user.id
     if user1 < user2:
@@ -1915,7 +1916,7 @@ def historyboard(request):
     query = request.GET.get('search_query', None)
     
     if query != None:
-        return HttpResponseRedirect('/week1/results/friends/'+query, {'query': query})
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=uid, username=request.user.username)
     num_result = Profile.objects.filter(user=currentuser).count()

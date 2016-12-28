@@ -59,22 +59,22 @@ def index(request):
             print "signup"
             form = RegistrationForm(request.POST)
             if form.is_valid():
+                username = form.cleaned_data['username']
+                first_name = form.cleaned_data['first_name'].capitalize()
+                last_name = form.cleaned_data['last_name'].capitalize()
+                password = form.cleaned_data['password1']
+
                 user = User.objects.create_user(
-                     username = form.cleaned_data['username'],
-                     first_name = form.cleaned_data['first_name'],
-                     last_name = form.cleaned_data['last_name'],
-                     password = form.cleaned_data['password1'],
+                     username = username,
+                     first_name = first_name,
+                     last_name = last_name,
+                     password = password,
                 )
 
-                email = request.POST.get('username')
-                firstname = request.POST.get('first_name')
-                lastname = request.POST.get('last_name')
-                passwd = request.POST.get('password1')
-
-                tomail = EmailMessage('Dear '+firstname, "Thank you for registering!", to=[email])
+                tomail = EmailMessage('Dear '+first_name, "Thank you for registering!", to=[username])
                 tomail.send()
 
-                newuser = authenticate(username=email, password=passwd)
+                newuser = authenticate(username=username, password=password)
                 if newuser is not None:
                     if newuser.is_active:
                         login(request, newuser)
@@ -132,27 +132,27 @@ def about(request):
             print "signup"
             form = RegistrationForm(request.POST)
             if form.is_valid():
+                username = form.cleaned_data['username']
+                first_name = form.cleaned_data['first_name'].capitalize()
+                last_name = form.cleaned_data['last_name'].capitalize()
+                password = form.cleaned_data['password1']
+
                 user = User.objects.create_user(
-                     username = form.cleaned_data['username'],
-                     first_name = form.cleaned_data['first_name'],
-                     last_name = form.cleaned_data['last_name'],
-                     password = form.cleaned_data['password1'],
+                     username = username,
+                     first_name = first_name,
+                     last_name = last_name,
+                     password = password,
                 )
 
-                email = request.POST.get('username')
-                firstname = request.POST.get('first_name')
-                lastname = request.POST.get('last_name')
-                passwd = request.POST.get('password1')
-
-                tomail = EmailMessage('Dear '+firstname, "Thank you for registering!", to=[email])
+                tomail = EmailMessage('Dear '+first_name, "Thank you for registering!", to=[username])
                 tomail.send()
 
-                newuser = authenticate(username=email, password=passwd)
+                newuser = authenticate(username=username, password=password)
                 if newuser is not None:
                     if newuser.is_active:
                         login(request, newuser)
                         return render(request, 'week1/welcome.html')
-                #return HttpResponseRedirect('/week1/home/')
+
             else:
                 loginform = LoginForm()
                 messages = []
@@ -201,22 +201,31 @@ def signup(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name'].capitalize()
+            last_name = form.cleaned_data['last_name'].capitalize()
+            password = form.cleaned_data['password1']
+
+            print "name ", first_name, last_name            
+
             user = User.objects.create_user(
-                 username = form.cleaned_data['username'],
-                 first_name = form.cleaned_data['first_name'],
-                 last_name = form.cleaned_data['last_name'],
-                 password = form.cleaned_data['password1'],
+                 username = username,
+                 first_name = first_name,
+                 last_name = last_name,
+                 password = password,
             )
 
+            """
             email = request.POST.get('username')
             firstname = request.POST.get('first_name')
             lastname = request.POST.get('last_name')
             passwd = request.POST.get('password1')
+            """
 
-            tomail = EmailMessage('Dear '+firstname, "Thank you for registering!", to=[email])
+            tomail = EmailMessage('Dear '+firstname, "Thank you for registering!", to=[username])
             tomail.send()
 
-            newuser = authenticate(username=email, password=passwd)
+            newuser = authenticate(username=username, password=password)
             if newuser is not None:
                 if newuser.is_active:
                     login(request, newuser)

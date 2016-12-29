@@ -2427,3 +2427,7 @@ hr .solid-divider{
 .comment-container{
    padding: 10px 90px;
 }
+
+#upcoming-more{
+   display: none;
+}

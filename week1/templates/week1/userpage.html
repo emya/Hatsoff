@@ -469,24 +469,26 @@
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
 
-	                        <div class="well well-mm">
-		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-		                        	
-		                        </ul>
+							<div class="comment-container">
+		                        <div class="well well-smm">
+			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+			                        	
+			                        </ul>
 
-		                        <form class="form-horizontal" action="">
-			                        <div class="form-group">
-				                        <div class="col-md-9">
-				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-				                        </div>
-				                    </div>
-				                    <div class="form-group">
-				                        <div class="col-md-12 text-right">
-				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+			                        <form class="form-horizontal" action="">
+				                        <div class="form-group">
+					                        <div class="col-md-9">
+					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+					                        </div>
+					                    </div>
+					                    <div class="form-group">
+					                        <div class="col-md-12 text-right">
+					                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+				                        	</div>
 			                        	</div>
-		                        	</div>
-		                        </form>
+			                        </form>
 
+		                        </div>
 	                        </div>
 
 					</blockquote>
@@ -611,24 +613,26 @@
 						    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
-	                        <div class="well well-mm">
-		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-		                        	
-		                        </ul>
+							<div class="comment-container">
+		                        <div class="well well-smm">
+			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+			                        	
+			                        </ul>
 
-		                        <form class="form-horizontal" action="">
-			                        <div class="form-group">
-				                        <div class="col-md-9">
-				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-				                        </div>
-				                    </div>
-				                    <div class="form-group">
-				                        <div class="col-md-12 text-right">
-				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+			                        <form class="form-horizontal" action="">
+				                        <div class="form-group">
+					                        <div class="col-md-9">
+					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+					                        </div>
+					                    </div>
+					                    <div class="form-group">
+					                        <div class="col-md-12 text-right">
+					                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+				                        	</div>
 			                        	</div>
-		                        	</div>
-		                        </form>
+			                        </form>
 
+		                        </div>
 	                        </div>
 	                                            
 						<!--/div>
@@ -1022,8 +1026,8 @@
 
 
 
-             
-           <div class="well well-mm">
+        <div class="comment-container">
+           <div class="well well-smm">
 	            <ul id="upcomingComment" style="list-style-type:none;">
 	            	
 	            </ul>
@@ -1031,7 +1035,7 @@
 	            <form class="form-horizontal" action="">
 	                <div class="form-group">
 	                    <div class="col-md-9">
-	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
+	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
 	                    </div>
 	                </div>
 	                <div class="form-group">
@@ -1042,6 +1046,7 @@
 	            </form>
 
             </div>
+        </div>
 
 	    {% else %}
 			<table width="750">

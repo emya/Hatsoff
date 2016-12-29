@@ -28,6 +28,11 @@ from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhot
 # Create your views here.
 @csrf_protect
 def index(request):
+    query = request.GET.get('search_query', None)
+    
+    if query:
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
+
     if request.method == 'POST':
         print "post"
         if 'login' in request.POST:
@@ -101,6 +106,11 @@ def index(request):
 
 @csrf_protect
 def about(request):
+    query = request.GET.get('search_query', None)
+    
+    if query:
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
+
     if request.method == 'POST':
         print "post"
         if 'login' in request.POST:
@@ -249,7 +259,7 @@ def home(request):
     uid = request.user.id
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         print "query", query
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
@@ -315,7 +325,7 @@ def project_management(request):
     uid = request.user.id
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         print "query", query
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
@@ -686,7 +696,7 @@ def step7(request):
 def home_edit_personalinfo(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -711,7 +721,7 @@ def home_edit_personalinfo(request):
 def home_edit_url(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -735,7 +745,7 @@ def home_edit_url(request):
 def home_edit_profession(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -796,7 +806,7 @@ def home_edit_profession(request):
 def home_edit_professionskills(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -861,7 +871,7 @@ def home_edit_professionskills(request):
 def home_edit_funfact(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -885,7 +895,7 @@ def home_edit_funfact(request):
 def home_edit_photo(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -913,7 +923,7 @@ def home_edit_photo(request):
 def home_edit_previouswork(request, num):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -1011,7 +1021,7 @@ def home_edit_previouswork(request, num):
 def home_edit_newpreviouswork(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -1102,7 +1112,7 @@ def home_edit_newpreviouswork(request):
 def home_edit_upcoming(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -1292,7 +1302,7 @@ def results_search(request, query):
     print "query ", query
     newquery = request.GET.get('search_query', None)
     
-    if newquery != None:
+    if newquery:
         return HttpResponseRedirect('/week1/search/results/'+newquery, {'query': newquery})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1322,7 +1332,7 @@ def results_search(request, query):
 def talent_list(request, query):
     newquery = request.GET.get('search_query', None)
     
-    if newquery != None:
+    if newquery:
         return HttpResponseRedirect('/week1/search/results/'+newquery, {'query': newquery})
 
     media_url = settings.MEDIA_URL
@@ -1340,41 +1350,8 @@ def talent_list(request, query):
 def hatsoff_list(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
-
-    """
-    user1 = request.user.id
-    if user1 < user2:
-        try:
-            hat = Hatsoff.objects.get(user_one_id=user1, user_two_id=user2)
-            if hat.actionuser == 2 and hat.status == 0:
-                hat.status = 1
-                hat.save()
-
-        except ObjectDoesNotExist:
-            hat = Hatsoff.objects.create(user_one_id=user1, user_two_id=user2, actionuser=1, status=0)
-            hat.save()
-
-    else:
-        try:
-            hat = Hatsoff.objects.get(user_one_id=user2, user_two_id=user1)
-            if hat.actionuser == 1 and hat.status == 0:
-                hat.status = 1
-                hat.save()
-
-
-        except ObjectDoesNotExist:
-            hat = Hatsoff.objects.create(user_one_id=user2, user_two_id=user1, actionuser=2, status=0)
-            hat.save()
-
-    users = None
-    hatlist1 = Hatsoff.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=user1, actionuser=1, status=0) | Q(user_one_id=user1, status=1))
-    hatlist2 = Hatsoff.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
-    hatlist = list(chain(hatlist1, hatlist2))
-    
-    users = User.objects.filter(id__in=hatlist)
-    """
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
@@ -1405,7 +1382,7 @@ def hatsoff_list(request):
 def thanks_list(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -1436,7 +1413,7 @@ def thanks_list(request):
 def follow_list(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -1507,6 +1484,11 @@ def hatsoff_list(request):
 
 @login_required
 def messages(request):
+    query = request.GET.get('search_query', None)
+    
+    if query:
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
+
     nodejs_url = settings.NODEJS_SOCKET_URL
     myid = request.user.id
 
@@ -1545,7 +1527,7 @@ def private_message(request, uid):
 def get_profile(request, uid):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1598,7 +1580,7 @@ def get_profile(request, uid):
 def community(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1640,7 +1622,7 @@ def community(request):
 def community_members(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1657,7 +1639,7 @@ def community_members(request):
 def community_needyou(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1691,7 +1673,7 @@ def community_needyou(request):
 def collaborators_you_need(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1725,7 +1707,7 @@ def collaborators_you_need(request):
 def collaborators_need_you(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1759,7 +1741,7 @@ def collaborators_need_you(request):
 def community_post(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     c_id = request.GET.get('c_id')
@@ -1793,7 +1775,7 @@ def community_post(request):
 def notification(request):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1826,7 +1808,7 @@ def folder(request):
     uid = request.user.id
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1865,7 +1847,7 @@ def folder(request):
 def add_folder(request, user2):
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     user1 = request.user.id
@@ -1915,7 +1897,7 @@ def historyboard(request):
     uid = request.user.id
     query = request.GET.get('search_query', None)
     
-    if query != None:
+    if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=uid, username=request.user.username)

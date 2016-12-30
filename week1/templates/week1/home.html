@@ -909,9 +909,9 @@
 
 			</table>
 
-            <!--div id="toggleUpcoming" onclick="toggleUpcoming()" > Show More </div-->
+            <div id="toggleUpcoming" onclick="toggleUpcoming()" class="show-link"> Show More </div>
 
-            <!--div id="upcoming-more"-->
+            <div id="upcoming-more">
     			<table width="750">
     				<tr>
     					<td width="50"></td>
@@ -1024,7 +1024,8 @@
     				</tr>  
 
     			</table>
-            <!--/div-->
+                <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
+            </div>
 
 
 
@@ -1394,9 +1395,9 @@
 
             console.log("status is "+status);
 
-            if (status == "none") {
+            if (status == "none" || status == "") {
                 document.getElementById("upcoming-more").style.display = "block";
-                document.getElementById("toggleUpcoming").innerText = "Show Less";
+                document.getElementById("toggleUpcoming").innerText = "";
             } else if (status == "block") {
                 document.getElementById("upcoming-more").style.display = "none";
                 document.getElementById("toggleUpcoming").innerText = "Show More";

@@ -2431,3 +2431,9 @@ hr .solid-divider{
 #upcoming-more{
    display: none;
 }
+
+.show-link{
+  color: #2d6ca2; 
+  text-decoration: underline;
+  padding: 5px;
+}

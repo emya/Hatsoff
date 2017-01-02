@@ -51,7 +51,7 @@
           
             </td>
             <td valign="top">
-                <a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
             </td>
             </tr>
             <tr>
@@ -70,7 +70,7 @@
                      {{profile.city}}
                 </td>
                 <td valign="top">  
-                    <a href="{% url 'week1:edit_personalinfo' %}" text-align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true" ></i></a>
+                    <a href="{% url 'week1:edit_personalinfo' %}" text-align="right"><i class="fa fa-pencil " aria-hidden="true" ></i></a>
                 </td>
             </tr>
             <tr>
@@ -136,7 +136,7 @@
                      {{ profile.weburl }} 
                 </td>
                 <td valign="top">
-                    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
+                    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
                 </td>
             </tr>
             
@@ -171,7 +171,7 @@
 				  Full-time projects
 				{% endif %}
                 </td>
-				<td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" text-align="right"></i></a>
+				<td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
                 </td>
             </tr>
             <tr>
@@ -295,7 +295,7 @@
                     {% endif %}
                     </td>
                     <td valign="top">
-                        <a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true" align="right"></i></a>
+                        <a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil " aria-hidden="true" align="right"></i></a>
                     </td>
                  </tr>
             </table>
@@ -309,7 +309,7 @@
                             <h4 halign="center">{{profile.profession1}} &nbsp {{profile.profession2}} &nbsp {{profile.profession3}} &nbsp {{profile.profession4}} &nbsp {{profile.profession5}}</h4>
                             <p halign="center">{{profile.describe}}</p>
                     </td>
-                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
+                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a></td>
                 </tr>
             </table>
         </div>
@@ -349,7 +349,7 @@
 					    <!--div class="row">
 						<div class="col-sm-8 col-sm-offset-2"-->
 						<div class="right-edit">
-		                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+		                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 		                </div>
 						    {% if showcase.image or showcase.video or showcase.youtube %}
 
@@ -502,7 +502,7 @@
 				    <!--div class="row">
 						<div class="col-sm-8 col-sm-offset-2"-->
 						<div class="right-edit">
-		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 		                </div>
 
 	                    <br>
@@ -643,7 +643,7 @@
 	                {% endfor %}
                 {% else %}
 	                <div class="right-edit">
-		            	<a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+		            	<a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 		            </div>
 					<div class="display-image">
 		            	<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
@@ -749,7 +749,7 @@
         <h3>Upcoming Project</h3>
         
         <div class="right-edit">
-	    	<a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+	    	<a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 	    </div>
 
         <br>

@@ -202,7 +202,7 @@ class Step7(forms.ModelForm):
         fields = ('collaborators', 'interestproject', 'explore', 'availableHours', 'rate', 'fQuote', 'fFilm', 'fBook', 'filmNow', 'hobby', 'cities')
         labels = {
             'collaborators': _('Collaborators you may want to collaborate with (eg. scientists)'),
-            'interestproject': _('Project type(s) or field(s) you want to explore (eg. Agriculture)'),
+            'interestproject': _('Project type you want to explore'),
             'explore': _('Projects/ fields you may want to explore (eg. interior design)'),
             'availableHours': _('How many hours per week would you be available for a project of your choice?'),
             'rate': _('What is your rate? Would you be open to free collaboration?'),

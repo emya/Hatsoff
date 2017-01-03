@@ -443,7 +443,7 @@
 					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
-					                    Tags: 
+					                    Keywords: 
 					                    </div>
 					                </td>
 					                    
@@ -469,24 +469,26 @@
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
 
-	                        <div class="well well-mm">
-		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-		                        	
-		                        </ul>
+							<div class="comment-container">
+		                        <div class="well well-smm">
+			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+			                        	
+			                        </ul>
 
-		                        <form class="form-horizontal" action="">
-			                        <div class="form-group">
-				                        <div class="col-md-9">
-				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-				                        </div>
-				                    </div>
-				                    <div class="form-group">
-				                        <div class="col-md-12 text-right">
-				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+			                        <form class="form-horizontal" action="">
+				                        <div class="form-group">
+					                        <div class="col-md-9">
+					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+					                        </div>
+					                    </div>
+					                    <div class="form-group">
+					                        <div class="col-md-12 text-right">
+					                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+				                        	</div>
 			                        	</div>
-		                        	</div>
-		                        </form>
+			                        </form>
 
+		                        </div>
 	                        </div>
 
 					</blockquote>
@@ -589,7 +591,7 @@
 					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
-					                    Tags: 
+					                    Keywords: 
 					                    </div>
 					                </td>
 					                    
@@ -611,24 +613,26 @@
 						    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
-	                        <div class="well well-mm">
-		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-		                        	
-		                        </ul>
+							<div class="comment-container">
+		                        <div class="well well-smm">
+			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+			                        	
+			                        </ul>
 
-		                        <form class="form-horizontal" action="">
-			                        <div class="form-group">
-				                        <div class="col-md-9">
-				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
-				                        </div>
-				                    </div>
-				                    <div class="form-group">
-				                        <div class="col-md-12 text-right">
-				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+			                        <form class="form-horizontal" action="">
+				                        <div class="form-group">
+					                        <div class="col-md-9">
+					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+					                        </div>
+					                    </div>
+					                    <div class="form-group">
+					                        <div class="col-md-12 text-right">
+					                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+				                        	</div>
 			                        	</div>
-		                        	</div>
-		                        </form>
+			                        </form>
 
+		                        </div>
 	                        </div>
 	                                            
 						<!--/div>
@@ -699,7 +703,7 @@
 					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
-					                    Tags: 
+					                    Keywords: 
 					                    </div>
 					                </td>
 					                    
@@ -821,6 +825,20 @@
 					</td>
 				                      
 				</tr>
+
+				<tr>
+					<td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Keywords:
+				        </div>
+				    </td>
+				                    
+				    <td>
+				        {{upcoming.tag1}} &nbsp {{upcoming.tag2}} &nbsp {{upcoming.tag3}} &nbsp {{upcoming.tag4}} &nbsp {{upcoming.tag5}} &nbsp {{upcoming.tag6}} &nbsp {{upcoming.tag7}} &nbsp {{upcoming.tag8}} &nbsp {{upcoming.tag9}} &nbsp {{upcoming.tag10}}
+					</td>
+				</tr>
+
 			</table>
 
 			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
@@ -884,117 +902,123 @@
 
 			</table>
 
-			<table width="750">
-				<tr>
-					<td width="50"></td>
-					<td valign="top">
-					    <div class="tableLabel">
-					       Start date: 
-					    </div>
-					</td>
-					                    
-					<td>
-					    {{upcoming.targetstartdate}}
-					</td>
+			<div id="toggleUpcoming" onclick="toggleUpcoming()" class="show-link"> Show More </div>
 
-					<td valign="top">
-					    <div class="tableLabel">
-					       End date: 
-					    </div>
-					</td>
-					                    
-					<td>
-					    {{upcoming.targetfinishdate}}
-					</td>
-				                      
-				</tr>     
-			</table>
+            <div id="upcoming-more">
 
-			<table width="750">
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Frequency of work: 
-					    </div>
-					</td>
-					                    
-					<td>
-						{{upcoming.often}}
-					</td>
-				                      
-				</tr>  
+				<table width="750">
+					<tr>
+						<td width="50"></td>
+						<td valign="top">
+						    <div class="tableLabel">
+						       Start date: 
+						    </div>
+						</td>
+						                    
+						<td>
+						    {{upcoming.targetstartdate}}
+						</td>
 
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       What I will offer: 
-					    </div>
-					</td>
-					                    
-					<td>
-						{% if upcoming.give_back == 1 %}
-				        Paid compensation
-				        {% endif %}
+						<td valign="top">
+						    <div class="tableLabel">
+						       End date: 
+						    </div>
+						</td>
+						                    
+						<td>
+						    {{upcoming.targetfinishdate}}
+						</td>
+					                      
+					</tr>     
+				</table>
 
-				        {% if upcoming.give_back == 2 %}
-				        Exchange  of skills/services
-				        {% endif %}
+				<table width="750">
+					<tr>
+						<td width="50"></td>
+						<td valign="top" class="tableTitle">
+						    <div class="tableLabel">
+						       Frequency of work: 
+						    </div>
+						</td>
+						                    
+						<td>
+							{{upcoming.often}}
+						</td>
+					                      
+					</tr>  
 
-				        {% if upcoming.give_back == 3 %}
-				        Negotiable
-				        {% endif %}
-					</td>
-				                      
-				</tr>     
+					<tr>
+						<td width="50"></td>
+						<td valign="top" class="tableTitle">
+						    <div class="tableLabel">
+						       What I will offer: 
+						    </div>
+						</td>
+						                    
+						<td>
+							{% if upcoming.give_back == 1 %}
+					        Paid compensation
+					        {% endif %}
 
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Comment: 
-					    </div>
-					</td>
-					                    
-					<td>
-						{{upcoming.comment}}
-					</td>
-				                      
-				</tr>  
+					        {% if upcoming.give_back == 2 %}
+					        Exchange  of skills/services
+					        {% endif %}
 
-			</table>
+					        {% if upcoming.give_back == 3 %}
+					        Negotiable
+					        {% endif %}
+						</td>
+					                      
+					</tr>     
 
-			<h4 align="center" class="tableLabel">Funding Status</h4>
-			<table width="750">
-	            <tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Funding I'm seeking: 
-					    </div>
-					</td>
-					                    
-					<td>
-						{{upcoming.fund}}
-					</td>
-				                      
-				</tr>    
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Comment: 
-					    </div>
-					</td>
-					                    
-					<td>
-						{{upcoming.comment_help}}
-					</td>
-				                      
-				</tr>  
+					<tr>
+						<td width="50"></td>
+						<td valign="top" class="tableTitle">
+						    <div class="tableLabel">
+						       Comment: 
+						    </div>
+						</td>
+						                    
+						<td>
+							{{upcoming.comment}}
+						</td>
+					                      
+					</tr>  
 
-			</table>
+				</table>
+
+				<h4 align="center" class="tableLabel">Funding Status</h4>
+				<table width="750">
+		            <tr>
+						<td width="50"></td>
+						<td valign="top" class="tableTitle">
+						    <div class="tableLabel">
+						       Funding I'm seeking: 
+						    </div>
+						</td>
+						                    
+						<td>
+							{{upcoming.fund}}
+						</td>
+					                      
+					</tr>    
+					<tr>
+						<td width="50"></td>
+						<td valign="top" class="tableTitle">
+						    <div class="tableLabel">
+						       Comment: 
+						    </div>
+						</td>
+						                    
+						<td>
+							{{upcoming.comment_help}}
+						</td>
+					                      
+					</tr>  
+
+				</table>
+				 <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
+			</div>
 
 
         <hr class="divider"/>
@@ -1008,8 +1032,8 @@
 
 
 
-             
-           <div class="well well-mm">
+        <div class="comment-container">
+           <div class="well well-smm">
 	            <ul id="upcomingComment" style="list-style-type:none;">
 	            	
 	            </ul>
@@ -1017,7 +1041,7 @@
 	            <form class="form-horizontal" action="">
 	                <div class="form-group">
 	                    <div class="col-md-9">
-	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:610px;"></textarea>
+	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
 	                    </div>
 	                </div>
 	                <div class="form-group">
@@ -1028,6 +1052,7 @@
 	            </form>
 
             </div>
+        </div>
 
 	    {% else %}
 			<table width="750">
@@ -1081,6 +1106,18 @@
 				    <td>
 					</td>
 				                      
+				</tr>
+
+				<tr>
+					<td width="50"></td>
+				    <td valign="top" class="tableTitle">
+				        <div class="tableLabel">
+				        	Keywords:
+				        </div>
+				    </td>
+				                    
+				    <td>
+					</td>
 				</tr>
 			</table>
 
@@ -1249,6 +1286,23 @@
 		        $('#qnimate').removeClass('popup-box-on');
 		    });
 		  })
+
+		  function toggleUpcoming()
+          {
+            console.log("toggle");
+
+            var status = document.getElementById("upcoming-more").style.display; 
+
+            console.log("status is "+status);
+
+            if (status == "none" || status == "") {
+                document.getElementById("upcoming-more").style.display = "block";
+                document.getElementById("toggleUpcoming").innerText = "";
+            } else if (status == "block") {
+                document.getElementById("upcoming-more").style.display = "none";
+                document.getElementById("toggleUpcoming").innerText = "Show More";
+            }
+          }
 
 		  function defaultMessage(c_type){
 		    $('#qnimate').addClass('popup-box-on');

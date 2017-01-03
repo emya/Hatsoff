@@ -20,221 +20,178 @@
   
  </script>
 
-<div class="modal fade bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <!--h4 class="modal-title" id="myModalLabel"-->
-                <h4 class="signupLabel">
-                    Login/SignUp to MatchHat</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
-                    <div class="col-md-10">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% else %}
-            <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-            <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% endif %}
-                            {% else %}
-                            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-                            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                            {% endif %}
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content" style="text-align:center;">
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane active" id="LoginTop">
-                                {% else %}
-                                    <div class="tab-pane" id="LoginTop">
-                                {% endif %}
-                            {% else %}
-                               <div class="tab-pane active" id="LoginTop">
-                            {% endif %}
-
-                                <!--form role="form" class="form-horizontal"-->
-                                <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
-            {% if loginform.non_field_errors  %}
-            <ul style="list-style-type:none">
-               {% for error in loginform.non_field_errors %}
-            <li>{{error}}</li>
-               {% endfor %}
-            </ul>
-            {% endif %}
-            <div class="form-group">
-              <br>
-              <br>
-              {{ loginform.username }}
-              <br>
-              <br>
-              {{ loginform.password }}
-            </div>
-
-            <div class="row">
-              <a href="{% url 'week1:reset' %}">Forgot password?</a>
-              <div class="login-wrapper">
-                 <input type="submit" value="Log me in" name="login" class="login-submit"/>
+<div id="home-main">
+  <div class="modal fade bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <!--h4 class="modal-title" id="myModalLabel"-->
+                  <h4 class="signupLabel">
+                      Login/SignUp to MatchHat</h4>
               </div>
-        <input type="hidden" name="next" value="/home/" />
-                                </div>
-                                </form>
-                            </div>
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane" id="Signup">
-                                {% else %}
-                                    <div class="tab-pane active" id="Signup">
-                                {% endif %}
-                            {% else %}
-                               <div class="tab-pane" id="Signup">
-                            {% endif %}
+              <div class="modal-body">
+                  <div class="row">
+                      <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
+                      <div class="col-md-10">
+                          <!-- Nav tabs -->
+                          <ul class="nav nav-tabs">
+                              {% if p_type %}
+                                  {% if p_typ == 0 %}
+              <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+              <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                  {% else %}
+              <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+              <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                  {% endif %}
+                              {% else %}
+                              <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+                              <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                              {% endif %}
+                          </ul>
+                          <!-- Tab panes -->
+                          <div class="tab-content" style="text-align:center;">
+                              {% if p_type %}
+                                  {% if p_typ == 0 %}
+                                      <div class="tab-pane active" id="LoginTop">
+                                  {% else %}
+                                      <div class="tab-pane" id="LoginTop">
+                                  {% endif %}
+                              {% else %}
+                                 <div class="tab-pane active" id="LoginTop">
+                              {% endif %}
 
+                                  <!--form role="form" class="form-horizontal"-->
+                                  <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
+              {% if loginform.non_field_errors  %}
+              <ul style="list-style-type:none">
+                 {% for error in loginform.non_field_errors %}
+              <li>{{error}}</li>
+                 {% endfor %}
+              </ul>
+              {% endif %}
+              <div class="form-group">
+                <br>
+                <br>
+                {{ loginform.username }}
+                <br>
+                <br>
+                {{ loginform.password }}
+              </div>
 
-                                <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
-            {% if signupform.non_field_errors  %}
-            <ul style="list-style-type:none">
-               {% for error in signupform.non_field_errors %}
-            <li>{{error}}</li>
-               {% endfor %}
-            </ul>
-            {% endif %}
-          <div class="form-group">
-              <br>
-              <br>
-              {{ signupform.username }}
-              <br>
-              <br>
-              {{ signupform.first_name }}
-              <br>
-              <br>
-              {{ signupform.last_name }}
-              <br>
-              <br>
-          <div class="popup" onclick="popFunction()">
-               {{ signupform.password1 }}
-          <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
-          </div>
-              <br>
-              <br>
-               {{ signupform.password2 }}
-              <br>
-              <br>
-
-                                </div>
-                                <div class="row">
-            <div class="login-wrapper">
-                <input type="submit" value="Sign up" name="signup" class='login-submit'/>
-            </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+              <div class="row">
+                <a href="{% url 'week1:reset' %}">Forgot password?</a>
+                <div class="login-wrapper">
+                   <input type="submit" value="Log me in" name="login" class="login-submit"/>
                 </div>
-            </div>
+          <input type="hidden" name="next" value="/home/" />
+                                  </div>
+                                  </form>
+                              </div>
+                              {% if p_type %}
+                                  {% if p_typ == 0 %}
+                                      <div class="tab-pane" id="Signup">
+                                  {% else %}
+                                      <div class="tab-pane active" id="Signup">
+                                  {% endif %}
+                              {% else %}
+                                 <div class="tab-pane" id="Signup">
+                              {% endif %}
 
-      ...
+
+                                  <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
+              {% if signupform.non_field_errors  %}
+              <ul style="list-style-type:none">
+                 {% for error in signupform.non_field_errors %}
+              <li>{{error}}</li>
+                 {% endfor %}
+              </ul>
+              {% endif %}
+            <div class="form-group">
+                <br>
+                <br>
+                {{ signupform.username }}
+                <br>
+                <br>
+                {{ signupform.first_name }}
+                <br>
+                <br>
+                {{ signupform.last_name }}
+                <br>
+                <br>
+            <div class="popup" onclick="popFunction()">
+                 {{ signupform.password1 }}
+            <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+            </div>
+                <br>
+                <br>
+                 {{ signupform.password2 }}
+                <br>
+                <br>
+
+                                  </div>
+                                  <div class="row">
+              <div class="login-wrapper">
+                  <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+              </div>
+                                  </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+        ...
+      </div>
     </div>
   </div>
-</div>
 
-<div class="paragraph">
-    <br>
-	<img src="{% static 'images/indextop_tmp.png'%}" align="center" width="350px">
-	<h3>Leave a trace in the world with what you create</h3>
-</div>
-
-<div class="row">
-<div class="row col-xs-3">
-</div>
-<div class="row col-xs-7">
-    
-	<p>
-        <font size="4pt">
-	Our mission is to create a community that empowers creators, entrepreneurs to innovate, do what they love, and succeed.
-	
-    </font></p>
-
-	<p><font size="4pt">
-	MatchHat does not take a fee. 100% of funds and earned income goes directly to the creatives.
-        </font>
-	</p>
+  <div class="row">
+      <br>
+      <img src="{% static 'images/FindYourCollaborator.png'%}" width="1024px">
   </div>
-  <div class="row col-xs-2">
+  <br><br><br><br>
+  <div class="row">
+      <div class="row col-md-7">
+      
+          <img src="{% static 'images/Portfolio.png'%}" width="512px">
+      </div>
+      <div class="row col-md-5">
+          <br><br><br><br>
+          <h2>
+              Showcase your <font size="7px">Portfolio</font></h1>
+          </h2>
+      </div>
+  </div>
+      <br><br><br><br>
+  <div class="row">
+      <div class="row col-md-5">
+          <br><br><br><br>
+          <h2>
+             Your <font size="7px">Upcomming</font> Project
+            </h2>
+      </div>
+      <div class="row col-md-7">
+  	   <img src="{% static 'images/WhatsNext.png'%}" width="512px">
+      </div>
+
+  </div>
+      <br><br><br><br>
+  <div class="row">
+      <div class="row col-md-7">
+  	   <img src="{% static 'images/LookingFor.png'%}" width="512px">
+      </div>
+      <div class="row col-md-5">
+          <br><br><br><br>
+          <h2>
+              and the <font size="7px">Collaborator</font> you need
+            </h2>
+      </div>
+  </div>
+
 </div>
-</div>
-<table style="width: 750px" align="center" id="space">
-   <tr class="spaceUnder">
-	<td><img src="{% static 'images/hatsoff_about.png'%}" width="50px"></td>
-        <td>
-           <h3>Hats off</h3>
-            <font size="4pt">
-           Tip off your hat to show respect and support
-            </font>
-        </td>
-   </tr>
 
-   <tr class="spaceUnder">
-	<td><img src="{% static 'images/message_about.png'%}" width="50px"></td>
-        <td>
-           <h3>Send a message/chat</h3>
-            <font size="4pt">
-           Messages from people you follow will go to your main inbox. Other messages will go to a separate message request inbox. Chats will be enabled when two people follow each other.
-            </font>
-            
-        </td>
-   </tr>
-
-   <tr class="spaceUnder">
-	<td><img src="{% static 'images/contribute_about.png'%}" width="50px"></td>
-        <td>
-           <h3>Contribute with your skills</h3>
-            <font size="4pt">
-           Support a project with your skills  or find people with skills that you need
-            </font>
-        </td>
-   </tr>
-
-   <tr class="spaceUnder">
-	<td><img src="{% static 'images/friend_about.png'%}" width="50px"></td>
-        <td>
-           <h3>Introduce a friend</h3>
-            <font size="4pt">
-           Introduce or be introduced to a friend.
-            </font>
-        </td>
-   </tr>
-
-   <tr class="spaceUnder">
-	<td><img src="{% static 'images/project_about.png'%}" width="50px"></td>
-        <td>
-           <h3>Fund a project</h3>
-            <font size="4pt">
-           Contribute to a project via a donation or raise funds for your project.
-            </font>
-        </td>
-   </tr>
-
-   <tr class="spaceUnder">
-	<td><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></td>
-        <td>
-           <h3>Pitch a project/job</h3>
-            <font size="4pt">
-           Pitch a project or find talent by pitching or get pitched a project.
-            </font>
-
-        </td>
-   </tr>
-
-</table>
 
 
 {% endblock %}

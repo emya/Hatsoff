@@ -20,173 +20,176 @@
   
  </script>
 
-<div class="modal fade bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <!--h4 class="modal-title" id="myModalLabel"-->
-                <h4 class="signupLabel">
-                    Login/SignUp to MatchHat</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
-                    <div class="col-md-10">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% else %}
-            <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-            <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% endif %}
-                            {% else %}
-                            <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
-                            <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                            {% endif %}
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content" style="text-align:center;">
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane active" id="LoginTop">
-                                {% else %}
-                                    <div class="tab-pane" id="LoginTop">
-                                {% endif %}
-                            {% else %}
-                               <div class="tab-pane active" id="LoginTop">
-                            {% endif %}
-
-                                <!--form role="form" class="form-horizontal"-->
-                                <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
-            {% if loginform.non_field_errors  %}
-            <ul style="list-style-type:none">
-               {% for error in loginform.non_field_errors %}
-            <li>{{error}}</li>
-               {% endfor %}
-            </ul>
-            {% endif %}
-            <div class="form-group">
-              <br>
-              <br>
-              {{ loginform.username }}
-              <br>
-              <br>
-              {{ loginform.password }}
-            </div>
-
-            <div class="row">
-              <a href="{% url 'week1:reset' %}">Forgot password?</a>
-              <div class="login-wrapper">
-                 <input type="submit" value="Log me in" name="login" class="login-submit"/>
+<div id="home-main">
+  <div class="modal fade bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <!--h4 class="modal-title" id="myModalLabel"-->
+                  <h4 class="signupLabel">
+                      Login/SignUp to MatchHat</h4>
               </div>
-        <input type="hidden" name="next" value="/home/" />
-                                </div>
-                                </form>
-                            </div>
-                            {% if p_type %}
-                                {% if p_typ == 0 %}
-                                    <div class="tab-pane" id="Signup">
-                                {% else %}
-                                    <div class="tab-pane active" id="Signup">
-                                {% endif %}
-                            {% else %}
-                               <div class="tab-pane" id="Signup">
-                            {% endif %}
+              <div class="modal-body">
+                  <div class="row">
+                      <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
+                      <div class="col-md-10">
+                          <!-- Nav tabs -->
+                          <ul class="nav nav-tabs">
+                              {% if p_type %}
+                                  {% if p_typ == 0 %}
+              <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+              <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                  {% else %}
+              <li><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+              <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                  {% endif %}
+                              {% else %}
+                              <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li-->
+                              <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                              {% endif %}
+                          </ul>
+                          <!-- Tab panes -->
+                          <div class="tab-content" style="text-align:center;">
+                              {% if p_type %}
+                                  {% if p_typ == 0 %}
+                                      <div class="tab-pane active" id="LoginTop">
+                                  {% else %}
+                                      <div class="tab-pane" id="LoginTop">
+                                  {% endif %}
+                              {% else %}
+                                 <div class="tab-pane active" id="LoginTop">
+                              {% endif %}
 
+                                  <!--form role="form" class="form-horizontal"-->
+                                  <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
+              {% if loginform.non_field_errors  %}
+              <ul style="list-style-type:none">
+                 {% for error in loginform.non_field_errors %}
+              <li>{{error}}</li>
+                 {% endfor %}
+              </ul>
+              {% endif %}
+              <div class="form-group">
+                <br>
+                <br>
+                {{ loginform.username }}
+                <br>
+                <br>
+                {{ loginform.password }}
+              </div>
 
-                                <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
-            {% if signupform.non_field_errors  %}
-            <ul style="list-style-type:none">
-               {% for error in signupform.non_field_errors %}
-            <li>{{error}}</li>
-               {% endfor %}
-            </ul>
-            {% endif %}
-          <div class="form-group">
-              <br>
-              <br>
-              {{ signupform.username }}
-              <br>
-              <br>
-              {{ signupform.first_name }}
-              <br>
-              <br>
-              {{ signupform.last_name }}
-              <br>
-              <br>
-          <div class="popup" onclick="popFunction()">
-               {{ signupform.password1 }}
-          <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
-          </div>
-              <br>
-              <br>
-               {{ signupform.password2 }}
-              <br>
-              <br>
-
-                                </div>
-                                <div class="row">
-            <div class="login-wrapper">
-                <input type="submit" value="Sign up" name="signup" class='login-submit'/>
-            </div>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+              <div class="row">
+                <a href="{% url 'week1:reset' %}">Forgot password?</a>
+                <div class="login-wrapper">
+                   <input type="submit" value="Log me in" name="login" class="login-submit"/>
                 </div>
-            </div>
+          <input type="hidden" name="next" value="/home/" />
+                                  </div>
+                                  </form>
+                              </div>
+                              {% if p_type %}
+                                  {% if p_typ == 0 %}
+                                      <div class="tab-pane" id="Signup">
+                                  {% else %}
+                                      <div class="tab-pane active" id="Signup">
+                                  {% endif %}
+                              {% else %}
+                                 <div class="tab-pane" id="Signup">
+                              {% endif %}
 
-      ...
+
+                                  <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
+              {% if signupform.non_field_errors  %}
+              <ul style="list-style-type:none">
+                 {% for error in signupform.non_field_errors %}
+              <li>{{error}}</li>
+                 {% endfor %}
+              </ul>
+              {% endif %}
+            <div class="form-group">
+                <br>
+                <br>
+                {{ signupform.username }}
+                <br>
+                <br>
+                {{ signupform.first_name }}
+                <br>
+                <br>
+                {{ signupform.last_name }}
+                <br>
+                <br>
+            <div class="popup" onclick="popFunction()">
+                 {{ signupform.password1 }}
+            <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+            </div>
+                <br>
+                <br>
+                 {{ signupform.password2 }}
+                <br>
+                <br>
+
+                                  </div>
+                                  <div class="row">
+              <div class="login-wrapper">
+                  <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+              </div>
+                                  </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+        ...
+      </div>
     </div>
   </div>
-</div>
 
-<div class="row">
-    <br>
-    <img src="{% static 'images/FindYourCollaborator.png'%}" width="1024px">
-</div>
-<br><br><br><br>
-<div class="row">
-    <div class="row col-md-7">
-    
-        <img src="{% static 'images/Portfolio.png'%}" width="512px">
-    </div>
-    <div class="row col-md-5">
-        <br><br><br><br>
-        <h2>
-            Showcase your <font size="7px">Portfolio</font></h1>
-        </h2>
-    </div>
-</div>
-    <br><br><br><br>
-<div class="row">
-    <div class="row col-md-5">
-        <br><br><br><br>
-        <h2>
-           Your <font size="7px">Upcomming</font> Project
+  <div class="row">
+      <br>
+      <img src="{% static 'images/FindYourCollaborator.png'%}" width="1024px">
+  </div>
+  <br><br><br><br>
+  <div class="row">
+      <div class="row col-md-7">
+      
+          <img src="{% static 'images/Portfolio.png'%}" width="512px">
+      </div>
+      <div class="row col-md-5">
+          <br><br><br><br>
+          <h2>
+              Showcase your <font size="7px">Portfolio</font></h1>
           </h2>
-    </div>
-    <div class="row col-md-7">
-	   <img src="{% static 'images/WhatsNext.png'%}" width="512px">
-    </div>
+      </div>
+  </div>
+      <br><br><br><br>
+  <div class="row">
+      <div class="row col-md-5">
+          <br><br><br><br>
+          <h2>
+             Your <font size="7px">Upcomming</font> Project
+            </h2>
+      </div>
+      <div class="row col-md-7">
+  	   <img src="{% static 'images/WhatsNext.png'%}" width="512px">
+      </div>
 
-</div>
-    <br><br><br><br>
-<div class="row">
-    <div class="row col-md-7">
-	   <img src="{% static 'images/LookingFor.png'%}" width="512px">
-    </div>
-    <div class="row col-md-5">
-        <br><br><br><br>
-        <h2>
-            and the <font size="7px">Collaborator</font> you need
-          </h2>
-    </div>
+  </div>
+      <br><br><br><br>
+  <div class="row">
+      <div class="row col-md-7">
+  	   <img src="{% static 'images/LookingFor.png'%}" width="512px">
+      </div>
+      <div class="row col-md-5">
+          <br><br><br><br>
+          <h2>
+              and the <font size="7px">Collaborator</font> you need
+            </h2>
+      </div>
+  </div>
+
 </div>
 
 

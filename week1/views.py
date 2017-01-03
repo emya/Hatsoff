@@ -61,9 +61,9 @@ def index(request):
         
 
         elif 'signup' in request.POST:
-            print "signup"
             form = RegistrationForm(request.POST)
             if form.is_valid():
+                print "valid"
                 username = form.cleaned_data['username']
                 first_name = form.cleaned_data['first_name'].capitalize()
                 last_name = form.cleaned_data['last_name'].capitalize()

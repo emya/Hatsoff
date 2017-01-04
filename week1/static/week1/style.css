@@ -179,9 +179,9 @@ img.profile_img {
    /*padding-right: 20px;*/
 }
 
-img.icons_img {
-   width: 45px;
-   height: 45px;
+img.icons-img {
+   width: 35px !important;
+   height: 35px !important;
 }
 
 #header #header-right input[type=submit]{

@@ -43,10 +43,10 @@ def index(request):
 
             user = authenticate(username=username, password=password)
             print "user", user
-            if user is not None:
+            if user:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/week1/home/')
+                    return HttpResponseRedirect('/week1/community/')
             # When user is None
             else:
                 print "Else None"
@@ -80,7 +80,7 @@ def index(request):
                 tomail.send()
 
                 newuser = authenticate(username=username, password=password)
-                if newuser is not None:
+                if newuser:
                     if newuser.is_active:
                         login(request, newuser)
                         return render(request, 'week1/welcome.html')
@@ -121,10 +121,10 @@ def about(request):
 
             user = authenticate(username=username, password=password)
             print "user", user
-            if user is not None:
+            if user:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/week1/home/')
+                    return HttpResponseRedirect('/week1/community/')
             # When user is None
             else:
                 print "Else None"
@@ -158,7 +158,7 @@ def about(request):
                 tomail.send()
 
                 newuser = authenticate(username=username, password=password)
-                if newuser is not None:
+                if newuser:
                     if newuser.is_active:
                         login(request, newuser)
                         return render(request, 'week1/welcome.html')

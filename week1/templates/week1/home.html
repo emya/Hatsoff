@@ -1195,7 +1195,7 @@
 				</tr>
 
 			</table>
-            
+
             <h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
 			<table width="750">
 	            <tr>
@@ -1374,6 +1374,7 @@
 		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
+          var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           /**
 	      socket.on('number thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;
@@ -1855,7 +1856,7 @@
 			              var colonIndex = created.indexOf(":");
                           var date = created.substring(0, colonIndex-3);
                           var datels = date.split('-');
-                          var mm = datels[1];
+                          var mm = months[parseInt(datels[1])-1];
                           var dd = datels[2];
                           var yy = datels[0];
 
@@ -1913,7 +1914,7 @@
 			              var colonIndex = created.indexOf(":");
                           var date = created.substring(0, colonIndex-3);
                           var datels = date.split('-');
-                          var mm = datels[1];
+                          var mm = months[parseInt(datels[1])-1];
                           var dd = datels[2];
                           var yy = datels[0];
 
@@ -1972,7 +1973,7 @@
 			            var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);
                         var datels = date.split('-');
-                        var mm = datels[1];
+                        var mm = months[parseInt(datels[1])-1];
                         var dd = datels[2];
                         var yy = datels[0];
 
@@ -2028,7 +2029,7 @@
 			            var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);
                         var datels = date.split('-');
-                        var mm = datels[1];
+                        var mm = months[parseInt(datels[1])-1];
                         var dd = datels[2];
                         var yy = datels[0];
 

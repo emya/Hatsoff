@@ -13,6 +13,13 @@
                 <label for="interestproject">{{form.interestproject.label_tag}}
                 </label>
                 <select name="interestproject">
+                    
+                {% if form.interestproject.value == 0 %}
+                    <option value="0" selected="selected">Select a Project Type</option>
+                {% else %}
+                    <option value="0" >Side projects</option>
+                {% endif %}
+                    
                 {% if form.interestproject.value == 1 %}
                     <option value="1" selected="selected">Side projects</option>
                 {% else %}

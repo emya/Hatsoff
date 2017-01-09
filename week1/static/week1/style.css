@@ -724,6 +724,9 @@ img.notification_img {
    opacity: 0.5;
 }
 
+#home-main a:hover {
+    color: skyblue;
+}
 
 #home-main .greyPanel {
     background-color: #F0F0F0;

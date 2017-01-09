@@ -628,6 +628,8 @@ to here
    width: 290px;
 }
 
+
+
 #body img.mainprofile {
    width: 200px;
 }
@@ -659,6 +661,7 @@ img.notification_img {
    position: fixed;
    bottom: 0;
 }
+
 
 #home-main .home-step {
    background-color: white;
@@ -720,6 +723,12 @@ img.notification_img {
    background-color: black;
    opacity: 0.5;
 }
+
+
+#home-main .greyPanel {
+    background-color: #F0F0F0;
+}
+
 
 #home-edit {
    padding: 50px;
@@ -925,6 +934,7 @@ img.notification_img {
    background-color: #cfe2f3;
    color: black;
 }
+
 
 #users a {
    text-decoration: none;

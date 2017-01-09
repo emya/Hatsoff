@@ -145,6 +145,10 @@
                 </td>
                 <td>
                     
+				{% if target_profile.interestproject == 0%}
+				  Project Type not Selected
+				{% endif %}
+                    
 				{% if target_profile.interestproject == 1%}
 				  Side projects
 				{% endif %}

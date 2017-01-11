@@ -92,8 +92,8 @@
             </ul>
 
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
-            <br>{{form.targetstartdate.label_tag}}</br><input type='date' name='targetstartdate' min="2016-10-01"><br/>
-            <br>{{form.targetfinishdate.label_tag}}</br><input type='date' name='targetfinishdate' min="2016-10-01"><br/>
+            <br>{{form.targetstartdate.label_tag}}</br><input type='date' name='targetstartdate' min="2016-10-01" value="{{form.targetstartdate.value | date:'Y-m-d'}}"><br/>
+            <br>{{form.targetfinishdate.label_tag}}</br><input type='date' name='targetfinishdate' min="2016-10-01" value="{{form.targetfinishdate.value | date:'Y-m-d'}}"><br/>
 
             <br>{{form.often.label_tag}}</br>{{form.often}}<br/>
 

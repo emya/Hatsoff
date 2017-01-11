@@ -1784,6 +1784,8 @@ input[type="file"]{
 
 .well-ssm {
     width: 530px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .well-smm {
@@ -2438,7 +2440,7 @@ hr .solid-divider{
 }
 
 .comment-container{
-   padding: 10px 90px;
+   padding: 10px 130px;
 }
 
 #upcoming-more{

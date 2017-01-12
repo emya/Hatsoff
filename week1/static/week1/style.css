@@ -344,6 +344,11 @@ img.icons-img {
    background-color: #f3f3f3;
 }
 
+#home-main #home-firstcolumn table.fixed { 
+    table-layout:fixed; 
+    word-break:break-all;
+}
+
 table #space {
    border-spacing:0 5px;
 }

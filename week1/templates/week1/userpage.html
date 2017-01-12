@@ -295,7 +295,6 @@
                             <h4 halign="center">{{target_profile.profession1}} &nbsp {{target_profile.profession2}} &nbsp {{target_profile.profession3}} &nbsp {{target_profile.profession4}} &nbsp {{target_profile.profession5}}</h4>
                             <p halign="center">{{target_profile.describe}}</p>
                     </td>
-                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
                 </tr>
         	</table>
         </div>
@@ -503,9 +502,6 @@
 				    <blockquote>
 				    <!--div class="row">
 						<div class="col-sm-8 col-sm-offset-2"-->
-						<div class="right-edit">
-		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-		                </div>
 
 	                    <br>
 	 					    {% if showcase.image or showcase.youtube %}

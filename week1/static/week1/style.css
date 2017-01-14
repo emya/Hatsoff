@@ -9,6 +9,15 @@ ul{
    color: black;
 }
 
+
+#home-main #home-main-center #home-step .portfoliostat-container{
+   padding: 20px 120px;
+}
+
+#home-main #home-main-center  #home-step .upcomingstat-container{
+   padding: 20px 120px;
+}
+
 #body {
    width: 1100px;
    margin: 0 auto;
@@ -624,7 +633,7 @@ to here
 }
 
 #home-main .tableTitle{
-   width: 200px;
+   width: 150px;
 }
 
 #home-main #home-secondcolumn {
@@ -734,6 +743,7 @@ img.notification_img {
 }
 
 #home-main .greyPanel {
+    
     background-color: #F0F0F0;
 }
 
@@ -2444,12 +2454,14 @@ hr .solid-divider{
    padding: 20px;
 }
 
+
 .comment-container{
-   padding: 10px 130px;
+   padding: 20px 120px;
 }
 
 #upcoming-more{
    display: none;
+    
 }
 
 .show-link{

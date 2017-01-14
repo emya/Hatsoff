@@ -383,10 +383,12 @@
 	                        {% else %}
 							<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 	                        {% endif %}
-
-	                        <table width="750">
+                            <br><br>
+                    
+                            <div class="comment-container">
+                            
+	                        <table align="left" width="750">
 		                        <tr>
-					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
 					                    Title: 
@@ -400,7 +402,6 @@
 					            </tr>     
 
 					            <tr>
-					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
 					                    Description: 
@@ -414,7 +415,6 @@
 					            </tr>
 
 					            <tr>
-					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
 					                    Your role: 
@@ -428,7 +428,6 @@
 					            </tr>
 
 					            <tr>
-					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
 					                    Year of completion: 
@@ -442,7 +441,6 @@
 					            </tr>
 
 					             <tr>
-					                <td width="50"></td>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
 					                    Keywords: 
@@ -461,20 +459,17 @@
 								<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
 								<li>Year of completion:{{showcase.completion}}</li>
 							    </ul-->
-
-	                        <hr class="divider"/>
-
-						    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})"><i class="fa fa-thumbs-o-up" aria-hidden="true"> </i>Like</button><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
-                    <div class="popupShare"> <button onclick="shareFunction(3, {{forloop.counter}})"><img src="{% static 'images/share.png' %}" height="18px" width="18px"> Share &nbsp </button><span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
-						    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
-						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-	              			<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
-
-
-                            <div class="comment-container">
+                                
+                            <div align="left">
+                                
+                                <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})"><i class="fa fa-thumbs-o-up" aria-hidden="true"> </i>Like</button><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
+                        <div class="popupShare"> <button onclick="shareFunction(3, {{forloop.counter}})"><img src="{% static 'images/share.png' %}" height="18px" width="18px"> Share &nbsp </button><span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
+                                <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
+                                <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
+                                <div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+                            </div>
     	                        <div class="well well-ssm">
     		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-    		                        	
     		                        </ul>
 
     		                        <form class="form-horizontal" action="">
@@ -485,7 +480,7 @@
     				                    </div>
     				                    <div class="form-group">
     				                        <div class="col-md-12 text-right">
-    				                        	<button class="btn btn-primary btn-lg" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
+    				                        	<button class="btn btn-primary btn-sm" onclick="submitShowcaseComment({{forloop.counter}})">Post</button>
     			                        	</div>
     		                        	</div>
     		                        </form>
@@ -775,9 +770,9 @@
 	    {% endif %}
 
 	    {% if upcoming %}
+        
 	     	<table width="750">
 	            <tr>
-					<td width="50"></td>
 					<td valign="top" class="tableTitle">
 					    <div class="tableLabel">
 					       Title: 
@@ -791,7 +786,6 @@
 				</tr>     
 
 				<tr>
-				    <td width="50"></td>
 				    <td valign="top" class="tableTitle">
 				        <div class="tableLabel">
 				            Description: 
@@ -805,7 +799,6 @@
 				</tr>
 
 				<tr>
-				    <td width="50"></td>
 				    <td valign="top" class="tableTitle">
 				        <div class="tableLabel">
 				            Your role: 
@@ -819,7 +812,6 @@
 				</tr>
 
 				<tr>
-				    <td width="50"></td>
 				    <td valign="top" class="tableTitle">
 				        <div class="tableLabel">
 				        	Status:
@@ -833,7 +825,6 @@
 				</tr>
 
 				<tr>
-				    <td width="50"></td>
 				    <td valign="top" class="tableTitle">
 				        <div class="tableLabel">
 				        	Keywords:
@@ -847,11 +838,10 @@
 				</tr>
 
 			</table>
-
+            
 			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
 			<table width="750">
 	            <tr>
-					<td width="50"></td>
 					<td valign="top" class="tableTitle">
 					    <div class="tableLabel">
 					       Collaborators: 
@@ -865,7 +855,6 @@
 				</tr>     
 
 				<tr>
-				    <td width="50"></td>
 				    <td valign="top" class="tableTitle">
 				        <div class="tableLabel">
 				        	Skills:
@@ -1025,9 +1014,6 @@
 
     			</table>
                 <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
-            </div>
-
-
 
             <!--div class="description-wrapper">
               <ul>
@@ -1103,8 +1089,7 @@
 		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
         <div class="popupCollaborate"><button onclick="collaborateFunction(2, 1)"><img src="{% static 'images/networking.png'%}" width ="18px" height="18px">Collaborate &nbsp</button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
 
-
-
+        </div>
              
         <div class="comment-container">
            <div class="well well-ssm">

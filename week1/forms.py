@@ -182,7 +182,7 @@ class Step6(forms.ModelForm):
             'status': _('Status of work (for eg: entering post-production phase)'),
             'targetstartdate': _('Start date'),
             'targetfinishdate': _('End date'),
-            'Additional info?': _('Comment'),
+            'comment': _('Additional info?'),
             'often': _('How often would you like to work with your collaborator?  (eg. 3 hours per week)'),
             'collaborator1': _('What kind of collaborators are you seeking? (eg. Video editor)'),
             'fund': _('Do you need to raise funds? If so how much and for what?'),

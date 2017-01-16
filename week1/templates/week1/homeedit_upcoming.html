@@ -65,6 +65,11 @@
             <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
             <br>{{form.collaborator1.label_tag}}<!--/br>{{form.collaborators}}<br/-->
             <ul id="myTagCollaborators">
+                <li>{{ form.collaborator1.value }}</li>
+                <li>{{ form.collaborator2.value }}</li>
+                <li>{{ form.collaborator3.value }}</li>
+                <li>{{ form.collaborator4.value }}</li>
+                <li>{{ form.collaborator5.value }}</li>
             </ul>
 
             
@@ -87,8 +92,8 @@
             </ul>
 
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
-            <br>{{form.targetstartdate.label_tag}}</br><input type='date' name='targetstartdate' min="2016-10-01"><br/>
-            <br>{{form.targetfinishdate.label_tag}}</br><input type='date' name='targetfinishdate' min="2016-10-01"><br/>
+            <br>{{form.targetstartdate.label_tag}}</br><input type='date' name='targetstartdate' min="2016-10-01" value="{{form.targetstartdate.value | date:'Y-m-d'}}"><br/>
+            <br>{{form.targetfinishdate.label_tag}}</br><input type='date' name='targetfinishdate' min="2016-10-01" value="{{form.targetfinishdate.value | date:'Y-m-d'}}"><br/>
 
             <br>{{form.often.label_tag}}</br>{{form.often}}<br/>
 
@@ -112,8 +117,9 @@
                 <option value="3">Negotiable</option>
                 {% endif %}
             </select>
-            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
             <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
+            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
             <!--br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/-->
 
 	    <div class="submit-wrapper">

@@ -295,7 +295,6 @@
                             <h4 halign="center">{{target_profile.profession1}} &nbsp {{target_profile.profession2}} &nbsp {{target_profile.profession3}} &nbsp {{target_profile.profession4}} &nbsp {{target_profile.profession5}}</h4>
                             <p halign="center">{{target_profile.describe}}</p>
                     </td>
-                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a></td>
                 </tr>
         	</table>
         </div>
@@ -469,20 +468,20 @@
 						    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
 	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
 						    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
-						    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
+						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
 
 							<div class="comment-container">
-		                        <div class="well well-smm">
+		                        <div class="well well-ssm">
 			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 			                        	
 			                        </ul>
 
 			                        <form class="form-horizontal" action="">
 				                        <div class="form-group">
-					                        <div class="col-md-9">
-					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+					                        <div class="col-md-15">
+					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea>
 					                        </div>
 					                    </div>
 					                    <div class="form-group">
@@ -503,9 +502,6 @@
 				    <blockquote>
 				    <!--div class="row">
 						<div class="col-sm-8 col-sm-offset-2"-->
-						<div class="right-edit">
-		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-		                </div>
 
 	                    <br>
 	 					    {% if showcase.image or showcase.youtube %}
@@ -614,19 +610,19 @@
 						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
 	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
 						    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
-						    <div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div>
+						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
 
 							<div class="comment-container">
-		                        <div class="well well-smm">
+		                        <div class="well well-ssm">
 			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
 			                        	
 			                        </ul>
 
 			                        <form class="form-horizontal" action="">
 				                        <div class="form-group">
-					                        <div class="col-md-9">
-					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+					                        <div class="col-md-15">
+					                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea>
 					                        </div>
 					                    </div>
 					                    <div class="form-group">
@@ -920,7 +916,7 @@
 						</td>
 						                    
 						<td>
-						    {{upcoming.targetstartdate}}
+						    {{upcoming.targetstartdate | date:'Y-m-d'}}
 						</td>
 
 						<td valign="top">
@@ -930,7 +926,7 @@
 						</td>
 						                    
 						<td>
-						    {{upcoming.targetfinishdate}}
+						    {{upcoming.targetfinishdate | date:'Y-m-d'}}
 						</td>
 					                      
 					</tr>     
@@ -1031,21 +1027,21 @@
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 		<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
-		<div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div>
+		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
         <div class="popupCollaborate" onclick="collaborateFunction(2, 1)"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>
 
 
 
         <div class="comment-container">
-           <div class="well well-smm">
+           <div class="well well-ssm">
 	            <ul id="upcomingComment" style="list-style-type:none;">
 	            	
 	            </ul>
 
 	            <form class="form-horizontal" action="">
 	                <div class="form-group">
-	                    <div class="col-md-9">
-	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:580px;"></textarea>
+	                    <div class="col-md-15">
+	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea>
 	                    </div>
 	                </div>
 	                <div class="form-group">
@@ -1919,7 +1915,7 @@
 			              var c_id = sharedocs[i_share]['_id'];
 						  var n  = users.indexOf(uid);
                           var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
-                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
                           var created = sharedocs[i_share]['created'];
 			              var colonIndex = created.indexOf(":");
                           var date = created.substring(0, colonIndex-3);
@@ -1974,7 +1970,7 @@
 						  var c_id = content['_id'];
 						  var n  = users.indexOf(uid);
                           var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
-                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
                           var created = communitydocs[i_community]['created'];
 			              var colonIndex = created.indexOf(":");
                           var date = created.substring(0, colonIndex-3);
@@ -2033,7 +2029,7 @@
 			            var c_id = sharedocs[i_share]['_id'];
 						var n  = users.indexOf(uid);
                         var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
-                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
                         var created = sharedocs[i_share]['created'];
 			            var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);
@@ -2090,7 +2086,7 @@
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);
                         var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
-                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:490px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
                         var created = communitydocs[i_community]['created'];
 			            var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);

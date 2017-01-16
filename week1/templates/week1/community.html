@@ -319,7 +319,7 @@
             popHatsoff();
 	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}, content_type:1, content_id:c_id});
             var hatsoff = document.getElementById("hatsoff_"+c_id);
-            hatsoff.innerHTML = '<img src="{% static 'images/hat.png'%}">';
+            hatsoff.innerHTML = '<img src="{% static 'images/hat.png'%}" class="icons-img">';
           }
 
           function popHatsoff(){
@@ -654,7 +654,6 @@
 	        socket.on('new community post', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
-              console.log('c_id:'+c_id);
               var n  = users.indexOf(uid);
 	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -733,7 +732,8 @@
                  if (docs[i]['user'] && docs[i]['user']['uid']) {
 			                  var uid = docs[i]['user']['uid'];
                         var c_id = docs[i]['_id'];
-			                  var n  = users.indexOf(uid);
+			                  var n  = users.indexOf(uid.toString());
+                        console.log("nnnnn :"+n);
                         var created = docs[i]['created'];
                         var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);
@@ -751,7 +751,6 @@
                           }else{
                             var sn  = users.indexOf(s_user.toString());
                             shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
-
                           }
                         }
 
@@ -767,7 +766,6 @@
                         var thanks = '';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
 
-                        console.log("c_id:"+c_id);
                         var like = '<hr class="divider"/>';
                         if (likels.indexOf(c_id) != -1){
                           like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
@@ -784,7 +782,7 @@
 
                         var hatsoff = '';
                         if (hatsoffls.indexOf(c_id) != -1){
-                          hatsoff = '<div class="popupHatsoff" id="hatsoff_'+c_id+'"><img src="{% static 'images/hat.png'%}"></div>';
+                          hatsoff = '<div class="popupHatsoff" id="hatsoff_'+c_id+'"><img src="{% static 'images/hat.png'%}" class="icons-img"></div>';
                         }else{
                           hatsoff = '<div class="popupHatsoff" id="hatsoff_'+c_id+'" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/grey_hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
 
@@ -811,6 +809,7 @@
                         }
 
                   			if ( n != -1) {
+                          console.log("photo path :"+photos[n]);
                   			   if (uid == {{user.id}}){
 
                               //Reply
@@ -863,7 +862,6 @@
 
     socket.on('three collaborators you need', function(docs){
       for(var i=0; i < docs.length; i++){
-        console.log("top collaborators:"+docs[i].user_id);
         var uid = docs[i].user_id;
         var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
         var n  = users.indexOf(uid);

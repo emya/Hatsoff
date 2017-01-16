@@ -1734,7 +1734,8 @@ img.notification_img {
     background-size: 120px;
     border-radius: 120px;
 }
-input[type="file"]{
+
+.step-form input[type="file"]{
     z-index: 999;
     line-height: 0;
     font-size: 0;
@@ -1745,6 +1746,7 @@ input[type="file"]{
     padding:0;
     left:0;
 }
+
 .uploadPhoto {
     position: absolute;
     top: 25%;
@@ -2468,4 +2470,25 @@ hr .solid-divider{
   color: #2d6ca2; 
   text-decoration: underline;
   padding: 5px;
+}
+
+.input-group .form-photo{
+   width: 100%;
+   display: inline-block;
+}
+
+.form-chat-text{
+   padding: 0;
+   margin: 0;
+   width: 370px;
+   height: 30px;
+   float: left;
+}
+
+.form-chat-photo{
+   padding: 0;
+   margin: 0;
+   width: 80px;
+   height: 30px;
+   float: left;
 }

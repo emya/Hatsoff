@@ -87,6 +87,17 @@
             console.log('send message to room:'+room_id);
             var message = $('#message_in_'+room_id).val();
             $('#message_in_'+room_id).val('');
+
+            var image = document.getElementById('image_in_'+room_id);
+            console.log("image :"+image);
+            var fReader = new FileReader();
+            /*
+            fReader.readAsDataURL(image.files[0]);
+            fReader.onloadend = function(event){
+              //console.log(event.target.result);
+            }
+            */
+
             socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
           }
 
@@ -190,7 +201,8 @@
                   var div = document.getElementById('acceptMessage');
                   var elem = document.createElement("div");
                   elem.setAttribute('class', 'row');
-                  elem.innerHTML = '<div class="row" id="row_'+room_id+'"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
+                  //elem.innerHTML = '<div class="row" id="row_'+room_id+'"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
+                  elem.innerHTML = '<div class="row" id="row_'+room_id+'"><div class="col-md-12"><div class="panel panel-primary"><div class="panel-body"><ul class="chat" id="message-room-'+room_id+'"></ul></div><div class="panel-footer"><div class="input-group"><div class="form-chat-text"><input id="message_in_'+room_id+'" type="text" class="form-control input-sm" placeholder="Type your message here..." /></div><div class="form-chat-photo"><input id="image_in_'+room_id+'" type="file" class="form-photo"/></div><span class="input-group-btn"><button class="btn btn-warning btn-sm" id="btn-chat" onclick="sendMessageFunction(\''+room_id+'\')">Send</button></span></div></div></div></div></div>';
                   div.appendChild(elem);
                  }
 
@@ -254,8 +266,8 @@
           });
 
           socket.on('new message', function (data) {
-             console.log("room message");
-             var n  = users.indexOf(data.uid);
+             var n  = users.indexOf(data.uid.toString());
+             console.log("room message: n is "+n);
 
             if ($('#short-room-'+data.room_id).length == 0){
                   var div = document.getElementById('chatusers');

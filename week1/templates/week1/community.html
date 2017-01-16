@@ -654,7 +654,7 @@
 	        socket.on('new community post', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
-              var n  = users.indexOf(uid);
+              var n  = users.indexOf(uid.toString());
 	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;

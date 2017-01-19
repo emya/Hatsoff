@@ -1014,80 +1014,17 @@
 
     			</table>
                 <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
-
-            <!--div class="description-wrapper">
-              <ul>
-		        <li>Description:{{upcoming.describe}}</li>
-				<li>Your role:{{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}</li>
-		        <li>Status:{{upcoming.status}}</li>
-		        <li>Comment:{{upcoming.comment}}</li>
-	      	  </ul>
-
-              <ul>
-	        <h4 align="center">Looking for</h4>
-            <li>Collaborators:{{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}</li>
-	        <li>Skills:
-	           {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
-	           {{ upcoming.collaborator_skill1 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill2 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill3 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill4 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill5 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill6 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill7 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill8 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill9 }}
-	           {% endif %}
-	           {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
-	           &nbsp{{ upcoming.collaborator_skill10 }}
-	           {% endif %}
-	        </li>
-	        <li>Preferred city location of collaborator:{{upcoming.preferred_city}}</li>
-	        <li>Start date:{{upcoming.targetstartdate}}</li>
-	        <li>End date:{{upcoming.targetfinishdate}}</li>
-	        <li>How often to work with collaborator:{{upcoming.often}}</li>
-	        <li>How to give back to collaborator:
-	        {% if upcoming.give_back == 1 %}
-	        Paid compensation
-	        {% endif %}
-
-	        {% if upcoming.give_back == 2 %}
-	        Exchange  of skills/services
-	        {% endif %}
-
-	        {% if upcoming.give_back == 3 %}
-	        Negotiable
-	        {% endif %}
-	        </li>
-	        <li>Funding:{{upcoming.fund}}</li>
-	        <li>Comment:{{upcoming.comment_help}}</li>
-	      </ul>
-	    </div-->
+            </div>
 
         <hr class="divider"/>
 
-        <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)"><i class="fa fa-thumbs-o-up" aria-hidden="true"> </i>Like</button><span class="popuptextLike" id="likePop">You Liked it</span></div>
- 		<div class="popupShare" ><button onclick="shareFunction(2, 1)"><img src="{% static 'images/share.png' %}" height="18px" width="18px"> Share &nbsp </button><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-		<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span></div>
-	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
-		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
-        <div class="popupCollaborate"><button onclick="collaborateFunction(2, 1)"><img src="{% static 'images/networking.png'%}" width ="18px" height="18px">Collaborate &nbsp</button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+        <div class="actionbutton-container">
+            <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)"><i class="fa fa-thumbs-o-up" aria-hidden="true"> </i>Like</button><span class="popuptextLike" id="likePop">You Liked it</span></div>
+     		<div class="popupShare" ><button onclick="shareFunction(2, 1)"><img src="{% static 'images/share.png' %}" height="18px" width="18px"> Share &nbsp </button><span class="popuptextShared" id="sharedPop">Shared!</span></div>
+    		<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span></div>
+    	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
+    		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
+            <div class="popupCollaborate"><button onclick="collaborateFunction(2, 1)"><img src="{% static 'images/networking.png'%}" width ="18px" height="18px">Collaborate &nbsp</button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
 
         </div>
              

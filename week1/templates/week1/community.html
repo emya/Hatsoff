@@ -34,6 +34,14 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <div class="col-md-9">
+                <label for="imageupload">Image file:</label>
+                <!--input name="imageupload" id="imageupload" type="file" /><br /-->
+                <input id="imageupload" type="file" />
+              </div>
+            </div>
+
              
             <label>Skill tag (up to 5)</label><ul id="myTags">
             </ul>
@@ -598,9 +606,17 @@
                  console.log('lis:'+t);
               }
             }
+
+            var files = document.getElementById('imageupload').files;
+            var file = files[0];
+
+            var data = {'file':file, 'fileName':file.name, 'type':file.type};
+            console.log("file:",file);
+            console.log("fileName:",file.name);
+
             console.log('tag:'+tagvalue);
             if ($('#p').val().length != 0){
-      		    socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
+      		    socket.emit('community post', {msg:$('#p').val(), data:data, uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
       		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
       		  });
       		  $('#p').val('');
@@ -654,6 +670,7 @@
 	        socket.on('new community post', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
+              console.log("image:", edata.image);
               var n  = users.indexOf(uid.toString());
 	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);

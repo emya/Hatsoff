@@ -52,6 +52,7 @@ var replySchema = mongoose.Schema({
 var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
+  image: { data: Buffer, contentType: String },
   replys: [replySchema],
   skillls: [String],
   tag: Number,//1: Yes, -1: No
@@ -1379,6 +1380,7 @@ io.on('connection', function(socket){
   socket.on('community post', function(data, callback){
     var d = new Date();
     console.log('date:'+d); 
+    console.log("data type:", typeof data.data);
     console.log('tag:'+data.tag); 
     var ls = [];
     if(data.skillls.length != 0){
@@ -1404,13 +1406,13 @@ io.on('connection', function(socket){
      });
     });
     
-    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls});
+    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, image:{data:data.data['file'], contentType: data.data['type']}});
     newPost.save(function(err, post){
       if (err) {
         console.log(err);
       } else{
         console.log('saved:'+post);
-        io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+        io.emit('new community post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
       }
     });
   });

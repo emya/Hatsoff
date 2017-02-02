@@ -375,7 +375,7 @@ def step1(request):
                     obj.count += 1
                     obj.save()
                 except Profession.DoesNotExist:
-                    obj = Profession.create(skill=lowtag, count=1)
+                    obj = Profession.objects.create(skill=lowtag, count=1)
                     obj.save()
 
             if len(tagls) != 5:
@@ -478,7 +478,7 @@ def step3(request):
                     obj.count += 1
                     obj.save()
                 except Profession.DoesNotExist:
-                    obj = Profession.create(skill=lowtag, count=1)
+                    obj = Profession.objects.create(skill=lowtag, count=1)
                     obj.save()
 
             if len(tagls) != 10:

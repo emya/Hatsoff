@@ -34,6 +34,14 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <div class="col-md-9">
+                <label for="imageupload">Image file:</label>
+                <!--input name="imageupload" id="imageupload" type="file" /><br /-->
+                <input id="imageupload" type="file" />
+              </div>
+            </div>
+
              
             <label>Skill tag (up to 5)</label><ul id="myTags">
             </ul>
@@ -69,133 +77,6 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="comments-logout">                
                     <ul class="media-list" id="communityPost">
-                      <!--li class="media">
-                        <a class="pull-left" href="#">
-                          <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
-                        </a>
-                        <div class="media-body">
-                          <div class="well well-lg">
-                              <h4 class="media-heading text-uppercase reviews">Marco </h4>
-                              <ul class="media-date text-uppercase reviews list-inline">
-                                <li class="dd">22</li>
-                                <li class="mm">09</li>
-                                <li class="aaaa">2014</li>
-                              </ul>
-                              <p class="media-comment">
-                                Great snippet! Thanks for sharing.
-                              </p>
-                              <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                              <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
-                          </div>              
-                        </div>
-                        <div class="collapse" id="replyOne">
-                            <ul class="media-list">
-                                <li class="media media-replied">
-                                    <a class="pull-left" href="#">
-                                      <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
-                                    </a>
-                                    <div class="media-body">
-                                      <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>
-                                          <ul class="media-date text-uppercase reviews list-inline">
-                                            <li class="dd">22</li>
-                                            <li class="mm">09</li>
-                                            <li class="aaaa">2014</li>
-                                          </ul>
-                                          <p class="media-comment">
-                                            Nice job Maria.
-                                          </p>
-                                          <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                      </div>              
-                                    </div>
-                                </li>
-                                <li class="media media-replied" id="replied">
-                                    <a class="pull-left" href="#">
-                                      <img class="media-object img-circle" src="https://pbs.twimg.com/profile_images/442656111636668417/Q_9oP8iZ.jpeg" alt="profile">
-                                    </a>
-                                    <div class="media-body">
-                                      <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> Mary</h4></h4>
-                                          <ul class="media-date text-uppercase reviews list-inline">
-                                            <li class="dd">22</li>
-                                            <li class="mm">09</li>
-                                            <li class="aaaa">2014</li>
-                                          </ul>
-                                          <p class="media-comment">
-                                            Thank you Guys!
-                                          </p>
-                                          <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                      </div>              
-                                    </div>
-                                </li>
-                            </ul>  
-                        </div>
-                      </li>          
-                      <li class="media">
-                        <a class="pull-left" href="#">
-                          <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kurafire/128.jpg" alt="profile">
-                        </a>
-                        <div class="media-body">
-                          <div class="well well-lg">
-                              <h4 class="media-heading text-uppercase reviews">Nico</h4>
-                              <ul class="media-date text-uppercase reviews list-inline">
-                                <li class="dd">22</li>
-                                <li class="mm">09</li>
-                                <li class="aaaa">2014</li>
-                              </ul>
-                              <p class="media-comment">
-                                I'm looking for that. Thanks!
-                              </p>
-                              <div class="embed-responsive embed-responsive-16by9">
-                                  <iframe class="embed-responsive-item" src="//www.youtube.com/embed/80lNjkcp6gI" allowfullscreen></iframe>
-                              </div>
-                              <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                          </div>              
-                        </div>
-                      </li>
-                      <li class="media">
-                        <a class="pull-left" href="#">
-                          <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/lady_katherine/128.jpg" alt="profile">
-                        </a>
-                        <div class="media-body">
-                          <div class="well well-lg">
-                              <h4 class="media-heading text-uppercase reviews">Kriztine</h4>
-                              <ul class="media-date text-uppercase reviews list-inline">
-                                <li class="dd">22</li>
-                                <li class="mm">09</li>
-                                <li class="aaaa">2014</li>
-                              </ul>
-                              <p class="media-comment">
-                                Yehhhh... Thanks for sharing.
-                              </p>
-                              <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                              <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyTwo"><span class="glyphicon glyphicon-comment"></span> 1 comment</a>
-                          </div>              
-                        </div>
-                        <div class="collapse" id="replyTwo">
-                            <ul class="media-list">
-                                <li class="media media-replied">
-                                    <a class="pull-left" href="#">
-                                      <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/jackiesaik/128.jpg" alt="profile">
-                                    </a>
-                                    <div class="media-body">
-                                      <div class="well well-lg">
-                                          <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> Lizz</h4>
-                                          <ul class="media-date text-uppercase reviews list-inline">
-                                            <li class="dd">22</li>
-                                            <li class="mm">09</li>
-                                            <li class="aaaa">2014</li>
-                                          </ul>
-                                          <p class="media-comment">
-                                            Classy!
-                                          </p>
-                                          <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                      </div>              
-                                    </div>
-                                </li>
-                            </ul>  
-                        </div>
-                      </li-->
                     </ul> 
                 </div>
             </div>
@@ -598,9 +479,18 @@
                  console.log('lis:'+t);
               }
             }
+
+            var files = document.getElementById('imageupload').files;
+            var file = files[0];
+
+            var data = {'file':file, 'fileName':file.name, 'type':file.type};
+            console.log("files:",files);
+            console.log("file:",file);
+            console.log("fileName:",file.name);
+
             console.log('tag:'+tagvalue);
             if ($('#p').val().length != 0){
-      		    socket.emit('community post', {msg:$('#p').val(), uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
+      		    socket.emit('community post', {msg:$('#p').val(), data:data, uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
       		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
       		  });
       		  $('#p').val('');
@@ -654,7 +544,8 @@
 	        socket.on('new community post', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
-              var n  = users.indexOf(uid);
+              console.log("image:", data.image);
+              var n  = users.indexOf(uid.toString());
 	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
@@ -691,16 +582,38 @@
                     if (uid == {{user.id}}){
                        //Reply
                        //$('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                      $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                      if (data.image){
+                        var bytes = new Uint8Array(data.image.file);
+                        console.log("Get image!", data.image.file);
+                        console.log("byte :", bytes);
+                        var image = document.getElementById('ItemPreview');
+                        image.src = "data:image/png;base64,"+encode(bytes);
+                      }
                     } else{
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                        if (data.image){
+                          var bytes = new Uint8Array(data.image.file);
+                          var image = document.getElementById('ItemPreview');
+                          image.src = "data:image/png;base64,"+encode(bytes);
+                        }
                     }
 
               }else{
                     if (uid == {{user.id}}){
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       if (data.image){
+                          var bytes = new Uint8Array(data.image.file);
+                          var image = document.getElementById('ItemPreview');
+                          image.src = "data:image/png;base64,"+encode(bytes);
+                        }
                     } else {
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       if (data.image){
+                          var bytes = new Uint8Array(data.image.file);
+                          var image = document.getElementById('ItemPreview');
+                          image.src = "data:image/png;base64,"+encode(bytes);
+                        }
                     }
               }
         	  });
@@ -733,7 +646,6 @@
 			                  var uid = docs[i]['user']['uid'];
                         var c_id = docs[i]['_id'];
 			                  var n  = users.indexOf(uid.toString());
-                        console.log("nnnnn :"+n);
                         var created = docs[i]['created'];
                         var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);
@@ -809,20 +721,39 @@
                         }
 
                   			if ( n != -1) {
-                          console.log("photo path :"+photos[n]);
                   			   if (uid == {{user.id}}){
 
                               //Reply
                               //$('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                               if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                                var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                                var image = document.getElementById('ItemPreview_'+c_id);
+                                image.src = "data:image/png;base64,"+encode(bytes);
+                              }
 			                  } else{
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                               if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                                  var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                                  var image = document.getElementById('ItemPreview_'+c_id);
+                                  image.src = "data:image/png;base64,"+encode(bytes);
+                                }
                   			   }
                   			} else{
                   			   if (uid == {{user.id}}){
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                                  var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                                  var image = document.getElementById('ItemPreview_'+c_id);
+                                  image.src = "data:image/png;base64,"+encode(bytes);
+                                }
 			                       } else{
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                                  var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                                  var image = document.getElementById('ItemPreview_'+c_id);
+                                  image.src = "data:image/png;base64,"+encode(bytes);
+                                }
                   			   }
                   			}
                         if (docs[i]['replys']) {
@@ -885,6 +816,32 @@
       }
     });
 
+    function encode (input) {
+      var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+      var output = "";
+      var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+      var i = 0;
+
+      while (i < input.length) {
+          chr1 = input[i++];
+          chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index 
+          chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
+
+          enc1 = chr1 >> 2;
+          enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+          enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+          enc4 = chr3 & 63;
+
+          if (isNaN(chr2)) {
+              enc3 = enc4 = 64;
+          } else if (isNaN(chr3)) {
+              enc4 = 64;
+          }
+          output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                    keyStr.charAt(enc3) + keyStr.charAt(enc4);
+      }
+      return output;
+    }
     /**
 	  socket.on('whisper', function(data){
 	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));

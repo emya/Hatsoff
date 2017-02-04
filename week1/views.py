@@ -31,7 +31,9 @@ from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhot
 # Create your views here.
 #@csrf_protect
 #@csrf_exempt
+@ensure_csrf_cookie
 def index(request):
+    print "index"
     query = request.GET.get('search_query', None)
     
     if query:

@@ -725,18 +725,43 @@
 
                               //Reply
                               //$('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              var imageUrl = '{{media_url}}'+photos[n];
+                              var exists = imageExists(imageUrl) 
+                                if(exists){
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+
+                                }else{
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+
+                                }
+                              
                                if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
                                 var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                                 var image = document.getElementById('ItemPreview_'+c_id);
                                 image.src = "data:image/png;base64,"+encode(bytes);
                               }
 			                  } else{
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                               if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
-                                  var bytes = new Uint8Array(docs[i]['image']['data']['data']);
-                                  var image = document.getElementById('ItemPreview_'+c_id);
-                                  image.src = "data:image/png;base64,"+encode(bytes);
+                              console.log(docs[i]);
+                              var imageUrl = '{{media_url}}'+photos[n];
+                              var exists = imageExists(imageUrl) 
+                                if(exists){
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                                  if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                                    var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                                    var image = document.getElementById('ItemPreview_'+c_id);
+                                    var enc = encode(bytes);
+                                    image.src = "data:image/png;base64,"+enc;
+                                  }
+
+                                }else{
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                                  if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                                    var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                                    var image = document.getElementById('ItemPreview_'+c_id);
+                                    var enc = encode(bytes);
+                                    image.src = "data:image/png;base64,"+enc;
+                                  }
+
                                 }
                   			   }
                   			} else{
@@ -840,6 +865,7 @@
           output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
                     keyStr.charAt(enc3) + keyStr.charAt(enc4);
       }
+      console.log("output", output);
       return output;
     }
     /**
@@ -847,6 +873,22 @@
 	      $('#messages').append($('<li><span class="whisper"><br>'+data.nick+':'+data.msg+'</span><br/>'));
     });
     **/
+
+    /*
+    function imageExists(url, callback) {
+      var img = new Image();
+      img.onload = function() { callback(true); };
+      img.onerror = function() { callback(false); };
+      img.src = url;
+    }
+    */
+
+    function imageExists(url) {
+      var http = new XMLHttpRequest();
+      http.open('HEAD', url, false);
+      http.send();
+      return http.status!=404;
+    }
     </script>
 </div>
 

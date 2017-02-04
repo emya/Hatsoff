@@ -181,6 +181,7 @@ var HatsoffPost = mongoose.model('HatsoffPost', hatsoffSchema);
 var messageSchema = mongoose.Schema({
   uid: Number,
   content: String,//1: sent request, 2:accepted, 3:blocked
+  image: { data: Buffer, contentType: String },
   created: {type: Date, default:Date.now}
 });
 
@@ -2014,7 +2015,7 @@ io.on('connection', function(socket){
           console.log(err);
         }else {
           if (result){
-            result.messages.push({uid:data.uid, content:data.msg});
+            result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
             result.save(function (error) {
               if (!error) {
                 console.log('Succeed to send message!');
@@ -2022,7 +2023,7 @@ io.on('connection', function(socket){
               console.log('sent message is saved!');
               socket.join(result._id);
               //socket.emit('new message', {uid:data.uid, content:data.msg});
-              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id});
+              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
               console.log('result:'+result);
             });
 
@@ -2039,14 +2040,14 @@ io.on('connection', function(socket){
           console.log(err);
         }else {
           if (result){
-            result.messages.push({uid:data.uid, content:data.msg});
+            result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
             result.save(function (error) {
               if (!error) {
                 console.log('Succeed to send message!');
               }
               console.log('sent message is saved!');
               socket.join(result._id);
-              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id});
+              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
               console.log('result:'+result);
             });
 

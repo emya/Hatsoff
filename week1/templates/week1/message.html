@@ -88,9 +88,10 @@
             var message = $('#message_in_'+room_id).val();
             $('#message_in_'+room_id).val('');
 
-            var image = document.getElementById('image_in_'+room_id);
-            console.log("image :"+image);
-            var fReader = new FileReader();
+            var files = document.getElementById('image_in_'+room_id).files;
+            var file = files[0];
+
+            var data = {'file':file, 'fileName':file.name, 'type':file.type};
             /*
             fReader.readAsDataURL(image.files[0]);
             fReader.onloadend = function(event){
@@ -98,7 +99,7 @@
             }
             */
 
-            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message });
+            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message, data:data });
           }
 
           function mainMessage(room_id){
@@ -267,7 +268,7 @@
 
           socket.on('new message', function (data) {
              var n  = users.indexOf(data.uid.toString());
-             console.log("room message: n is "+n);
+             console.log("room message: n is ", n, data);
 
             if ($('#short-room-'+data.room_id).length == 0){
                   var div = document.getElementById('chatusers');
@@ -284,6 +285,14 @@
 
              if (data.uid == {{user.id}}){
               if (n != -1 && photos[n] != "None" && photos[n] != ""){
+                if (data.image && data.image['file']){
+                  var countImg = $('[id^=Image_in_'+data.room_id+']').length;
+                  $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[n]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p><img id="Image_in_'+data.room_id+'_'+countImg+'" src="" /></div></li>'));
+                  var bytes = new Uint8Array(data.image['file']);
+                  var image = document.getElementById('Image_in_'+data.room_id+'_'+countImg);
+                  var enc = encode(bytes);
+                  image.src = "data:image/png;base64,"+enc;
+                }
                 $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[n]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
               }else{
                 $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{% static 'images/profileimage.png' %}" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p></div></li>'));
@@ -298,6 +307,33 @@
 
           });
 
+        function encode (input) {
+          var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+          var output = "";
+          var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+          var i = 0;
+
+          while (i < input.length) {
+              chr1 = input[i++];
+              chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index 
+              chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
+
+              enc1 = chr1 >> 2;
+              enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+              enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+              enc4 = chr3 & 63;
+
+              if (isNaN(chr2)) {
+                  enc3 = enc4 = 64;
+              } else if (isNaN(chr3)) {
+                  enc4 = 64;
+              }
+              output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                        keyStr.charAt(enc3) + keyStr.charAt(enc4);
+          }
+          console.log("output", output);
+          return output;
+        }
 
 
 /***

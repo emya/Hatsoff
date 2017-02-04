@@ -6,9 +6,12 @@ from django.contrib.auth import logout, login, authenticate
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, RequestContext, Context
+from django.template.context_processors import csrf
 from django.shortcuts import render_to_response
 
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import requires_csrf_token, ensure_csrf_cookie
+
 from django.core.mail import EmailMessage
 
 from django.core.urlresolvers import reverse
@@ -26,7 +29,8 @@ from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork, Pr
 from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
 
 # Create your views here.
-@csrf_protect
+#@csrf_protect
+#@csrf_exempt
 def index(request):
     query = request.GET.get('search_query', None)
     
@@ -45,8 +49,12 @@ def index(request):
             print "user", user
             if user:
                 if user.is_active:
+                    print "active"
                     login(request, user)
-                    return HttpResponseRedirect('/week1/community/')
+                    print "login"
+                    variables = RequestContext(request, {})
+                    return render(request, 'week1/community.html', {})
+                    #return render_to_response('week1/community.html', variables)
             # When user is None
             else:
                 print "Else None"
@@ -54,10 +62,12 @@ def index(request):
                 signupform = RegistrationForm()
                 message.append("The username or password is incorrect.")
                 print "message", message
-                variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
+                #variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
+                variables = {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0}
 
                 #template = loader.get_template('week1/discover.html')
-                return render_to_response('week1/index.html', variables, )
+                return render(request, 'week1/index.html', variables)
+                #return render_to_response('week1/index.html', variables, )
         
 
         elif 'signup' in request.POST:
@@ -89,9 +99,11 @@ def index(request):
                 loginform = LoginForm()
                 messages = []
                 messages.append(form.errors)
-                variables = RequestContext(request, {'messages':messages, 'signupform':form, 'loginform':loginform, 'p_type':1})
+                #variables = RequestContext(request, {'messages':messages, 'signupform':form, 'loginform':loginform, 'p_type':1})
+                variables = {'messages':messages, 'signupform':form, 'loginform':loginform, 'p_type':1}
 
-                return render_to_response('week1/index.html', variables, )
+                return render(request, 'week1/index.html', variables)
+                #return render_to_response('week1/index.html', variables, )
     """
     else:
         form = RegistrationForm()
@@ -99,10 +111,11 @@ def index(request):
     loginform = LoginForm()
     signupform = RegistrationForm()
 
-    variables = RequestContext(request, {'p_type':-1, 'loginform':loginform, 'signupform':signupform})
+    #variables = RequestContext(request, {'p_type':-1, 'loginform':loginform, 'signupform':signupform})
+    variables = {'p_type':-1, 'loginform':loginform, 'signupform':signupform}
 
     #template = loader.get_template('week1/discover.html')
-    return render_to_response('week1/index.html', variables, )
+    return render(request, 'week1/index.html', variables)
 
 @csrf_protect
 def about(request):
@@ -1109,6 +1122,7 @@ def home_edit_newpreviouswork(request):
     variables = RequestContext(request, {'form':form, 'num_show':num_show})
     return render_to_response('week1/homeedit_newpreviouswork.html', variables, )
 
+@csrf_protect
 def home_edit_upcoming(request):
     query = request.GET.get('search_query', None)
     

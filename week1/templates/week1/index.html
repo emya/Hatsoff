@@ -199,86 +199,88 @@
                                    <div class="tab-pane active" id="LoginTop">
                                 {% endif %}
                                     <!--form role="form" class="form-horizontal"-->
-                                <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
-    				    {% if loginform.non_field_errors  %}
-    				    <ul style="list-style-type:none">
-    				       {% for error in loginform.non_field_errors %}
-    					  <li>{{error}}</li>
-    				       {% endfor %}
-    				    </ul>
-    				    {% endif %}
+                                <form role="form" class="login-form" name="login" method="POST">
+                                {% csrf_token %}
+                				    {% if loginform.non_field_errors  %}
+                				    <ul style="list-style-type:none">
+                				       {% for error in loginform.non_field_errors %}
+                					  <li>{{error}}</li>
+                				       {% endfor %}
+                				    </ul>
+                				    {% endif %}
 
-    				    <div class="form-group">
-    					  <br>
-    					  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
-                          {{ loginform.username }}
-    					  <br>
-    					  <br>
-    					  <!--input type="password" name="password" placeholder=" Password"-->
-                          {{ loginform.password }}
-    				    </div>
+                				    <div class="form-group">
+                					  <br>
+                					  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
+                                      {{ loginform.username }}
+                					  <br>
+                					  <br>
+                					  <!--input type="password" name="password" placeholder=" Password"-->
+                                      {{ loginform.password }}
+                				    </div>
 
-    				    <div class="row">
-        					<a href="{% url 'week1:reset' %}">Forgot password?</a>
-        					<div class="login-wrapper">
-        					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
-        					</div>
-        					<input type="hidden" name="next" value="/home/" />
-    				    </div>
-                                    </form>
-                                </div>
-                                {% if p_type %}
-                                    {% if p_type == 0 %}
-                                        <div class="tab-pane" id="Signup">
-                                    {% else %}
-                                        <div class="tab-pane active" id="Signup">
+                				    <div class="row">
+                    					<a href="{% url 'week1:reset' %}">Forgot password?</a>
+                    					<div class="login-wrapper">
+                    					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
+                    					</div>
+                    					<input type="hidden" name="next" value="/home/" />
+                				    </div>
+                                 </form>
+                                            </div>
+                                            {% if p_type %}
+                                                {% if p_type == 0 %}
+                                                    <div class="tab-pane" id="Signup">
+                                                {% else %}
+                                                    <div class="tab-pane active" id="Signup">
+                                                {% endif %}
+                                            {% else %}
+                                               <div class="tab-pane" id="Signup">
+                                            {% endif %}
+
+
+                                <form role="form" class="login-form" name="signup" method="POST">
+                                {% csrf_token %}
+                                    {% if signupform.non_field_errors  %}
+                                    <ul style="list-style-type:none">
+                                       {% for error in signupform.non_field_errors %}
+                                      <li>{{error}}</li>
+                                       {% endfor %}
+                                    </ul>
                                     {% endif %}
-                                {% else %}
-                                   <div class="tab-pane" id="Signup">
-                                {% endif %}
 
+                                      <div class="form-group">
+                    				  <br>
+                    				  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
+                                      {{ signupform.username }}
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="text" name="first_name" placeholder=" First Name" class="sign-text"-->
+                                      {{ signupform.first_name }}
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="text" name="last_name" placeholder=" Last Name" class="sign-text"-->
+                                      {{ signupform.last_name }}
+                    				  <br>
+                    				  <br>
+                    				  <div class="popup" onclick="popFunction()">
+                    				  <!--input type="password" name="password1" placeholder=" Password"-->
+                                      {{ signupform.password1 }}
+                    				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+                    				  </div>
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="password" name="password2" placeholder=" Confirm Password"-->
+                                      {{ signupform.password2 }}
+                    				  <br>
+                    				  <br>
 
-                                <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
-                        {% if signupform.non_field_errors  %}
-                        <ul style="list-style-type:none">
-                           {% for error in signupform.non_field_errors %}
-                          <li>{{error}}</li>
-                           {% endfor %}
-                        </ul>
-                        {% endif %}
-
-                      <div class="form-group">
-    				  <br>
-    				  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
-                      {{ signupform.username }}
-    				  <br>
-    				  <br>
-    				  <!--input type="text" name="first_name" placeholder=" First Name" class="sign-text"-->
-                      {{ signupform.first_name }}
-    				  <br>
-    				  <br>
-    				  <!--input type="text" name="last_name" placeholder=" Last Name" class="sign-text"-->
-                      {{ signupform.last_name }}
-    				  <br>
-    				  <br>
-    				  <div class="popup" onclick="popFunction()">
-    				  <!--input type="password" name="password1" placeholder=" Password"-->
-                      {{ signupform.password1 }}
-    				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
-    				  </div>
-    				  <br>
-    				  <br>
-    				  <!--input type="password" name="password2" placeholder=" Confirm Password"-->
-                      {{ signupform.password2 }}
-    				  <br>
-    				  <br>
-
-                                    </div>
-                                    <div class="row">
-    				    <div class="login-wrapper">
-    				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
-    				    </div>
-                                    </div>
+                                                    </div>
+                                                    <div class="row">
+                    				    <div class="login-wrapper">
+                    				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+                    				    </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

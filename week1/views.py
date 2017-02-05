@@ -1620,7 +1620,7 @@ def community(request):
 
         usernames.append([u.first_name, u.last_name])
         users.append(u.id)
-        userphoto.append(str(prof))
+        userphoto.append(unicode(prof))
 
     uid = request.user.id
     folderlist1 = FavoriteFolder.objects.values_list('user_two_id', flat=True).filter(Q(user_one_id=uid, actionuser=1, status=0) | Q(user_one_id=uid, status=1))

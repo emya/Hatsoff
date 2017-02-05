@@ -539,7 +539,7 @@
                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp</br><p>'+data.msg+'</p>'));
               }else{
             //$('#communityPost').prepend($('<hr>'));
-                 $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+                 $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp</br><p>'+data.msg+'</p>'));
               }
           });
 
@@ -565,7 +565,7 @@
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
               //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
               var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div>';
-              var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+              var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
               var skillls = '';
               var imageText = '';
@@ -692,7 +692,7 @@
                         //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
                         var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
                         var skillls = '';
-                        var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
 
                         if (docs[i]['skillls']){

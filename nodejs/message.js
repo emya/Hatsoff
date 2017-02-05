@@ -1405,8 +1405,13 @@ io.on('connection', function(socket){
         console.log(row.user_id + ": " + row.profession);
      });
     });
-    
-    var newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, image:{data:data.data['file'], contentType: data.data['type']}});
+
+    var newPost;    
+    if (data.data){
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, image:{data:data.data['file'], contentType: data.data['type']}});
+    }else{
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls});
+    }
     newPost.save(function(err, post){
       if (err) {
         console.log(err);
@@ -2015,7 +2020,12 @@ io.on('connection', function(socket){
           console.log(err);
         }else {
           if (result){
-            result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
+
+            if(data.data && data.data != {}){
+              result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
+            }else{
+              result.messages.push({uid:data.uid, content:data.msg});
+            }
             result.save(function (error) {
               if (!error) {
                 console.log('Succeed to send message!');
@@ -2040,7 +2050,12 @@ io.on('connection', function(socket){
           console.log(err);
         }else {
           if (result){
-            result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
+
+            if(data.data && data.data != {}){
+              result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
+            }else{
+              result.messages.push({uid:data.uid, content:data.msg});
+            }
             result.save(function (error) {
               if (!error) {
                 console.log('Succeed to send message!');

@@ -483,10 +483,13 @@
             var files = document.getElementById('imageupload').files;
             var file = files[0];
 
-            var data = {'file':file, 'fileName':file.name, 'type':file.type};
-            console.log("files:",files);
-            console.log("file:",file);
-            console.log("fileName:",file.name);
+            var data = {};
+            if (file){
+              data = {'file':file, 'fileName':file.name, 'type':file.type};
+              console.log("files:",files);
+              console.log("file:",file);
+              console.log("fileName:",file.name);
+            }
 
             console.log('tag:'+tagvalue);
             if ($('#p').val().length != 0){
@@ -565,6 +568,7 @@
               var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
               var skillls = '';
+              var imageText = '';
 
               if (data.skillls){
                 if(data.skillls.length != 0){
@@ -577,43 +581,26 @@
                   skillls += "</div><br>";
                 }
               }
+              if (data.image){
+                var bytes = new Uint8Array(data.image.file);
+                var enc = encode(bytes);
+                imageText = '<img id="ItemPreview" src="data:image/png;base64,'+enc+'" class="postImage" />';
+              }
 
               if ( n != -1) {
                     if (uid == {{user.id}}){
                        //Reply
                        //$('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                      $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                      if (data.image){
-                        var bytes = new Uint8Array(data.image.file);
-                        console.log("Get image!", data.image.file);
-                        console.log("byte :", bytes);
-                        var image = document.getElementById('ItemPreview');
-                        image.src = "data:image/png;base64,"+encode(bytes);
-                      }
+                      $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     } else{
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                        if (data.image){
-                          var bytes = new Uint8Array(data.image.file);
-                          var image = document.getElementById('ItemPreview');
-                          image.src = "data:image/png;base64,"+encode(bytes);
-                        }
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     }
 
               }else{
                     if (uid == {{user.id}}){
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                       if (data.image){
-                          var bytes = new Uint8Array(data.image.file);
-                          var image = document.getElementById('ItemPreview');
-                          image.src = "data:image/png;base64,"+encode(bytes);
-                        }
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     } else {
-                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p><img id="ItemPreview" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                       if (data.image){
-                          var bytes = new Uint8Array(data.image.file);
-                          var image = document.getElementById('ItemPreview');
-                          image.src = "data:image/png;base64,"+encode(bytes);
-                        }
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     }
               }
         	  });
@@ -728,10 +715,10 @@
                               var imageUrl = '{{media_url}}'+photos[n];
                               var exists = imageExists(imageUrl) 
                                 if(exists){
-                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" class="postImage" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
 
                                 }else{
-                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" class="postImage" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
 
                                 }
                               
@@ -745,7 +732,7 @@
                               var imageUrl = '{{media_url}}'+photos[n];
                               var exists = imageExists(imageUrl) 
                                 if(exists){
-                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" class="postImage" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                                   if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
                                     var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                                     var image = document.getElementById('ItemPreview_'+c_id);
@@ -754,7 +741,7 @@
                                   }
 
                                 }else{
-                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                                  $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" class="postImage" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                                   if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
                                     var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                                     var image = document.getElementById('ItemPreview_'+c_id);
@@ -766,14 +753,14 @@
                   			   }
                   			} else{
                   			   if (uid == {{user.id}}){
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" class="postImage" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                               if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
                                   var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                                   var image = document.getElementById('ItemPreview_'+c_id);
                                   image.src = "data:image/png;base64,"+encode(bytes);
                                 }
 			                       } else{
-                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p><img id="ItemPreview_'+c_id+'" src="" class="postImage" /></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                               if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
                                   var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                                   var image = document.getElementById('ItemPreview_'+c_id);
@@ -865,7 +852,6 @@
           output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
                     keyStr.charAt(enc3) + keyStr.charAt(enc4);
       }
-      console.log("output", output);
       return output;
     }
     /**

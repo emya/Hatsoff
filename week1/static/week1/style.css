@@ -2505,3 +2505,11 @@ hr .solid-divider{
    height: 30px;
    float: left;
 }
+
+.media-body .postImage{
+  width: 300px; 
+}
+
+.panel-body .messageImage{
+  width: 200px; 
+}

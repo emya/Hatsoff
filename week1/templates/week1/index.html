@@ -16,12 +16,14 @@
 
   });
   
- </script>
- <div class="row header-img">
+</script>
+
+<div class="row header-img">
         <br>
         <div class="img-container"></div><!-- IMAGE CONTAINER -->
         
-    </div>
+</div>
+
 <div id="home-main">
    
     <br><br><br><br>
@@ -37,7 +39,8 @@
             </h2>
         </div>
     </div>
-        <br><br><br><br>
+
+    <br><br><br><br>
     <div class="row">
         <div class="row col-md-5">
             <br><br><br><br>
@@ -50,7 +53,8 @@
         </div>
 
     </div>
-        <br><br><br><br>
+
+    <br><br><br><br>
     <div class="row">
         <div class="row col-md-7">
     	   <img src="{% static 'images/LookingFor.png'%}" width="512px">
@@ -64,86 +68,85 @@
     </div>
 
     <div class="row" align="center">
-    <img src="{% static 'images/MatchHatIsFree.png'%}" width="512px">
+        <img src="{% static 'images/MatchHatIsFree.png'%}" width="512px">
     </div>
 
     <br>
-<div class="greyPanel">
-<br>
 
-    <div class="row">
-
-        <div class="row col-md-2">
-        </div>
-        <div class="row col-md-2">
-        <img src="{% static 'images/hat.png'%}" width="64px">
-        </div>
-        <div class="row col-md-5">
-            <h3>Hats Off</h3>
-            <p>Tip off your hat to show respect and support.</p>
-        </div>
-        <div class="row col-md-3">
-        </div>
-        
-    </div>
-
-
-
-    <div class="row">
-
-        <div class="row col-md-2">
-        </div>
-        <div class="row col-md-2">
-            <i class="fa fa-comment-o fa-3x" aria-hidden="true"></i>
-        </div>
-        <div class="row col-md-5">
-            <h3>Send a message</h3>
-            <p>Send a message to collaborate.</p>
-        </div>
-        <div class="row col-md-3">
-        </div>
-        
-    </div>
-
-
-    <div class="row">
-        <div class="row col-md-2">
-        </div>
-        <div class="row col-md-2">
-            
-        <img src="{% static 'images/networking.png'%}" width="64px">
-        </div>
-        <div class="row col-md-5">
-            <h3>Collaborate</h3>
-            <p>Support a project with your skills.</p>
-        </div>
-        <div class="row col-md-3">
-        </div>
-        
-    </div>
-
-
-
-    <div class="row">
-
-        <div class="row col-md-2">
-        </div>
-        <div class="row col-md-2">
-            
-            <i class="fa fa-handshake-o fa-3x" aria-hidden="true"></i>
-        </div>
-        <div class="row col-md-5">
-            <h3>Pitch a project or job</h3>
-            <p>Pitch or find a project or a job.</p>
-        </div>
-        <div class="row col-md-3">
-        </div>
-        
-    </div>
-
+    <div class="greyPanel">
     <br>
+        <div class="row">
+
+            <div class="row col-md-2">
+            </div>
+            <div class="row col-md-2">
+                <img src="{% static 'images/hat.png'%}" width="64px">
+            </div>
+
+            <div class="row col-md-5">
+                <h3>Hats Off</h3>
+                <p>Tip off your hat to show respect and support.</p>
+            </div>
+
+            <div class="row col-md-3">
+            </div>
+            
+        </div>
+
+        <div class="row">
+
+            <div class="row col-md-2">
+            </div>
+            <div class="row col-md-2">
+                <i class="fa fa-comment-o fa-3x" aria-hidden="true"></i>
+            </div>
+            <div class="row col-md-5">
+                <h3>Send a message</h3>
+                <p>Send a message to collaborate.</p>
+            </div>
+            <div class="row col-md-3">
+            </div>
+            
+        </div>
+
+
+        <div class="row">
+            <div class="row col-md-2">
+            </div>
+            <div class="row col-md-2">
+                
+            <img src="{% static 'images/networking.png'%}" width="64px">
+            </div>
+            <div class="row col-md-5">
+                <h3>Collaborate</h3>
+                <p>Support a project with your skills.</p>
+            </div>
+            <div class="row col-md-3">
+            </div>
+            
+        </div>
+
+
+
+        <div class="row">
+
+            <div class="row col-md-2">
+            </div>
+            <div class="row col-md-2">
+                <i class="fa fa-handshake-o fa-3x" aria-hidden="true"></i>
+            </div>
+            <div class="row col-md-5">
+                <h3>Pitch a project or job</h3>
+                <p>Pitch or find a project or a job.</p>
+            </div>
+            <div class="row col-md-3">
+            </div>
+            
+        </div>
+        <br>
     </div>
-<br><br>
+
+    <br><br>
     <div class="row" align="center">
         <H2>Create your profile on  <img src="{% static 'images/MatchHatWithoutCat.png'%}" width="200px"> to connect with collaborators or be a collaborator!</H2>
     </div>
@@ -199,86 +202,88 @@
                                    <div class="tab-pane active" id="LoginTop">
                                 {% endif %}
                                     <!--form role="form" class="form-horizontal"-->
-                                <form role="form" class="login-form" name="login" method="POST">{% csrf_token %}
-    				    {% if loginform.non_field_errors  %}
-    				    <ul style="list-style-type:none">
-    				       {% for error in loginform.non_field_errors %}
-    					  <li>{{error}}</li>
-    				       {% endfor %}
-    				    </ul>
-    				    {% endif %}
+                                <form role="form" class="login-form" name="login" method="POST">
+                                {% csrf_token %}
+                				    {% if loginform.non_field_errors  %}
+                				    <ul style="list-style-type:none">
+                				       {% for error in loginform.non_field_errors %}
+                					  <li>{{error}}</li>
+                				       {% endfor %}
+                				    </ul>
+                				    {% endif %}
 
-    				    <div class="form-group">
-    					  <br>
-    					  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
-                          {{ loginform.username }}
-    					  <br>
-    					  <br>
-    					  <!--input type="password" name="password" placeholder=" Password"-->
-                          {{ loginform.password }}
-    				    </div>
+                				    <div class="form-group">
+                					  <br>
+                					  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
+                                      {{ loginform.username }}
+                					  <br>
+                					  <br>
+                					  <!--input type="password" name="password" placeholder=" Password"-->
+                                      {{ loginform.password }}
+                				    </div>
 
-    				    <div class="row">
-        					<a href="{% url 'week1:reset' %}">Forgot password?</a>
-        					<div class="login-wrapper">
-        					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
-        					</div>
-        					<input type="hidden" name="next" value="/home/" />
-    				    </div>
-                                    </form>
-                                </div>
-                                {% if p_type %}
-                                    {% if p_type == 0 %}
-                                        <div class="tab-pane" id="Signup">
-                                    {% else %}
-                                        <div class="tab-pane active" id="Signup">
+                				    <div class="row">
+                    					<a href="{% url 'week1:reset' %}">Forgot password?</a>
+                    					<div class="login-wrapper">
+                    					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
+                    					</div>
+                    					<input type="hidden" name="next" value="/home/" />
+                				    </div>
+                                 </form>
+                                            </div>
+                                            {% if p_type %}
+                                                {% if p_type == 0 %}
+                                                    <div class="tab-pane" id="Signup">
+                                                {% else %}
+                                                    <div class="tab-pane active" id="Signup">
+                                                {% endif %}
+                                            {% else %}
+                                               <div class="tab-pane" id="Signup">
+                                            {% endif %}
+
+
+                                <form role="form" class="login-form" name="signup" method="POST">
+                                {% csrf_token %}
+                                    {% if signupform.non_field_errors  %}
+                                    <ul style="list-style-type:none">
+                                       {% for error in signupform.non_field_errors %}
+                                      <li>{{error}}</li>
+                                       {% endfor %}
+                                    </ul>
                                     {% endif %}
-                                {% else %}
-                                   <div class="tab-pane" id="Signup">
-                                {% endif %}
 
+                                      <div class="form-group">
+                    				  <br>
+                    				  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
+                                      {{ signupform.username }}
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="text" name="first_name" placeholder=" First Name" class="sign-text"-->
+                                      {{ signupform.first_name }}
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="text" name="last_name" placeholder=" Last Name" class="sign-text"-->
+                                      {{ signupform.last_name }}
+                    				  <br>
+                    				  <br>
+                    				  <div class="popup" onclick="popFunction()">
+                    				  <!--input type="password" name="password1" placeholder=" Password"-->
+                                      {{ signupform.password1 }}
+                    				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+                    				  </div>
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="password" name="password2" placeholder=" Confirm Password"-->
+                                      {{ signupform.password2 }}
+                    				  <br>
+                    				  <br>
 
-                                <form role="form" class="login-form" name="signup" method="POST">{% csrf_token %}
-                        {% if signupform.non_field_errors  %}
-                        <ul style="list-style-type:none">
-                           {% for error in signupform.non_field_errors %}
-                          <li>{{error}}</li>
-                           {% endfor %}
-                        </ul>
-                        {% endif %}
-
-                      <div class="form-group">
-    				  <br>
-    				  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
-                      {{ signupform.username }}
-    				  <br>
-    				  <br>
-    				  <!--input type="text" name="first_name" placeholder=" First Name" class="sign-text"-->
-                      {{ signupform.first_name }}
-    				  <br>
-    				  <br>
-    				  <!--input type="text" name="last_name" placeholder=" Last Name" class="sign-text"-->
-                      {{ signupform.last_name }}
-    				  <br>
-    				  <br>
-    				  <div class="popup" onclick="popFunction()">
-    				  <!--input type="password" name="password1" placeholder=" Password"-->
-                      {{ signupform.password1 }}
-    				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
-    				  </div>
-    				  <br>
-    				  <br>
-    				  <!--input type="password" name="password2" placeholder=" Confirm Password"-->
-                      {{ signupform.password2 }}
-    				  <br>
-    				  <br>
-
-                                    </div>
-                                    <div class="row">
-    				    <div class="login-wrapper">
-    				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
-    				    </div>
-                                    </div>
+                                                    </div>
+                                                    <div class="row">
+                    				    <div class="login-wrapper">
+                    				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+                    				    </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

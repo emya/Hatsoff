@@ -2476,7 +2476,6 @@ hr .solid-divider{
 
 #upcoming-more{
    display: none;
-    
 }
 
 .show-link{
@@ -2504,4 +2503,12 @@ hr .solid-divider{
    width: 80px;
    height: 30px;
    float: left;
+}
+
+.media-body .postImage{
+  width: 300px; 
+}
+
+.panel-body .messageImage{
+  width: 200px; 
 }

@@ -29,9 +29,9 @@ from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork, Pr
 from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
 
 # Create your views here.
-#@csrf_protect
 #@csrf_exempt
-@ensure_csrf_cookie
+#@ensure_csrf_cookie
+@csrf_protect
 def index(request):
     print "index"
     query = request.GET.get('search_query', None)

@@ -1744,6 +1744,15 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('unlike upcoming', function(data, callback){
+    LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':2}).remove().exec();
+    console.log('unlike upcoming');
+  });
+
+  socket.on('unlike portfolio', function(data, callback){
+    LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':3, 'content_id':data.c_id}).remove().exec();
+    console.log('unlike portfolio');
+  });
 
   socket.on('like portfolio', function(data, callback){
 

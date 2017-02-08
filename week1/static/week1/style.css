@@ -2512,3 +2512,7 @@ hr .solid-divider{
 .panel-body .messageImage{
   width: 200px; 
 }
+
+.popupmessageImage{
+  width: 100px; 
+}

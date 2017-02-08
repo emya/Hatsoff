@@ -256,7 +256,7 @@
                         var bytes = new Uint8Array(mdocs[j]['image']['data']['data']);
                         var ctype = mdocs[j]['image']['contentType'];
                         var enc = encode(bytes);
-                        imageText = '<embed id="Image_in__'+room_id+'_'+mdocs[j]['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="messageImage" ></embed>';
+                        imageText = '<embed id="Image_in_'+room_id+'_'+mdocs[j]['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="messageImage" ></embed>';
                       }
 
                      if ( mdocs[j]['uid'] == uid ) {

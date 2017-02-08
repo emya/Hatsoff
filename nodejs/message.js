@@ -1684,6 +1684,10 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('unlike community', function(data, callback){
+    LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
+    console.log('unlike community');
+  });
 
   socket.on('like community', function(data, callback){
 

@@ -277,7 +277,15 @@
             //popLike();
 	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
             var like = document.getElementById("like_"+c_id);
-            like.innerHTML = "Liked &nbsp";
+            like.innerHTML = '<div class="popupLike" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')">Unlike &nbsp<span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          }
+
+          function unlikeFunction(uid, c_id){
+            console.log('uid on like:'+uid+':'+c_id);
+            //popLike();
+            socket.emit('unlike community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+            var like = document.getElementById("like_"+c_id);
+            like.innerHTML = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
           }
 
           function popLike(){
@@ -668,9 +676,10 @@
 
                         var like = '<hr class="divider"/>';
                         if (likels.indexOf(c_id) != -1){
-                          like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                          //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><div class="popupLike" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')">UnLike &nbsp<span class="popuptextLike" id="likePop">You Unliked it</br></span></div></div>';
                         }else{
-                          like += '<div class="popupLike" id="like_'+c_id+'" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div></div>';
                         }
 
                         var share = '';

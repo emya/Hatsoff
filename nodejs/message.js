@@ -996,10 +996,17 @@ io.on('connection', function(socket){
       }
     });
 
+    LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid}).exec(function(error, result){
+      if(error) throw error;
+
+      if(result){
+        socket.emit('like status', result);
+      }
+    }); 
+
     // Follow status 0:not following, 1:following
     FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
       if(error) throw error;
-
        
       FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
         if(err){

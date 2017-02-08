@@ -719,7 +719,7 @@
 
                         var imageText = '';
 
-                        if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                        if (docs[i]['image'] && docs[i]['image']['data']){
                           var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                           var enc = encode(bytes);
                           var ctype = docs[i]['image']['contentType'];

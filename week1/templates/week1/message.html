@@ -252,7 +252,7 @@
 
                       var imageText = '';
 
-                      if (mdocs[j]['image'] && mdocs[j]['image']['data'] && mdocs[j]['image']['data']){
+                      if (mdocs[j]['image'] && mdocs[j]['image']['data']){
                         var bytes = new Uint8Array(mdocs[j]['image']['data']['data']);
                         var ctype = mdocs[j]['image']['contentType'];
                         var enc = encode(bytes);

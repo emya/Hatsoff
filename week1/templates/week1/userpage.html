@@ -1325,11 +1325,12 @@
             if (c_type == 2){
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like upcoming');
-			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="unlikeFunction(2, 1)">Unlike</button></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+			    //<img src="{% static 'images/hat.png'%}" class="icons-img">
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
             }else if (c_type == 3){
 			    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like portfolio');
-			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="unlikeFunction(3, '+c_id+')">Unlike</button></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1341,11 +1342,11 @@
             if (c_type == 2){
 			    socket.emit('unlike upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('unlike upcoming');
-			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
             }else if (c_type == 3){
 			    socket.emit('unlike portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('unlike portfolio');
-			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, '+c_id+')">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1616,13 +1617,13 @@
           			var doc = data[i];
           			var content_type = doc['content_type'];
           			if (content_type == 2){
-          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="unlikeFunction(2, 1)">Unlike</button></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
           				upcoming = true; 
           			}
           			console.log("content_type:", content_type);
           			if (content_type == 3){
           				var p_id = parseInt(doc['content_id']);
-          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="unlikeFunction(3, '+p_id+')">Unlike</button></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
           				portfolios.push(p_id);
           			}
           		}
@@ -1631,7 +1632,7 @@
           	if(upcoming == false){
           		var upcomingElement = document.getElementById("upcomingLike");
           		if (upcomingElement != null){
-          			upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+          			upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 
           		}
           	}
@@ -1640,7 +1641,7 @@
           	for (var i = 0; i < p_count; i++){
           		var counter = i+1;
           		if (portfolios.indexOf(counter) == -1){
-          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, '+counter+')">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 
           		}	
           	}

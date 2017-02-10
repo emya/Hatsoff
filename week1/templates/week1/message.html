@@ -104,7 +104,7 @@
             }
             */
 
-            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message, data:data });
+            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message, });
           }
 
           function mainMessage(room_id){

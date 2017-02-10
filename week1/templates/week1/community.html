@@ -277,7 +277,7 @@
             //popLike();
 	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
             var like = document.getElementById("like_"+c_id);
-            like.innerHTML = '<div class="popupLike" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')">Unlike &nbsp<span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+            like.innerHTML = '<img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')">';
           }
 
           function unlikeFunction(uid, c_id){
@@ -285,7 +285,7 @@
             //popLike();
             socket.emit('unlike community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
             var like = document.getElementById("like_"+c_id);
-            like.innerHTML = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+            like.innerHTML = '<img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">';
           }
 
           function popLike(){
@@ -564,7 +564,7 @@
               var shareskill = '';
               //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
 
-              var like = '<hr class="divider"/><div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+              var like = '<hr class="divider"/><div class="popupLike"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')"><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
               var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
               //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
               var thanks = '';
@@ -677,9 +677,9 @@
                         var like = '<hr class="divider"/>';
                         if (likels.indexOf(c_id) != -1){
                           //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
-                          like += '<div class="popupLike" id="like_'+c_id+'" ><div class="popupLike" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')">UnLike &nbsp<span class="popuptextLike" id="likePop">You Unliked it</br></span></div></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                         }else{
-                          like += '<div class="popupLike" id="like_'+c_id+'" ><div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')" /></div>';
                         }
 
                         var share = '';

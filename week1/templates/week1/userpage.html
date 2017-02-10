@@ -465,7 +465,8 @@
 
 	                        <hr class="divider"/>
 
-						    <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
+						    <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
+						    <!--div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div-->
 	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
 						    <div class="popupHatsoff" onclick="hatsoffFunction(3, {{forloop.counter}})"><img src="{% static 'images/hat.png'%}" class="icons-img"><br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat<br></span></div>
 						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
@@ -604,6 +605,7 @@
 
 	                        <hr class="divider"/>
 
+						    <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
 							<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
 	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
@@ -1023,7 +1025,8 @@
 
         <hr class="divider"/>
 
-        <div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>
+        <div id="upcomingLike" class="popupLike"></div> 
+        <!--div class="popupLike" onclick="popLike()"><button onclick="likeFunction(2, 1)">Like</button></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div-->
  		<div class="popupShare" onclick="shareFunction(2, 1)"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!</br></span></div>
 		<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>
 	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
@@ -1322,9 +1325,28 @@
             if (c_type == 2){
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like upcoming');
+			    //<img src="{% static 'images/hat.png'%}" class="icons-img">
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
             }else if (c_type == 3){
 			    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like portfolio');
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+            }
+		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	      }
+
+	      function unlikeFunction(c_type, c_id){
+		    console.log('uid on like:'+c_type+':'+c_id);
+
+		    //popLike();
+            if (c_type == 2){
+			    socket.emit('unlike upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+			    console.log('unlike upcoming');
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+            }else if (c_type == 3){
+			    socket.emit('unlike portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+			    console.log('unlike portfolio');
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1565,7 +1587,16 @@
                     
             if (post_val.length != 0){
                 console.log('if:'+post_val);
-		        socket.emit('send message', {msg:post_val, to_uid:{{t_user.id}}, uid:{{user.id}} });
+                var files = document.getElementById('image_in_message').files;
+	            var file = files[0];
+
+	            var data = {};
+
+	            if (file){
+	              data = {'file':file, 'fileName':file.name, 'type':file.type};
+	              document.getElementById('image_in_message').value = "";
+	            }
+		        socket.emit('send message', {msg:post_val, to_uid:{{t_user.id}}, uid:{{user.id}}, data:data});
             }
 		    $('#status_message').val('');
 		    return false;
@@ -1575,6 +1606,46 @@
             console.log('get message');
 		    //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
           }
+
+          // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
+          socket.on('like status', function(data){
+          	console.log("data", data);
+          	var upcoming = false;
+          	var portfolios = [];
+          	if (data){
+          		for (var i = 0; i < data.length; i++){
+          			var doc = data[i];
+          			var content_type = doc['content_type'];
+          			if (content_type == 2){
+          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          				upcoming = true; 
+          			}
+          			console.log("content_type:", content_type);
+          			if (content_type == 3){
+          				var p_id = parseInt(doc['content_id']);
+          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          				portfolios.push(p_id);
+          			}
+          		}
+          	}
+
+          	if(upcoming == false){
+          		var upcomingElement = document.getElementById("upcomingLike");
+          		if (upcomingElement != null){
+          			upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+
+          		}
+          	}
+
+          	var p_count = $('[id^=portfolioLike_]').length;
+          	for (var i = 0; i < p_count; i++){
+          		var counter = i+1;
+          		if (portfolios.indexOf(counter) == -1){
+          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+
+          		}	
+          	}
+          });
 
           socket.on('new hatsoff userpage', function(){
              var count = parseInt(document.getElementById("hatsoffNum").innerHTML);
@@ -1591,12 +1662,22 @@
             	if(data['messages']){
             		for (var i=0; i < data['messages'].length; i++){
             			if (data['messages'][i]['content']){
-			   				var n  = users.indexOf(data['messages'][i]['uid']);
+            				var doc = data['messages'][i];
+			   				var n  = users.indexOf(doc['uid']);
+			   				var imageText = '';
+
+	                        if (doc['image'] && doc['image']['data']){
+		                        var bytes = new Uint8Array(doc['image']['data']['data']);
+		                        var ctype = doc['image']['contentType'];
+		                        var enc = encode(bytes);
+		                        imageText = '<embed id="Image_in_'+doc['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="popupmessageImage" ></embed>';
+	                      	}
+
             				if(data['messages'][i]['uid'] == {{user.id}}){
             					if (n != -1){
-            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div>'+imageText+'<div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
             					}else{
-            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            						$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div>'+imageText+'<div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
 
             					}
             				}else if(data['messages'][i]['uid'] == {{t_user.id}}){
@@ -1718,19 +1799,30 @@
             console.log('new message');
 
 			var n  = users.indexOf(data.uid);
+
+			var imageText = '';
+
+            if (data.image && data.image['file'] && data.image['type']){
+              var bytes = new Uint8Array(data.image['file']);
+              var ctype = data.image['type'];
+              var enc = encode(bytes);
+              var countImg = $('[id^=Image_in_]').length;
+              imageText = '<embed id="Image_in_'+countImg+'" src="data:'+ctype+';base64,'+enc+'" class="popupmessageImage" ></embed>';
+            }
+
             if(data.uid == {{user.id}}){
             	if (n != -1){
-            		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div>'+imageText+'<div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
             	}else{
-            		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+            		$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div>'+imageText+'<div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
 
             	}
 
             }else if(data.uid == {{t_user.id}}){
             	if (n != -1){
-	            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+	            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div>'+imageText+'<div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
             	}else{
-	            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+	            	$('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+'{{t_user.first_name}}&nbsp{{t_user.last_name}}'+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div>'+imageText+'<div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
             	}
 
             }
@@ -2138,6 +2230,33 @@
 
 	  });
 
+	  function encode (input) {
+          var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+          var output = "";
+          var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+          var i = 0;
+
+          while (i < input.length) {
+              chr1 = input[i++];
+              chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index 
+              chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
+
+              enc1 = chr1 >> 2;
+              enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+              enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+              enc4 = chr3 & 63;
+
+              if (isNaN(chr2)) {
+                  enc3 = enc4 = 64;
+              } else if (isNaN(chr3)) {
+                  enc4 = 64;
+              }
+              output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                        keyStr.charAt(enc3) + keyStr.charAt(enc4);
+          }
+          return output;
+        }
+
 	</script>
 
 
@@ -2247,6 +2366,7 @@
 			</div>
 			<div class="popup-messages-footer">
 				<textarea id="status_message" placeholder="Type a message..." rows="20" cols="40" name="message"></textarea>
+				<input id="image_in_message" type="file" class="form-photo"/>
 				<div class="btn-footer">
 					<!--button class="bg_none"><i class="glyphicon glyphicon-film"></i> </button>
 					<button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>

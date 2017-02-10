@@ -277,7 +277,15 @@
             //popLike();
 	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
             var like = document.getElementById("like_"+c_id);
-            like.innerHTML = "Liked &nbsp";
+            like.innerHTML = '<img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')">';
+          }
+
+          function unlikeFunction(uid, c_id){
+            console.log('uid on like:'+uid+':'+c_id);
+            //popLike();
+            socket.emit('unlike community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+            var like = document.getElementById("like_"+c_id);
+            like.innerHTML = '<img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">';
           }
 
           function popLike(){
@@ -556,7 +564,7 @@
               var shareskill = '';
               //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
 
-              var like = '<hr class="divider"/><div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+              var like = '<hr class="divider"/><div class="popupLike"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')"><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
               var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
               //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
               var thanks = '';
@@ -661,15 +669,17 @@
 			                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
                         var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                        var profile_link = "{% static 'images/profileimage.png' %}";
                         //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
                         var thanks = '';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
 
                         var like = '<hr class="divider"/>';
                         if (likels.indexOf(c_id) != -1){
-                          like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                          //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                         }else{
-                          like += '<div class="popupLike" id="like_'+c_id+'" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')" /></div>';
                         }
 
                         var share = '';
@@ -709,7 +719,7 @@
 
                         var imageText = '';
 
-                        if (docs[i]['image'] && docs[i]['image']['data'] && docs[i]['image']['data']['data']){
+                        if (docs[i]['image'] && docs[i]['image']['data']){
                           var bytes = new Uint8Array(docs[i]['image']['data']['data']);
                           var enc = encode(bytes);
                           var ctype = docs[i]['image']['contentType'];
@@ -722,6 +732,8 @@
                               //Reply
                               //$('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                               var imageUrl = '{{media_url}}'+photos[n];
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              /*
                               var exists = imageExists(imageUrl) 
                                 if(exists){
                                   $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
@@ -730,11 +742,14 @@
                                   $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
 
                                 }
+                              */
                               
                                
 			                  } else{
                               console.log(docs[i]);
                               var imageUrl = '{{media_url}}'+photos[n];
+                              $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              /*
                               var exists = imageExists(imageUrl) 
                                 if(exists){
                                   $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
@@ -742,6 +757,7 @@
                                 }else{
                                   $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                                 }
+                                */
                   			   }
                   			} else{
                   			   if (uid == {{user.id}}){

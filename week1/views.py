@@ -55,8 +55,10 @@ def index(request):
                     login(request, user)
                     print "login"
                     variables = RequestContext(request, {})
-                    return render(request, 'week1/community.html', {})
+                    return HttpResponseRedirect('/week1/community/')
                     #return render_to_response('week1/community.html', variables)
+                    #return render(request, 'week1/community.html', {})
+
             # When user is None
             else:
                 print "Else None"
@@ -311,7 +313,7 @@ def home(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
 
     folderusers = Profile.objects.filter(user__in=userlist)
@@ -1385,7 +1387,7 @@ def hatsoff_list(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     media_url = settings.MEDIA_URL
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1448,7 +1450,7 @@ def follow_list(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     media_url = settings.MEDIA_URL
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1523,7 +1525,7 @@ def messages(request):
 
         usernames.append([u.first_name, u.last_name])
         users.append(u.id)
-        userphoto.append(str(prof))
+        userphoto.append(unicode(prof))
 
     currentuser = User.objects.get(id=myid, username=request.user.username)
     profile = Profile.objects.get(user=currentuser)
@@ -1590,7 +1592,7 @@ def get_profile(request, uid):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 't_user':user, 'showcases':showcases, 'upcoming':upcomingwork, 'userphoto':userphoto, 'users':users, 'nodejs_url':nodejs_url, 'media_url':media_url})
     return render_to_response('week1/userpage.html', variables, )
@@ -1678,7 +1680,7 @@ def community_needyou(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     uid = request.user.id
 
@@ -1712,7 +1714,7 @@ def collaborators_you_need(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     uid = request.user.id
 
@@ -1746,7 +1748,7 @@ def collaborators_need_you(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     uid = request.user.id
 
@@ -1817,7 +1819,7 @@ def notification(request):
         except Profile.DoesNotExist:
             prof = "None"
 
-        userphoto.append(str(prof))
+        userphoto.append(unicode(prof))
 
     variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'users':users, 'usernames':usernames, 'userphoto':userphoto})
     return render_to_response('week1/notification.html', variables, )
@@ -1856,7 +1858,7 @@ def folder(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
 
     variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'folderusers':folderusers, 'users':users, 'userphoto':userphoto})
@@ -1938,7 +1940,7 @@ def historyboard(request):
 
         if prof != None:
             users.append(u.id)
-            userphoto.append(str(prof))
+            userphoto.append(unicode(prof))
 
     return render_to_response('week1/historyboard.html', {'user':currentuser, 'users':users, 'userphoto':userphoto, 'nodejs_url':nodejs_url, 'media_url':media_url})
 

@@ -104,7 +104,7 @@
             }
             */
 
-            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message, data:data });
+            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message, });
           }
 
           function mainMessage(room_id){
@@ -252,11 +252,11 @@
 
                       var imageText = '';
 
-                      if (mdocs[j]['image'] && mdocs[j]['image']['data'] && mdocs[j]['image']['data']){
+                      if (mdocs[j]['image'] && mdocs[j]['image']['data']){
                         var bytes = new Uint8Array(mdocs[j]['image']['data']['data']);
                         var ctype = mdocs[j]['image']['contentType'];
                         var enc = encode(bytes);
-                        imageText = '<embed id="Image_in__'+room_id+'_'+mdocs[j]['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="messageImage" ></embed>';
+                        imageText = '<embed id="Image_in_'+room_id+'_'+mdocs[j]['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="messageImage" ></embed>';
                       }
 
                      if ( mdocs[j]['uid'] == uid ) {

@@ -55,8 +55,10 @@ def index(request):
                     login(request, user)
                     print "login"
                     variables = RequestContext(request, {})
-                    return render(request, 'week1/community.html', {})
+                    return HttpResponseRedirect('/week1/community/')
                     #return render_to_response('week1/community.html', variables)
+                    #return render(request, 'week1/community.html', {})
+
             # When user is None
             else:
                 print "Else None"

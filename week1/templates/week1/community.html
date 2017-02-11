@@ -461,6 +461,11 @@
             $('#replyComment_'+c_id).val('');
           }
 
+          function getLikeusers(c_id){
+            console.log("get likeusers");
+            socket.emit('get community likeusers', {c_id:c_id, content_type:1});
+          }
+
           function submitComment(uid, c_id){
             console.log('form submit comment'+c_id);
             var post_val = $('#c_'+c_id).val();
@@ -514,6 +519,11 @@
       		  return false;
       	    }
       	  });
+
+          socket.on('list community likeusers', function(data){
+            console.log("list likeusers:", data.result);
+
+          });
 
 	        socket.on('new reply community', function(data){
               var uid = data.uid;
@@ -688,9 +698,9 @@
                         var like = '<hr class="divider"/>';
                         if (likels.indexOf(c_id) != -1){
                           //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
-                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
                         }else{
-                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
                         }
 
                         var share = '';

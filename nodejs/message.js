@@ -1686,6 +1686,12 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('get community likeusers', function(data){
+    LikePost.find({'content_type':1, content_id:data.c_id}).exec(function(err, docs){
+      socket.emit('list community likeusers', {c_id:data.c_id, result:docs});
+    });
+  });
+
   socket.on('unlike community', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
     CommunityPost.findById(data.c_id, function(err, doc){

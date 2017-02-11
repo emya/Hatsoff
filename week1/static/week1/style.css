@@ -1113,6 +1113,17 @@ img.notification_img {
    -moz-user-select: none;
    -ms-user-select: none;
    user-select: none;
+   padding: 0px 20px;
+}
+
+.popupCount {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
 }
 
 .popupLike .popuptextLike {

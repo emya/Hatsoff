@@ -57,6 +57,8 @@ var communitySchema = mongoose.Schema({
   skillls: [String],
   tag: Number,//1: Yes, -1: No
   sharedBy: Number,
+  likes: Number,
+  shares: Number,
   content_id: String,
   created: {type: Date, default:Date.now}
 });
@@ -1415,9 +1417,9 @@ io.on('connection', function(socket){
 
     var newPost;    
     if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, image:{data:data.data['file'], contentType: data.data['type']}});
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
     }else{
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls});
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, shares:0, likes:0});
     }
     newPost.save(function(err, post){
       if (err) {
@@ -1686,6 +1688,15 @@ io.on('connection', function(socket){
 
   socket.on('unlike community', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      if (doc.likes > 0){
+        doc.likes -= 1;
+        doc.save(callback);
+      }
+    });
+
     console.log('unlike community');
   });
 
@@ -1707,6 +1718,14 @@ io.on('connection', function(socket){
         }
       }
     });
+
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      doc.likes += 1;
+      doc.save(callback);
+    });
+
 
     var newNotification = new NotificationPost({action_id:4, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 

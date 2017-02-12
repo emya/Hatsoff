@@ -63,8 +63,8 @@ ul{
 #header-wrapper {
    padding; 50px 0 50px;
    width: 100%;
-   background-color: #ac4f7d;
-   border-bottom: 3px solid #4a86e8;
+   background-color: white;
+   border-bottom: 3px solid grey;
    position: fixed;
    top:0;
    z-index: 3;
@@ -87,7 +87,7 @@ ul{
    display: inline-block;
     
    float: left;
-   width:130px; 
+   width:230px; 
    /*line-height: 100px;*/
 }
 
@@ -99,8 +99,8 @@ ul{
 
 #header #logo img {
    vertical-align: middle;
-   height: 90px;
-   width: 130px;
+   padding-top: 20px;
+   width: 300px;
 }
 
 @font-face {
@@ -126,22 +126,21 @@ ul{
 #header #header-menus a {
    text-decoration: none;
    vertical-align: middle;
-   color: white;
+   color: darkgrey;
    padding: 0 10px;
    border: 1px;
     
    border-radius: 10px;
    font-family: Asap;
-   border-style:solid; 
-   border-color:#ac4f7d; 
    padding: 1em;
 }
 
 #header #header-menus a:hover {
     border:1px; 
     border-style:solid; 
-    border-color:#8a4166; 
-    background-color: #823b5e;
+    border-color: #2EA7E0; 
+    background-color: #2EA7E0;
+    color: azure;
     padding: 1em;
     border-radius: 10px;
 }
@@ -157,7 +156,7 @@ ul{
 }
 
 #header #header-right .loginModal {
-   color: white;
+   color: darkgrey;
    font-family: Asap;
    padding: 1em;
 }

@@ -5,13 +5,14 @@ ul{
 }
 
 .img-container {
-  min-height: 110%;
-  background-image: url(/static/images/FindYourCollaborator.png);
+  min-height: 100%;
+  background-image: url(/static/images/LandingPageTopPicture.png);
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
   /*padding: 40px; (If don't want to set min-height or some image content is there) */
 }
+
 #home-main a {
    text-decoration: none;
    color: black;
@@ -64,7 +65,6 @@ ul{
    padding; 50px 0 50px;
    width: 100%;
    background-color: white;
-   border-bottom: 3px solid grey;
    position: fixed;
    top:0;
    z-index: 3;
@@ -115,7 +115,7 @@ ul{
 
 #header #header-menus {
    display: inline-block;
-   width:750px; 
+   width:500px; 
    line-height: 100px;
    font-family: Asap;
    /*min-width: 600px;
@@ -144,21 +144,22 @@ ul{
     padding: 1em;
     border-radius: 10px;
 }
-#header #header-right {
+
+
+#header #header-right{
    display: inline-block;
    width: 200px;
-   /*
    float: right;
    min-width: 200px;
-   
-   padding-right: 20px;
-    */
+   padding-right: 50px;
+   padding-top: 20px
 }
 
 #header #header-right .loginModal {
    color: darkgrey;
    font-family: Asap;
    padding: 1em;
+    
 }
 
 
@@ -170,6 +171,8 @@ ul{
    border-color:#FFFFFF; 
    padding: 1em;
    border-radius: 10px;
+   border-color: #2EA7E0; 
+   background-color: #2EA7E0;
 }
 
 #header #header-right #header-top {

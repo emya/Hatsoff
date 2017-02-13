@@ -5,13 +5,14 @@ ul{
 }
 
 .img-container {
-  min-height: 110%;
-  background-image: url(/static/images/FindYourCollaborator.png);
+  min-height: 100%;
+  background-image: url(/static/images/LandingPageTopPicture.png);
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
   /*padding: 40px; (If don't want to set min-height or some image content is there) */
 }
+
 #home-main a {
    text-decoration: none;
    color: black;
@@ -63,8 +64,7 @@ ul{
 #header-wrapper {
    padding; 50px 0 50px;
    width: 100%;
-   background-color: #ac4f7d;
-   border-bottom: 3px solid #4a86e8;
+   background-color: white;
    position: fixed;
    top:0;
    z-index: 3;
@@ -87,7 +87,7 @@ ul{
    display: inline-block;
     
    float: left;
-   width:130px; 
+   width:230px; 
    /*line-height: 100px;*/
 }
 
@@ -99,8 +99,8 @@ ul{
 
 #header #logo img {
    vertical-align: middle;
-   height: 90px;
-   width: 130px;
+   padding-top: 20px;
+   width: 300px;
 }
 
 @font-face {
@@ -115,7 +115,7 @@ ul{
 
 #header #header-menus {
    display: inline-block;
-   width:750px; 
+   width:500px; 
    line-height: 100px;
    font-family: Asap;
    /*min-width: 600px;
@@ -126,40 +126,40 @@ ul{
 #header #header-menus a {
    text-decoration: none;
    vertical-align: middle;
-   color: white;
+   color: darkgrey;
    padding: 0 10px;
    border: 1px;
     
    border-radius: 10px;
    font-family: Asap;
-   border-style:solid; 
-   border-color:#ac4f7d; 
    padding: 1em;
 }
 
 #header #header-menus a:hover {
     border:1px; 
     border-style:solid; 
-    border-color:#8a4166; 
-    background-color: #823b5e;
+    border-color: #2EA7E0; 
+    background-color: #2EA7E0;
+    color: azure;
     padding: 1em;
     border-radius: 10px;
 }
-#header #header-right {
+
+
+#header #header-right{
    display: inline-block;
    width: 200px;
-   /*
    float: right;
    min-width: 200px;
-   
-   padding-right: 20px;
-    */
+   padding-right: 50px;
+   padding-top: 20px
 }
 
 #header #header-right .loginModal {
-   color: white;
+   color: darkgrey;
    font-family: Asap;
    padding: 1em;
+    
 }
 
 
@@ -171,6 +171,8 @@ ul{
    border-color:#FFFFFF; 
    padding: 1em;
    border-radius: 10px;
+   border-color: #2EA7E0; 
+   background-color: #2EA7E0;
 }
 
 #header #header-right #header-top {
@@ -1106,6 +1108,17 @@ img.notification_img {
 }
 
 .popupLike {
+   position: relative;
+   display: inline-block;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   padding: 0px 20px;
+}
+
+.popupCount {
    position: relative;
    display: inline-block;
    cursor: pointer;
@@ -2516,4 +2529,42 @@ hr .solid-divider{
 
 .popupmessageImage{
   width: 100px; 
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal_community {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    min-height: 100px;
 }

@@ -80,7 +80,7 @@ ul{
 
 #header a {
    text-decoration: none;
-   color: white;
+   color: grey;
 }
 
 #header #logo {
@@ -115,8 +115,9 @@ ul{
 
 #header #header-menus {
    display: inline-block;
-   width:500px; 
-   line-height: 100px;
+   width:600px; 
+   padding-top: 25px;
+   line-height: 30px;
    font-family: Asap;
    /*min-width: 600px;
    width: calc(100% - 300px);
@@ -127,7 +128,7 @@ ul{
    text-decoration: none;
    vertical-align: middle;
    color: darkgrey;
-   padding: 0 10px;
+   padding: 0 5px;
    border: 1px;
     
    border-radius: 10px;
@@ -152,7 +153,7 @@ ul{
    float: right;
    min-width: 200px;
    padding-right: 50px;
-   padding-top: 20px
+   padding-top: 30px
 }
 
 #header #header-right .loginModal {
@@ -175,25 +176,33 @@ ul{
    background-color: #2EA7E0;
 }
 
-#header #header-right #header-top {
+#header #header-menus #header-search {
    height:15px;
-   vertical-align: top;
+    width:260px;
+    padding-left:35px;
    margin-bottom: 10px;
 }
 
-#header #header-right #header-top input[type=text]{
-   width: 100px;
+#header #header-right #header-search input[type=text]{
+   width: 150px;
    color: black;
 }
 
-#header #header-right #header-top input[type=submit]{
+#header #header-menus #header-search input[type=submit]{
    width: 60px;
    padding: 5px;
 }
 
+#header #header-menus #header-search input[type=submit]:hover{
+   width: 60px;
+   padding: 5px;
+    color: white;
+   border-color: #2EA7E0; 
+   background-color: #2EA7E0;
+}
+
 #header #header-right #header-down {
-   height:15px;
-   vertical-align: bottom;
+   height:25px;
 }
 
 img.profile_img {
@@ -211,7 +220,7 @@ img.icons-img {
 
 #header #header-right input[type=submit]{
    color: white;
-   background-color:#7D0541;
+   background-color:#2EA7E0;
    border:0px;
 }
 
@@ -1848,10 +1857,10 @@ img.notification_img {
 }
 
 .btn.btn-primary.btn-lg{
-    /*
-    background-color: #d5a6bd;
-    border-color: #d5a6bd;
-    */
+    
+    background-color: #2EA7E0;
+    border-color: #2EA7E0;
+    
 }
 
 /*portfolio*/

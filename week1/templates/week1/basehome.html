@@ -38,6 +38,7 @@
 
 <div id="header-wrapper">
     <div id='header'>
+       
     	<a href="{% url 'week1:index' %}">
            <div id="logo">
               <img src="{% static 'images/MatchHat Logo-01.png'%}" >
@@ -45,6 +46,17 @@
         </a>
 
 	   <div id='header-menus'>
+           <div class="row">
+               <div class="col-xs-5">
+            <div id='header-search'>
+			    <form method="GET" action="" >
+			     <input type="text" id="searchBox" name='search_query' placeholder="Search Matchhat">
+			     <input type="submit" class="btn" value="Search" >
+            </form>
+			</div>
+                   </div>
+               <div class="col-xs-7">
+            <div id='header-middle'>
 	      <a href="{% url 'week1:community' %}"><img src="{% static 'images/community_header.png'%}" class="user_header">Community</a>
 	      <!--a href="{% url 'week1:historyboard' %}">MessageBoard</a-->
 	      <!--a href="{% url 'week1:folder' %}"><i class="fa fa-folder-open-o fa-2x" aria-hidden="true"></i></a-->
@@ -52,16 +64,15 @@
 	      <a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a>
 	      <a href="{% url 'week1:notification' %}"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i><nbsp> </nbsp>Notification</a>
 	      <!--a href="{% url 'week1:hatsoff_list' %}">Hatsoff</a-->
+                </div>
+                   </div>
+                </div>
 	   </div>
+       
 
 	   <div id='header-right'>
 
-			<div id='header-top'>
-			     <form method="GET" action="" >
-			     <input type="text" id="searchBox" name='search_query' placeholder="Find Friends">
-			     <input type="submit" class="btn" value="Search" >
-			     </form>
-			</div>
+			
 
 			<div id='header-down'>
 				{% if profile.photo %}

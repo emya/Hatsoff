@@ -1,0 +1,103 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href={% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-85772251-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div id="header-wrapper">
+    <div id='header'>
+       
+      <a href="{% url 'week1:index' %}">
+           <div id="logo">
+              <img src="{% static 'images/MatchHat Logo-01.png'%}" >
+           </div>
+        </a>
+
+        <div id='header-menus'>
+           <div class="row">
+               <div class="col-xs-5">
+                  <div id='header-search'>
+                    <form method="GET" action="" >
+                       <input type="text" id="searchBox" name='search_query' placeholder="Search Matchhat">
+                       <input type="submit" class="btn" value="Search" >
+                    </form>
+                  </div>
+                </div>
+
+                <div class="col-xs-7">
+                  <div id='header-middle'>
+                      <a href="{% url 'week1:community' %}"><img src="{% static 'images/community_header.png'%}" class="user_header">Community</a>
+                      <!--a href="{% url 'week1:historyboard' %}">MessageBoard</a-->
+                      <!--a href="{% url 'week1:folder' %}"><i class="fa fa-folder-open-o fa-2x" aria-hidden="true"></i></a-->
+                      <!--a href=""><img src="{% static 'images/top_friends.png'%}" class="user_header"></a-->
+                      <a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a>
+                      <a href="{% url 'week1:notification' %}"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i><nbsp> </nbsp>Notification</a>
+                      <!--a href="{% url 'week1:hatsoff_list' %}">Hatsoff</a-->
+                  </div>
+               </div>
+            </div>
+        </div>
+       
+
+       <div id='header-right'>
+
+          <div id='header-down'>
+            {% if profile.photo %}
+            <a href="{% url 'week1:home' %}">{{user.first_name}}</a>
+            <img src="{{ profile.photo.url }}" class="profile_img">
+
+            {% else %}
+            <a href="{% url 'week1:home' %}">{{user.first_name}}</a>
+            <img src="{% static 'images/profileimage.png'%}" class="profile_img">
+            {% endif %}
+            <a href="{% url 'week1:logout' %}">Log out</a>
+          </div>
+          
+       </div>
+            
+    </div>
+</div>
+
+
+<div id="body_index">
+	{% block content %}
+	{% endblock %}
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $('#myModal').modal('show');
+
+    function popFunction(){
+        var popup = document.getElementById('passwordPop');
+        popup.classList.toggle('show');
+    }
+
+</script>
+
+</div>
+
+<!--div id='footer-wrapper'>
+
+    <div id='footer'>
+	 <a href="{% url 'week1:about' %}">ABOUT US</a>
+	 <a href="{% url 'week1:about' %}">COMMUNITY</a>
+	 <a href="{% url 'week1:about' %}">TERMS</a>
+	 <a href="{% url 'week1:about' %}">FOLLOW US</a>
+	 <a href="{% url 'week1:about' %}">CAREER</a>
+	 <a href="{% url 'week1:about' %}">CONTACT US</a>
+
+    </div>
+</div-->

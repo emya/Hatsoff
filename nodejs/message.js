@@ -1882,9 +1882,11 @@ io.on('connection', function(socket){
         console.log(err);
       } else{
         console.log('saved:'+data.msg);
+        /*
         if (users[data.to]) {
             users[data.to].emit('new portfolio comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname, p_id:data.p_id});
         }
+        */
        
         if (data.uid) {
             console.log('data.uid'+data.uid);

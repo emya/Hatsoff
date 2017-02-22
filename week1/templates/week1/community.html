@@ -536,6 +536,11 @@
             }
           });
 
+          socket.on('community members number', function(len){
+            console.log("length :", len);
+          });
+
+
           function closeLikeList(c_id){
             console.log("close like list");
             var span = document.getElementById('likeClose_'+c_id);
@@ -789,7 +794,6 @@
                               
                                
 			                  } else{
-                              console.log(docs[i]);
                               var imageUrl = '{{media_url}}'+photos[n];
                               $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+'</div></div></li>'));
                               /*
@@ -811,7 +815,6 @@
                   			}
                         if (docs[i]['replys']) {
                            var rdocs = docs[i]['replys'];
-                           console.log('replys');
                            for(var j=0; j < rdocs.length; j++){
                               if (rdocs[j]['user']['uid']){
                       				  var ruid = rdocs[j]['user']['uid']

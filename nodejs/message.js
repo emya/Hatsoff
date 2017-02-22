@@ -262,9 +262,6 @@ io.on('connection', function(socket){
      users[socket.uid] = socket;
      console.log('join user:'+data.uid);
      console.log('join first:'+data.firstname);
-     console.log('join users[data.uid]:'+users[data.uid]);
-     console.log('join users[data.uid]:'+users[data.uid]["firstname"]);
-     console.log('join users keys:'+Object.keys(users[data.uid]));
      updateUids();
   });
 
@@ -273,7 +270,6 @@ io.on('connection', function(socket){
      socket.firstname = data.firstname;
      socket.lastname = data.lastname;
      chatusers[socket.uid] = socket;
-     console.log('join chatusers:'+chatusers[socket.uid].firstname);
      updatechatUids();
   });
 
@@ -282,8 +278,6 @@ io.on('connection', function(socket){
       if(!result){
         console.log("no results");
       }else{
-        console.log(result);
-        console.log(typeof result);
         var friends = result.friends;
         var tuplestr = "(";
         for (var i = 0; i < friends.length; i++){
@@ -293,12 +287,9 @@ io.on('connection', function(socket){
         tuplestr += ")";
 
         var liststr = "("+friends.join(",")+")";
-        console.log(friends.length);
-        console.log(liststr);
         db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM auth_user, week1_profile WHERE week1_profile.user_id==auth_user.id AND week1_profile.user_id in "+tuplestr, friends, function(err, rows){
           //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
           socket.emit('get community members', rows);
-          console.log("collaborators"+rows);
         });
       }
     });
@@ -335,9 +326,6 @@ io.on('connection', function(socket){
       });
     }); 
 
-   
-
-
     db.serialize(function() {
       db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
         if(err){
@@ -346,7 +334,6 @@ io.on('connection', function(socket){
         else {
           if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
             var skillls_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
-            console.log("skillls:"+skillls);
             var skillls = [];
             for (var i = 0; i < 10; i++){
               if (skillls_empty[i] == ""){
@@ -370,15 +357,12 @@ io.on('connection', function(socket){
                     var item = doc.skillls[j];  // Calling myNodeList.item(i) isn't necessary in JavaScript
                     //console.log("item:"+item);
                     if (item != "" && skillls.indexOf(item) != -1 ){
-                      console.log("push");
                       newdocs.push(doc);
                     }
                   }
                 }
                 curIdx += 1;
                 if (len == curIdx){
-                  console.log("newdocs:"+newdocs.length);
-                  console.log("newdocs:"+newdocs);
                   socket.emit('three community posts need you', newdocs);
                 }
               });
@@ -387,11 +371,9 @@ io.on('connection', function(socket){
             //var uids = [];
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
             var liststr = "("+skillls.join(",")+")";
-            console.log(liststr);
             db.all("SELECT DISTINCT user_id FROM week1_upcomingwork WHERE user_id!=? AND (collaborator_skill1 in "+tuplestr+" or collaborator_skill2 in "+tuplestr+" or collaborator_skill3 in "+tuplestr+" or collaborator_skill4 in "+tuplestr+" or collaborator_skill5 in "+tuplestr+" or collaborator_skill6 in "+tuplestr+" or collaborator_skill7 in "+tuplestr+" or collaborator_skill8 in "+tuplestr+" or collaborator_skill9 in "+tuplestr+" or collaborator_skill10 in "+tuplestr+") GROUP BY user_id limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
             //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
               socket.emit('three collaborators need you', rows);
-              console.log("collaborators"+rows);
             });
           } 
         }
@@ -415,11 +397,9 @@ io.on('connection', function(socket){
             }
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
             var liststr = "("+skillls.join(",")+")";
-            console.log(liststr);
             db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND (skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5 in "+tuplestr+" or skill6 in "+tuplestr+" or skill7 in "+tuplestr+" or skill8 in "+tuplestr+" or skill9 in "+tuplestr+" or skill10 in "+tuplestr+") GROUP BY week1_profile.user_id limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
             //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND (week1_profile.skill1 in "+tuplestr+" or week1_profile.skill2 in "+tuplestr+" or week1_profile.skill3 in "+tuplestr+" or week1_profile.skill4 in "+tuplestr+" or week1_profile.skill5 in "+tuplestr+" or week1_profile.skill6 in "+tuplestr+" or week1_profile.skill7 in "+tuplestr+" or week1_profile.skill8 in "+tuplestr+" or week1_profile.skill9 in "+tuplestr+" or week1_profile.skill10 in "+tuplestr+") GROUP BY week1_profile.user_id", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
               socket.emit('three collaborators you need', rows);
-              console.log("collaborators you need"+rows);
             });
             
           }
@@ -429,14 +409,19 @@ io.on('connection', function(socket){
 
     });
 
+    var query = CommunityMember.find({'uid':socket.uid});
+    query.exec(function(err, docs){
+      var len = docs.length;
+      socket.emit('community members number', len);
+    });
 
   });
+
 
   socket.on('join community post', function(data){
     console.log('join community');
     CommunityPost.findById(data.c_id, function(err, post){
       if (err) throw err;
-      console.log('join community'+post);
       socket.emit('get community post', post);
     });
 
@@ -455,7 +440,6 @@ io.on('connection', function(socket){
         else {
           if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
             var skillls = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
-            console.log("skillls:"+skillls);
             var newdocs = [];
             var query = CommunityPost.find({});
             query.sort('-created').limit(50).exec(function(err, docs){
@@ -468,17 +452,13 @@ io.on('connection', function(socket){
                 if(doc.skillls && doc.skillls.length != 0){
                   for (var j = 0; j < doc.skillls.length; j++) {
                     var item = doc.skillls[j];  // Calling myNodeList.item(i) isn't necessary in JavaScript
-                    console.log("item:"+item);
                     if (item != "" && skillls.indexOf(item) != -1 ){
-                      console.log("push");
                       newdocs.push(doc);
                     }
                   }
                 }
                 curIdx += 1;
                 if (len == curIdx){
-                  console.log("newdocs:"+newdocs.length);
-                  console.log("newdocs:"+newdocs);
                   socket.emit('update community post needs you', newdocs);
                 }
               });
@@ -510,7 +490,6 @@ io.on('connection', function(socket){
             }
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
             var liststr = "("+skillls.join(",")+")";
-            console.log(skillls);
 
             if (row.collaborator1 != "" || row.collaborator2 != "" || row.collaborator3 !="" || row.collaborator4 != "" || row.collaborator5 != "" ){
               var collaborators_empty = [row.collaborator1, row.collaborator2, row.collaborator3, row.collaborator4, row.collaborator5];
@@ -524,10 +503,6 @@ io.on('connection', function(socket){
               }
               var c_tuplestr = "(?,?,?,?,?)";
               var c_liststr = "("+collaboratorls.join(",")+")";
-              console.log(socket.uid);
-              console.log(tuplestr);
-              console.log(c_tuplestr);
-              console.log(collaboratorls);
               var c_liststr = "('"+collaboratorls[0]+"'";
               for (var i = 1; i < 5; i++){
                 c_liststr += ", '"+ collaboratorls[i]+"'";
@@ -539,13 +514,10 @@ io.on('connection', function(socket){
                 liststr += ", '"+ skillls[i]+"'";
               }
               liststr += ")";
-              console.log(c_liststr);
-              console.log(liststr);
 
               db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!="+socket.uid+" AND week1_profile.user_id=auth_user.id AND (week1_profile.profession1 in "+c_liststr+" OR week1_profile.profession2 in "+c_liststr+" OR week1_profile.profession3 in "+c_liststr+" OR week1_profile.profession4 in "+c_liststr+" OR week1_profile.profession5 in "+c_liststr+" OR week1_profile.skill1 in "+liststr+" OR week1_profile.skill2 in "+liststr+" OR week1_profile.skill3 in "+liststr+" OR week1_profile.skill4 in "+liststr+" OR week1_profile.skill5 in "+liststr+" OR week1_profile.skill6 in "+liststr+" OR week1_profile.skill7 in "+liststr+" OR week1_profile.skill8 in "+liststr+" OR week1_profile.skill9 in "+liststr+" OR week1_profile.skill10 in "+liststr+") GROUP BY week1_profile.user_id", function(err, rows){
               //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1 in "+tuplestr+" or week1_profile.skill2 in "+tuplestr+" or week1_profile.skill3 in "+tuplestr+" or week1_profile.skill4 in "+tuplestr+" or week1_profile.skill5 in "+tuplestr+" or week1_profile.skill6 in "+tuplestr+" or week1_profile.skill7 in "+tuplestr+" or week1_profile.skill8 in "+tuplestr+" or week1_profile.skill9 in "+tuplestr+" or week1_profile.skill10 in "+tuplestr+" or week1_profile.profession1 in "+c_tuplestr+" or week1_profile.profession2 in "+c_tuplestr+" or week1_profile.profession3 in "+c_tuplestr+" or week1_profile.profession4 in "+c_tuplestr+" or week1_profile.profession5 in "+c_tuplestr+" ) GROUP BY week1_profile.user_id", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, collaboratorls, collaboratorls, collaboratorls, collaboratorls, collaboratorls), function(err, rows){
                 socket.emit('get collaborators you need', rows);
-                console.log("collaborators you need in if "+rows);
               });
 
 
@@ -553,7 +525,6 @@ io.on('connection', function(socket){
               db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!="+socket.uid+" AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1 in "+liststr+" or week1_profile.skill2 in "+liststr+" or week1_profile.skill3 in "+liststr+" or week1_profile.skill4 in "+liststr+" or week1_profile.skill5 in "+liststr+" or week1_profile.skill6 in "+liststr+" or week1_profile.skill7 in "+liststr+" or week1_profile.skill8 in "+liststr+" or week1_profile.skill9 in "+liststr+" or week1_profile.skill10 in "+liststr+") GROUP BY week1_profile.user_id", function(err, rows){
               //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND (week1_profile.skill1 in "+tuplestr+" or week1_profile.skill2 in "+tuplestr+" or week1_profile.skill3 in "+tuplestr+" or week1_profile.skill4 in "+tuplestr+" or week1_profile.skill5 in "+tuplestr+" or week1_profile.skill6 in "+tuplestr+" or week1_profile.skill7 in "+tuplestr+" or week1_profile.skill8 in "+tuplestr+" or week1_profile.skill9 in "+tuplestr+" or week1_profile.skill10 in "+tuplestr+") GROUP BY week1_profile.user_id", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
                 socket.emit('get collaborators you need', rows);
-                console.log("collaborators you need in else"+rows);
               });
               
             }
@@ -573,7 +544,6 @@ io.on('connection', function(socket){
         else {
           if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
             var skillls_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
-            console.log("skillls:"+skillls);
             var skillls = [];
             for (var i = 0; i < 10; i++){
               if (skillls_empty[i] == ""){
@@ -587,11 +557,9 @@ io.on('connection', function(socket){
             //var uids = [];
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
             var liststr = "("+skillls.join(",")+")";
-            console.log(liststr);
             db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM auth_user, week1_profile, week1_upcomingwork WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND week1_profile.user_id=week1_upcomingwork.user_id AND (week1_upcomingwork.collaborator_skill1 in "+tuplestr+" or week1_upcomingwork.collaborator_skill2 in "+tuplestr+" or week1_upcomingwork.collaborator_skill3 in "+tuplestr+" or week1_upcomingwork.collaborator_skill4 in "+tuplestr+" or week1_upcomingwork.collaborator_skill5 in "+tuplestr+" or week1_upcomingwork.collaborator_skill6 in "+tuplestr+" or week1_upcomingwork.collaborator_skill7 in "+tuplestr+" or week1_upcomingwork.collaborator_skill8 in "+tuplestr+" or week1_upcomingwork.collaborator_skill9 in "+tuplestr+" or week1_upcomingwork.collaborator_skill10 in "+tuplestr+") GROUP BY week1_profile.user_id ", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
             //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
               socket.emit('get collaborators need you', rows);
-              console.log("collaborators"+rows);
             });
           } 
         }
@@ -601,17 +569,14 @@ io.on('connection', function(socket){
 
   socket.on('at talent list', function(data){
     var query = data.query;
-    console.log("query:"+query);
     db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM auth_user, week1_profile WHERE (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) AND week1_profile.user_id=auth_user.id GROUP BY week1_profile.user_id ", [query, query, query, query, query, query, query, query, query, query], function(err, rows){
       socket.emit('get talent list', rows);
-      console.log("talent "+rows);
     });
   });
 
   socket.on('at folder', function(data){
     var query = CollaboratePost.find({'to_uid':socket.uid});
       query.sort('-created').limit(30).exec(function(err, collaboratedocs){
-           console.log('share skill:'+collaboratedocs);
            var newdocs = [];
            var curIdx = 0;
            var len = collaboratedocs.length;
@@ -654,54 +619,45 @@ io.on('connection', function(socket){
   });
 
   socket.on('at hatsoff', function(data){
-    console.log('at hatsoff'+socket.uid);
     var query = HatsoffPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at hatsoffreceived'+docs);
       socket.emit('update hatsoffreceived', docs);
     }); 
 
     var query1 = HatsoffPost.find({'user.uid':socket.uid});
     query1.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at hatsoffgave'+docs);
       socket.emit('update hatsoffgave', docs);
     }); 
   });
 
 
   socket.on('at thanks', function(data){
-    console.log('at thanks'+socket.uid);
     var query = ThanksPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at thanksreceived'+docs);
       socket.emit('update thanksreceived', docs);
     }); 
 
     var query1 = ThanksPost.find({'user.uid':socket.uid});
     query1.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at thanksgave'+docs);
       socket.emit('update thanksgave', docs);
     }); 
   });
 
   socket.on('at follow', function(data){
-    console.log('at follow'+socket.uid);
 
     var query = FollowPost.find().or([{ uid1:socket.uid, action_user:2, status:1 }, { uid1:socket.uid, status:2 }, { uid2:socket.uid, action_user:1, status:1 }, { uid2:socket.uid, status:2 }]);
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at folowgave'+docs);
       socket.emit('update followreceived', docs);
     }); 
 
     var query1 = FollowPost.find().or([{ uid1:socket.uid, action_user:1 }, { uid1:socket.uid, status:2 }, { uid2:socket.uid, action_user:2 }, { uid2:socket.uid, status:2 }]);
     query1.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at folowgave'+docs);
       socket.emit('update followgave', docs);
     }); 
   });
@@ -715,7 +671,6 @@ io.on('connection', function(socket){
         console.log(err);
       }else {
         if (result){
-          console.log("result");
           socket.emit('update first message', result);
         }
 
@@ -732,7 +687,6 @@ io.on('connection', function(socket){
           socket.emit('update chat message', result);
           for (var i = 0; i < result.length; i++){
              socket.join(result[i]._id);
-             console.log("join "+result[i]._id);
           }
         }
 
@@ -742,7 +696,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at history', function(data){
-    console.log('at history'+socket.uid);
 
     var query = CommunityPost.find({'user.uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, communitydocs){
@@ -760,14 +713,12 @@ io.on('connection', function(socket){
     var query2 = SharePost.find({'user.uid':socket.uid});
     query2.sort('-created').limit(30).exec(function(err, sharedocs){
       if (err) throw err;
-      console.log('share history'+sharedocs);
       socket.emit('update share history', sharedocs);
     }); 
 
     var query3 = ShareSkillPost.find({'user.uid':socket.uid});
     query3.sort('-created').limit(30).exec(function(err, skilldocs){
       if (err) throw err;
-      console.log('shareskill history'+skilldocs);
       socket.emit('update shareskill history', skilldocs);
     }); 
 
@@ -802,7 +753,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at home', function(data){
-    console.log('at home'+socket.uid);
     var query = CommentPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -818,7 +768,6 @@ io.on('connection', function(socket){
     var query3 = PortfolioPost.find({'to_uid':socket.uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log("portfolio:"+docs);
       socket.emit('update portfolio comment', docs);
     }); 
 
@@ -829,7 +778,6 @@ io.on('connection', function(socket){
 
     HatsoffPost.find({'to_uid':socket.uid}).count(function(err, count){
       if (err) throw err;
-      console.log("count:"+count);
       socket.emit('number hatsoff', count);
     }); 
 
@@ -842,14 +790,12 @@ io.on('connection', function(socket){
     var query_cp = CommunityPost.find({'user.uid':socket.uid});
     async.waterfall([
         function(callback){
-           console.log("communitydocs");
            var query_cp = CommunityPost.find({'user.uid':socket.uid});
            query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
               callback(null, communitydocs);
            });
         },
         function(communitydocs, callback){
-           console.log("communitydocs:"+communitydocs.length);
        	   var query_sh = SharePost.find({'user.uid':socket.uid});
       	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
                     callback(null, communitydocs, sharedocs);
@@ -878,7 +824,6 @@ io.on('connection', function(socket){
         				 //console.log("****newdocs****:"+newdocs);
         				 curIdx += 1;
         				 if (curIdx == len){
-        				  console.log("***********************************length of newdocs:"+newdocs.length);
         				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
         				 }
         			 }
@@ -888,25 +833,21 @@ io.on('connection', function(socket){
 			} else if(docs.content_type == 2){
 			 curIdx += 1;
 			 if (curIdx == len){
-			  console.log("***********************************length of newdocs:"+newdocs.length);
 			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
 			 }
 			} else if(docs.content_type == 3){
 			 curIdx += 1;
 			 if (curIdx == len){
-			  console.log("***********************************length of newdocs:"+newdocs.length);
 			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
 			 }
 			} else if(docs.content_type == 4){
 			 curIdx += 1;
 			 if (curIdx == len){
-			  console.log("***********************************length of newdocs:"+newdocs.length);
 			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
 			 }
 			} else{
 			 curIdx += 1;
 			 if (curIdx == len){
-			  console.log("***********************************length of newdocs:"+newdocs.length);
 			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
 			 }
 			}
@@ -921,25 +862,21 @@ io.on('connection', function(socket){
  
   socket.on('at userpage', function(data){
 
-    console.log('at userpage'+socket.uid);
     var query = CommentPost.find({'to_uid':data.to_uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('at home');
       socket.emit('update comment', docs);
     }); 
 
     var query2 = UpcomingPost.find({'to_uid':data.to_uid});
     query2.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('upcoming comment at home');
       socket.emit('update upcoming comment', docs);
     }); 
 
     var query3 = PortfolioPost.find({'to_uid':data.to_uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('portfolio comment at userpage');
       socket.emit('update portfolio comment', docs);
     }); 
 
@@ -979,7 +916,6 @@ io.on('connection', function(socket){
         if (result){
           socket.join(result._id);
           socket.emit('set message', result);
-          console.log('result:'+result);
         }else{
           //Default status is 2
           var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:2 });
@@ -990,7 +926,6 @@ io.on('connection', function(socket){
             }else{
               /** emmit new message to data.to_uid message.html **/
                 socket.join(newdata._id);
-                console.log('newdata:'+newdata);
                 socket.emit('set message', newdata) 
             }
           });
@@ -1030,7 +965,6 @@ io.on('connection', function(socket){
       if (err) throw err;
       HatsoffPost.find({'user.uid':socket.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
         if(error) throw error;
-        console.log('hatsoff status:'+docs);
         socket.emit('hatsoff status', {docs:docs, count:count});
       }); 
     });
@@ -1050,14 +984,12 @@ io.on('connection', function(socket){
     var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       async.waterfall([
         function(callback){
-           console.log("communitydocs");
            var query_cp = CommunityPost.find({'user.uid':data.to_uid});
            query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
               callback(null, communitydocs);
            });
         },
         function(communitydocs, callback){
-           console.log("communitydocs:"+communitydocs.length);
            var query_sh = SharePost.find({'user.uid':data.to_uid});
            query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
               callback(null, communitydocs, sharedocs);
@@ -1080,13 +1012,11 @@ io.on('connection', function(socket){
                         });
                      },
                      function(post){
-                       console.log("second");
                        docs.set('content', post.toJSON(), {strict: false});
                        newdocs.push(docs);
                        //console.log("****newdocs****:"+newdocs);
                        curIdx += 1;
                        if (curIdx == len){
-                        console.log("***********************************length of newdocs:"+newdocs.length);
                         socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
                        }
                      }
@@ -1096,25 +1026,21 @@ io.on('connection', function(socket){
                 } else if(docs.content_type == 2){
                  curIdx += 1;
                  if (curIdx == len){
-                  console.log("***********************************length of newdocs:"+newdocs.length);
                   socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
                  }
                 } else if(docs.content_type == 3){
                  curIdx += 1;
                  if (curIdx == len){
-                  console.log("***********************************length of newdocs:"+newdocs.length);
                   socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
                  }
                 } else if(docs.content_type == 4){
                  curIdx += 1;
                  if (curIdx == len){
-                  console.log("***********************************length of newdocs:"+newdocs.length);
                   socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
                  }
                 } else{
                  curIdx += 1;
                  if (curIdx == len){
-                  console.log("***********************************length of newdocs:"+newdocs.length);
                   socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
                  }
                 }
@@ -1202,42 +1128,34 @@ io.on('connection', function(socket){
   });
 
   socket.on('change portfolio', function(data){
-    console.log('change portfolio'+socket.uid);
     if (data.to_uid){
 	var query = PortfolioPost.find({'to_uid':data.to_uid, 'p_id':data.p_id});
 	query.sort('-created').limit(30).exec(function(err, docs){
 	  if (err) throw err;
-	  console.log('portfolio comment at userpage'+docs);
-	  console.log('socket.uid'+socket.uid);
 	  socket.emit('update portfolio comment', docs);
 	}); 
     }else{
 	var query = PortfolioPost.find({'to_uid':socket.uid, 'p_id':data.p_id});
 	query.sort('-created').limit(30).exec(function(err, docs){
 	  if (err) throw err;
-	  console.log('portfolio comment at home'+docs);
 	  socket.emit('update portfolio comment', docs);
 	}); 
     }
   });
 
   socket.on('see userpage', function(data){
-    console.log('at userpage'+socket.uid);
     var query = CommentPost.find({'to_uid':data.to});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('sending comments updates to userpage'+docs);
       socket.emit('update comment', docs);
     }); 
   });
 
   socket.on('at notification', function(){
-    console.log('check notification');
     var newdocs = [];
     var query = NotificationPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
-      console.log('sending notification'+docs);
       //socket.emit('update notification', docs);
       var len = docs.length;
       var curIdx = 0;
@@ -1247,8 +1165,6 @@ io.on('connection', function(socket){
                  function(callback){
                     //CommunityMember.findOne({ uid : uid }).lean().exec(function(err, post){
                     CommunityMember.findOne({ uid : uid }, function(err, post){
-                      console.log('Community post:'+post);
-                      console.log('Community post:'+ typeof post );
                       callback(null, post);
                     });
                  },
@@ -1281,16 +1197,12 @@ io.on('connection', function(socket){
                     });
                  },
                  function(post, fstatus){
-                   console.log("second:"+uid);
                    if (post != null){
-                      console.log("::::::::::::::::::::::not null:::::::::::::::::");
                       var friend = JSON.stringify(post);
                       var obj = JSON.parse(friend);
-                      console.log(obj);
                       var f = obj["friends"];
                       doc.set('friends', f, {strict: false});
                       doc.set('fstatus', fstatus, {strict: false});
-                      console.log("friend doooooooooooooc:"+doc);
                       newdocs.push(doc);
                    }else{
                       doc.set('fstatus', fstatus, {strict: false});
@@ -1299,11 +1211,7 @@ io.on('connection', function(socket){
                    //console.log("****newdocs****:"+newdocs);
                    curIdx += 1;
                    if (curIdx == len){
-                      console.log("***********************************length of notification newdocs:"+newdocs.length);
-                      console.log(newdocs);
-                      console.log("***********************************");
                       CommunityMember.findOne({ uid : socket.uid }, function(err, mycm){
-                        console.log("mycm:"+mycm);
                         socket.emit('update notification', {newdocs:newdocs, myMember:mycm});
                       });
                    }
@@ -1327,7 +1235,6 @@ io.on('connection', function(socket){
         }
       }
     });
-    console.log('hatsoff to '+uid);
   });
 
   /**
@@ -1364,7 +1271,6 @@ io.on('connection', function(socket){
             var msg = msg.substring(ind+1);
             if (name in users){
                 users[name].emit('whisper', {msg:msg, nick:socket.uid});
-	        console.log('whisper!');
 	    }else{
                 callback('Erorr! Enter valid user');
 	    }
@@ -1372,16 +1278,13 @@ io.on('connection', function(socket){
             callback('Error! Please enter a meesage for your whisper.');
 	}
     }else{
-	io.emit('new message', {msg:msg, nick:socket.uid});
-	console.log('message: ' + data);
+	     io.emit('new message', {msg:msg, nick:socket.uid});
     }
   });
 
   socket.on('private message', function(data, callback){
     if (data.uid in users){
         users[data.uid].emit('whisper', {msg:data.msg, uid:socket.uid, uname:socket.firstname});
-        console.log(socket.uid, socket.firstname);
-        console.log('private message!');
     }else{
         callback('Erorr! The user is not online');
     }
@@ -1390,14 +1293,11 @@ io.on('connection', function(socket){
   socket.on('community post', function(data, callback){
     var d = new Date();
     console.log('date:'+d); 
-    console.log("data type:", typeof data.data);
-    console.log('tag:'+data.tag); 
     var ls = [];
     if(data.skillls.length != 0){
       for (var i = 0; i < data.skillls.length; i++) {
         var item = data.skillls[i];  // Calling myNodeList.item(i) isn't necessary in JavaScript
         ls.push(item);
-        console.log(item);
       }
       if (data.skillls.length < 5){
         for (var i = data.skillls.length; i <= 5; i++){
@@ -1411,7 +1311,6 @@ io.on('connection', function(socket){
         if(err){
           console.log(err);
         }
-        console.log(row.user_id + ": " + row.profession);
      });
     });
 
@@ -1425,7 +1324,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:'+post);
         io.emit('new community post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
       }
     });
@@ -1453,7 +1351,6 @@ io.on('connection', function(socket){
 
   socket.on('community comment', function(data, callback){
     var d = new Date();
-    console.log('community comment date:'+d); 
     
     CommunityPost.findById(data.c_id, function(err, post){
       if (err) {
@@ -1462,7 +1359,6 @@ io.on('connection', function(socket){
         post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
         post.save(function (err) {
           if (!err) {
-            console.log('Success!');
             io.emit('new community comment', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
           }
         });
@@ -1473,8 +1369,6 @@ io.on('connection', function(socket){
 
   socket.on('share skill', function(data, callback){
     var d = new Date();
-    console.log('date:'+d); 
-    console.log('share skill by:'+socket.uid); 
     
     var newPost = new ShareSkillPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, community_id:data.c_id});
     newPost.save(function(err){
@@ -1498,8 +1392,6 @@ io.on('connection', function(socket){
 
   socket.on('give collaborate', function(data, callback){
     var d = new Date();
-    console.log('date:'+d); 
-    console.log('give collaborate:'+socket.uid); 
     
     var newPost = new CollaboratePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_id:data.c_id, content_type:data.c_type});
     newPost.save(function(err){
@@ -1524,7 +1416,6 @@ io.on('connection', function(socket){
 
   socket.on('give thanks', function(data, callback){
     var d = new Date();
-    console.log('give thanks'+socket.uid); 
     
     var newPost = new ThanksPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
     newPost.save(function(err){
@@ -1551,7 +1442,6 @@ io.on('connection', function(socket){
 
   socket.on('give hatsoff', function(data, callback){
     var d = new Date();
-    console.log('give hatsoff'+socket.uid); 
 
 /*
     var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
@@ -1634,7 +1524,6 @@ io.on('connection', function(socket){
             }
           }); 
         }else{
-          console.log('result:'+result);
           if (result.action_user != action_user && result.status != 2){
             result.status = 2;
             result.save();
@@ -1996,9 +1885,11 @@ io.on('connection', function(socket){
         console.log(err);
       } else{
         console.log('saved:'+data.msg);
+        /*
         if (users[data.to]) {
             users[data.to].emit('new portfolio comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname, p_id:data.p_id});
         }
+        */
        
         if (data.uid) {
             console.log('data.uid'+data.uid);

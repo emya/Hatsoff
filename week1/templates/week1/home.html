@@ -1302,6 +1302,8 @@
                   document.getElementById("thanksNum").innerHTML = count;
               });
           **/
+          var cmembers = localStorage.getItem("num-cmembers");
+          document.getElementById('num-cmembers').innerHTML = cmembers;
 
 	      socket.on('number hatsoff', function(count){
                   document.getElementById("hatsoffNum").innerHTML = count;

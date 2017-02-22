@@ -67,6 +67,9 @@
           var usernames = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
           var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 
+          var cmembers = localStorage.getItem("num-cmembers");
+          document.getElementById('num-cmembers').innerHTML = cmembers;
+
           function acceptMessageFunction(uid, msg, room_id){
             console.log("accept");
             socket.emit('accept first message', { to_uid:uid, uid:{{user.id}}, msg:msg, room_id:room_id });

@@ -538,6 +538,10 @@
 
           socket.on('community members number', function(len){
             console.log("length :", len);
+            document.getElementById('num-cmembers').innerHTML = len;
+            localStorage.setItem("num-cmembers", len); 
+            var cmembers = localStorage.getItem("num-cmembers");
+            console.log(cmembers);
           });
 
 

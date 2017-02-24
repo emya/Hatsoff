@@ -1282,6 +1282,11 @@
 
           var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+          //community members
+          var cmembers = localStorage.getItem("num-cmembers");
+          document.getElementById('num-cmembers').innerHTML = cmembers;
+
+
 		 $(function(){
 			$(".addClass").click(function () {
 		        $('#qnimate').addClass('popup-box-on');

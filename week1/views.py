@@ -1613,10 +1613,8 @@ def community(request):
     usernames = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = "None"
 

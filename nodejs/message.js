@@ -406,16 +406,18 @@ io.on('connection', function(socket){
         }
       });
 
-
     });
 
+  });
+
+  socket.on('get community members number', function(){
     var query = CommunityMember.find({'uid':socket.uid});
     query.exec(function(err, docs){
       var len = docs.length;
       socket.emit('community members number', len);
     });
 
-  });
+  })
 
 
   socket.on('join community post', function(data){

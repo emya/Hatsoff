@@ -1287,16 +1287,15 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
+    <script type="text/javascript">
 
-	      var socket = io.connect("{{nodejs_url}}");
+	      //var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
-		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-
-          var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
           /**
 	      socket.on('number thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;

@@ -1903,6 +1903,75 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('add community members', function(data){
+
+    var uid1, uid2, action_user;
+    if (data.sid < data.rid){
+      uid1 = data.sid;
+      uid2 = data.rid; 
+      action_user = 1;
+    }else{
+      uid2 = data.sid;
+      uid1 = data.rid; 
+      action_user = 2;
+    }
+    
+    FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
+      if(err){
+      }else{
+        if(!result){
+          var newPost = new FollowPost({uid1:uid1, uid2:uid2, action_user:action_user, status:1});
+          newPost.save(function(err){
+            if (err) {
+              console.log(err);
+            } else{
+              socket.emit('new history', {to_uid:data.to_uid, content_type:1, action_id:8});
+              if (data.to_uid in users){
+                  users[data.to_uid].emit('new notification', {action_id:8, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+              }
+            }
+          }); 
+        }else{
+          if (result.action_user != action_user && result.status != 2){
+            result.status = 2;
+            result.save();
+            CommunityMember.findOne({uid:uid1}).exec(function(err, result){
+              if (result){
+                result.friends.push(uid2);
+                result.save(function (er) {
+                  console.log("friends saved");
+                });
+              }else{
+                var cm = new CommunityMember({uid:uid1, friends:[uid2]})
+                cm.save(function(e){
+                  console.log("new friends saved");
+                })
+              }
+
+            });
+
+            CommunityMember.findOne({uid:uid2}).exec(function(err, result){
+              if(result){
+                result.friends.push(uid1);
+                result.save(function (err) {
+                  console.log("friends saved");
+                });
+              }else{
+                var cm = new CommunityMember({uid:uid2, friends:[uid1]})
+                cm.save(function(e){
+                  console.log("new friends saved");
+                })
+              }
+            });
+
+          }else{
+            console.log("status:"+result.status); 
+          }
+         }
+      }
+    });
+  });
+
   socket.on('search query', function(query){
     console.log('search query'+query);
 

@@ -317,6 +317,7 @@
         <li><a href="#" onclick="defaultMessage(1)"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
         <li><a href="#" onclick="collaborateFunction(5, 0)">Collaborate</a></li>
 	 	<li><a href="#" onclick="defaultMessage(2)"><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
+        <li><a href="#" onclick="addCommunityFunction({{user.id}}, {{t_user.id}})">Add</a></li>
 
        </ul>
 
@@ -1258,6 +1259,7 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
 	<script>
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});

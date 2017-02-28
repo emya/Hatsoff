@@ -271,7 +271,7 @@
 			                  var n  = users.indexOf(uid);
 			                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                        var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/hat.png'%}"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
+                        var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
                         var thanks = '';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
                         var like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';

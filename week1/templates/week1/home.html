@@ -1287,16 +1287,15 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
+    <script type="text/javascript">
 
-	      var socket = io.connect("{{nodejs_url}}");
+	      //var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
-		  var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		  var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-
-          var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
           /**
 	      socket.on('number thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;
@@ -1595,16 +1594,16 @@
 
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
@@ -1626,16 +1625,16 @@
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 						if ( n != -1) {
 						      if (uid == {{user.id}}){
-						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 						      } else{
-						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 						      }
 
 						}else{
 						      if (uid == {{user.id}}){
-						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 						      } else {
-						         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 						      }
 						}
 					}
@@ -1660,9 +1659,9 @@
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
 		             //$('#communityPost').prepend($('<hr>'));
-		             $('#upcomingComment').prepend($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#upcomingComment').prepend($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
@@ -1686,15 +1685,15 @@
 			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 			    if ( n != -1) {
 			       if (uid == {{user.id}}){
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       } else{
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       }
 			    } else{
 			       if (uid == {{user.id}}){
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p">'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p">'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       } else{
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       }
 			    }
 		        }

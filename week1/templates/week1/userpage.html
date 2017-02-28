@@ -317,6 +317,7 @@
         <li><a href="#" onclick="defaultMessage(1)"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
         <li><a href="#" onclick="collaborateFunction(5, 0)">Collaborate</a></li>
 	 	<li><a href="#" onclick="defaultMessage(2)"><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
+        <li><a href="#" onclick="addCommunityFunction({{user.id}}, {{t_user.id}})" id="add-request">Add</a></li>
 
        </ul>
 
@@ -1258,6 +1259,7 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
 	<script>
 	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
@@ -1323,6 +1325,14 @@
 		    }
 		  }
 
+
+		  function addCommunityFunction(send_uid, recieve_uid){
+			console.log("add community");
+			socket.emit('add community members', {sid:send_uid, rid:recieve_uid});
+			document.getElementById('add-request').innerHTML = "Request sent";
+			document.getElementById('add-request').setAttribute("onclick", "");
+		  }
+
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
 
@@ -1331,11 +1341,11 @@
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like upcoming');
 			    //<img src="{% static 'images/hat.png'%}" class="icons-img">
-			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
             }else if (c_type == 3){
 			    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like portfolio');
-			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1347,11 +1357,11 @@
             if (c_type == 2){
 			    socket.emit('unlike upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('unlike upcoming');
-			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
             }else if (c_type == 3){
 			    socket.emit('unlike portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('unlike portfolio');
-			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1622,13 +1632,13 @@
           			var doc = data[i];
           			var content_type = doc['content_type'];
           			if (content_type == 2){
-          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
           				upcoming = true; 
           			}
           			console.log("content_type:", content_type);
           			if (content_type == 3){
           				var p_id = parseInt(doc['content_id']);
-          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
+          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></br><span class="popuptextLike" id="likePop">You Unliked it</br></span></div>';
           				portfolios.push(p_id);
           			}
           		}
@@ -1637,7 +1647,7 @@
           	if(upcoming == false){
           		var upcomingElement = document.getElementById("upcomingLike");
           		if (upcomingElement != null){
-          			upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+          			upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 
           		}
           	}
@@ -1646,7 +1656,7 @@
           	for (var i = 0; i < p_count; i++){
           		var counter = i+1;
           		if (portfolios.indexOf(counter) == -1){
-          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
 
           		}	
           	}
@@ -1710,6 +1720,8 @@
 		  	if(data.status == 1){
 		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
+				document.getElementById('add-request').innerHTML = "Request sent";
+				document.getElementById('add-request').setAttribute("onclick", "");
 		  		//var str = '<span class="following">Following</span><span id="followNum">'+data.count+'</span>';
 				//elem.insertAdjacentHTML('beforeend', str);
 		  	}else{
@@ -1846,16 +1858,16 @@
 		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
@@ -1876,16 +1888,16 @@
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 				if ( n != -1) {
 				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      } else{
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      }
 
 				}else{
 				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      } else {
-				         $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
+				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
 				      }
 				}
                           }
@@ -1919,18 +1931,42 @@
 			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 			    if ( n != -1) {
 			       if (uid == {{user.id}}){
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       } else{
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       }
 			    } else{
 			       if (uid == {{user.id}}){
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p">'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p">'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       } else{
-			     $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
+			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
 			       }
 			    }
 		       }
+		    }
+	     });
+
+	     socket.on('new upcoming comment on userpage', function(data){
+	     	console.log('new upcoming comment on userpage');
+		    var uid = data.from_uid;
+		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+		    var n  = users.indexOf(uid);
+		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+		    if ( n != -1) {
+		          if (uid == {{user.id}}){
+		             $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		          } else{
+		             $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		          }
+
+		    }else{
+		          if (uid == {{user.id}}){
+		             $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		          } else {
+		             $('#upcomingComment').append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		          }
 		    }
 	     });
  

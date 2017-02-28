@@ -1720,6 +1720,8 @@
 		  	if(data.status == 1){
 		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
+				document.getElementById('add-request').innerHTML = "Request sent";
+				document.getElementById('add-request').setAttribute("onclick", "");
 		  		//var str = '<span class="following">Following</span><span id="followNum">'+data.count+'</span>';
 				//elem.insertAdjacentHTML('beforeend', str);
 		  	}else{

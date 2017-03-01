@@ -1657,7 +1657,6 @@
           		var counter = i+1;
           		if (portfolios.indexOf(counter) == -1){
           			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-
           		}	
           	}
           });
@@ -1717,7 +1716,12 @@
 		  	var elem = document.getElementsByClassName("followstatus");
 		  	elemprofile.innerHTML = '';
 		  	elem.innerHTML = '';
-		  	if(data.status == 1){
+		  	if(data.status == 2){
+		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
+		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
+				document.getElementById('add-request').innerHTML = "Community member";
+				document.getElementById('add-request').setAttribute("onclick", "");
+		  	}else if(data.status == 1){
 		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
 				document.getElementById('add-request').innerHTML = "Request sent";

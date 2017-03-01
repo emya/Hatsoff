@@ -18,8 +18,3 @@ socket.on('community members number', function(len){
 });
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-function addCommunityFunction(send_uid, recieve_uid){
-	console.log("add community");
-	socket.emit('add community members', {sid:send_uid, rid:recieve_uid});
-}

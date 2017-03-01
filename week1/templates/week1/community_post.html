@@ -265,6 +265,7 @@
 	        socket.on('get community post', function(docs){
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              console.log("docs:", docs);
               if (docs['user']['uid']) {
 			                  var uid = docs['user']['uid'];
                         var c_id = docs['_id'];

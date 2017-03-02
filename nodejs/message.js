@@ -788,6 +788,14 @@ io.on('connection', function(socket){
       socket.emit('number follow', count);
     }); 
 
+    LikePost.find({'to_uid':socket.uid, 'user.uid':socket.uid}).exec(function(error, result){
+      if(error) throw error;
+
+      if(result){
+        socket.emit('like status at home', result);
+      }
+    }); 
+
     // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
     var query_cp = CommunityPost.find({'user.uid':socket.uid});
     async.waterfall([

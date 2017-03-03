@@ -12,9 +12,8 @@
     <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
     <script>
-	  /*var socket = io();*/
-          var socket = io.connect("{{nodejs_url}}");
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 
           /***new lines***/
@@ -52,13 +51,6 @@
             console.log('follow!');
             popFollowed();
             socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
-          }
-          */
-
-          function followFunction(uid){
-            console.log('follow!');
-            popFollowed();
-            socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
 
             var elem = document.getElementsByClassName('follow_status_'+uid);
 
@@ -67,6 +59,7 @@
             }
             $('.follow_status_'+uid).append($('<div class="following"><span>Following &nbsp<span></div>'));
           }
+          */
 
 
           function popFollowed(){
@@ -100,6 +93,7 @@
         
 	         socket.on('update notification', function(data){
               var docs = data.newdocs;
+              console.log('docs:', docs);
               var myMember = data.myMember;
               var myFriends = [];
               if (myMember != null && myMember['friends']){
@@ -122,14 +116,18 @@
 	                 $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
                  }
                  else if (docs[i]['action_id'] === 2){//Hatsoff
-                  var fstatus = '<div class="follow_status_'+uid+'"><div class="popupLike" onclick="followFunction('+uid+')">Follow &nbsp</br></div></div>';
-                  if (docs[i]['fstatus'] && docs[i]['fstatus'] == 1){
-                    var fstatus = '<div class="follow_status_'+uid+'"><div class="popupLike"><span>Following &nbsp<span></div></div>';
+                  var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Add &nbsp</br></div></span>';
+                  if (docs[i]['fstatus']){
+                    if (docs[i]['fstatus'] == 1){
+                      var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Request Sent &nbsp<span></div></span>';
+                    }else if (docs[i]['fstatus'] == 2){
+                      var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Community Member &nbsp<span></div></span>';
+                    }
                   }
                   if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupLike" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div></span>'));
+                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupLike" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
                   }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div></span>'));
+                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
                   }
                  }
                  else if (docs[i]['action_id'] === 3){
@@ -174,9 +172,13 @@
                   }
                  }
                  else if (docs[i]['action_id'] === 8){
-                  var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="followFunction('+uid+')">Follow &nbsp</br></div></span>';
-                  if (docs[i]['fstatus'] && docs[i]['fstatus'] == 1){
-                    var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Following &nbsp<span></div></span>';
+                  var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Add &nbsp</br></div></span>';
+                  if (docs[i]['fstatus']){
+                    if (docs[i]['fstatus'] == 1){
+                      fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Request Sent &nbsp<span></div></span>';
+                    }else if (docs[i]['fstatus'] == 2){
+                      fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Community Member &nbsp<span></div></span>';
+                    }
                   }
                   if( n != -1 && photos[n] != "None" && photos[n] != ""){
                     $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));

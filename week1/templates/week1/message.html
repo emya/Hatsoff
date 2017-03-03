@@ -58,8 +58,8 @@
     <!--script src="localhost:8889/socket.io/socket.io.js"></script-->
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
     <script>
-          var socket = io.connect("{{nodejs_url}}");
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('at chat message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 

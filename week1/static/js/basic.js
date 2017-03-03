@@ -17,8 +17,15 @@ socket.on('community members number', function(len){
     console.log(cmembers);
 });
 
-var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+socket.on('new community member', function(){
+	var cmembers = localStorage.getItem("num-cmembers");
+	if (cmembers == null){
+		cmembers = 0;
+	}
+	document.getElementById('num-cmembers').innerHTML = cmembers+1;
+});
 
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function likeCommunityFunction(uid, c_id){
     console.log('uid on like:'+uid+':'+c_id);
@@ -45,6 +52,23 @@ function hatsoffCommunityFunction(uid, c_id){
     socket.emit('give hatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
     var hatsoff = document.getElementById("hatsoff_"+c_id);
     hatsoff.innerHTML = '<img src="/static/images/2hats-01.png" class="icons-img">';
+}
+
+function addCommunityFunction(uid){
+    console.log('follow!');
+    socket.emit('give follow', {to_uid:uid, uid:socket.uid});
+
+    var elem = document.getElementsByClassName('follow_status_'+uid);
+
+    for(var i = 0; i < elem.length; i++){
+        elem[i].innerHTML = '';
+    }
+    $('.follow_status_'+uid).append($('<div class="following"><span>Request Sent &nbsp<span></div>'));
+
+    var addstatus = document.getElementById('add-request');
+    if (addstatus){
+    	addstatus.innerHTML = 'Request Sent';	
+    }
 }
 
 function encode (input) {

@@ -317,7 +317,7 @@
         <li><a href="#" onclick="defaultMessage(1)"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
         <li><a href="#" onclick="collaborateFunction(5, 0)">Collaborate</a></li>
 	 	<li><a href="#" onclick="defaultMessage(2)"><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
-        <li><a href="#" onclick="addCommunityFunction({{user.id}}, {{t_user.id}})" id="add-request">Add</a></li>
+        <li><a href="#" onclick="addCommunityFunction({{t_user.id}})" id="add-request">Add</a></li>
 
        </ul>
 
@@ -1261,7 +1261,6 @@
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
 	<script>
-	      var socket = io.connect("{{nodejs_url}}");
 	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
 	      socket.emit('at userpage', {uid:{{user.id}}, to_uid:{{t_user.id}}, uname:"{{user.first_name}}"});
 
@@ -1326,12 +1325,14 @@
 		  }
 
 
+		  /*
 		  function addCommunityFunction(send_uid, recieve_uid){
 			console.log("add community");
 			socket.emit('add community members', {sid:send_uid, rid:recieve_uid});
 			document.getElementById('add-request').innerHTML = "Request sent";
 			document.getElementById('add-request').setAttribute("onclick", "");
 		  }
+		  */
 
 	      function likeFunction(c_type, c_id){
 		    console.log('uid on like:'+c_type+':'+c_id);
@@ -1657,7 +1658,6 @@
           		var counter = i+1;
           		if (portfolios.indexOf(counter) == -1){
           			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></br><span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
-
           		}	
           	}
           });
@@ -1717,7 +1717,12 @@
 		  	var elem = document.getElementsByClassName("followstatus");
 		  	elemprofile.innerHTML = '';
 		  	elem.innerHTML = '';
-		  	if(data.status == 1){
+		  	if(data.status == 2){
+		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
+		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
+				document.getElementById('add-request').innerHTML = "Community member";
+				document.getElementById('add-request').setAttribute("onclick", "");
+		  	}else if(data.status == 1){
 		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
 				document.getElementById('add-request').innerHTML = "Request sent";

@@ -1,0 +1,4 @@
+{
+	"NODEJS_SOCKET_URL" : "http://localhost:8889",
+	"STATIC_URL" : "/static/" 
+}

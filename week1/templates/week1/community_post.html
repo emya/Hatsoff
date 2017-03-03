@@ -132,10 +132,8 @@
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-	  /*var socket = io();*/
-          var socket = io.connect("{{nodejs_url}}");
-
+    <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
+    <script type="text/javascript">
           /***new lines***/
           socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
           socket.emit('join community post', {uid:{{user.id}}, uname:"{{user.first_name}}", c_id:"{{c_id}}" });
@@ -172,11 +170,13 @@
             popup.classList.toggle('show');
 	        }
 
+          /*
           function hatsoffFunction(uid){
             console.log('uid on hatsoff:'+uid);
             popHatsoff();
 	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}});
           }
+          */
 
           function popHatsoff(){
 	          var popup = document.getElementById('hatsoffPop');
@@ -202,17 +202,6 @@
 
           function popFollow(){
 	          var popup = document.getElementById('followPop');
-            popup.classList.toggle('show');
-	        }
-
-          function likeFunction(uid, c_id){
-            console.log('uid on like:'+uid+':'+c_id);
-            popLike();
-	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-          }
-
-          function popLike(){
-	          var popup = document.getElementById('likePop');
             popup.classList.toggle('show');
 	        }
 
@@ -262,36 +251,112 @@
               }
           });
 	 
-	        socket.on('get community post', function(docs){
+	        socket.on('get community post', function(data){
               var users = [{% for u in users %} {{ u }} ,{% endfor %}];
               var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+              var docs = data.post;
+              var sharedocs = data.sharedocs;
+              var likedocs = data.likedocs;
+              var hatsoffdocs = data.hatsoffdocs;
+              var sharels = [];
+              var likels = [];
+              var hatsoffls = [];
+              var isLike = false;
+              var isShare = false;
+              var isHat = false;
+
+              for (var i=0; i < sharedocs.length; i++){
+                sharels.push(sharedocs[i]['user']);
+                if (sharedocs[i]['user']['uid'] == socket.uid){
+                 isShare = true; 
+                }
+              }
+
+              for (var i=0; i < likedocs.length; i++){
+                likels.push(likedocs[i]['user']);
+                if (likedocs[i]['user']['uid'] == socket.uid){
+                 isLike = true; 
+                }
+              }
+
+              var count_likes = likels.length;
+              for (var i=0; i < hatsoffdocs.length; i++){
+                hatsoffls.push(hatsoffdocs[i]['user']);
+                if (hatsoffdocs[i]['user']['uid'] == socket.uid){
+                 isHat = true; 
+                }
+              }
               console.log("docs:", docs);
+              console.log("data:", data);
+              console.log("like:", likels);
+
               if (docs['user']['uid']) {
 			                  var uid = docs['user']['uid'];
                         var c_id = docs['_id'];
+
+                        var created = docs['created'];
+                        var colonIndex = created.indexOf(":");
+                        var date = created.substring(0, colonIndex-3);
+                        var datels = date.split('-');
+                        var mm = months[parseInt(datels[1])-1];
+                        var dd = datels[2];
+                        var yy = datels[0];
+
 			                  var n  = users.indexOf(uid);
 			                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                        var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
                         var thanks = '';
                         var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
-                        var like = '<div class="popupLike" onclick="likeFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
+
+                        var like = '<hr class="divider"/>';
+                        if (isLike){
+                          //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
+                        }else{
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
+                        }
+                        //var like = '<div class="popupLike" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')">Like &nbsp<span class="popuptextLike" id="likePop">You Liked it</br></span></div>';
                         var shareskill = '';
-                        var share = '<div class="popupShare" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
+
+                        var share = '';
+                        if (isShare){
+                          share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_sharedicon-02.png'%}" class="icons-img"></div>';
+                        }else{
+                          share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_sharedicon-02.png'%}" class="icons-img"></div>';
+                        }
+
+                        var hatsoff = '';
+                        if (isHat){
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
+                        }else{
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
+
+                        }
+                        //var share = '<div class="popupShare" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')">Share &nbsp<span class="popuptextShared" id="sharedPop">You shared!<br></span></div>';
                         var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</br></span></div><hr class="divider"/>';
                         var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+                        var imageText = '';
+
+                        if (docs['image'] && docs['image']['data']){
+                          var bytes = new Uint8Array(docs['image']['data']);
+                          var enc = encode(bytes);
+                          var ctype = docs['image']['contentType'];
+                          imageText = '<embed id="ItemPreview_'+c_id+'" src="data:'+ctype+';base64,'+enc+'" class="largepostImage" /></embed>';
+                        }
+
                   			if ( n != -1) {
                   			   if (uid == {{user.id}}){
 
-                              $('.post-body').append($('<li class="media" style="ist-style-type:none;"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('.post-body').append($('<li class="media" style="ist-style-type:none;"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><p class="media-comment">'+docs['content']+'</p>'+imageText+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
 			                      } else{
-                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><p class="media-comment">'+docs['content']+'</p>'+imageText+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                   			   }
                   			} else{
                   			   if (uid == {{user.id}}){
-                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><h4 class="media-heading text-uppercase reviews">'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><h4 class="media-heading text-uppercase reviews">'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><p class="media-comment">'+docs['content']+'</p>'+imageText+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
 			                      } else{
-                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><h4 class="media-heading text-uppercase reviews">'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><p class="media-comment">'+docs['content']+'</p>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                              $('.post-body').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="media-object img-circle" src="{% static 'images/profileimage.png' %}" alt="profile"></a><h4 class="media-heading text-uppercase reviews">'+docs['user']['first_name']+'&nbsp'+docs['user']['last_name']+'</h4><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><p class="media-comment">'+docs['content']+'</p>'+imageText+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
 			                      }
 			                  }
                         if (docs['replys']) {

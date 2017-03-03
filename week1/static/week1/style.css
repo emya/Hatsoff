@@ -2547,6 +2547,11 @@ hr .solid-divider{
   width: 300px; 
 }
 
+.media-body .largepostImage{
+  width: 400px; 
+  min-height: 400px; 
+}
+
 .panel-body .messageImage{
   width: 200px; 
 }

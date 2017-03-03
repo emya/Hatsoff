@@ -422,10 +422,32 @@ io.on('connection', function(socket){
 
   socket.on('join community post', function(data){
     console.log('join community');
+    /*
     CommunityPost.findById(data.c_id, function(err, post){
       if (err) throw err;
       socket.emit('get community post', post);
     });
+    */
+
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) throw err;
+      var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
+      query1.exec(function(err1, likedocs){
+        if (err1) throw err1;
+
+        var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
+        query2.exec(function(err2, sharedocs){
+          if (err2) throw err2;
+
+          var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
+          query3.exec(function(err3, hatsoffdocs){
+            if (err3) throw err3;
+
+            socket.emit('get community post', {sharedocs:sharedocs, likedocs:likedocs, hatsoffdocs:hatsoffdocs, post:post});
+          });
+        });
+      });
+    }); 
 
   });
 

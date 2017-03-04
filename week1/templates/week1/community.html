@@ -8,6 +8,28 @@
   $(document).ready(function() {
     $("#myTags").tagit();
   });
+    
+    
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 </script> 
 
 <!--div class="community-container"-->
@@ -54,12 +76,25 @@
                   <option value="1">Yes</option>
                   <option value="-1">No</option>
                 </select>
-                <button class="btn btn-primary btn-lg" onclick="return publicPost()">Post to public community</button>
-                <button class="btn btn-primary btn-lg" onclick="return privatePost()">Post to private community</button>
+                  
+                <!-- button class="btn btn-primary btn-lg" onclick="return publicPost()">Share with the public</button-->
+                <!-- button class="btn btn-primary btn-lg" onclick="return privatePost()">Share with your community</button-->
               </div>
             </div>
+              
           </fieldset>
           </form>
+            <div align="right">
+            <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn">Post</button>
+                        <div id="myDropdown" class="dropdown-content">
+                        <a href="#" onclick="return publicPost()">Share with the public        <img src="{% static 'images/internet.png'%}" width="20px" height="20px" align="right"></a>
+                            
+                        <a href="#" onclick="return privatePost()">Share with your community<img src="{% static 'images/about-us.svg'%}" width="20px" height="20px" align="right"></a>
+                    </div>
+                </div>
+            </div>
+            
         </div>
       </div>
   </div>

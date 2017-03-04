@@ -11,8 +11,6 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbfile);
 
 
-
-
 /** redis
 var redis = require('redis');
 var sub = redis.createClient();

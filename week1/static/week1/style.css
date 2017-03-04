@@ -193,12 +193,13 @@ ul{
 
 #header #header-menus #header-search {
    height:15px;
-    width:260px;
-    padding-left:35px;
+   width:260px;
+   color: black;
+   padding-left:35px;
    margin-bottom: 10px;
 }
 
-#header #header-right #header-search input[type=text]{
+#header #header-right #header-search input[type=text] {
    width: 150px;
    color: black;
 }
@@ -206,6 +207,7 @@ ul{
 #header #header-menus #header-search input[type=submit]{
    width: 60px;
    padding: 5px;
+   color:black;
 }
 
 #header #header-menus #header-search input[type=submit]:hover{

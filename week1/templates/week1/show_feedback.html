@@ -1,0 +1,19 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+<div id="step">
+     <div id="step-left">
+     </div>
+
+    
+     <div id="step-right">
+        <h3>Feedback</h3>
+        <ul>
+        {% for f in feedback %}
+            <p>{{f.body}}</p>
+        {% endfor %}
+        </ul>
+     </div>
+
+</div>
+{% endblock %}

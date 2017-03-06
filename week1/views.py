@@ -709,6 +709,17 @@ def step7(request):
 
 @csrf_protect
 @login_required
+def show_feedback(request):
+    query = request.GET.get('search_query', None)
+    if query:
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
+
+    all_feedback = Feedback.objects.all()
+    return render(request, 'week1/show_feedback.html', {'feedback':all_feedback})
+
+
+@csrf_protect
+@login_required
 def feedback(request):
     query = request.GET.get('search_query', None)
     

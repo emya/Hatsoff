@@ -1,0 +1,26 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+<div id="step">
+     <div id="step-left">
+     </div>
+
+    
+     <div id="step-right">
+        <h3>Update your information</h3>
+        {{ form.errors }}
+        <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <!--br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/-->
+                <br>{{form.body.label_tag}}</br> {{form.body}}<br/>
+                <!--br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
+                <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/-->
+	<div class="submit-wrapper">
+		<input type="submit" value="Send" class="step-submit" />
+		<input type="hidden" name="next" value="home.html">
+	        <a href="{% url 'week1:home' %}">Back to Home</a>
+        </div>
+        </form>
+     </div>
+
+</div>
+{% endblock %}

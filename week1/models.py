@@ -115,6 +115,9 @@ class UpcomingWork(models.Model):
     tag9 = models.CharField(max_length=300, default='', blank=True)
     tag10 = models.CharField(max_length=300, default='', blank=True)
 
+class Feedback(models.Model):
+    body = models.CharField(max_length=500, default='', blank=True)
+
 class Hatsoff(models.Model):
     user_one_id = models.IntegerField()
     user_two_id = models.IntegerField()

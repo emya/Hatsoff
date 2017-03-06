@@ -9,7 +9,7 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
 from django.forms import extras
-from .models import Profile, Showcase, UpcomingWork
+from .models import Profile, Showcase, UpcomingWork, Feedback
 
 class RegistrationForm(forms.Form):
     username = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=100, placeholder=" Email")), label=_("Email address"), label_suffix="")
@@ -258,6 +258,20 @@ class PersonalPhoto(forms.ModelForm):
         fields = ('photo',)
         labels = {
             'photo': _('Add profile photo'),
+        }
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        return cleaned_data
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        widgets = {
+            'body': forms.Textarea(attrs={'cols': 70, 'rows': 5}),
+        }
+        fields = ('body',)
+        labels = {
+            'body': _('Please share your opinion with us'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

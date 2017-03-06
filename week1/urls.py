@@ -51,5 +51,6 @@ urlpatterns = [
     url(r'^edit/upcomingwork/$', views.home_edit_upcoming, name='edit_upcoming'),
     url(r'^folder/$', views.folder, name='folder'),
     url(r'^folder/list/(?P<user2>\d+)/$', views.add_folder, name='add_folder'),
+    url(r'^feedback/$', views.feedback, name='feedback'),
     url(r'^messageboard/$', views.historyboard, name='historyboard'),
 ]

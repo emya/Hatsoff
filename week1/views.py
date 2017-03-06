@@ -25,8 +25,8 @@ from itertools import chain
 from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
-from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork, Profession
-from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm
+from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork, Profession, Feedback
+from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm, FeedbackForm
 
 # Create your views here.
 #@csrf_exempt
@@ -707,6 +707,29 @@ def step7(request):
     variables = RequestContext(request, {'form':form})
     return render_to_response('week1/step7.html', variables, )
 
+@csrf_protect
+@login_required
+def feedback(request):
+    query = request.GET.get('search_query', None)
+    
+    if query:
+        return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
+
+    currentuser = User.objects.get(id=request.user.id, username=request.user.username)
+    if request.method == "POST":
+        form = FeedbackForm(request.POST, label_suffix="")
+
+        if form.is_valid():
+            form.save()
+
+            profile = Profile.objects.get(user=currentuser)
+            return HttpResponseRedirect('/week1/home/')
+
+    else:
+        form = FeedbackForm(label_suffix="")
+
+    usersprofile = Profile.objects.get(user=currentuser)
+    return render(request, 'week1/feedback.html', {'profile':usersprofile, 'form':form})
 
 @csrf_protect
 @login_required

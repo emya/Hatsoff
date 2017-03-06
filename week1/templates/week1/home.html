@@ -1307,9 +1307,6 @@
                   document.getElementById("thanksNum").innerHTML = count;
               });
           **/
-          var cmembers = localStorage.getItem("num-cmembers");
-          document.getElementById('num-cmembers').innerHTML = cmembers;
-
 	      socket.on('number hatsoff', function(count){
                   document.getElementById("hatsoffNum").innerHTML = count;
               });
@@ -1341,12 +1338,29 @@
 	          if (c_type == 2){
 			      socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like upcoming');
+                  document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br></div>';
 	          }else if (c_type == 3){
 				  socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like portfolio');
+                  document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
 	          }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
+
+          function unlikeFunction(c_type, c_id){
+            console.log('uid on like:'+c_type+':'+c_id);
+            //popLike();
+            if (c_type == 2){
+                socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+                console.log('unlike upcoming');
+                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
+            }else if (c_type == 3){
+                socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+                console.log('unlike portfolio');
+                document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
+            }
+         //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
 
 	      function popLike(){
 

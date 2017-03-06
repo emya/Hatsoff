@@ -1283,11 +1283,6 @@
 
           var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-          //community members
-          var cmembers = localStorage.getItem("num-cmembers");
-          document.getElementById('num-cmembers').innerHTML = cmembers;
-
-
 		 $(function(){
 			$(".addClass").click(function () {
 		        $('#qnimate').addClass('popup-box-on');
@@ -1455,7 +1450,6 @@
 	      function hatsoffFunction(c_type, c_id){
 			 console.log('hatsoff!');
 
-			 
 			 popGavehatsoff();
 			 socket.emit('give hatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 	      }
@@ -1564,7 +1558,6 @@
 		    $('#c_portfolio_'+number).val('');
 		    return false;
           }
-
 
           function submitUpcomingComment(){
             console.log('form submit upcoming');

@@ -10,7 +10,6 @@ var dbfile = '../db.sqlite3';
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbfile);
 
-
 /** redis
 var redis = require('redis');
 var sub = redis.createClient();
@@ -803,6 +802,8 @@ io.on('connection', function(socket){
   });
 
   socket.on('at home', function(data){
+    console.log("at home");
+
     var query = CommentPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -1943,7 +1944,6 @@ io.on('connection', function(socket){
         if (data.to in users && data.to != socket.uid){
            users[data.to].emit('new comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         }
-
       }
     });
 
@@ -1961,6 +1961,14 @@ io.on('connection', function(socket){
         }
       }
     });
+  });
+
+  socket.on('delete community post', function(c_id){
+    console.log("delete post");
+    CommunityPost.find({'_id':c_id}).remove().exec();
+    CommunityPost.find({'content_id':c_id}).remove().exec();
+    SharePost.find({'content_id':c_id}).remove().exec();
+    LikePost.find({'content_id':c_id}).remove().exec();
   });
 
   socket.on('upcoming comment', function(data, callback){

@@ -317,7 +317,7 @@
         <li><a href="#" onclick="defaultMessage(1)"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
         <li><a href="#" onclick="collaborateFunction(5, 0)">Collaborate</a></li>
 	 	<li><a href="#" onclick="defaultMessage(2)"><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
-        <li><a href="#" onclick="addCommunityFunction({{t_user.id}})" id="add-request">Add</a></li>
+        <li><a href="#" onclick="addCommunityFunction({{t_user.id}})" class="follow_status_{{t_user.id}}" id="add-request">Add</a></li>
 
        </ul>
 
@@ -1722,9 +1722,13 @@
 				document.getElementById('add-request').setAttribute("onclick", "");
 		  		//var str = '<span class="following">Following</span><span id="followNum">'+data.count+'</span>';
 				//elem.insertAdjacentHTML('beforeend', str);
+		  	}else if(data.status == 11){
+		  		$('.followstatus').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Confirm request &nbsp</div>'));
+		  		$('#follow-profile').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Confirm request &nbsp<span id="followNum">'+data.count+'</span></div>'));
+				document.getElementById('add-request').innerHTML = "Confirm request";
 		  	}else{
-		  		$('.followstatus').append($('<div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span></div>'));
-		  		$('#follow-profile').append($('<div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum">'+data.count+'</span></div>'));
+		  		$('.followstatus').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Add &nbsp</div>'));
+		  		$('#follow-profile').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Add &nbsp<span id="followNum">'+data.count+'</span></div>'));
 				//var str = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum">'+data.count+'</span></div>';
 				//elem.insertAdjacentHTML('beforeend', str);
 		  	}

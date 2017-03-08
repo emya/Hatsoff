@@ -1002,11 +1002,12 @@ io.on('connection', function(socket){
 
     // Follow status 0:not following, 1:following
     //1: sent request, 2:accepted, 3:blocked
-    FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
+     FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
       if(error) throw error;
-       
+         
       FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
         if(err){
+
         }else{
           if(result){
             if( result.status == 2){
@@ -1014,14 +1015,15 @@ io.on('connection', function(socket){
             }else if ((result.uid1==socket.uid && result.action_user==1) || (result.uid2==socket.uid && result.action_user==2)){
               socket.emit('follow status', {status:1, count:count});
             }else{
-              socket.emit('follow status', {status:0, count:count});
+              //Got request
+              socket.emit('follow status', {status:11, count:count});
             }
           }else{
             socket.emit('follow status', {status:0, count:count});
           }
         }
       });
-    }); 
+    });
 
     HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
       if (err) throw err;

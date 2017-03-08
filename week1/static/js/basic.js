@@ -67,7 +67,11 @@ function addCommunityFunction(uid){
 
     var addstatus = document.getElementById('add-request');
     if (addstatus){
-    	addstatus.innerHTML = 'Request Sent';	
+        if (addstatus.innerHTML == 'Confirm request'){
+            addstatus.innerHTML = 'Community member';   
+        }else{
+            addstatus.innerHTML = 'Request Sent';   
+        }
     }
 }
 

@@ -103,89 +103,97 @@
               for(var i = 0; i < docs.length; i++){
                 if(docs[i]['action_user'] && docs[i]['action_user']['uid']){
                  var uid = docs[i]['action_user']['uid'];
-                 var theirFriends = [];
-                 var commonFriends = [];
-                 if (docs[i]['friends']){
-                    theirFriends = docs[i]['friends']; 
-                    commonFriends = myFriends.filter(function(v) { if(theirFriends.indexOf(v) != -1) {return 1} })
-                 }
-                 var commonNum = commonFriends.length;
-                 console.log('commonFriends:'+commonFriends);
-                 var n = users.indexOf(uid);
-                 if (docs[i]['action_id'] === 1){
-	                 $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
-                 }
-                 else if (docs[i]['action_id'] === 2){//Hatsoff
-                  var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Add &nbsp</br></div></span>';
-                  if (docs[i]['fstatus']){
-                    if (docs[i]['fstatus'] == 1){
-                      var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Request Sent &nbsp<span></div></span>';
-                    }else if (docs[i]['fstatus'] == 2){
-                      var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Community Member &nbsp<span></div></span>';
+
+                 if (uid != {{user.id}}){
+
+                   var theirFriends = [];
+                   var commonFriends = [];
+                   if (docs[i]['friends']){
+                      theirFriends = docs[i]['friends']; 
+                      commonFriends = myFriends.filter(function(v) { if(theirFriends.indexOf(v) != -1) {return 1} })
+                   }
+                   var commonNum = commonFriends.length;
+                   console.log('commonFriends:'+commonFriends);
+                   var n = users.indexOf(uid);
+                   if (docs[i]['action_id'] === 1){
+  	                 $('#notifications').append($('<li><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp Left a comment on your page.'+'</p></span><br/>'));
+                   }
+                   else if (docs[i]['action_id'] === 2){//Hatsoff
+                    var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Add &nbsp</br></div></span>';
+                    if (docs[i]['fstatus']){
+                      if (docs[i]['fstatus'] == 1){
+                        var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Request Sent &nbsp<span></div></span>';
+                      }else if (docs[i]['fstatus'] == 2){
+                        var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Community Member &nbsp<span></div></span>';
+                      }else if (docs[i]['fstatus'] == 11){
+                        fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Confirm Request</br></div></span>';
+                      }
                     }
-                  }
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupLike" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
-                  }
-                 }
-                 else if (docs[i]['action_id'] === 3){
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
-                  }
-                 }
-                 else if (docs[i]['action_id'] === 4){
-                  /*
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-	                  $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp liked your community post.'+'</p></span><br/>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp liked your community post.'+'</p></span><br/>'));
-                  }
-                  */
-                 }
-                 else if (docs[i]['action_id'] === 5){
-                  /*
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-	                  $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared your community post.'+'</span><br/>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared your community post.'+'</p></span><br/>'));
-                  }
-                  */
-                 }
-                 else if (docs[i]['action_id'] === 6){
-                  /*
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a thanks.'+'</p></span><br/>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a thanks.'+'</p></span><br/>'));
-                  }
-                  */
-                 }
-                 else if (docs[i]['action_id'] === 7){
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp wanted to collaborate with you.'+'</p></span><br/>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp wanted to collaborate with you.'+'</p></span><br/>'));
-                  }
-                 }
-                 else if (docs[i]['action_id'] === 8){
-                  var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Add &nbsp</br></div></span>';
-                  if (docs[i]['fstatus']){
-                    if (docs[i]['fstatus'] == 1){
-                      fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Request Sent &nbsp<span></div></span>';
-                    }else if (docs[i]['fstatus'] == 2){
-                      fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Community Member &nbsp<span></div></span>';
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupLike" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
                     }
-                  }
-                  if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                    $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
-                  }else{
-                    $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
-                  }
-                 }
+                   }
+                   else if (docs[i]['action_id'] === 3){
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared skill.'+'</p></span><br/>'));
+                    }
+                   }
+                   else if (docs[i]['action_id'] === 4){
+                    /*
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+  	                  $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp liked your community post.'+'</p></span><br/>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp liked your community post.'+'</p></span><br/>'));
+                    }
+                    */
+                   }
+                   else if (docs[i]['action_id'] === 5){
+                    /*
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+  	                  $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared your community post.'+'</span><br/>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp shared your community post.'+'</p></span><br/>'));
+                    }
+                    */
+                   }
+                   else if (docs[i]['action_id'] === 6){
+                    /*
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a thanks.'+'</p></span><br/>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp gave you a thanks.'+'</p></span><br/>'));
+                    }
+                    */
+                   }
+                   else if (docs[i]['action_id'] === 7){
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp wanted to collaborate with you.'+'</p></span><br/>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error"><br><p>'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp wanted to collaborate with you.'+'</p></span><br/>'));
+                    }
+                   }
+                   else if (docs[i]['action_id'] === 8){
+                    var fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Add &nbsp</br></div></span>';
+                    if (docs[i]['fstatus']){
+                      if (docs[i]['fstatus'] == 1){
+                        fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Request Sent &nbsp<span></div></span>';
+                      }else if (docs[i]['fstatus'] == 2){
+                        fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike"><span>Community Member &nbsp<span></div></span>';
+                      }else if (docs[i]['fstatus'] == 11){
+                        fstatus = '<span class="follow_status_'+uid+'"><div class="popupLike" onclick="addCommunityFunction('+uid+')">Confirm Request</br></div></span>';
+                      }
+                    }
+                    if( n != -1 && photos[n] != "None" && photos[n] != ""){
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
+                    }else{
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
+                    }
+                   }
+                }
                }
               }
 	         });

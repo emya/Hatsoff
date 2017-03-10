@@ -1254,6 +1254,8 @@ io.on('connection', function(socket){
                           fstatus = 1;
                         }else if (result.status == 1 && uid2 == socket.uid && result.action_user == 2){
                           fstatus = 1;
+                        }else{
+                          fstatus = 11;
                         }
 
                       }
@@ -1971,6 +1973,16 @@ io.on('connection', function(socket){
     CommunityPost.find({'content_id':c_id}).remove().exec();
     SharePost.find({'content_id':c_id}).remove().exec();
     LikePost.find({'content_id':c_id}).remove().exec();
+  });
+
+  //socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:{{user.id}} });
+  socket.on('update postContent', function(data){
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      doc.content = data.msg;
+      doc.save();
+    });
   });
 
   socket.on('upcoming comment', function(data, callback){

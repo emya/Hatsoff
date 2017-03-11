@@ -12,11 +12,13 @@
     
 function myDropDownPostFunction() {
     document.getElementById("myPostDropdown").classList.toggle("show");
+    return false;
 }
 
     
-function myDropDownDelEditFunction() {
-    document.getElementById("myDelEditDropdown").classList.toggle("show");
+function myDropDownDelEditFunction(c_id) {
+    document.getElementById("myDelEditDropdown_"+c_id).classList.toggle("show");
+    return false;
 }
 
 // Close the dropdown menu if the user clicks outside of it
@@ -725,7 +727,9 @@ window.onclick = function(event) {
               
               
               if (uid == {{user.id}}){
-                dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
+                //dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
+                deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+docs[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
               }
 
               if (data.skillls){
@@ -749,14 +753,14 @@ window.onclick = function(event) {
                     if (uid == {{user.id}}){
                        //Reply
                        //$('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
-                      $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+dells+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                      $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
                     } else{
                        $('#communityPost').prepend($('<li class="media"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     }
 
               }else{
                     if (uid == {{user.id}}){
-                       $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+dells+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
                     } else {
                        $('#communityPost').prepend($('<li class="media"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     }
@@ -769,8 +773,8 @@ window.onclick = function(event) {
               var c_id = data.community_id;
               console.log("data:", data);
               var n  = users.indexOf(uid.toString());
-	          var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-	          var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
               var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
               var shareskill = '';
@@ -809,20 +813,21 @@ window.onclick = function(event) {
 
               var dells = '';
               if (uid == {{user.id}}){
-                dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
+                deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+docs[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
               }
 
               if ( n != -1) {
                     if (uid == {{user.id}}){
                        //Reply
-                      $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+dells+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                      $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
                     } else{
                        $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     }
 
               }else{
                     if (uid == {{user.id}}){
-                       $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+dells+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                       $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
                     } else {
                        $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                     }
@@ -955,9 +960,9 @@ window.onclick = function(event) {
                           var deleteOrEdit = '';
                             
                           if (uid == {{user.id}}){
-                            deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction()" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
-                            dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
-                            editls = '<li><button class="btn btn-primary" onclick="return editPost(\''+c_id+'\')" align="right">Edit</button></li>';
+                            deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                            //dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
+                            //editls = '<li><button class="btn btn-primary" onclick="return editPost(\''+c_id+'\')" align="right">Edit</button></li>';
 
                             edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+docs[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
                           }

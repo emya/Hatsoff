@@ -10,17 +10,31 @@
   });
     
     
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
+function myDropDownPostFunction() {
+    document.getElementById("myPostDropdown").classList.toggle("show");
+}
+
+    
+function myDropDownDelEditFunction() {
+    document.getElementById("myDelEditDropdown").classList.toggle("show");
 }
 
 // Close the dropdown menu if the user clicks outside of it
 
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
+  if (!event.target.matches('.dropPostBtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-PostContent");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+  if (!event.target.matches('.dropDelEditBtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-DelEditContent");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
@@ -85,9 +99,9 @@ window.onclick = function(event) {
           </fieldset>
           </form>
             <div align="right">
-            <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn">Post</button>
-                        <div id="myDropdown" class="dropdown-content">
+                <div class="dropdown">
+                    <button onclick="myDropDownPostFunction()" class="dropPostBtn">Post</button>
+                    <div id="myPostDropdown" class="dropdown-PostContent">
                         <a href="#" onclick="return publicPost()">Share with the public        <img src="{% static 'images/internet.png'%}" width="20px" height="20px" align="right"></a>
                             
                         <a href="#" onclick="return privatePost()">Share with your community<img src="{% static 'images/about-us.svg'%}" width="20px" height="20px" align="right"></a>
@@ -706,6 +720,10 @@ window.onclick = function(event) {
               var imageText = '';
 
               var dells = '';
+              
+              var deleteOrEdit = '';
+              
+              
               if (uid == {{user.id}}){
                 dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
               }
@@ -751,8 +769,8 @@ window.onclick = function(event) {
               var c_id = data.community_id;
               console.log("data:", data);
               var n  = users.indexOf(uid.toString());
-	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+	          var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+	          var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
               var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
               var shareskill = '';
@@ -933,7 +951,11 @@ window.onclick = function(event) {
                           var dells = '';
                           var editls = '';
                           var edit = '';
+                            
+                          var deleteOrEdit = '';
+                            
                           if (uid == {{user.id}}){
+                            deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction()" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
                             dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
                             editls = '<li><button class="btn btn-primary" onclick="return editPost(\''+c_id+'\')" align="right">Edit</button></li>';
 
@@ -967,7 +989,7 @@ window.onclick = function(event) {
                                 //Reply
                                 //$('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p></a>'+skillls+'<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                                 var imageUrl = '{{media_url}}'+photos[n];
-                                $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+dells+editls+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+edit+'</div></div></li>'));
+                                $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+edit+'</div></div></li>'));
                                  
   			                     } else{
                                 var imageUrl = '{{media_url}}'+photos[n];
@@ -975,7 +997,7 @@ window.onclick = function(event) {
                     			   }
                     			} else{
                     			   if (uid == {{user.id}}){
-                                $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+dells+editls+'</ul><a href="'+post_link+'"><p class="media-comment" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+edit+'</div></div></li>'));
+                                $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+edit+'</div></div></li>'));
   			                       } else{
                                 $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+'</div></div></li>'));
                     			   }

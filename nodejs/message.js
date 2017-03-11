@@ -1609,6 +1609,10 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('give unhatsoff', function(data, callback){
+    HatsoffPost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':data.content_type, 'content_id':data.content_id}).remove().exec();
+  });
+
   socket.on('give follow', function(data, callback){
     var d = new Date();
     console.log('give follow'+socket.uid); 

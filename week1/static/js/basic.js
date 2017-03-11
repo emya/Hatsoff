@@ -51,7 +51,15 @@ function hatsoffCommunityFunction(uid, c_id){
     //popHatsoff();
     socket.emit('give hatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
     var hatsoff = document.getElementById("hatsoff_"+c_id);
-    hatsoff.innerHTML = '<img src="/static/images/2hats-01.png" class="icons-img">';
+    hatsoff.innerHTML = '<img src="/static/images/2hats-02.png" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')">';
+}
+
+function unhatsoffCommunityFunction(uid, c_id){
+    console.log('uid on unhatsoff:'+uid);
+    //popHatsoff();
+    socket.emit('give unhatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
+    var hatsoff = document.getElementById("hatsoff_"+c_id);
+    hatsoff.innerHTML = '<img src="/static/images/2hats-01.png" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')">';
 }
 
 function addCommunityFunction(uid){

@@ -375,6 +375,15 @@ img.icons-img {
    display: none;
 }
 
+.home-footer {
+   background-color: #434343;
+}
+
+.home-footer a {
+    font-family: Cabin;
+    color: white;
+    font-size: 18px;
+}
 #footer-wrapper {
    width: 100%;
    background-color: #efefef;
@@ -785,7 +794,12 @@ to here
    width: 290px;
 }
 
-
+.truncate {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 #body img.mainprofile {
    width: 200px;

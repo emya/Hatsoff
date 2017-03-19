@@ -72,7 +72,9 @@
       var profession1 = docs[i].profession1;
       var describe = docs[i].describe;
       var photo = docs[i].photo;
-      $('#collaborator-results').append($('<div class="col-xs-9 col-xs-offset-1 slide-row"><div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel"><div class="carousel-inner"><img src="{{media_url}}'+photo+'" alt="Image" class="collaborator-img"></div></div><div class="slide-content"><a href="'+url_link+'"><h4>'+firstname+'&nbsp'+lastname+'</h4></a><p>'+profession1+'</p><p>'+describe+'</p></div><div class="slide-footer"><span class="pull-right buttons"><span class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></span><span class="followstatus"><div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum"></span></div></span></span></div></div>'));
+      var add = '<div class="popupFollow" id="follow_status_'+uid+'"><a href="#" onclick="addCommunityFunction(\''+uid+'\')">Add</a></div>';
+      
+      $('#collaborator-results').append($('<div class="col-xs-9 col-xs-offset-1 slide-row"><div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel"><div class="carousel-inner"><img src="{{media_url}}'+photo+'" alt="Image" class="collaborator-img"></div></div><div class="slide-content"><a href="'+url_link+'"><h4>'+firstname+'&nbsp'+lastname+'</h4></a><p>'+profession1+'</p><p>'+describe+'</p></div><div class="slide-footer"><span class="pull-right buttons"><span class="popupHatsoff" onclick="hatsoffFunction(5, -1)"><img src="{% static 'images/hat.png'%}" class="icons-img"><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</span><span id="hatsoffNum"></span></span><span class="followstatus"><div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum"></span></div></span>'+add+'</span></div></div>'));
       console.log(photo); 
     }
   });

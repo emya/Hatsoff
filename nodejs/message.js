@@ -830,6 +830,10 @@ io.on('connection', function(socket){
     HatsoffPost.find({'to_uid':socket.uid}).count(function(err, count){
       if (err) throw err;
       socket.emit('number hatsoff', count);
+      HatsoffPost.find({'user.uid':socket.uid, 'to_uid':socket.uid}).exec(function(error, docs){
+        if(error) throw error;
+        socket.emit('hatsoff status at home', {docs:docs, count:count});
+      }); 
     }); 
 
     FollowPost.find().or([{uid1:socket.uid, action_user:2, status:1}, {uid1:socket.uid, status:2}, {uid2:socket.uid, action_user:1, status:1}, {uid2:socket.uid, status:2}]).count(function(err, count){
@@ -844,6 +848,8 @@ io.on('connection', function(socket){
         socket.emit('like status at home', result);
       }
     }); 
+
+    
 
     // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
     var query_cp = CommunityPost.find({'user.uid':socket.uid});

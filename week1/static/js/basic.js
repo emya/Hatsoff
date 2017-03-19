@@ -1,5 +1,6 @@
 //var socket = io.connect("{{nodejs_url}}");
 var socket = io.connect('http://localhost:8889');
+//var socket = io.connect('http://ec2-35-164-130-35.us-west-2.compute.amazonaws.com:8889');
 console.log("socket :", socket);
 
 var cmembers = localStorage.getItem("num-cmembers");

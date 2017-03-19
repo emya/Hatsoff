@@ -41,10 +41,37 @@
     </div>
     
     <br><br>
-    <img src="{% static 'images/LandingPageFooterPlaceholder.png' %}" width="100%">
-    
+
+    <div class="home-footer">
+        <br/>
+        <div class="row">
+            
+            <div class="col-md-1">
+            </div>
+            
+            <div class="col-md-2">
+                <A HREF="#">COMPANY</A><Br/>
+                <A HREF="#">About</A><Br/>
+                <A HREF="#">Terms</A><Br/>
+                <A HREF="#">Privacy</A><Br/>
+                <A HREF="#">Careers</A><Br/>
+            </div>
+             <div class="col-md-2">
+                 <A HREF="#">FOLLOW US</A>
+            </div>
+            
+             <div class="col-md-2">
+                 <A HREF="{% url 'week1:feedback' %}">FEEDBACK</A>
+            </div>
+             <div class="col-md-2">
+                 <A HREF="#">CONTACT</A>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
    
-    
+   
     <!-- Google map -->
     <!--div class="paragraph">
     <iframe

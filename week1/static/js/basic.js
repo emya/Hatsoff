@@ -28,6 +28,11 @@ socket.on('new community member', function(){
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+function sharePortfolioFunction(uid, c_id){
+    console.log('share portfolio function');
+    socket.emit('share portfolio', {to_uid:uid, uid:socket.uid, content_id:c_id});
+}
+
 function likeCommunityFunction(uid, c_id){
     console.log('uid on like:'+uid+':'+c_id);
 	socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});

@@ -464,7 +464,7 @@
                                 
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                                <div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img"> </div>
+                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
                                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
                                 <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
@@ -604,7 +604,7 @@
                             <div class="actionbutton-container">
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                                <div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img"> </div>
+                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
                                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
     	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
@@ -1431,7 +1431,11 @@
              if (c_type == 2){
 		         socket.emit('share upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
              }else if (c_type == 3){
-		         socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+		         //socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+                 console.log('share function');
+                 sharePortfolioFunction({{user.id}}, c_id);
+                 var share = document.getElementById("sharestatus_portfolio_"+c_id);
+                 share.innerHTML = '<img src="/static/images/active_sharedicon-02.png" class="icons-img">';
              }
 		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1671,11 +1675,8 @@
                     }else if(c_type == 3){//portfolio
                         var c = parseInt(c_id);
                         if(!isNaN(c)){
-                            console.log("c_type:", typeof c);
                             var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
                             if(elemprofile){
-                                console.log("portfolio !", elemprofile);
-                                console.log("portfolio type!", typeof elemprofile);
                                 elemprofile.innerHTML = 'Sample';
                                 elemprofile.innerHTML = '<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(\''+3+'\',\''+c+'\')">';
                                 p_list[c-1] = true;
@@ -1708,9 +1709,6 @@
                     var c = i+1;
                     var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
                     if (elemprofile){
-                        console.log("c_type:", typeof c);
-                        console.log("portfolio yet!", elemprofile);
-                        console.log("portfolio yet type!", typeof elemprofile);
                         elemprofile.innerHTML = '<img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')">';
                     }
                 }
@@ -1828,7 +1826,6 @@
 	        for(var i = 0; i < docs.length; i++){
                 if (docs[i]['p_id']) {
                     var p_id = docs[i]['p_id'];
-                    console.log('If!');
                     if (docs[i]['user']['uid']){
 						var uid = docs[i]['user']['uid'];
                         console.log('If!'+uid);
@@ -1896,6 +1893,7 @@
 			    var n  = users.indexOf(uid);
 			    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                console.log('upcoming commnet length!', docs.length);
 			    if ( n != -1) {
 			       if (uid == {{user.id}}){
 			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));

@@ -1932,6 +1932,40 @@ io.on('connection', function(socket){
       }
     });
 
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+
+    db.each("SELECT user_id, user_first_name, user_last_name, title, image, tag1, tag2, tag3, describe FROM week1_showcase WHERE user_id!=? AND number=?", [socket.uid, data.c_id], function(err, row){
+      console.log("search result by portfolio"+row);
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
+    });
+
+    if (data.data){
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
+    }else{
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, shares:0, likes:0});
+    }
+    newPost.save(function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+        CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+          if(!result){
+            console.log("no results");
+            socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+          }else{
+            var friends = result.friends;
+            socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+            for (var i = 0; i < friends.length; i++){
+              if (friends[i] in users){
+                users[friends[i]].emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+              }
+
+            }
+          }
+        });
+      }
+    });
+
     var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){

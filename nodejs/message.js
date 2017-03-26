@@ -49,6 +49,8 @@ var replySchema = mongoose.Schema({
 var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
+  portfolio : { image: String, title: String, description: String},
+  //upcoming : {}
   image: { data: Buffer, contentType: String },
   replys: [replySchema],
   skillls: [String],
@@ -1917,53 +1919,29 @@ io.on('connection', function(socket){
 
     var d = new Date();
     console.log('share portfolio:'+socket.uid); 
-    
-    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
-    newPost.save(function(err){
-      if (err) {
-        console.log(err);
-      } else{
-        console.log('saved share community:');
-        socket.emit('new history', {to_uid:data.to_uid, content_type:3, content_id:data.c_id, action_id:5});
-        if (data.to_uid in users){
-            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
-           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
-        }
-      }
-    });
 
-    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+    //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+    console.log("SELECT!");
+    console.log("user id is ", data.to_uid, typeof data.to_uid);
+    console.log("number is ", data.content_id, typeof data.content_id);
 
-    db.each("SELECT user_id, user_first_name, user_last_name, title, image, tag1, tag2, tag3, describe FROM week1_showcase WHERE user_id!=? AND number=?", [socket.uid, data.c_id], function(err, row){
-      console.log("search result by portfolio"+row);
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
-    });
-
-    if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
-    }else{
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, shares:0, likes:0});
-    }
-    newPost.save(function(err, post){
-      if (err) {
-        console.log(err);
-      } else{
-        CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-          if(!result){
-            console.log("no results");
-            socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
-          }else{
-            var friends = result.friends;
-            socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
-            for (var i = 0; i < friends.length; i++){
-              if (friends[i] in users){
-                users[friends[i]].emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
-              }
-
+    db.serialize(function() {
+      console.log("db serialize");
+      //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
+      db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id='"+data.to_uid+"' AND number='"+data.content_id+"'", function(err, row){
+        if (err) console.log("error", err);
+        if(row){
+          console.log("search result by portfolio"+row);
+          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:row.user_id, first_name:row.user_first_name, last_name:row.user_last_name} });
+           newPost.save(function(err, post){
+            if (err) {
+              console.log(err);
+            } else{
             }
-          }
-        });
-      }
+          });
+        }
+        
+      });
     });
 
     var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -1975,8 +1953,8 @@ io.on('connection', function(socket){
         console.log('saved notification:');
       }
     });
-  });
 
+  });
 
   socket.on('post comment', function(data, callback){
     console.log('post aomment');

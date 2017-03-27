@@ -1928,11 +1928,11 @@ io.on('connection', function(socket){
     db.serialize(function() {
       console.log("db serialize");
       //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
-      db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id='"+data.to_uid+"' AND number='"+data.content_id+"'", function(err, row){
+      db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_showcase s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.number='"+data.content_id+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
         if (err) console.log("error", err);
         if(row){
-          console.log("search result by portfolio"+row);
-          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:row.user_id, first_name:row.user_first_name, last_name:row.user_last_name} });
+          console.log("search result by portfolio"+row.first_name);
+          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:row.user_id, first_name:row.first_name, last_name:row.last_name} });
            newPost.save(function(err, post){
             if (err) {
               console.log(err);

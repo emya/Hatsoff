@@ -1921,18 +1921,12 @@ io.on('connection', function(socket){
     console.log('share portfolio:'+socket.uid); 
 
     //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
-    console.log("SELECT!");
-    console.log("user id is ", data.to_uid, typeof data.to_uid);
-    console.log("number is ", data.content_id, typeof data.content_id);
 
     db.serialize(function() {
-      console.log("db serialize");
       //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
       db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_showcase s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.number='"+data.content_id+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
         if (err) console.log("error", err);
         if(row){
-          console.log("search result by portfolio"+row.first_name);
-          console.log("search result by portfolio"+row.title);
           newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
            newPost.save(function(err, post){
             if (err) {

@@ -49,6 +49,8 @@ var replySchema = mongoose.Schema({
 var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
+  portfolio : { image: String, title: String, description: String},
+  //upcoming : {}
   image: { data: Buffer, contentType: String },
   replys: [replySchema],
   skillls: [String],
@@ -1917,19 +1919,24 @@ io.on('connection', function(socket){
 
     var d = new Date();
     console.log('share portfolio:'+socket.uid); 
-    
-    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
-    newPost.save(function(err){
-      if (err) {
-        console.log(err);
-      } else{
-        console.log('saved share community:');
-        socket.emit('new history', {to_uid:data.to_uid, content_type:3, content_id:data.c_id, action_id:5});
-        if (data.to_uid in users){
-            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
-           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+
+    //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+
+    db.serialize(function() {
+      //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
+      db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_showcase s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.number='"+data.content_id+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
+        if (err) console.log("error", err);
+        if(row){
+          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
+           newPost.save(function(err, post){
+            if (err) {
+              console.log(err);
+            } else{
+            }
+          });
         }
-      }
+        
+      });
     });
 
     var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -1941,8 +1948,8 @@ io.on('connection', function(socket){
         console.log('saved notification:');
       }
     });
-  });
 
+  });
 
   socket.on('post comment', function(data, callback){
     console.log('post aomment');

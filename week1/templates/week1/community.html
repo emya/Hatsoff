@@ -854,10 +854,12 @@ window.onclick = function(event) {
                 hatsoffls.push(hatsoffdocs[i]['content_id']);
               }
 
+              /*
               console.log("sharels:"+sharels);
               console.log("likels :"+likels);
               console.log("hatsoffls :"+hatsoffls);
               console.log("friends :"+friends);
+              */
 
               for(var i=0; i < docs.length; i++){
                  if (docs[i]['user'] && docs[i]['user']['uid']) {
@@ -958,6 +960,19 @@ window.onclick = function(event) {
                           var edit = '';
                             
                           var deleteOrEdit = '';
+
+                          if (docs[i]['portfolio']){
+                            var portfolio = docs[i]['portfolio'];
+                            console.log("portfolio!!!", portfolio);
+
+                            var imageText = '';
+                            if (portfolio.image){
+                              imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+portfolio.image+'" width="350px" /></object>';
+                            }
+
+                            $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+portfolio.title+'<br>'+'Description: '+portfolio.description+'</p>'+imageText+'</a>'+like+share+hatsoff+thanks+collaborate+comment+listlikes+'</div></div></li>'));
+                            continue;                            
+                          }
                             
                           if (uid == {{user.id}}){
                             deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';

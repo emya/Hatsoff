@@ -470,7 +470,7 @@
 
 						    <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
 						    <!--div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div-->
-	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp <span class="popuptextShared" id="sharedPop">Shared!<br></span></div>
+                            <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
 						    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
 						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
@@ -613,7 +613,7 @@
 	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
 						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
 						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
-	 						<div class="popupShare" onclick="shareFunction(3, {{forloop.counter}})"> Share &nbsp </div>
+                            <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
                             <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
 						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
 	              			<div class="popupCollaborate" onclick="collaborateFunction(3, {{forloop.counter}})"><button class="collaborate-btn">Collaborate &nbsp</button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
@@ -1391,17 +1391,20 @@
 			 popup.classList.toggle('show');
 	      }
 
-	      function shareFunction(c_type, c_id){
-			 console.log('uid on share:'+c_type+':'+c_id);
-
-			 //popShared();
+          function shareFunction(c_type, c_id){
+             console.log('uid on share:'+c_type+':'+c_id);
+             //popShared();
              if (c_type == 2){
-		         socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+                 socket.emit('share upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
              }else if (c_type == 3){
-		         socket.emit('share portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
+                 //socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+                 console.log('share function');
+                 sharePortfolioFunction({{t_user.id}}, c_id);
+                 var share = document.getElementById("sharestatus_portfolio_"+c_id);
+                 share.innerHTML = '<img src="/static/images/active_sharedicon-02.png" class="icons-img">';
              }
-		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-	      }
+         //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
 
 	      function popShared(){
 	      	 var popHatsoff = document.getElementById("hatsoffPop");

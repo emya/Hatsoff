@@ -1932,7 +1932,8 @@ io.on('connection', function(socket){
         if (err) console.log("error", err);
         if(row){
           console.log("search result by portfolio"+row.first_name);
-          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:row.user_id, first_name:row.first_name, last_name:row.last_name} });
+          console.log("search result by portfolio"+row.title);
+          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
            newPost.save(function(err, post){
             if (err) {
               console.log(err);

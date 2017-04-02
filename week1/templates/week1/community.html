@@ -11,13 +11,21 @@
     
     
 function myDropDownPostFunction() {
+    console.log("post", document.getElementById("myPostDropdown").classList);
     document.getElementById("myPostDropdown").classList.toggle("show");
+    console.log("post", typeof document.getElementById("myPostDropdown"));
+    console.log("post", document.getElementById("myPostDropdown"));
     return false;
 }
 
     
 function myDropDownDelEditFunction(c_id) {
+    console.log("press!");
+    console.log("document", document.getElementById("myDelEditDropdown_"+c_id).classList);
     document.getElementById("myDelEditDropdown_"+c_id).classList.toggle("show");
+    console.log("document", typeof document.getElementById("myDelEditDropdown_"+c_id));
+    console.log("document", document.getElementById("myDelEditDropdown_"+c_id));
+    console.log(document.getElementById("myDelEditDropdown_"+c_id).classList.contains("show"));
     return false;
 }
 
@@ -35,7 +43,7 @@ window.onclick = function(event) {
       }
     }
   }
-  if (!event.target.matches('.dropDelEditBtn')) {
+  if (!event.target.matches('.dropDelEditIcon')) {
     var dropdowns = document.getElementsByClassName("dropdown-DelEditContent");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -975,7 +983,7 @@ window.onclick = function(event) {
                           }
                             
                           if (uid == {{user.id}}){
-                            deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                            deleteOrEdit = '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
                             //dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
                             //editls = '<li><button class="btn btn-primary" onclick="return editPost(\''+c_id+'\')" align="right">Edit</button></li>';
 

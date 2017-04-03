@@ -667,7 +667,7 @@ to here
 
 #home-friends {
    display: inline-block;
-   width: 17%;
+   width: 180px;
    vertical-align: top;
    float: left;
    background-color: #9fc5e8;
@@ -677,6 +677,7 @@ to here
    top: 0;
    display: block;
    font-size: 18px;
+   line-height: 125%
 }
 
 #left-logo{

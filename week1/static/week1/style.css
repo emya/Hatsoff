@@ -33,7 +33,7 @@ ul{
    min-height: 100%;
    /*padding: 20px;*/
    font-family: Cabin;
-   padding-top: 100px;
+   padding-top: 80px;
 }
 
 #body_index {
@@ -336,6 +336,11 @@ img.icons-img {
    width: 35px !important;
    height: 35px !important;
    display: inline-block !important;
+}
+
+ img.icons-img {
+ width: 35px !important;
+ height: auto !important;
 }
 
 #header #header-right input[type=submit]{
@@ -662,15 +667,16 @@ to here
 
 #home-friends {
    display: inline-block;
-   width: 150px;
+   width: 17%;
    vertical-align: top;
    float: left;
-   background-color: #C0C0C0;
+   background-color: #9fc5e8;
    color: white;
    min-height: 100%;
    position: fixed;
    top: 0;
    display: block;
+   font-size: 18px;
 }
 
 #left-logo{

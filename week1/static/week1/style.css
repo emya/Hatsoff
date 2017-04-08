@@ -33,7 +33,7 @@ ul{
    min-height: 100%;
    /*padding: 20px;*/
    font-family: Cabin;
-   padding-top: 100px;
+   padding-top: 80px;
 }
 
 #body_index {
@@ -176,11 +176,6 @@ ul{
 /* Change color of dropdown links on hover */
 .dropdown-PostContent a:hover {background-color: #f1f1f1}
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
-
-
-
 /* Dropdown Button */
 .dropDelEditBtn {
     background-color: #2EA7E0;
@@ -191,6 +186,11 @@ ul{
     border-radius: 5px;
     border: none;
     cursor: pointer;
+}
+
+/* Dropdown Button */
+.dropDelEditIcon{
+    width: 20px;  
 }
 
 /* Dropdown button on hover & focus */
@@ -228,6 +228,8 @@ ul{
 /* Change color of dropdown links on hover */
 .dropdown-DelEditContent a:hover {background-color: #f1f1f1}
 
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block !important;}
 
 #header #header-menus {
    display: inline-block;
@@ -334,6 +336,11 @@ img.icons-img {
    width: 35px !important;
    height: 35px !important;
    display: inline-block !important;
+}
+
+ img.icons-img {
+ width: 35px !important;
+ height: auto !important;
 }
 
 #header #header-right input[type=submit]{
@@ -660,15 +667,17 @@ to here
 
 #home-friends {
    display: inline-block;
-   width: 150px;
+   width: 180px;
    vertical-align: top;
    float: left;
-   background-color: #C0C0C0;
+   background-color: #9fc5e8;
    color: white;
    min-height: 100%;
    position: fixed;
    top: 0;
    display: block;
+   font-size: 18px;
+   line-height: 125%
 }
 
 #left-logo{

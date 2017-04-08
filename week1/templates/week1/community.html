@@ -11,13 +11,21 @@
     
     
 function myDropDownPostFunction() {
+    console.log("post", document.getElementById("myPostDropdown").classList);
     document.getElementById("myPostDropdown").classList.toggle("show");
+    console.log("post", typeof document.getElementById("myPostDropdown"));
+    console.log("post", document.getElementById("myPostDropdown"));
     return false;
 }
 
     
 function myDropDownDelEditFunction(c_id) {
+    console.log("press!");
+    console.log("document", document.getElementById("myDelEditDropdown_"+c_id).classList);
     document.getElementById("myDelEditDropdown_"+c_id).classList.toggle("show");
+    console.log("document", typeof document.getElementById("myDelEditDropdown_"+c_id));
+    console.log("document", document.getElementById("myDelEditDropdown_"+c_id));
+    console.log(document.getElementById("myDelEditDropdown_"+c_id).classList.contains("show"));
     return false;
 }
 
@@ -35,7 +43,7 @@ window.onclick = function(event) {
       }
     }
   }
-  if (!event.target.matches('.dropDelEditBtn')) {
+  if (!event.target.matches('.dropDelEditIcon')) {
     var dropdowns = document.getElementsByClassName("dropdown-DelEditContent");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -973,9 +981,22 @@ window.onclick = function(event) {
                             $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+portfolio.title+'<br>'+'Description: '+portfolio.description+'</p>'+imageText+'</a>'+like+share+hatsoff+thanks+collaborate+comment+listlikes+'</div></div></li>'));
                             continue;                            
                           }
+
+                          if (docs[i]['upcoming']){
+                            var upcoming = docs[i]['upcoming'];
+                            console.log("upcoming!!!", upcoming);
+
+                            var imageText = '';
+                            if (upcoming.image){
+                              imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+upcoming.image+'" width="350px" /></object>';
+                            }
+
+                            $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+upcoming.title+'<br>'+'Description: '+upcoming.description+'</p>'+imageText+'</a>'+like+share+hatsoff+thanks+collaborate+comment+listlikes+'</div></div></li>'));
+                            continue;                            
+                          }
                             
                           if (uid == {{user.id}}){
-                            deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                            deleteOrEdit = '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
                             //dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
                             //editls = '<li><button class="btn btn-primary" onclick="return editPost(\''+c_id+'\')" align="right">Edit</button></li>';
 

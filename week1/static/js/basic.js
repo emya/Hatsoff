@@ -33,6 +33,11 @@ function sharePortfolioFunction(uid, c_id){
     socket.emit('share portfolio', {to_uid:uid, uid:socket.uid, content_id:c_id});
 }
 
+function shareUpcomingFunction(uid, c_id){
+    console.log('share upcoming function');
+    socket.emit('share upcoming', {to_uid:uid, uid:socket.uid, content_id:c_id});
+}
+
 function likeCommunityFunction(uid, c_id){
     console.log('uid on like:'+uid+':'+c_id);
 	socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});

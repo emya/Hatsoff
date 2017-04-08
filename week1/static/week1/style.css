@@ -76,6 +76,13 @@ ul{
    padding: 20px;
 }
 
+.borderlessbutton {
+   border: 0;
+   background: none;
+   box-shadow: none
+}
+
+
 #header-wrapper {
    padding; 50px 0 50px;
    width: 100%;
@@ -333,15 +340,12 @@ img.profile_img {
 }
 
 img.icons-img {
-   width: 35px !important;
+   width: auto !important;
    height: 35px !important;
    display: inline-block !important;
 }
 
- img.icons-img {
- width: 35px !important;
- height: auto !important;
-}
+
 
 #header #header-right input[type=submit]{
    color: white;
@@ -1265,7 +1269,7 @@ img.notification_img {
    -moz-user-select: none;
    -ms-user-select: none;
    user-select: none;
-   padding: 0px 20px;
+   padding: 0;
 }
 
 .popupCount {

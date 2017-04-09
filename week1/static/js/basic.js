@@ -19,9 +19,10 @@ socket.on('community members number', function(len){
 });
 
 socket.on('new community member', function(){
-	var cmembers = localStorage.getItem("num-cmembers");
-	if (cmembers == null){
-		cmembers = 0;
+	var members = localStorage.getItem("num-cmembers");
+    var cmembers = 0
+	if (members != null){
+		cmembers = parseInt(members);
 	}
 	document.getElementById('num-cmembers').innerHTML = cmembers+1;
 });

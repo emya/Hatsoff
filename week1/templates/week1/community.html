@@ -146,16 +146,16 @@ window.onclick = function(event) {
 </div>
 
 <div class="suggested">
-  <h4>Suggested Projects</h4>
+  <!--h4>Suggested Projects</h4>
   <ul id="suggested_project" style="padding-left: 10px;">
   </ul>
   <a href="{% url 'week1:community_needyou' %}" >View more</a>
   <br>
-  <br>
+  <br-->
 
   <h4>Collaborators who may need you</h4>
-  <ul id="collaborators_needyou">
-  </ul>
+  <!--ul id="collaborators_needyou">
+  </ul-->
   <a href="{% url 'week1:collaborators_need_you' %}">View more</a>
   <br>
   <br>
@@ -1096,6 +1096,7 @@ window.onclick = function(event) {
       }
     });
         
+    /*
     socket.on('three community posts need you', function(docs){
       for(var i=0; i < docs.length; i++){
         console.log("top community posts:"+docs[i]._id);
@@ -1106,6 +1107,7 @@ window.onclick = function(event) {
         $('#suggested_project').append($('<li class="media"><a href="'+post_link+'"><p>'+docs[i].content+'</p></a></li>'));
       }
     });
+    */
 
     function encode (input) {
       var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";

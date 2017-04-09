@@ -446,6 +446,52 @@ io.on('connection', function(socket){
 
   })
 
+  socket.on('get suggested projects', function(){
+    db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
+        if(err){
+          console.log(err);
+        }
+        else {
+          if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
+            var skillls_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+            var skillls = [];
+            for (var i = 0; i < 10; i++){
+              if (skillls_empty[i] == ""){
+                skillls.push(skillls_empty[0])
+              }else{
+                skillls.push(skillls_empty[i])
+              }
+            }
+            var newdocs = [];
+            var query = CommunityPost.find({});
+            query.sort('-created').limit(50).exec(function(err, docs){
+              if (err) throw err;
+
+              var fixed_len = 3;
+              var len = (fixed_len < docs.length) ? fixed_len: docs.length;
+              var curIdx = 0;
+              async.each(docs, function(doc){
+
+                if(doc.skillls && doc.skillls.length != 0){
+                  for (var j = 0; j < doc.skillls.length; j++) {
+                    var item = doc.skillls[j];  // Calling myNodeList.item(i) isn't necessary in JavaScript
+                    //console.log("item:"+item);
+                    if (item != "" && skillls.indexOf(item) != -1 ){
+                      newdocs.push(doc);
+                    }
+                  }
+                }
+                curIdx += 1;
+                if (len == curIdx){
+                  socket.emit('three community posts need you', newdocs);
+                }
+              });
+            });
+
+          } 
+        }
+      });
+  });
 
   socket.on('join community post', function(data){
     console.log('join community');

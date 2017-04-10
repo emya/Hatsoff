@@ -2164,11 +2164,41 @@ blockquote:before {
 } 
 
 .collaborate-btn {
-   background-color: #d5a6bd;
+   background-color: none;
    color: #fff; 
    border-style: solid;
    border-color: #d5a6bd transparent transparent transparent;
 }
+
+
+/*base*/
+.like-btn {
+   display: inline-block;
+   width: 35px;
+   height: 35px;
+   padding: 0px;
+   margin: 0px;
+}
+
+
+/*alreadyliked*/
+.activelike-btn {
+   background-image: url("../images/smallerthumbsUp-01.png");
+   background-size: 33px 33px;
+   background-repeat: no-repeat;
+}
+
+
+/*disiked*/
+.inactivelike-btn {
+   background-image: url("../images/smallerthumbsUp-02.png");
+   background-size: 33px 33px;
+   background-repeat: no-repeat;
+}
+
+
+
+
 
 hr .solid-divider{
    border-top: 1px solid #333;

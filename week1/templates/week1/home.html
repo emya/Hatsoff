@@ -317,11 +317,11 @@
 
     <div id="home-thirdcolumn">
        <ul style="list-style-type:none">
-	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/2hats-01.png'%}" width="20px"><span id="hatsoffNum"></span></a></li>
+	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/2hats-01.png'%}" width="33px"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
 		 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
-		 <li><a href=""><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="20px"></a></li>
+		 <li><a href=""><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="33px"></a></li>
 		 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
        </ul>
 
@@ -468,7 +468,7 @@
                                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
                                 <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-                                <div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+                                <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="45px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
                             </div>
     	                        <div class="well well-ssm">
     		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
@@ -1372,7 +1372,7 @@
 	          if (c_type == 2){
 			      socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like upcoming');
-                  document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br></div>';
+                  document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
 	          }else if (c_type == 3){
 				  socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like portfolio');
@@ -1387,7 +1387,7 @@
             if (c_type == 2){
                 socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
                 console.log('unlike upcoming');
-                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
+                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
             }else if (c_type == 3){
                 socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
                 console.log('unlike portfolio');
@@ -1962,7 +1962,7 @@
 
                        	  //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
  						  var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></div>';
+						  var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 						  var uid = sharedocs[i_share]['to_uid'];
 			              var content = sharedocs[i_share]['content'];
 			              var c_id = sharedocs[i_share]['_id'];
@@ -1975,7 +1975,7 @@
                           var yy = datels[0];
 
 						  var n  = users.indexOf(uid);
-                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
+                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
                           var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
                           var tag = (content['tag']) ? content['tag'] : 0;
@@ -2017,11 +2017,11 @@
                        	  var uid = {{user.id}};
 			              var content = communitydocs[i_community];
  						  var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></div>';
+						  var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
 
 						  var c_id = content['_id'];
 						  var n  = users.indexOf(uid);
-                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
+                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
                           var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
                           var created = communitydocs[i_community]['created'];
@@ -2075,12 +2075,12 @@
                     }else if(i_share < len_share){
 
  						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></div>';
+						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 						var uid = sharedocs[i_share]['to_uid'];
 			            var content = sharedocs[i_share]['content'];
 			            var c_id = sharedocs[i_share]['_id'];
 						var n  = users.indexOf(uid);
-                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
+                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
                         var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
                         var created = sharedocs[i_share]['created'];
@@ -2133,11 +2133,11 @@
 						var uid = {{user.id}};
 			            var content = communitydocs[i_community];
  						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></div>';
+						var like = '<div class="popupLike" onclick="popLike()"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
 
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);
-                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
+                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
                         var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
                         var created = communitydocs[i_community]['created'];
 			            var colonIndex = created.indexOf(":");

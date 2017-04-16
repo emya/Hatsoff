@@ -311,7 +311,7 @@
                         var like = '<hr class="divider"/>';
                         if (isLike){
                           //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
-                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/Active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
                         }else{
                           like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
                         }

@@ -335,7 +335,7 @@ ul{
 img.profile_img {
    /*top:40;*/
    width: 25px;
-   height: 25px;
+   height: auto;
    /*padding-right: 20px;*/
 }
 

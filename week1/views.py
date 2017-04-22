@@ -33,27 +33,21 @@ from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhot
 #@ensure_csrf_cookie
 @csrf_protect
 def index(request):
-    print "index"
     query = request.GET.get('search_query', None)
     
     if query:
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     if request.method == 'POST':
-        print "post"
         if 'login' in request.POST:
-            print "login"
             form = LoginForm(request.POST)
             username = request.POST["username"]
             password = request.POST["password"]
 
             user = authenticate(username=username, password=password)
-            print "user", user
             if user:
                 if user.is_active:
-                    print "active"
                     login(request, user)
-                    print "login"
                     variables = RequestContext(request, {})
                     return HttpResponseRedirect('/week1/community/')
                     #return render_to_response('week1/community.html', variables)
@@ -61,11 +55,9 @@ def index(request):
 
             # When user is None
             else:
-                print "Else None"
                 message = []
                 signupform = RegistrationForm()
                 message.append("The username or password is incorrect.")
-                print "message", message
                 #variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
                 variables = {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0}
 
@@ -77,7 +69,6 @@ def index(request):
         elif 'signup' in request.POST:
             form = RegistrationForm(request.POST)
             if form.is_valid():
-                print "valid"
                 username = form.cleaned_data['username']
                 first_name = form.cleaned_data['first_name'].capitalize()
                 last_name = form.cleaned_data['last_name'].capitalize()
@@ -129,26 +120,21 @@ def about(request):
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     if request.method == 'POST':
-        print "post"
         if 'login' in request.POST:
-            print "login"
             form = LoginForm(request.POST)
             username = request.POST["username"]
             password = request.POST["password"]
 
             user = authenticate(username=username, password=password)
-            print "user", user
             if user:
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect('/week1/community/')
             # When user is None
             else:
-                print "Else None"
                 signupform = RegistrationForm()
                 message = []
                 message.append("The username or password is incorrect.")
-                print "message", message
                 variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
 
                 #template = loader.get_template('week1/discover.html')
@@ -156,7 +142,6 @@ def about(request):
         
 
         elif 'signup' in request.POST:
-            print "signup"
             form = RegistrationForm(request.POST)
             if form.is_valid():
                 username = form.cleaned_data['username']
@@ -233,8 +218,6 @@ def signup(request):
             last_name = form.cleaned_data['last_name'].capitalize()
             password = form.cleaned_data['password1']
 
-            print "name ", first_name, last_name            
-
             user = User.objects.create_user(
                  username = username,
                  first_name = first_name,
@@ -272,12 +255,10 @@ def signup(request):
 def home(request):
     media_url = settings.MEDIA_URL
     nodejs_url = settings.NODEJS_SOCKET_URL
-    print "userid", request.user.id
     uid = request.user.id
     query = request.GET.get('search_query', None)
     
     if query:
-        print "query", query
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=uid, username=request.user.username)
@@ -291,7 +272,6 @@ def home(request):
     hatlist = list(chain(hatlist1, hatlist2))
 
     users = User.objects.filter(id__in=hatlist)
-    print "users:", type(users), users
     userlist = list(users)
 
     hatsusers = Profile.objects.filter(user__in=userlist)
@@ -304,10 +284,8 @@ def home(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -320,8 +298,6 @@ def home(request):
     profile = Profile.objects.get(user=currentuser)
     request.COOKIES['profile_photo'] = profile.photo
     
-    print "folderusers", folderusers, folderusers.count()
-
     try:
         showcases = Showcase.objects.filter(user=currentuser)
     except Showcase.DoesNotExist:
@@ -343,7 +319,6 @@ def project_management(request):
     query = request.GET.get('search_query', None)
     
     if query:
-        print "query", query
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     currentuser = User.objects.get(id=uid, username=request.user.username)
@@ -379,9 +354,7 @@ def step1(request):
         if form.is_valid():
             step = form.save(commit=False)
             #step = form.save(commit=False)
-            print request.POST
             tags = request.POST.getlist('professiontags')
-            print "tags", tags
 
             tagls = []
             for tag in tags:
@@ -479,9 +452,7 @@ def step3(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        print request.POST
         tags = request.POST.getlist('tags')
-        print "tags", tags
 
         form = Step3(request.POST, label_suffix="", instance=instance)
 
@@ -528,8 +499,6 @@ def step3(request):
                 skill10=tagls[9]
             )
 
-            print tagls
-
             return HttpResponseRedirect('/week1/home/')
             #nextform = Step4(label_suffix="", instance=instance)
             #return HttpResponseRedirect('/week1/step4/', {'form': nextform})
@@ -541,7 +510,6 @@ def step3(request):
 
     else:
         form = Step3(label_suffix="", instance=instance)
-        print form
 
     variables = RequestContext(request, {'form':form})
 
@@ -617,7 +585,6 @@ def step5(request):
 def step6(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = UpcomingWork.objects.filter(user=currentuser, number=1).count()
-    print "num_result", num_result
 
     if num_result == 0:
         u = UpcomingWork.objects.create(user=currentuser, number=1)
@@ -631,13 +598,11 @@ def step6(request):
             work = form.save(commit=False)
             work.user = currentuser
             get_help = form.cleaned_data["get_help"]
-            print get_help
             if get_help == 1 or get_help == 2:
                 tagls = []
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
                 tags = request.POST.getlist('tags')
-                print "tags", tags
                 for tag in tags:
                     lowtag = tag.capitalize()
                     tagls.append(lowtag)
@@ -801,18 +766,12 @@ def home_edit_profession(request):
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
-    print "request:", request
     if request.method == "POST":
         form = ProfessionForm(request.POST, instance=instance, label_suffix="")
         if form.is_valid():
             profession = form.save(commit=False)
 
-            print "POST:", request.POST
-            print "valid:", form.is_valid()
-
-            print request.POST
             tags = request.POST.getlist('professiontags')
-            print "tags", tags
 
             tagls = []
             for tag in tags:
@@ -830,7 +789,6 @@ def home_edit_profession(request):
                 for i in range(5-len(tagls)):
                     tagls.append("")
 
-            print "tagls", tagls
             profession.profession1 = tagls[0]
             profession.profession2 = tagls[1]
             profession.profession3 = tagls[2]
@@ -863,9 +821,7 @@ def home_edit_professionskills(request):
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     instance = get_object_or_404(Profile, user=currentuser)
     if request.method == 'POST':
-        print request.POST
         tags = request.POST.getlist('tags')
-        print "tags", tags
 
         form = Step3(request.POST, label_suffix="", instance=instance)
         tagls = []
@@ -899,8 +855,6 @@ def home_edit_professionskills(request):
                 skill10=tagls[9]
             )
 
-            print tagls
-
             return HttpResponseRedirect('/week1/home/')
             #return render_to_response('week1/step5.html', {'form':nextform})
 
@@ -911,8 +865,6 @@ def home_edit_professionskills(request):
 
     else:
         form = Step3(label_suffix="", instance=instance)
-        print form
-
 
     usersprofile = Profile.objects.get(user=currentuser)
     return render(request, 'week1/homeedit_professionskills.html', {'profile':usersprofile, 'form':form})
@@ -982,12 +934,9 @@ def home_edit_previouswork(request, num):
     num_show = Showcase.objects.filter(user=currentuser).count()
     if request.method == 'POST':
         form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
-        print "isvalid", form.is_valid()
-        print "POST", request.POST
         if form.is_valid():
             work = form.save(commit=False)
             tags = request.POST.getlist('professiontags')
-            print "tags", tags
 
             tagls = []
             for tag in tags:
@@ -1005,7 +954,6 @@ def home_edit_previouswork(request, num):
                 for i in range(5-len(tagls)):
                     tagls.append("")
 
-            print "tagls", tagls
             work.role1 = tagls[0]
             work.role2 = tagls[1]
             work.role3 = tagls[2]
@@ -1013,7 +961,6 @@ def home_edit_previouswork(request, num):
             work.role5 = tagls[4]
 
             projecttags = request.POST.getlist('projecttags')
-            print "tags", projecttags
 
             tagls = []
             for tag in projecttags:
@@ -1031,7 +978,6 @@ def home_edit_previouswork(request, num):
                 for i in range(10-len(tagls)):
                     tagls.append("")
 
-            print "tagls", tagls
             work.tag1 = tagls[0]
             work.tag2 = tagls[1]
             work.tag3 = tagls[2]
@@ -1080,7 +1026,6 @@ def home_edit_newpreviouswork(request):
     if request.method == 'POST':
         form = Step5(request.POST, request.FILES, label_suffix="")
         if form.is_valid():
-            print 'valid'
             work = form.save(commit=False)
 
             tags = request.POST.getlist('professiontags')
@@ -1108,7 +1053,6 @@ def home_edit_newpreviouswork(request):
             work.role5 = tagls[4]
 
             projecttags = request.POST.getlist('projecttags')
-            print "tags", projecttags
 
             tagls = []
             for tag in projecttags:
@@ -1126,7 +1070,6 @@ def home_edit_newpreviouswork(request):
                 for i in range(10-len(tagls)):
                     tagls.append("")
 
-            print "tagls", tagls
             work.tag1 = tagls[0]
             work.tag2 = tagls[1]
             work.tag3 = tagls[2]
@@ -1169,7 +1112,6 @@ def home_edit_upcoming(request):
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
     num_result = UpcomingWork.objects.filter(user=currentuser, number=1).count()
-    print "num_result", num_result
 
     if num_result == 0:
         u = UpcomingWork.objects.create(user=currentuser, number=1)
@@ -1178,7 +1120,6 @@ def home_edit_upcoming(request):
     instance = get_object_or_404(UpcomingWork, user=currentuser, number=1)
 
     if request.method == 'POST':
-        print "request POST:", request.POST
         form = Step6(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             work = form.save(commit=False)
@@ -1231,7 +1172,6 @@ def home_edit_upcoming(request):
 
             work.number = 1
             get_help = form.cleaned_data["get_help"]
-            print "get_help", get_help, type(get_help)
             if get_help == 1 or get_help == 2:
                 work.fund = form.cleaned_data["fund"]
                 work.comment_help = form.cleaned_data["comment_help"]
@@ -1298,7 +1238,6 @@ def home_edit_upcoming(request):
         else:
             messages = []
             messages.append(form.errors)
-            print "mwssages", messages
             variables = RequestContext(request, {'messages':messages, 'form':form})
 
     else:
@@ -1328,7 +1267,6 @@ def reset(request):
         form = PasswordResetForm(request.POST)
         if form.is_valid():
             validemail = form.cleaned_data["email"]
-            print "validemail", validemail
             num_result = User.objects.filter(username=validemail).count()
 
             if num_result == 0:
@@ -1337,7 +1275,6 @@ def reset(request):
             else:
                 password_reset(request, from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', subject_template_name=None, template_name=None, post_reset_redirect='week1/password_reset_email_sent.html')
                 #form.save(from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', request=request)
-                print "num result", num_result
                 return render_to_response('week1/password_reset_email_sent.html')
 
     else:
@@ -1351,7 +1288,6 @@ def reset(request):
 
 @login_required
 def results_search(request, query):
-    print "query ", query
     newquery = request.GET.get('search_query', None)
     
     if newquery:
@@ -1412,10 +1348,8 @@ def hatsoff_list(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1444,10 +1378,8 @@ def thanks_list(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1475,10 +1407,8 @@ def follow_list(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1550,10 +1480,8 @@ def messages(request):
     usernames = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = "None"
 
@@ -1571,10 +1499,7 @@ def messages(request):
 def private_message(request, uid):
     nodejs_url = settings.NODEJS_SOCKET_URL
     user = User.objects.get(id=uid)
-    print "user.id", user.id
-    print "user.name", user.first_name
     myid = request.user.id
-    print "my.id", myid
     variables = RequestContext(request, {'chatuser':user, 'myid':myid, 'nodejs_url':nodejs_url})
     return render_to_response('week1/private_message.html', variables, )
 
@@ -1595,7 +1520,6 @@ def get_profile(request, uid):
     hatlist = list(chain(hatlist1, hatlist2))
 
     users = User.objects.filter(id__in=hatlist)
-    print "users:", type(users), users
     userlist = list(users)
 
     hatsusers = Profile.objects.filter(user__in=userlist)
@@ -1617,10 +1541,8 @@ def get_profile(request, uid):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1703,10 +1625,8 @@ def community_needyou(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1737,10 +1657,8 @@ def collaborators_you_need(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1771,10 +1689,8 @@ def collaborators_need_you(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1798,14 +1714,10 @@ def community_post(request):
         return HttpResponseRedirect('/week1/search/results/'+query, {'query': query})
 
     c_id = request.GET.get('c_id')
-    print "c_id:", c_id
 
     tag = int(request.GET.get('tag'))
 
-    print "tag:",tag, type(tag)
-
     auid = request.GET.get('u')
-    print "uid:",auid 
 
     uid = request.user.id
     nodejs_url = settings.NODEJS_SOCKET_URL
@@ -1847,7 +1759,6 @@ def notification(request):
         users.append(u.id)
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = "None"
 
@@ -1881,10 +1792,8 @@ def folder(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 
@@ -1932,8 +1841,6 @@ def add_folder(request, user2):
     folderlist2 = FavoriteFolder.objects.values_list('user_one_id', flat=True).filter(Q(user_two_id=user1, actionuser=2, status=0) | Q(user_two_id=user1, status=1))
     folderlist = list(chain(folderlist1, folderlist2))
 
-    print "folderlist", folderlist
-    
     users = User.objects.filter(id__in=folderlist)
 
     currentuser = User.objects.get(id=request.user.id, username=request.user.username)
@@ -1963,10 +1870,8 @@ def historyboard(request):
     users = []
     userphoto = []
     for u in allusers:
-        print "uid", u.id
         try:
             prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-            print "prof", prof, type(prof)
         except Profile.DoesNotExist:
             prof = None
 

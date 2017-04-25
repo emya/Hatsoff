@@ -335,7 +335,7 @@ ul{
 img.profile_img {
    /*top:40;*/
    width: 25px;
-   height: 25px;
+   height: auto;
    /*padding-right: 20px;*/
 }
 
@@ -790,11 +790,20 @@ to here
 
 #home-main #home-firstcolumn {
    display: inline-block;
-   width: 420px;
+   width: 460px;
 }
 
 #home-main .tableLabel{
    color: lightslategrey;
+   padding-left: 30px;
+   width: 160px;
+   vertical-align: top
+   display: block;
+   line-height: 1.4;
+}
+
+.tableValue{
+width: 500px
 }
 
 #home-main .tableTitle{
@@ -808,10 +817,23 @@ to here
 }
 
 .truncate {
-  width: 200px;
+  width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.wrap{
+  width: 250px;
+  word-break: break-word;
+  text-align: left;
+}
+
+.visible_pencil .pencil {
+  display: none;
+}
+.visible_pencil:hover .pencil {
+  display: inline;
 }
 
 #body img.mainprofile {
@@ -834,7 +856,7 @@ img.notification_img {
 #home-main #home-thirdcolumn {
    display: inline-block;
    vertical-align: top;
-   width: 150px;
+   width: 100px;
 }
 
 #home-main #home-thirdcolumn li {
@@ -848,7 +870,6 @@ img.notification_img {
 
 
 #home-main .home-step {
-   background-color: white;
    padding: 5px;
    margin: 5px;
    font-size: 14px;
@@ -867,7 +888,7 @@ img.notification_img {
 }
 
 #home-main .home-step ul{
-   padding:10px;
+   padding: 5px;
    list-style-type:none;
    text-align:left;
 }
@@ -2079,7 +2100,7 @@ img.notification_img {
 }
 blockquote {
    padding: 0 !important;
-   font-size: 14px !important;
+   font-size: 1px !important;
 }
 blockquote:before {
    padding: 0 !important;
@@ -2164,11 +2185,12 @@ blockquote:before {
 } 
 
 .collaborate-btn {
-   background-color: #d5a6bd;
+   background-color: none;
    color: #fff; 
    border-style: solid;
    border-color: #d5a6bd transparent transparent transparent;
 }
+
 
 hr .solid-divider{
    border-top: 1px solid #333;
@@ -2634,12 +2656,15 @@ hr .solid-divider{
 }
 
 .display-image{
-   padding: 20px;
+   padding: 2px;
 }
 
 
 .comment-container{
    padding: 20px 120px;
+}
+.collaborator-container{
+   padding: 0px 120px;
 }
 
 #upcoming-more{

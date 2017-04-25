@@ -146,16 +146,16 @@ window.onclick = function(event) {
 </div>
 
 <div class="suggested">
-  <h4>Suggested Projects</h4>
+  <!--h4>Suggested Projects</h4>
   <ul id="suggested_project" style="padding-left: 10px;">
   </ul>
   <a href="{% url 'week1:community_needyou' %}" >View more</a>
   <br>
-  <br>
+  <br-->
 
   <h4>Collaborators who may need you</h4>
-  <ul id="collaborators_needyou">
-  </ul>
+  <!--ul id="collaborators_needyou">
+  </ul-->
   <a href="{% url 'week1:collaborators_need_you' %}">View more</a>
   <br>
   <br>
@@ -971,7 +971,6 @@ window.onclick = function(event) {
 
                           if (docs[i]['portfolio']){
                             var portfolio = docs[i]['portfolio'];
-                            console.log("portfolio!!!", portfolio);
 
                             var imageText = '';
                             if (portfolio.image){
@@ -984,7 +983,6 @@ window.onclick = function(event) {
 
                           if (docs[i]['upcoming']){
                             var upcoming = docs[i]['upcoming'];
-                            console.log("upcoming!!!", upcoming);
 
                             var imageText = '';
                             if (upcoming.image){
@@ -1067,12 +1065,15 @@ window.onclick = function(event) {
       for(var i=0; i < docs.length; i++){
         console.log("top collaborators:"+docs[i].user_id);
         var uid = docs[i].user_id;
+        var first_name = docs[i].first_name;
+        var last_name = docs[i].last_name;
+        var profession = docs[i].profession1;
         var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
         var n  = users.indexOf(uid);
         if ( n != -1 ){
-          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a></li>'));
+          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
         }else{
-          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile"></a></li>'));
+          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
 
         }
       }
@@ -1081,17 +1082,21 @@ window.onclick = function(event) {
     socket.on('three collaborators you need', function(docs){
       for(var i=0; i < docs.length; i++){
         var uid = docs[i].user_id;
+        var first_name = docs[i].first_name;
+        var last_name = docs[i].last_name;
+        var profession = docs[i].profession1;
         var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
         var n  = users.indexOf(uid);
         if ( n != -1 ){
-          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a></li>'));
+          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
         }else{
-          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile"></a></li>'));
+          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
 
         }
       }
     });
         
+    /*
     socket.on('three community posts need you', function(docs){
       for(var i=0; i < docs.length; i++){
         console.log("top community posts:"+docs[i]._id);
@@ -1102,6 +1107,7 @@ window.onclick = function(event) {
         $('#suggested_project').append($('<li class="media"><a href="'+post_link+'"><p>'+docs[i].content+'</p></a></li>'));
       }
     });
+    */
 
     function encode (input) {
       var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";

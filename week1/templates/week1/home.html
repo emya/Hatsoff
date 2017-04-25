@@ -1403,13 +1403,26 @@ function hatClicked(event,postid){
 
              if(c_type == 2){//upcoming
                 var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+                if (elemprofile){
+                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)" /></br></div>';    
+                }
+                /*
                 elemprofile.innerHTML = '';
-                $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)">'));
+                
+                $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)">'));
+                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
+                */
+               
              }else if(c_type == 3){//portflio
                 var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
                 if(elemprofile){
+                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';   
+                    /*
                     elemprofile.innerHTML = '';
-                    $('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')">'));
+
+                    $('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')">'));
+                    */
+
                 }
              }else if(c_type == 5){
              }
@@ -1421,13 +1434,19 @@ function hatClicked(event,postid){
 
              if(c_type == 2){
                 var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+                if (elemprofile){
+                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)" /></br></div>';
+                }
+                /*
                 elemprofile.innerHTML = '';
-                $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)">'));
+
+                $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)">'));
+                */
              }else if(c_type == 3){
                 var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
                 if(elemprofile){
-                    elemprofile.innerHTML = '';
-                    $('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')">'));
+                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')" /></br></div>';
+                    //$('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')">'));
                 }
              }else if(c_type == 5){
              }
@@ -1574,7 +1593,9 @@ function hatClicked(event,postid){
                     }else if(c_type == 2){//upcoming work
                         var elemprofile = document.getElementById("hatsoffstatus_upcoming");
                         if (elemprofile){
-                            $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffedFunction(2, 1)">'));
+
+                            $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)">'));
+
                         }
                         flag2 = true;
 
@@ -1594,8 +1615,12 @@ function hatClicked(event,postid){
 
                     }else if(c_type == 5){//profile
                         var elemprofile = document.getElementById("hatsoff-profile");
-                        elemprofile.innerHTML = '<img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(5, 1)"><span id="hatsoffNum">'+count+'</span>';
-                        flag5 = true;
+
+                        if (elemprofile){
+                            elemprofile.innerHTML = '<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(5, 1)"><span id="hatsoffNum">'+count+'</span>';
+                            flag5 = true;
+                        }
+
                     }
                         
                 }   

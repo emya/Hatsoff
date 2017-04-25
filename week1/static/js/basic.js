@@ -18,6 +18,21 @@ socket.on('community members number', function(len){
     console.log(cmembers);
 });
 
+sprojects = document.getElementById('suggested_project').innerHTML;
+if (sprojects && sprojects == ""){
+    socket.emit('get suggested projects');
+}
+
+socket.on('three community posts need you', function(docs){
+    for(var i=0; i < docs.length; i++){
+        var c_id = docs[i]._id;
+        var tag = docs[i].tag;
+        var uid = docs[i].user.uid;
+        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+        $('#suggested_project').append($('<li class="media"><a href="'+post_link+'"><p>'+docs[i].content+'</p></a></li>'));
+    }
+});
+
 socket.on('new community member', function(){
 	var members = localStorage.getItem("num-cmembers");
     var cmembers = 0

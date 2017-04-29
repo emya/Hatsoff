@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
+<link rel='stylesheet' type='text/css' href="{% static 'week1/icons.css' %}">
 <!--link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.css"-->
@@ -57,7 +58,7 @@
                    </div>
                <div class="col-xs-7">
             <div id='header-middle'>
-	      <a href="{% url 'week1:community' %}"><img src="{% static 'images/community_header.png'%}" class="user_header">Community</a>
+	      <a href="{% url 'week1:community' %}"><img src="{% static 'images/community_header_32x32.png'%}" class="user_header">Community</a>
 	      <!--a href="{% url 'week1:historyboard' %}">MessageBoard</a-->
 	      <!--a href="{% url 'week1:folder' %}"><i class="fa fa-folder-open-o fa-2x" aria-hidden="true"></i></a-->
 	      <!--a href=""><img src="{% static 'images/top_friends.png'%}" class="user_header"></a-->
@@ -98,8 +99,10 @@
 		    <li><a href="{% url 'week1:community_members' %}"><span id="num-cmembers"></span> Community Members</a></li>
 		    <li><a href="{% url 'week1:project_management' %}">Projects</a></li>
 		    <li>Projects you took</li>
-		    <li><a href="{% url 'week1:community_needyou' %}" >Suggested projects</a><ul id="suggested_project"></ul></li>
-		    <li><a href="{% url 'week1:collaborators_need_you' %}">Collaborators who may need you</a></li>
+
+		    <li><a href="{% url 'week1:community_needyou' %}" >Suggested projects</a></li>
+		    <li><a href="{% url 'week1:collaborators_need_you' %}"><img src="{% static 'images/white_collab_button_32x32.png'%}" width="32px" height=auto> Collaborators who may need you</a></li>
+
 		    <li><a href="{% url 'week1:collaborators_you_need' %}">Collaborators you may need</a></li>
 		</ul>
 	</div>

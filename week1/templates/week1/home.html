@@ -3,278 +3,198 @@
 {% block content %}
 {% load staticfiles %}
 
+
+
+
+<script>
+function iconToggle(event)
+{
+    if(event.target.classList.contains('inactive-icon'))
+    {
+        event.target.classList.remove('inactive-icon');
+        event.target.classList.add('active-icon');
+    }
+    else
+    {
+        event.target.classList.remove('active-icon');
+        event.target.classList.add('inactive-icon');        
+    }
+
+}
+function likeClicked(event,postid){
+    iconToggle(event)
+}
+    
+function shareClicked(event,postid){
+    iconToggle(event)
+}
+function hatClicked(event,postid){
+    iconToggle(event)
+}
+
+</script>
+
+<div id="post123" style="position: absolute; top: 1030px; left: 100px"> 
+  <div class="like-btn">
+    <div class="active-icon" onclick="likeClicked(event, 'post123')">
+    </div>
+  </div> 
+</div>
+
+<div id="post123" style="position: absolute; top: 1030px; left: 150px"> 
+  <div class="hats-btn">
+    <div class="active-icon" onclick="hatClicked(event, 'post123')">
+    </div>
+  </div> 
+</div>
+
+
+<div id="post123" style="position: absolute; top: 1030px; left: 200px"> 
+  <div class="share-btn">
+    <div class="active-icon" onclick="shareClicked(event, 'post123')">
+    </div>
+  </div> 
+</div>
+
+
+
+
+
 <!--div id="body-home"-->
 
 <div id="home-main">
-    
-    <div id="home-firstcolumn">
+    <div style="border: none">
+        <div style="border: none">
+       
+
+
+        </div> 
+        <div style="border: none"></div> 
+        <div style="border: none"></div> 
+        <div id="home-firstcolumn">
       
-	<div class="home-step">
-        <br>
-        <table width="420" class="fixed"><tr><td width="10"></td>
-            <td width="130" valign="top">
-                
-                <div class="tableLabel">
-			     Skills:
-                </div>
-            </td><td width="230">
-           {% if profile.skill1 and profile.skill1 != ""%}	
+            <div class="home-step">
+                <br>
+              <div id="home-firstcolumn">
+        <table width="400" class="fixed">
+
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Skills:</td>
+                    <td class="wrap">{% if profile.skill1 and profile.skill1 != ""%}  
            {{profile.skill1}}
            {% endif %}
-           {% if profile.skill2 and profile.skill2 != ""%}	
+           {% if profile.skill2 and profile.skill2 != ""%}  
            &nbsp{{profile.skill2}}
            {% endif %}
-           {% if profile.skill3 and profile.skill3 != ""%}	
+           {% if profile.skill3 and profile.skill3 != ""%}  
            &nbsp{{profile.skill3}}
            {% endif %}
-           {% if profile.skill4 and profile.skill4 != ""%}	
+           {% if profile.skill4 and profile.skill4 != ""%}  
            &nbsp{{profile.skill4}}
            {% endif %}
-           {% if profile.skill5 and profile.skill5 != ""%}	
+           {% if profile.skill5 and profile.skill5 != ""%}  
            &nbsp{{profile.skill5}}
            {% endif %}
-           {% if profile.skill6 and profile.skill6 != ""%}	
+           {% if profile.skill6 and profile.skill6 != ""%}  
            &nbsp{{profile.skill6}}
            {% endif %}
-           {% if profile.skill7 and profile.skill7 != ""%}	
+           {% if profile.skill7 and profile.skill7 != ""%}  
            &nbsp{{profile.skill7}}
            {% endif %}
-           {% if profile.skill8 and profile.skill8 != ""%}	
+           {% if profile.skill8 and profile.skill8 != ""%}  
            &nbsp{{profile.skill8}}
            {% endif %}
-           {% if profile.skill9 and profile.skill9 != ""%}	
+           {% if profile.skill9 and profile.skill9 != ""%}  
            &nbsp{{profile.skill9}}
            {% endif %}
-           {% if profile.skill10 and profile.skill10 != ""%}	
+           {% if profile.skill10 and profile.skill10 != ""%}    
            &nbsp{{profile.skill10}}
-           {% endif %}
-          
-            </td>
-            <td valign="top">
-                <a href="{% url 'week1:edit_professionskills' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-            </td>
-            </tr>
-            <tr>
-                <td>
-                <br>
-                </td>
-            </tr>
-            <tr><td width="10"></td>
+           {% endif %} <a class="pencil" href="{% url 'week1:edit_professionskills' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+                <tr class="visible_pencil">
+                    <td class="tableLabel">City:</td>
+                    <td class="tableValue">{{profile.city}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
+                </tr>
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Work at:</td>
+                    <td class="tableValue">{{profile.worksAt}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
+                </tr>
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Education:</td>
+                    <td class="tableValue">{{profile.education}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Language:</td>
+                    <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+                
+                <tr class="visible_pencil">
+                <td class="tableLabel">Website:</td>
+                <td class="truncate"><a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a></td>
                 <td valign="top">
-                    
-                    <div class="tableLabel">
-                    City:
-                    </div>
-               </td>
-                <td>
-                     {{profile.city}}
+                    <a href="{% url 'week1:edit_url' %}" class="pencil"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
                 </td>
-                <td valign="top">  
-                    <a href="{% url 'week1:edit_personalinfo' %}" text-align="right"><i class="fa fa-pencil " aria-hidden="true" ></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td width="20"></td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Work at: 
-                    </div>
-                </td>
-                    
-                <td>
-                {{profile.worksAt}}
-                </td>
-                      
-                <td valign="top">  
-                    
-                </td>
-            </tr>      
-            <tr><td width="20"></td>
-                <td valign="top">
-                    <div class="tableLabel">
-                    Education:
-                    </div>
-               </td>
-                <td>
-                     {{profile.education}}
-                </td>
-                <td valign="top">  
-                   
-                </td>
-            </tr>
-            <tr>
-                <td width="20"></td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Language:
-                    </div>
-                </td>
-                <td>{{profile.language}}
-                </td>
-                <td valign="top">  
-                </td>
-            </tr>
-            <tr>
-            </tr>
-            
-            <tr>
-                <td>
-                <br>
-                </td>
-            </tr>
-            <tr><td width="20"></td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                        Website:
-                    </div>
-                    
-                </td>
-                <td class="truncate">
-                     <a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a>
-                </td>
-                <td valign="top">
-                    <a href="{% url 'week1:edit_url' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                <br>
-                </td>
-            </tr>
-            <tr>
-                <td width="20"></td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
+               </tr>
+           
+                <tr class="visible_pencil">   
+                <td class="tableLabel">
                 Interested in: 
-                    </div>
                 </td>
-                <td>
+            
+                <td class="tableValue">
                     
-				{% if profile.interestproject == 1%}
-				  Side projects
-				{% endif %}
+                {% if profile.interestproject == 1%}
+                  Side projects
+                {% endif %}
 
-				{% if profile.interestproject == 2 %}  
-				  Short term projects
-				{% endif %}
+                {% if profile.interestproject == 2 %}  
+                  Short term projects
+                {% endif %}
 
-				{% if profile.interestproject == 3 %}  
-				  Long term projects
-				{% endif %}
+                {% if profile.interestproject == 3 %}  
+                  Long term projects
+                {% endif %}
 
-				{% if profile.interestproject == 4 %}  
-				  Full-time projects
-				{% endif %}
+                {% if profile.interestproject == 4 %}  
+                  Full-time projects
+                {% endif %}
                 </td>
-				<td valign="top"><a href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Want to explore: 
-                    </div>
-                </td>
-                <td>
-                    {{profile.explore}}
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Hobby: 
-                    </div>
-                </td>
-                <td>
-                    {{profile.hobby}}
-                </td>
-                <td>
-                </td>
-            </tr>
 
-            <tr>
-                <td>
+                <td valign="top"><a class="pencil" href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
                 </td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Favorite quote: 
-                    </div>
-                </td>
-                <td>
-                    {{profile.fQuote}}
-                </td>
-                <td>
-                </td>
-            </tr>
+          
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Want to explore:</td>
+                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+
+
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Hobby:</td>
+                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Favorite quote:</td>
+                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Films I love:</td>
+                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Books I love:</td>
+                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
+                
+                <tr class="visible_pencil">
+                    <td class="tableLabel">Lived in:</td>
+                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+                </tr>
             
-            
-            <tr>
-                <td>
-                </td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Films I love: 
-                    </div>
-                </td>
-                <td>
-                    {{profile.fFilm}}
-                </td>
-                <td>
-                </td>
-            </tr>
-            
-            
-            
-            <tr>
-                <td>
-                </td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Books I love: 
-                    </div>
-                </td>
-                <td>
-                    {{profile.fBook}}
-                </td>
-                <td>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                </td>
-                <td valign="top">
-                    
-                    <div class="tableLabel">
-                    Lived in: 
-                    </div>
-                </td>
-                <td>
-                    {{profile.cities}}
-                </td>
-                <td>
-                </td>
-            </tr>
-            
-            </table>
-            
-            	
+            </table></div>  	
 	        
 	</div>
 	
@@ -283,7 +203,7 @@
     <div id="home-secondcolumn">
         <div class="home-step">
             <table>
-                <tr>
+                <tr class="visible_pencil">
                     <td width="10px">
                     </td>
                     <td>
@@ -295,33 +215,34 @@
                     {% endif %}
                     </td>
                     <td valign="top">
-                        <a href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil " aria-hidden="true" align="right"></i></a>
+                        <a class="pencil" href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil " aria-hidden="true" align="right"></i></a>
                     </td>
                  </tr>
             </table>
         </div>
         <div class="home-step-out">
             <table>
-                <tr>
+                <tr class="visible_pencil">
                     <td width="20px"></td>
                     <td width="250px" >
                         <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
                             <h4 halign="center">{{profile.profession1}} &nbsp {{profile.profession2}} &nbsp {{profile.profession3}} &nbsp {{profile.profession4}} &nbsp {{profile.profession5}}</h4>
                             <p halign="center">{{profile.describe}}</p>
                     </td>
-                    <td valign="top"><a href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a></td>
+                    <td valign="top"><a class="pencil" href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a></td>
                 </tr>
             </table>
         </div>
     </div>
 
+
     <div id="home-thirdcolumn">
        <ul style="list-style-type:none">
-	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/2hats-01.png'%}" width="20px"><span id="hatsoffNum"></span></a></li>
+	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" width="33px"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
          <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
 		 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
-		 <li><a href=""><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="20px"></a></li>
+		 <li><a href=""><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="33px"></a></li>
 		 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
        </ul>
 
@@ -464,11 +385,12 @@
                                 
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
-                                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
+                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
+                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
+                                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
                                 <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-                                <div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+                                <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_64x64.png'%}" width="32px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
                             </div>
     	                        <div class="well well-ssm">
     		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
@@ -477,7 +399,7 @@
     		                        <form class="form-horizontal" action="">
     			                        <div class="form-group">
     				                        <div class="col-md-15">
-    				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea>
+    				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
     				                        </div>
     				                    </div>
     				                    <div class="form-group">
@@ -604,14 +526,15 @@
                             <div class="actionbutton-container">
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
-                                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div>
+                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
+                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
+                                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
     	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
     						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
     						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
     						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-    	              			<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
+    	              			<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_64x64.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
                             </div>
 
                             <div class="comment-container">
@@ -623,7 +546,7 @@
     		                        <form class="form-horizontal" action="">
     			                        <div class="form-group">
     				                        <div class="col-md-15">
-    				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea>
+    				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
     				                        </div>
     				                    </div>
     				                    <div class="form-group">
@@ -776,7 +699,7 @@
 	    {% endif %}
 
 	    {% if upcoming %}
-        
+            <div class="comment-container">
 	     	<table width="750">
 	            <tr>
 					<td valign="top" class="tableTitle">
@@ -844,14 +767,17 @@
 				</tr>
 
 			</table>
+            </div>
             
-			<h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
+			<h3>Collaborators I'd love!</h3>
 			<table width="750">
 	            <tr>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Collaborators: 
-					    </div>
+                        <div class="collaborator-container">
+					       <div class="tableLabel">
+					           Collaborators: 
+					       </div>
+                        </div>
 					</td>
 					                    
 					<td>
@@ -862,9 +788,11 @@
 
 				<tr>
 				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
+				        <div class="collaborator-container">
+                        <div class="tableLabel">
 				        	Skills:
-				        </div>
+                        </div>
+                        </div>
 				    </td>
 				                    
 				    <td>
@@ -907,9 +835,9 @@
             <div id="toggleUpcoming" onclick="toggleUpcoming()" class="show-link"> Show More </div>
 
             <div id="upcoming-more">
+              <div class="collaborator-container">
     			<table width="750">
     				<tr>
-    					<td width="50"></td>
     					<td valign="top">
     					    <div class="tableLabel">
     					       Start date: 
@@ -936,7 +864,6 @@
     			<table width="750">
 
     				<tr>
-    					<td width="50"></td>
     					<td valign="top" class="tableTitle">
     					    <div class="tableLabel">
     					       Frequency of work: 
@@ -950,7 +877,6 @@
     				</tr>  
 
     				<tr>
-    					<td width="50"></td>
     					<td valign="top" class="tableTitle">
     					    <div class="tableLabel">
     					       What I will offer: 
@@ -974,7 +900,6 @@
     				</tr>     
 
     				<tr>
-    					<td width="50"></td>
     					<td valign="top" class="tableTitle">
     					    <div class="tableLabel">
     					       Comment: 
@@ -988,11 +913,12 @@
     				</tr>  
 
     			</table>
+                </div>
 
-    			<h4 align="center" class="tableLabel">Funding Status</h4>
-    			<table width="750">
+                <div class="collaborator-container">
+    			<h4 align="center">Funding Status</h4>
+                <table width="750">
     	            <tr>
-    					<td width="50"></td>
     					<td valign="top" class="tableTitle">
     					    <div class="tableLabel">
     					       Funding I'm seeking: 
@@ -1005,7 +931,6 @@
     				                      
     				</tr>    
     				<tr>
-    					<td width="50"></td>
     					<td valign="top" class="tableTitle">
     					    <div class="tableLabel">
     					       Comment: 
@@ -1019,6 +944,7 @@
     				</tr>  
 
     			</table>
+                </div>
                 <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
             </div>
 
@@ -1027,12 +953,12 @@
         <div class="actionbutton-container">
             <!--div class="popupLike" onclick="likeFunction(2, 1)"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
             <div id="upcomingLike" class="popupLike"></div> 
-            <div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_sharedicon-02.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div>
-            <div class="popupHatsoff" id="hatsoffstatus_upcoming"></div>
-            <!--div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div-->
+            <div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div>
+            <!-- <div class="popupHatsoff" id="hatsoffstatus_upcoming"></div> -->
+            <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
     	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
     		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
-            <div class="popupCollaborate"><button onclick="collaborateFunction(2, 1)"><img src="{% static 'images/OriginalCollaboration-01.png'%}" width="20px"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+            <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(2, 1)"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
 
         </div>
              
@@ -1045,7 +971,7 @@
 	            <form class="form-horizontal" action="">
 	                <div class="form-group">
 	                    <div class="col-md-15">
-	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea>
+	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
 	                    </div>
 	                </div>
 	                <div class="form-group">
@@ -1372,11 +1298,11 @@
 	          if (c_type == 2){
 			      socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like upcoming');
-                  document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></br></div>';
+                  document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
 	          }else if (c_type == 3){
 				  socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				  console.log('like portfolio');
-                  document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
+                  document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
 	          }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1387,11 +1313,11 @@
             if (c_type == 2){
                 socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
                 console.log('unlike upcoming');
-                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
+                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
             }else if (c_type == 3){
                 socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
                 console.log('unlike portfolio');
-                document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
+                document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
             }
          //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
           }
@@ -1409,13 +1335,13 @@
              if (c_type == 2){
                  shareUpcomingFunction({{user.id}}, c_id);
                  var share = document.getElementById("sharestatus_upcoming");
-                 share.innerHTML = '<img src="/static/images/active_sharedicon-02.png" class="icons-img">';
+                 share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
              }else if (c_type == 3){
 		         //socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
                  console.log('share function');
                  sharePortfolioFunction({{user.id}}, c_id);
                  var share = document.getElementById("sharestatus_portfolio_"+c_id);
-                 share.innerHTML = '<img src="/static/images/active_sharedicon-02.png" class="icons-img">';
+                 share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
              }
 		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1482,17 +1408,21 @@
                 }
                 /*
                 elemprofile.innerHTML = '';
+                
                 $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)">'));
                 document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
                 */
+               
              }else if(c_type == 3){//portflio
                 var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
                 if(elemprofile){
                     elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';   
                     /*
                     elemprofile.innerHTML = '';
+
                     $('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')">'));
                     */
+
                 }
              }else if(c_type == 5){
              }
@@ -1509,6 +1439,7 @@
                 }
                 /*
                 elemprofile.innerHTML = '';
+
                 $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)">'));
                 */
              }else if(c_type == 3){
@@ -1646,13 +1577,13 @@
             var flag4 = false;
             var flag5 = false;
             var p_list = [];
-
+          
             console.log("hatsoff docs", docs);
-
+            
             for (var i = 0; i < 10; i++){
                 p_list.push(false);
             }
-
+             
             for (var i = 0; i < len; i++){
                 if(docs[i]['content_id'] && docs[i]['content_type']){
                     var c_id = docs[i]['content_id'];
@@ -1663,6 +1594,7 @@
                         var elemprofile = document.getElementById("hatsoffstatus_upcoming");
                         if (elemprofile){
                              elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(2, 1)"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
+
                         }
                         flag2 = true;
 
@@ -1672,6 +1604,7 @@
                             var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
                             if(elemprofile){
                                 elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(3, '+c+')"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
+
                                 p_list[c-1] = true;
                             }
                         }
@@ -1681,10 +1614,12 @@
 
                     }else if(c_type == 5){//profile
                         var elemprofile = document.getElementById("hatsoff-profile");
+
                         if (elemprofile){
                             elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(5, 1)"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
                             flag5 = true;
                         }
+
                     }
                         
                 }   
@@ -1694,6 +1629,7 @@
                 var elemprofile = document.getElementById("hatsoffstatus_upcoming");
                 if(elemprofile){
                     elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
+
                 }
             }
 
@@ -1705,6 +1641,7 @@
                     var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
                     if (elemprofile){
                         elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>';
+
                     }
                 }
             }
@@ -1713,6 +1650,7 @@
                 var elemprofile = document.getElementById("hatsoff-profile");
                 if(elemprofile){
                     elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(5, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
+
                 }
             }
           });
@@ -1758,13 +1696,13 @@
                     var doc = data[i];
                     var content_type = doc['content_type'];
                     if (content_type == 2){
-                        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
+                        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
                         upcoming = true; 
                     }
                     console.log("content_type:", content_type);
                     if (content_type == 3){
                         var p_id = parseInt(doc['content_id']);
-                        document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-01.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
+                        document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
                         portfolios.push(p_id);
                     }
                 }
@@ -1773,7 +1711,7 @@
             if(upcoming == false){
                 var upcomingElement = document.getElementById("upcomingLike");
                 if (upcomingElement != null){
-                    upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
+                    upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
 
                 }
             }
@@ -1782,7 +1720,7 @@
             for (var i = 0; i < p_count; i++){
                 var counter = i+1;
                 if (portfolios.indexOf(counter) == -1){
-                    document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
+                    document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
                 }   
             }
           });
@@ -1977,7 +1915,7 @@
 
                        	  //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
  						  var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></div>';
+						  var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 						  var uid = sharedocs[i_share]['to_uid'];
 			              var content = sharedocs[i_share]['content'];
 			              var c_id = sharedocs[i_share]['_id'];
@@ -1990,8 +1928,8 @@
                           var yy = datels[0];
 
 						  var n  = users.indexOf(uid);
-                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
-                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
                           var tag = (content['tag']) ? content['tag'] : 0;
 						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
@@ -2032,12 +1970,12 @@
                        	  var uid = {{user.id}};
 			              var content = communitydocs[i_community];
  						  var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></div>';
+						  var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
 
 						  var c_id = content['_id'];
 						  var n  = users.indexOf(uid);
-                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
-                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
                           var created = communitydocs[i_community]['created'];
 			              var colonIndex = created.indexOf(":");
@@ -2090,13 +2028,13 @@
                     }else if(i_share < len_share){
 
  						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></div>';
+						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 						var uid = sharedocs[i_share]['to_uid'];
 			            var content = sharedocs[i_share]['content'];
 			            var c_id = sharedocs[i_share]['_id'];
 						var n  = users.indexOf(uid);
-                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
-                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
                         var created = sharedocs[i_share]['created'];
 			            var colonIndex = created.indexOf(":");
@@ -2148,12 +2086,12 @@
 						var uid = {{user.id}};
 			            var content = communitydocs[i_community];
  						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></div>';
+						var like = '<div class="popupLike" onclick="popLike()"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
 
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);
-                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div><hr class="divider"/>';
-                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Please enter your comment here..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
                         var created = communitydocs[i_community]['created'];
 			            var colonIndex = created.indexOf(":");
                         var date = created.substring(0, colonIndex-3);

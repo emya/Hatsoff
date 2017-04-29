@@ -59,89 +59,74 @@ function hatClicked(event,postid){
 
 
 
-
 <!--div id="body-home"-->
 
 <div id="home-main">
-    <div style="border: none">
-        <div style="border: none">
-       
-
-
-        </div> 
-        <div style="border: none"></div> 
-        <div style="border: none"></div> 
-        <div id="home-firstcolumn">
-      
-            <div class="home-step">
-                <br>
-              <div id="home-firstcolumn">
+    <div id="home-firstcolumn" class="home-step">
         <table width="400" class="fixed">
+          <tr class="visible_pencil">
+              <td class="tableLabel">Skills:</td>
+              <td class="wrap">{% if profile.skill1 and profile.skill1 != ""%}  
+               {{profile.skill1}}
+               {% endif %}
+               {% if profile.skill2 and profile.skill2 != ""%}  
+               &nbsp{{profile.skill2}}
+               {% endif %}
+               {% if profile.skill3 and profile.skill3 != ""%}  
+               &nbsp{{profile.skill3}}
+               {% endif %}
+               {% if profile.skill4 and profile.skill4 != ""%}  
+               &nbsp{{profile.skill4}}
+               {% endif %}
+               {% if profile.skill5 and profile.skill5 != ""%}  
+               &nbsp{{profile.skill5}}
+               {% endif %}
+               {% if profile.skill6 and profile.skill6 != ""%}  
+               &nbsp{{profile.skill6}}
+               {% endif %}
+               {% if profile.skill7 and profile.skill7 != ""%}  
+               &nbsp{{profile.skill7}}
+               {% endif %}
+               {% if profile.skill8 and profile.skill8 != ""%}  
+               &nbsp{{profile.skill8}}
+               {% endif %}
+               {% if profile.skill9 and profile.skill9 != ""%}  
+               &nbsp{{profile.skill9}}
+               {% endif %}
+               {% if profile.skill10 and profile.skill10 != ""%}    
+               &nbsp{{profile.skill10}}
+               {% endif %} 
+               <a class="pencil" href="{% url 'week1:edit_professionskills' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
 
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Skills:</td>
-                    <td class="wrap">{% if profile.skill1 and profile.skill1 != ""%}  
-           {{profile.skill1}}
-           {% endif %}
-           {% if profile.skill2 and profile.skill2 != ""%}  
-           &nbsp{{profile.skill2}}
-           {% endif %}
-           {% if profile.skill3 and profile.skill3 != ""%}  
-           &nbsp{{profile.skill3}}
-           {% endif %}
-           {% if profile.skill4 and profile.skill4 != ""%}  
-           &nbsp{{profile.skill4}}
-           {% endif %}
-           {% if profile.skill5 and profile.skill5 != ""%}  
-           &nbsp{{profile.skill5}}
-           {% endif %}
-           {% if profile.skill6 and profile.skill6 != ""%}  
-           &nbsp{{profile.skill6}}
-           {% endif %}
-           {% if profile.skill7 and profile.skill7 != ""%}  
-           &nbsp{{profile.skill7}}
-           {% endif %}
-           {% if profile.skill8 and profile.skill8 != ""%}  
-           &nbsp{{profile.skill8}}
-           {% endif %}
-           {% if profile.skill9 and profile.skill9 != ""%}  
-           &nbsp{{profile.skill9}}
-           {% endif %}
-           {% if profile.skill10 and profile.skill10 != ""%}    
-           &nbsp{{profile.skill10}}
-           {% endif %} <a class="pencil" href="{% url 'week1:edit_professionskills' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">City:</td>
-                    <td class="tableValue">{{profile.city}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Work at:</td>
-                    <td class="tableValue">{{profile.worksAt}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Education:</td>
-                    <td class="tableValue">{{profile.education}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Language:</td>
-                    <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-                
-                <tr class="visible_pencil">
-                <td class="tableLabel">Website:</td>
-                <td class="truncate"><a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a></td>
-                <td valign="top">
-                    <a href="{% url 'week1:edit_url' %}" class="pencil"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-                </td>
-               </tr>
-           
-                <tr class="visible_pencil">   
-                <td class="tableLabel">
-                Interested in: 
-                </td>
-            
-                <td class="tableValue">
+          <tr class="visible_pencil">
+              <td class="tableLabel">City:</td>
+              <td class="tableValue">{{profile.city}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Work at:</td>
+              <td class="tableValue">{{profile.worksAt}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Education:</td>
+              <td class="tableValue">{{profile.education}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Language:</td>
+              <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+          
+          <tr class="visible_pencil">
+              <td class="tableLabel">Website:</td>
+              <td class="tableValue"><div class="truncate" style="width:200px;display: inline-block;"><a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a></div><a href="{% url 'week1:edit_url' %}" class="pencil" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a></td>
+          </tr>
+     
+          <tr class="visible_pencil">   
+             <td class="tableLabel">Interested in:</td>
+             <td class="tableValue">
                     
                 {% if profile.interestproject == 1%}
                   Side projects
@@ -158,47 +143,47 @@ function hatClicked(event,postid){
                 {% if profile.interestproject == 4 %}  
                   Full-time projects
                 {% endif %}
-                </td>
 
-                <td valign="top"><a class="pencil" href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-                </td>
+                <a class="pencil" href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right" style="float: right"></i></a>
+              </td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Want to explore:</td>
+              <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Hobby:</td>
+              <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Favorite quote:</td>
+              <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Films I love:</td>
+              <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+
+          <tr class="visible_pencil">
+              <td class="tableLabel">Books I love:</td>
+              <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
           
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Want to explore:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-
-
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Hobby:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Favorite quote:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Films I love:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Books I love:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-                
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Lived in:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-            
-            </table></div>  	
-	        
-	</div>
-	
+          <tr class="visible_pencil">
+              <td class="tableLabel">Lived in:</td>
+              <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+          </tr>
+      </table>
     </div>
+
+
+
+
 
     <div id="home-secondcolumn">
         <div class="home-step">
@@ -264,11 +249,6 @@ function hatClicked(event,postid){
 					{% for showcase in showcases %}
 				    {% if forloop.counter == 1 %}
 				    <div class="item active">
-	                    
-	                    
-					<blockquote>
-					    <!--div class="row">
-						<div class="col-sm-8 col-sm-offset-2"-->
 						<div class="right-edit">
 		                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 		                </div>
@@ -308,7 +288,8 @@ function hatClicked(event,postid){
                     
                             <div class="comment-container">
                             
-	                        <table align="left" width="750">
+
+	                        <table align="left" width="100%">
 		                        <tr>
 					                <td valign="top" class="tableTitle">
 					                    <div class="tableLabel">
@@ -380,17 +361,20 @@ function hatClicked(event,postid){
 								<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
 								<li>Year of completion:{{showcase.completion}}</li>
 							    </ul-->
-                                
+                                <br style="clear: both;"/>
                             <div class="actionbutton-container">
-                                
+                            <div class="comments_top_bar">
+
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
-                                <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
+                                <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div> 
+
                                 <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
                                 <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
                                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
                                 <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
                                 <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_64x64.png'%}" width="32px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+                            </div>
                             </div>
     	                        <div class="well well-ssm">
     		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
@@ -409,17 +393,13 @@ function hatClicked(event,postid){
     		                        	</div>
     		                        </form>
 
-    	                        </div>
+    	                     
+                              </div>
                             </div>
-
-					</blockquote>
 				    </div>
 
 	                {% else %}
 				    <div class="item">
-				    <blockquote>
-				    <!--div class="row">
-						<div class="col-sm-8 col-sm-offset-2"-->
 						<div class="right-edit">
 		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 		                </div>
@@ -558,10 +538,6 @@ function hatClicked(event,postid){
 
     	                        </div>
                             </div>
-	                                            
-						<!--/div>
-					</div-->
-					</blockquote>
 				    </div>
 	                {% endif %}
 	                {% endfor %}

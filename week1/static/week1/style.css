@@ -797,8 +797,7 @@ to here
    color: lightslategrey;
    padding-left: 30px;
    width: 160px;
-   vertical-align: top
-   display: block;
+   vertical-align: top;
    line-height: 1.4;
 }
 
@@ -817,7 +816,6 @@ width: 500px
 }
 
 .truncate {
-  width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2002,8 +2000,8 @@ img.notification_img {
 }
 
 .well-ssm {
-    width: 530px;
-    padding-top: 5px;
+    width: 100%;
+    padding-top: 1px;
     padding-bottom: 5px;
 }
 

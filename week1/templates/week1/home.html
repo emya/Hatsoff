@@ -116,7 +116,7 @@ function hatClicked(event,postid){
 
           <tr class="visible_pencil">
               <td class="tableLabel">Language:</td>
-              <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+              <td class="tableValue wrap">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
           </tr>
           
           <tr class="visible_pencil">
@@ -503,7 +503,8 @@ function hatClicked(event,postid){
 
 	                        <hr class="divider"/>
 
-                            <div class="actionbutton-container">
+                            <div class="actionbutton-container"></div>
+                            <div class="comments_top_bar"></div>
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
                                 <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>

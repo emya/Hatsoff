@@ -2002,11 +2002,11 @@ img.notification_img {
 .well-ssm {
     width: 100%;
     padding-top: 1px;
-    padding-bottom: 5px;
+    padding-bottom: 3px;
 }
 
 .well-smm {
-    width: 620px;
+    width: 100%;
     background-image: linear-gradient(to bottom, #F5F5F5 0, #F5F5F5 100%);
 }
 

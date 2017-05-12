@@ -18,10 +18,12 @@ socket.on('community members number', function(len){
     console.log(cmembers);
 });
 
+/*
 sprojects = document.getElementById('suggested_project').innerHTML;
 if (sprojects && sprojects == ""){
     socket.emit('get suggested projects');
 }
+*/
 
 socket.on('three community posts need you', function(docs){
     for(var i=0; i < docs.length; i++){

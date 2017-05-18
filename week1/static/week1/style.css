@@ -797,7 +797,7 @@ to here
    color: lightslategrey;
    padding-left: 30px;
    width: 160px;
-   vertical-align: top
+   vertical-align: top;
    display: block;
    line-height: 1.4;
 }

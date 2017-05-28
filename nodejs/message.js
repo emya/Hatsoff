@@ -316,6 +316,7 @@ io.on('connection', function(socket){
 
     key = "community_"+socket.uid;
 
+/*
     client.del(key, function(err, response) {
       if (response == 1) {
         console.log("Deleted Successfully!")
@@ -323,25 +324,14 @@ io.on('connection', function(socket){
         console.log("Cannot delete")
       }
     });
+*/
 
     client.exists(key, function(err, reply) {
       if (reply === 1) {
-        console.log('exists');
-        client.keys('*', function (err, keys) {
-          if (err) return console.log(err);
-
-          for(var i = 0, len = keys.length; i < len; i++) {
-            console.log(keys[i]);
-          }
-        }); 
-
         client.hgetall(key, function(err, data) {
-          console.log('data of ', key);
-          console.log(data);
           socket.emit('update community post', data);
         });
       } else {
-        console.log('doesn\'t exist');
         query.sort('-created').limit(30).exec(function(err, docs){
           if (err) throw err;
           var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
@@ -480,6 +470,50 @@ io.on('connection', function(socket){
       }
     });
 
+  });
+
+  socket.on('leave community', function(uid){
+    key = "community_"+uid;
+    var query = CommunityPost.find({});
+    query.sort('-created').limit(30).exec(function(err, docs){
+      if (err) throw err;
+      var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+      query1.sort('-created').limit(30).exec(function(err1, likedocs){
+        if (err1) throw err1;
+
+        var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+        query2.sort('-created').limit(30).exec(function(err2, sharedocs){
+          if (err2) throw err2;
+
+          var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+          query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
+            if (err3) throw err3;
+
+            CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+              if(!result){
+                var friends = [];
+                client.hmset(key, {
+                  'sharedocs': JSON.stringify(sharedocs),
+                  'likedocs': JSON.stringify(likedocs),
+                  'hatsoffdocs': JSON.stringify(hatsoffdocs),
+                  'docs': JSON.stringify(docs),
+                  'friends': JSON.stringify(friends)
+                });
+              }else{
+                var friends = result.friends;
+                client.hmset(key, {
+                  'sharedocs': JSON.stringify(sharedocs),
+                  'likedocs': JSON.stringify(likedocs),
+                  'hatsoffdocs': JSON.stringify(hatsoffdocs),
+                  'docs': JSON.stringify(docs),
+                  'friends': JSON.stringify(friends)
+                });
+              }
+            });
+          });
+        });
+      });
+    }); 
   });
 
   socket.on('get community members number', function(){

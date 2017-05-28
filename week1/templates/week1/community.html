@@ -1150,6 +1150,19 @@ window.onclick = function(event) {
       http.send();
       return http.status!=404;
     }
+
+/*
+    window.onbeforeunload = function(){
+      return 'Are you sure you want to leave?';
+    };
+*/
+
+    $(window).unload(function() {
+      console.log("Bye now!");
+      socket.emit('leave community', {{user.id}});
+      return "Bye now!";
+    });
+
     </script>
 </div>
 

@@ -610,6 +610,30 @@ window.onclick = function(event) {
             modal.style.display = "block";
           }
 
+          function deleteComment(c_id, r_id){
+            console.log("delete comment");
+            socket.emit('delete community comment', {c_id:c_id, r_id:r_id});
+            document.getElementById("media_"+r_id).innerHTML = '';
+          }
+
+          function editComment(c_id, r_id){
+            var modal = document.getElementById('editModal_'+c_id+'_'+r_id);  
+            modal.style.display = "block";
+          }
+
+          function submitcommentEdit(c_id, r_id){
+            var post_val = $('#post_text_'+c_id+'_'+r_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('if:'+post_val);
+              socket.emit('update postComment', {msg:post_val, c_id:c_id, r_id:r_id, uid:{{user.id}} });
+              document.getElementById("media-content_"+c_id+'_'+r_id).innerHTML = post_val;
+              closeEdit(c_id+'_'+r_id);
+            }
+            $('#status_message').val('');
+            return false;
+          }
+
           function submitEdit(c_id){
             var post_val = $('#post_text_'+c_id).val();
                     
@@ -1039,15 +1063,18 @@ window.onclick = function(event) {
                          var rdocs = docs[i]['replys'];
                          for(var j=0; j < rdocs.length; j++){
                             if (rdocs[j]['user']['uid']){
-                    				  var ruid = rdocs[j]['user']['uid']
+                    				  var r_id = j;
+                              var ruid = rdocs[j]['user']['uid'];
+                              var deleteOrEdit_cmt = (ruid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deleteComment(\''+c_id+'\', ,\''+r_id+'\')">Delete</a><a href="#" onclick="return editComment(\''+c_id+'\', \''+r_id+'\')">Edit</a></div></div>' : '';
+                              var edit_cmt = (ruid == {{user.id}}) ? '<div id="editModal_'+c_id+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'_'+r_id+'" onclick="closeEdit(\''+c_id+'_'+r_id+'\')">&times;</span><div id="edit_post_'+c_id+'_'+r_id+'"><textarea id="post_text_'+c_id+'_'+r_id+'" rows="20" cols="40" name="message">'+rdocs[j]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+c_id+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
                     				  var m  = users.indexOf(ruid);
                     				  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
                     				  if ( m != -1) {
-                    				     $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+                    				     $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp'+deleteOrEdit_cmt+'</br><p id="media-content_'+c_id+'_'+r_id+'">'+rdocs[j]['content']+edit_cmt+'</p>'));
                     				   }else{
-                    				     $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+                    				     $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp'+deleteOrEdit_cmt+'</br><p id="media-content_'+c_id+'_'+r_id+'">'+rdocs[j]['content']+edit_cmt+'</p>'));
                     				  }
-                             }
+                            }
                          }
                       }
                   }

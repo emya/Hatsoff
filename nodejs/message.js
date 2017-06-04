@@ -52,7 +52,6 @@ var replySchema = mongoose.Schema({
   created: {type: Date, default:Date.now}
 });
 
-
 var communitySchema = mongoose.Schema({
   user: {uid: Number, first_name: String, last_name: String},
   content: String,
@@ -2009,11 +2008,7 @@ io.on('connection', function(socket){
          });
       }
     });
-
-   
-
   });
-
 
   socket.on('share upcoming', function(data, callback){
 
@@ -2149,6 +2144,37 @@ io.on('connection', function(socket){
         } else {
         }
       }
+    });
+  });
+
+  socket.on('delete community comment', function(data){
+    console.log("delete comment");
+
+    CommunityPost.findById(data.c_id, function(err, post){
+      if (err) {
+        console.log(err);
+      } else{
+        post.replys.splice(data.r_id, 1);
+        post.save(function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+  });
+
+  socket.on('update postComment', function(data){
+    console.log("update postComment", data);
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      comment = doc.replys[data.r_id];
+      console.log("comment", comment);
+      comment.content = data.msg;
+      console.log("comment", comment);
+      doc.replys[data.r_id] = comment;
+      doc.save();
     });
   });
 
@@ -2458,14 +2484,10 @@ io.on('connection', function(socket){
                 socket.emit('set message', newdata) 
             }
           });
-
         }
-
       }
     });
-
   });
-
 
   /***
   uid1: Number,
@@ -2512,10 +2534,8 @@ io.on('connection', function(socket){
         } else{
           socket.emit();
         }
-
       }
     });
-
   });
 
   socket.on('accept first message', function(data){

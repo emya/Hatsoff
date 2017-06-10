@@ -112,6 +112,67 @@ function addCommunityFunction(uid){
     }
 }
 
+function myDropDownPFFunction(id) {
+    //myPostDropdown
+    document.getElementById(id).classList.toggle("show");
+    return false;
+}
+
+    
+function myDropDownDelEditPFFunction(id) {
+    //myDelEditDropdown_
+    document.getElementById(id).classList.toggle("show");
+    return false;
+}
+
+// type: 0 (portfolio), 1 (upcoming)
+function deletePFComment(uid, r_id, type, c_id){
+  var clname, eid;
+  if ( type == 0 ){
+    clname = 'pf_portfolio_'+r_id;
+    eid = 'pf_portfolio_'+uid;
+    socket.emit('delete portfolio comment', {c_id:c_id, r_id:r_id});
+  } else if ( type == 1 ) {
+    clname = 'pf_upcoming_'+r_id;
+    eid = 'upcomingComment_'+uid;
+    console.log("deletePFComment ", c_id);
+    socket.emit('delete upcoming comment', c_id);
+  }
+  document.getElementById(eid).getElementsByClassName(clname)[0].innerHTML = '';
+}
+
+function editPFComment(type, c_id){
+  var modalid = (type == 0) ? 'editModal_pf_portfolio_'+c_id+'_'+r_id : 'editModal_pf_up_'+c_id;
+  var modal = document.getElementById(modalid);  
+  modal.style.display = "block";
+}
+
+function closePFEdit(id){
+  console.log("close like list");
+  var span = document.getElementById('editClose_'+id);
+  var modal = document.getElementById('editModal_'+id);  
+  modal.style.display = "none";
+}
+
+function submitcommentPFEdit(c_id, r_id, type){
+  var pid, post_val;
+
+  if ( type == 0 ){
+
+  } else if ( type == 1 ){
+    pid =  '#post_text_pf_up_'+c_id;
+    post_val = $(pid).val();
+    if (post_val.length != 0){
+      socket.emit('update upcomingComment', {msg:post_val, c_id:c_id });
+      document.getElementById("media-content_pf_up_"+c_id).innerHTML = post_val;
+      closePFEdit('pf_up_'+c_id);
+    }
+  }
+
+  $('#status_message').val('');
+  return false;
+}
+
 function isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))

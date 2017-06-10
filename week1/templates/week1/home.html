@@ -63,317 +63,313 @@ function hatClicked(event,postid){
 <!--div id="body-home"-->
 
 <div id="home-main">
+  <div style="border: none">
     <div style="border: none">
-        <div style="border: none">
        
 
 
-        </div> 
-        <div style="border: none"></div> 
-        <div style="border: none"></div> 
-        <div id="home-firstcolumn">
+    </div> 
+    <div style="border: none"></div> 
+    <div style="border: none"></div> 
+    <div id="home-firstcolumn">
       
-            <div class="home-step">
-                <br>
-              <div id="home-firstcolumn">
-        <table width="400" class="fixed">
+    <div class="home-step">
+      <br>
+    <div id="home-firstcolumn">
+      <table width="400" class="fixed">
 
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Skills:</td>
-                    <td class="wrap">{% if profile.skill1 and profile.skill1 != ""%}  
-           {{profile.skill1}}
-           {% endif %}
-           {% if profile.skill2 and profile.skill2 != ""%}  
-           &nbsp{{profile.skill2}}
-           {% endif %}
-           {% if profile.skill3 and profile.skill3 != ""%}  
-           &nbsp{{profile.skill3}}
-           {% endif %}
-           {% if profile.skill4 and profile.skill4 != ""%}  
-           &nbsp{{profile.skill4}}
-           {% endif %}
-           {% if profile.skill5 and profile.skill5 != ""%}  
-           &nbsp{{profile.skill5}}
-           {% endif %}
-           {% if profile.skill6 and profile.skill6 != ""%}  
-           &nbsp{{profile.skill6}}
-           {% endif %}
-           {% if profile.skill7 and profile.skill7 != ""%}  
-           &nbsp{{profile.skill7}}
-           {% endif %}
-           {% if profile.skill8 and profile.skill8 != ""%}  
-           &nbsp{{profile.skill8}}
-           {% endif %}
-           {% if profile.skill9 and profile.skill9 != ""%}  
-           &nbsp{{profile.skill9}}
-           {% endif %}
-           {% if profile.skill10 and profile.skill10 != ""%}    
-           &nbsp{{profile.skill10}}
-           {% endif %} <a class="pencil" href="{% url 'week1:edit_professionskills' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">City:</td>
-                    <td class="tableValue">{{profile.city}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Work at:</td>
-                    <td class="tableValue">{{profile.worksAt}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Education:</td>
-                    <td class="tableValue">{{profile.education}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Language:</td>
-                    <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
+      <tr class="visible_pencil">
+        <td class="tableLabel">Skills:</td>
+        <td class="wrap">{% if profile.skill1 and profile.skill1 != ""%}  
+          {{profile.skill1}}
+          {% endif %}
+          {% if profile.skill2 and profile.skill2 != ""%}  
+          &nbsp{{profile.skill2}}
+          {% endif %}
+          {% if profile.skill3 and profile.skill3 != ""%}  
+          &nbsp{{profile.skill3}}
+          {% endif %}
+          {% if profile.skill4 and profile.skill4 != ""%}  
+          &nbsp{{profile.skill4}}
+          {% endif %}
+          {% if profile.skill5 and profile.skill5 != ""%}  
+          &nbsp{{profile.skill5}}
+          {% endif %}
+          {% if profile.skill6 and profile.skill6 != ""%}  
+          &nbsp{{profile.skill6}}
+          {% endif %}
+          {% if profile.skill7 and profile.skill7 != ""%}  
+          &nbsp{{profile.skill7}}
+          {% endif %}
+          {% if profile.skill8 and profile.skill8 != ""%}  
+          &nbsp{{profile.skill8}}
+          {% endif %}
+          {% if profile.skill9 and profile.skill9 != ""%}  
+          &nbsp{{profile.skill9}}
+          {% endif %}
+          {% if profile.skill10 and profile.skill10 != ""%}    
+          &nbsp{{profile.skill10}}
+          {% endif %} <a class="pencil" href="{% url 'week1:edit_professionskills' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+      </tr>
+      <tr class="visible_pencil">
+        <td class="tableLabel">City:</td>
+        <td class="tableValue">{{profile.city}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
+      </tr>
+      <tr class="visible_pencil">
+        <td class="tableLabel">Work at:</td>
+        <td class="tableValue">{{profile.worksAt}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
+      </tr>
+      <tr class="visible_pencil">
+        <td class="tableLabel">Education:</td>
+        <td class="tableValue">{{profile.education}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+      </tr>
+      <tr class="visible_pencil">
+        <td class="tableLabel">Language:</td>
+        <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+      </tr>
                 
-                <tr class="visible_pencil">
-                <td class="tableLabel">Website:</td>
-                <td class="truncate"><a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a></td>
-                <td valign="top">
-                    <a href="{% url 'week1:edit_url' %}" class="pencil"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-                </td>
-               </tr>
+      <tr class="visible_pencil">
+        <td class="tableLabel">Website:</td>
+        <td class="truncate"><a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a></td>
+        <td valign="top">
+          <a href="{% url 'week1:edit_url' %}" class="pencil"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
+        </td>
+      </tr>
            
-                <tr class="visible_pencil">   
-                <td class="tableLabel">
-                Interested in: 
-                </td>
+      <tr class="visible_pencil">   
+        <td class="tableLabel">
+          Interested in: 
+        </td>
             
-                <td class="tableValue">
+        <td class="tableValue">
                     
-                {% if profile.interestproject == 1%}
-                  Side projects
-                {% endif %}
+          {% if profile.interestproject == 1%}
+            Side projects
+          {% endif %}
 
-                {% if profile.interestproject == 2 %}  
-                  Short term projects
-                {% endif %}
+          {% if profile.interestproject == 2 %}  
+            Short term projects
+          {% endif %}
 
-                {% if profile.interestproject == 3 %}  
-                  Long term projects
-                {% endif %}
+          {% if profile.interestproject == 3 %}  
+            Long term projects
+          {% endif %}
 
-                {% if profile.interestproject == 4 %}  
-                  Full-time projects
-                {% endif %}
-                </td>
+          {% if profile.interestproject == 4 %}  
+            Full-time projects
+          {% endif %}
+        </td>
 
-                <td valign="top"><a class="pencil" href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-                </td>
+        <td valign="top"><a class="pencil" href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
+        </td>
           
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Want to explore:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
+        <tr class="visible_pencil">
+          <td class="tableLabel">Want to explore:</td>
+          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+        </tr>
 
+        <tr class="visible_pencil">
+          <td class="tableLabel">Hobby:</td>
+          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+        </tr>
 
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Hobby:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
+        <tr class="visible_pencil">
+          <td class="tableLabel">Favorite quote:</td>
+          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+        </tr>
 
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Favorite quote:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
+        <tr class="visible_pencil">
+          <td class="tableLabel">Films I love:</td>
+          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+        </tr>
 
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Films I love:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
-
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Books I love:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
+        <tr class="visible_pencil">
+          <td class="tableLabel">Books I love:</td>
+          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+        </tr>
                 
-                <tr class="visible_pencil">
-                    <td class="tableLabel">Lived in:</td>
-                    <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-                </tr>
+        <tr class="visible_pencil">
+          <td class="tableLabel">Lived in:</td>
+          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
+        </tr>
             
-            </table></div>  	
+      </table></div>  	
 	        
 	</div>
 	
     </div>
 
     <div id="home-secondcolumn">
-        <div class="home-step">
-            <table>
-                <tr class="visible_pencil">
-                    <td width="10px">
-                    </td>
-                    <td>
-                    <br>
-                    {% if profile.photo %}
-                        <img src="{{ profile.photo.url }}" class="mainprofile">
-                    {% else %}
-                        <img src="{% static 'images/profileimage.png'%}" class="mainprofile" width="180">
-                    {% endif %}
-                    </td>
-                    <td valign="top">
-                        <a class="pencil" href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil " aria-hidden="true" align="right"></i></a>
-                    </td>
-                 </tr>
-            </table>
-        </div>
-        <div class="home-step-out">
-            <table>
-                <tr class="visible_pencil">
-                    <td width="20px"></td>
-                    <td width="250px" >
-                        <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
-                            <h4 halign="center">{{profile.profession1}} &nbsp {{profile.profession2}} &nbsp {{profile.profession3}} &nbsp {{profile.profession4}} &nbsp {{profile.profession5}}</h4>
-                            <p halign="center">{{profile.describe}}</p>
-                    </td>
-                    <td valign="top"><a class="pencil" href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a></td>
-                </tr>
-            </table>
-        </div>
+      <div class="home-step">
+        <table>
+          <tr class="visible_pencil">
+            <td width="10px">
+            </td>
+            <td>
+              <br>
+              {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" class="mainprofile">
+              {% else %}
+                <img src="{% static 'images/profileimage.png'%}" class="mainprofile" width="180">
+              {% endif %}
+            </td>
+            <td valign="top">
+              <a class="pencil" href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil " aria-hidden="true" align="right"></i></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="home-step-out">
+        <table>
+          <tr class="visible_pencil">
+            <td width="20px"></td>
+            <td width="250px" >
+              <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
+              <h4 halign="center">{{profile.profession1}} &nbsp {{profile.profession2}} &nbsp {{profile.profession3}} &nbsp {{profile.profession4}} &nbsp {{profile.profession5}}</h4>
+              <p halign="center">{{profile.describe}}</p>
+            </td>
+            <td valign="top"><a class="pencil" href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a></td>
+          </tr>
+        </table>
+      </div>
     </div>
 
-
-    <div id="home-thirdcolumn">
-       <ul style="list-style-type:none">
-	     <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" width="33px"><span id="hatsoffNum"></span></a></li>
+  <div id="home-thirdcolumn">
+    <ul style="list-style-type:none">
+	    <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" width="33px"><span id="hatsoffNum"></span></a></li>
          <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
-         <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
-		 <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
-		 <li><a href=""><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="33px"></a></li>
-		 <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
-       </ul>
-
-    </div>
+      <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
+		  <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
+		  <li><a href=""><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="33px"></a></li>
+		  <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
+     </ul>
+  </div>
 <hr>
 <div id="home-main-center">
 
 <!--div class="portfolio-container"-->
-<div class="home-step">
+  <div class="home-step">
     <!--div class="row"-->
-        <h3>Portfolio</h3>
-        <!--div class="col-md-12" data-wow-delay="0.6s"-->
-            <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
-                <!-- Carousel Slides / Quotes -->
-                <div class="carousel-inner text-center">
+    <h3>Portfolio</h3>
+      <!--div class="col-md-12" data-wow-delay="0.6s"-->
+      <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
+        <!-- Carousel Slides / Quotes -->
+        <div class="carousel-inner text-center">
 
 	                    <!-- Quote 1 -->
 			    {% if showcases %}
-					{% for showcase in showcases %}
-				    {% if forloop.counter == 1 %}
-				    <div class="item active">
+					  {% for showcase in showcases %}
+				      {% if forloop.counter == 1 %}
+				        <div class="item active">
 	                    
-	                    
-					<blockquote>
+					        <blockquote>
 					    <!--div class="row">
 						<div class="col-sm-8 col-sm-offset-2"-->
-						<div class="right-edit">
-		                     <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil " aria-hidden="true"></i></a>
+						        <div class="right-edit">
+		                  <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil " aria-hidden="true"></i></a>
 		                </div>
 						    {% if showcase.image or showcase.video or showcase.youtube %}
 
-							{% if showcase.image %}
-							   	<div class="display-image">
-									{% if '.pdf' in showcase.image.url %}
+							    {% if showcase.image %}
+							   	  <div class="display-image">
+									    {% if '.pdf' in showcase.image.url %}
 								    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
-								    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
-								    </object>
-								    {% else %}
-								    <object data="{{ showcase.image.url }}" width="350px" />
-								    </object>
+								      <object data="{{ showcase.image.url }}" width="350px" height="450px" />
+								      </object>
+								      {% else %}
+								      <object data="{{ showcase.image.url }}" width="350px" />
+								      </object>
 								    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
-								    {% endif %}
-							   	</div>
-							{% endif %}
+								      {% endif %}
+							   	  </div>
+							    {% endif %}
 
-							{% if showcase.video %}
+							  {% if showcase.video %}
 							    <video controls id="video">
-							        <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
+							      <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
 							    </video>
-							{% endif %}
+							  {% endif %}
 
-							{% if showcase.youtube %}
+							  {% if showcase.youtube %}
 							   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
 							   <div class="display-image">
-							   <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+							     <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
 							   </div>
-							{% endif %}
+							  {% endif %}
 
-	                        {% else %}
-							<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	                        {% endif %}
-                            <br><br>
+	            {% else %}
+							  <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+	            {% endif %}
+              <br><br>
                     
-                            <div class="comment-container">
+              <div class="comment-container">
                             
-	                        <table align="left" width="750">
-		                        <tr>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Title: 
-					                    </div>
-					                </td>
+	              <table align="left" width="750">
+		              <tr>
+					          <td valign="top" class="tableTitle">
+					            <div class="tableLabel">
+					              Title: 
+					            </div>
+					          </td>
 					                    
-					                <td>
-					                {{showcase.title}}
-					                </td>
+					          <td>
+					            {{showcase.title}}
+					          </td>
 					                      
-					            </tr>     
+					        </tr>     
 
-					            <tr>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Description: 
-					                    </div>
-					                </td>
+					        <tr>
+					          <td valign="top" class="tableTitle">
+					            <div class="tableLabel">
+					              Description: 
+					            </div>
+					          </td>
 					                    
-					                <td>
-					                {{showcase.describe}}
-					                </td>
+					          <td>
+					            {{showcase.describe}}
+					          </td>
 					                      
-					            </tr>
+					        </tr>
 
-					            <tr>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Your role: 
-					                    </div>
-					                </td>
+					        <tr>
+					          <td valign="top" class="tableTitle">
+					            <div class="tableLabel">
+					              Your role: 
+					            </div>
+					          </td>
 					                    
-					                <td>
-					                {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
-					                </td>
+					          <td>
+					            {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
+					          </td>
 					                      
-					            </tr>
+					        </tr>
 
-					            <tr>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Year of completion: 
-					                    </div>
-					                </td>
+					        <tr>
+					          <td valign="top" class="tableTitle">
+					            <div class="tableLabel">
+					              Year of completion: 
+					            </div>
+					          </td>
 					                    
-					                <td>
-					                {{showcase.completion}}
-					                </td>
+					          <td>
+					            {{showcase.completion}}
+					          </td>
 					                      
-					            </tr>
+					          </tr>
 
-					             <tr>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Keywords: 
-					                    </div>
-					                </td>
+					          <tr>
+					            <td valign="top" class="tableTitle">
+					              <div class="tableLabel">
+					                Keywords: 
+					              </div>
+					            </td>
 					                    
-					                <td>
-					                {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
-					                </td>
+					            <td>
+					              {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
+					            </td>
 					                      
-					            </tr>
-				            </table>
+					          </tr>
+				          </table>
 							    <!--ul style="list-style-type:none; padding-left:0px;">
 								<li>Title:{{showcase.title}}</li>
 								<li>Description:{{showcase.describe}}</li>
@@ -381,280 +377,272 @@ function hatClicked(event,postid){
 								<li>Year of completion:{{showcase.completion}}</li>
 							    </ul-->
                                 
-                            <div class="actionbutton-container">
-                                
-                                <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
-                                <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
-                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
-                                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
-                                <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
-                                <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-                                <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_64x64.png'%}" width="32px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
-                            </div>
-    	                        <div class="well well-ssm">
-    		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-    		                        </ul>
+                  <div class="actionbutton-container">
+                    <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
+                    <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
+                    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
+                    <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+                  </div>
 
-    		                        <form class="form-horizontal" action="">
-    			                        <div class="form-group">
-    				                        <div class="col-md-15">
-    				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
-    				                        </div>
-    				                    </div>
-    				                    <div class="form-group">
-    				                        <div class="col-md-12 text-right">
-    				                        	<button class="btn btn-primary btn-sm" onclick="return submitShowcaseComment({{forloop.counter}})">Post</button>
-    			                        	</div>
-    		                        	</div>
-    		                        </form>
+    	            <div class="well well-ssm">
+    		            <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+    		            </ul>
 
-    	                        </div>
-                            </div>
+    		            <form class="form-horizontal" action="">
+    			            <div class="form-group">
+    				            <div class="col-md-15">
+    				              <textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
+    				            </div>
+    				          </div>
+    				          <div class="form-group">
+    				            <div class="col-md-12 text-right">
+    				              <button class="btn btn-primary btn-sm" onclick="return submitShowcaseComment({{forloop.counter}})">Post</button>
+    			              </div>
+    		              </div>
+    		            </form>
 
-					</blockquote>
+    	            </div>
+                </div>
+
+					    </blockquote>
 				    </div>
 
-	                {% else %}
+	          {% else %}
 				    <div class="item">
-				    <blockquote>
+				      <blockquote>
 				    <!--div class="row">
 						<div class="col-sm-8 col-sm-offset-2"-->
-						<div class="right-edit">
-		                    <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-		                </div>
+						    <div class="right-edit">
+		              <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
+		            </div>
 
-	                    <br>
-	 					    {% if showcase.image or showcase.youtube %}
+	              <br>
+	 					  {% if showcase.image or showcase.youtube %}
 								{% if showcase.image %}
 									{% if '.pdf' in showcase.image.url %}
 								    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
 								    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
 								    </object>
 
-								    {% else %}
+								  {% else %}
 								    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
 								    <object data="{{ showcase.image.url }}" width="350px" />
 								    </object>
-								    {% endif %}
+								  {% endif %}
 								{% endif %}
 
 								{% if showcase.youtube %}
 									<div class="display-image">
-							   			<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-							   		</div>
+							   		<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+							   	</div>
 								{% endif %}
 
-						    {% else %}
-							<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-						    {% endif %}
+						  {% else %}
+							  <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+						  {% endif %}
 
-						    <table width="750">
-		                        <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Title: 
-					                    </div>
-					                </td>
+						  <table width="750">
+		            <tr>
+					        <td width="50"></td>
+					        <td valign="top" class="tableTitle">
+					          <div class="tableLabel">
+					            Title: 
+					          </div>
+					        </td>
 					                    
-					                <td>
-					                {{showcase.title}}
-					                </td>
+					        <td>
+					          {{showcase.title}}
+					        </td>
 					                      
-					            </tr>     
+					      </tr>     
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Description: 
-					                    </div>
-					                </td>
+					      <tr>
+					        <td width="50"></td>
+					        <td valign="top" class="tableTitle">
+					          <div class="tableLabel">
+					            Description: 
+					          </div>
+					        </td>
 					                    
-					                <td>
-					                {{showcase.describe}}
-					                </td>
+					        <td>
+					          {{showcase.describe}}
+					        </td>
 					                      
-					            </tr>
+					      </tr>
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Your role: 
-					                    </div>
-					                </td>
+					      <tr>
+					        <td width="50"></td>
+					        <td valign="top" class="tableTitle">
+					          <div class="tableLabel">
+					            Your role: 
+					          </div>
+					        </td>
 					                    
-					                <td>
-					                {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
-					                </td>
+					        <td>
+					          {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
+					        </td>
 					                      
-					            </tr>
+					      </tr>
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Year of completion: 
-					                    </div>
-					                </td>
+					      <tr>
+					        <td width="50"></td>
+					        <td valign="top" class="tableTitle">
+					          <div class="tableLabel">
+					            Year of completion: 
+					          </div>
+					        </td>
 					                    
-					                <td>
-					                {{showcase.completion}}
-					                </td>
+					        <td>
+					          {{showcase.completion}}
+					        </td>
 					                      
-					            </tr>
+					      </tr>
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Keywords: 
-					                    </div>
-					                </td>
+					      <tr>
+					        <td width="50"></td>
+					        <td valign="top" class="tableTitle">
+					          <div class="tableLabel">
+					            Keywords: 
+					          </div>
+					        </td>
 					                    
-					                <td>
-					                {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
-					                </td>
+					        <td>
+					          {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
+					        </td>
 					                      
-					            </tr>
-				            </table>
+					      </tr>
+				      </table>
 
-	                        <hr class="divider"/>
+	            <hr class="divider"/>
 
-                            <div class="actionbutton-container">
+              <div class="actionbutton-container">
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
-                                <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
-                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
-                                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
+                <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
+                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
+                               <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
+                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
     	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
     						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
     						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
     						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-    	              			<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_64x64.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
-                            </div>
+    	         	<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
+              </div>
 
-                            <div class="comment-container">
-    	                        <div class="well well-ssm">
-    		                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
-    		                        	
-    		                        </ul>
+              <div class="comment-container">
+    	          <div class="well well-ssm">
+    		          <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+    		          </ul>
 
-    		                        <form class="form-horizontal" action="">
-    			                        <div class="form-group">
-    				                        <div class="col-md-15">
-    				                        	<textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
-    				                        </div>
-    				                    </div>
-    				                    <div class="form-group">
-    				                        <div class="col-md-12 text-right">
-    				                        	<button class="btn btn-primary btn-lg" onclick="return submitShowcaseComment({{forloop.counter}})">Post</button>
-    			                        	</div>
-    		                        	</div>
-    		                        </form>
+    		          <form class="form-horizontal" action="">
+    			          <div class="form-group">
+    				          <div class="col-md-15">
+    				            <textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
+    				          </div>
+    				        </div>
+    				        <div class="form-group">
+    				          <div class="col-md-12 text-right">
+    				            <button class="btn btn-primary btn-lg" onclick="return submitShowcaseComment({{forloop.counter}})">Post</button>
+    			            </div>
+    		            </div>
+    		          </form>
 
-    	                        </div>
-                            </div>
+    	          </div>
+              </div>
 	                                            
 						<!--/div>
 					</div-->
-					</blockquote>
-				    </div>
+					  </blockquote>
+				  </div>
 	                {% endif %}
 	                {% endfor %}
                 {% else %}
-	                <div class="right-edit">
-		            	<a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-		            </div>
+	        <div class="right-edit">
+		        <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
+		      </div>
 					<div class="display-image">
-		            	<img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-		            </div>
+		        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+		      </div>
 
-		            <table width="750">
-		                        <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Title: 
-					                    </div>
-					                </td>
-					                    
-					                <td>
-					                </td>
+		      <table width="750">
+		        <tr>
+					  <td width="50"></td>
+					  <td valign="top" class="tableTitle">
+					    <div class="tableLabel">
+					      Title: 
+					    </div>
+					  </td>
+					       
+					  <td>
+					  </td>
 					                      
-					            </tr>     
+					  </tr>     
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Description: 
-					                    </div>
-					                </td>
+					  <tr>
+					    <td width="50"></td>
+					    <td valign="top" class="tableTitle">
+					      <div class="tableLabel">
+					        Description: 
+					      </div>
+					    </td>
 					                    
-					                <td>
-					                </td>
+					    <td>
+					    </td>
 					                      
-					            </tr>
+					  </tr>
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Your role: 
-					                    </div>
-					                </td>
+					  <tr>
+					    <td width="50"></td>
+					    <td valign="top" class="tableTitle">
+					      <div class="tableLabel">
+					        Your role: 
+					      </div>
+					    </td>
 					                    
-					                <td>
-					                </td>
-					                      
-					            </tr>
+					    <td>
+					    </td>
+					  </tr>
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Year of completion: 
-					                    </div>
-					                </td>
+					  <tr>
+					    <td width="50"></td>
+					    <td valign="top" class="tableTitle">
+					      <div class="tableLabel">
+					        Year of completion: 
+					      </div>
+					    </td>
 					                    
-					                <td>
-					                </td>
-					                      
-					            </tr>
+					    <td>
+					    </td>
+					  </tr>
 
-					            <tr>
-					                <td width="50"></td>
-					                <td valign="top" class="tableTitle">
-					                    <div class="tableLabel">
-					                    Keywords: 
-					                    </div>
-					                </td>
+					  <tr>
+					    <td width="50"></td>
+					    <td valign="top" class="tableTitle">
+					      <div class="tableLabel">
+					        Keywords: 
+					      </div>
+					    </td>
 					                    
-					                <td>
-					                </td>
-					                      
-					            </tr>
-				            </table>
-                {% endif %}
-                </div>
+					    <td>
+					    </td>
+					  </tr>
+				  </table>
+          {% endif %}
+        </div>
 
                 <!-- Carousel Buttons Next/Prev -->
                 <!--a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
                 <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a-->
-                <a data-slide="prev" href="#quote-carousel" class="carousel-control left">&lsaquo;</a>
-                <a data-slide="next" href="#quote-carousel" class="carousel-control right">&rsaquo;</a>
-            </div>
+        <a data-slide="prev" href="#quote-carousel" class="carousel-control left">&lsaquo;</a>
+        <a data-slide="next" href="#quote-carousel" class="carousel-control right">&rsaquo;</a>
+      </div>
         <!--/div-->
    <!--/div-->
 </div>
 
 
-	<div class="home-step">
-        <script>
+<div class="home-step">
+  <script>
 		function show_upcoming(){
             console.log('show more!');
 		    $('#upcomingComment').show();
@@ -668,19 +656,19 @@ function hatClicked(event,postid){
 		    $('#upcoming_hide').hide();
 		    $('#upcoming_show').show();
 		};
-        </script>
+  </script>
 
-        <h3>Upcoming Project</h3>
+  <h3>Upcoming Project</h3>
         
-        <div class="right-edit">
-	    	<a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-	    </div>
+  <div class="right-edit">
+	  <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
+	</div>
 
-        <br>
-	    {% if upcoming %}
-	        {% if upcoming.image %}
+  <br>
+	  {% if upcoming %}
+	    {% if upcoming.image %}
 
-	        	{% if upcoming.image %}
+	      {% if upcoming.image %}
 					<div class="display-image">
 					{% if '.pdf' in upcoming.image.url %}
 					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
@@ -691,420 +679,402 @@ function hatClicked(event,postid){
 					</div>
 				{% endif %}
 
-	        {% else %}
-	            <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	        {% endif %}
 	    {% else %}
-	        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+	      <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
 	    {% endif %}
+	  {% else %}
+	    <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
+	  {% endif %}
 
-	    {% if upcoming %}
-            <div class="comment-container">
+	  {% if upcoming %}
+      <div class="comment-container">
 	     	<table width="750">
-	            <tr>
+	        <tr>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Title: 
-					    </div>
+					  <div class="tableLabel">
+					    Title: 
+					  </div>
 					</td>
 					                    
 					<td>
-					    {{upcoming.title}}
+					  {{upcoming.title}}
 					</td>
-				                      
-				</tr>     
+				  </tr>     
 
-				<tr>
+				  <tr>
 				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				            Description: 
-				        </div>
+				      <div class="tableLabel">
+				        Description: 
+				      </div>
 				    </td>
 				                    
 				    <td>
-				        {{upcoming.describe}}
+				      {{upcoming.describe}}
 				    </td>
-				                      
-				</tr>
+				  </tr>
 
-				<tr>
+				  <tr>
 				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				            Your role: 
-				        </div>
+				      <div class="tableLabel">
+				        Your role: 
+				      </div>
 				    </td>
 				                    
 				    <td>
-				        {{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}
+				      {{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}
 				    </td>
-				                      
-				</tr>
+				  </tr>
 
-				<tr>
+				  <tr>
 				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				        	Status:
-				        </div>
+				      <div class="tableLabel">
+				        Status:
+				      </div>
 				    </td>
 				                    
 				    <td>
-				        {{upcoming.status}}
-					</td>
-				                      
-				</tr>
+				      {{upcoming.status}}
+					  </td>
+				  </tr>
 
-				<tr>
+				  <tr>
 				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				        	Keywords:
-				        </div>
+				      <div class="tableLabel">
+				        Keywords:
+				      </div>
 				    </td>
 				                    
 				    <td>
-				        {{upcoming.tag1}} &nbsp {{upcoming.tag2}} &nbsp {{upcoming.tag3}} &nbsp {{upcoming.tag4}} &nbsp {{upcoming.tag5}} &nbsp {{upcoming.tag6}} &nbsp {{upcoming.tag7}} &nbsp {{upcoming.tag8}} &nbsp {{upcoming.tag9}} &nbsp {{upcoming.tag10}}
-					</td>
+				      {{upcoming.tag1}} &nbsp {{upcoming.tag2}} &nbsp {{upcoming.tag3}} &nbsp {{upcoming.tag4}} &nbsp {{upcoming.tag5}} &nbsp {{upcoming.tag6}} &nbsp {{upcoming.tag7}} &nbsp {{upcoming.tag8}} &nbsp {{upcoming.tag9}} &nbsp {{upcoming.tag10}}
+					  </td>
 				                      
-				</tr>
+				  </tr>
 
-			</table>
-            </div>
+			  </table>
+      </div>
             
 			<h3>Collaborators I'd love!</h3>
 			<table width="750">
-	            <tr>
+	      <tr>
 					<td valign="top" class="tableTitle">
-                        <div class="collaborator-container">
-					       <div class="tableLabel">
-					           Collaborators: 
-					       </div>
-                        </div>
+            <div class="collaborator-container">
+					    <div class="tableLabel">
+					      Collaborators: 
+					    </div>
+            </div>
 					</td>
 					                    
 					<td>
-					    {{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}
+					  {{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}
 					</td>
-				                      
 				</tr>     
 
 				<tr>
-				    <td valign="top" class="tableTitle">
-				        <div class="collaborator-container">
-                        <div class="tableLabel">
-				        	Skills:
-                        </div>
-                        </div>
-				    </td>
+				  <td valign="top" class="tableTitle">
+				    <div class="collaborator-container">
+              <div class="tableLabel">
+				        Skills:
+              </div>
+            </div>
+				  </td>
 				                    
-				    <td>
-				        {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
-				           {{ upcoming.collaborator_skill1 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill2 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill3 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill4 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill5 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill6 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill7 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill8 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill9 }}
-				        {% endif %}
-				        {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
-				           &nbsp{{ upcoming.collaborator_skill10 }}
-	           			{% endif %}
-					</td>
-				                      
-				</tr>
+				  <td>
+				    {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
+				       {{ upcoming.collaborator_skill1 }}
+				    {% endif %}
 
+				    {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill2 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill3 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill4 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill5 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill6 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill7 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill8 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill9 }}
+				    {% endif %}
+
+				    {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
+				      &nbsp{{ upcoming.collaborator_skill10 }}
+	          {% endif %}
+					</td>
+				</tr>
 			</table>
 
-            <div id="toggleUpcoming" onclick="toggleUpcoming()" class="show-link"> Show More </div>
+      <div id="toggleUpcoming" onclick="toggleUpcoming()" class="show-link"> Show More </div>
 
-            <div id="upcoming-more">
-              <div class="collaborator-container">
+      <div id="upcoming-more">
+        <div class="collaborator-container">
     			<table width="750">
     				<tr>
     					<td valign="top">
-    					    <div class="tableLabel">
-    					       Start date: 
-    					    </div>
+    					  <div class="tableLabel">
+    					    Start date: 
+    					  </div>
     					</td>
     					                    
     					<td>
-    					    {{upcoming.targetstartdate | date:'Y-m-d'}}
+    					  {{upcoming.targetstartdate | date:'Y-m-d'}}
     					</td>
 
     					<td valign="top">
-    					    <div class="tableLabel">
-    					       End date: 
-    					    </div>
+    					  <div class="tableLabel">
+    					    End date: 
+    					  </div>
     					</td>
     					                    
     					<td>
-    					    {{upcoming.targetfinishdate | date:'Y-m-d'}}
+    					  {{upcoming.targetfinishdate | date:'Y-m-d'}}
     					</td>
-    				                      
     				</tr>     
     			</table>
 
     			<table width="750">
-
     				<tr>
     					<td valign="top" class="tableTitle">
-    					    <div class="tableLabel">
-    					       Frequency of work: 
-    					    </div>
+    					  <div class="tableLabel">
+    					    Frequency of work: 
+    					  </div>
     					</td>
     					                    
     					<td>
     						{{upcoming.often}}
     					</td>
-    				                      
     				</tr>  
 
     				<tr>
     					<td valign="top" class="tableTitle">
-    					    <div class="tableLabel">
-    					       What I will offer: 
-    					    </div>
+    					  <div class="tableLabel">
+    					    What I will offer: 
+    					  </div>
     					</td>
     					                    
     					<td>
     						{% if upcoming.give_back == 1 %}
-    				        Paid compensation
-    				        {% endif %}
+    				      Paid compensation
+    				    {% endif %}
 
-    				        {% if upcoming.give_back == 2 %}
-    				        Exchange  of skills/services
-    				        {% endif %}
+    				    {% if upcoming.give_back == 2 %}
+    				      Exchange  of skills/services
+    				    {% endif %}
 
-    				        {% if upcoming.give_back == 3 %}
-    				        Negotiable
-    				        {% endif %}
+    				    {% if upcoming.give_back == 3 %}
+    				      Negotiable
+    				    {% endif %}
     					</td>
-    				                      
     				</tr>     
 
     				<tr>
     					<td valign="top" class="tableTitle">
-    					    <div class="tableLabel">
-    					       Comment: 
-    					    </div>
+    					  <div class="tableLabel">
+    					    Comment: 
+    					  </div>
     					</td>
     					                    
     					<td>
     						{{upcoming.comment}}
     					</td>
-    				                      
     				</tr>  
-
     			</table>
-                </div>
+        </div>
 
-                <div class="collaborator-container">
+        <div class="collaborator-container">
     			<h4 align="center">Funding Status</h4>
-                <table width="750">
-    	            <tr>
-    					<td valign="top" class="tableTitle">
+            <table width="750">
+    	        <tr>
+    					  <td valign="top" class="tableTitle">
     					    <div class="tableLabel">
     					       Funding I'm seeking: 
     					    </div>
-    					</td>
+    					  </td>
     					                    
-    					<td>
-    						{{upcoming.fund}}
-    					</td>
+    					  <td>
+    						 {{upcoming.fund}}
+    					  </td>
     				                      
-    				</tr>    
+    				  </tr>    
     				<tr>
     					<td valign="top" class="tableTitle">
-    					    <div class="tableLabel">
-    					       Comment: 
-    					    </div>
+    					  <div class="tableLabel">
+    					    Comment: 
+    					  </div>
     					</td>
     					                    
     					<td>
     						{{upcoming.comment_help}}
     					</td>
-    				                      
     				</tr>  
-
     			</table>
-                </div>
-                <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
-            </div>
+        </div>
 
-        <hr class="divider"/>
+        <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
+      </div>
 
-        <div class="actionbutton-container">
+      <hr class="divider"/>
+
+      <div class="actionbutton-container">
             <!--div class="popupLike" onclick="likeFunction(2, 1)"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
-            <div id="upcomingLike" class="popupLike"></div> 
-            <div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div>
+        <div id="upcomingLike" class="popupLike"></div> 
+        <div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div>
             <!-- <div class="popupHatsoff" id="hatsoffstatus_upcoming"></div> -->
-            <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
+        <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
     	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
     		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
-            <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(2, 1)"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+        <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(2, 1)"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
 
-        </div>
+      </div>
              
-        <div class="comment-container">
-           <div class="well well-ssm">
-	            <ul id="upcomingComment" style="list-style-type:none;">
-	            	
-	            </ul>
+      <div class="comment-container">
+        <div class="well well-ssm">
+	        <ul id="upcomingComment_{{user.id}}" style="list-style-type:none;">
+	        </ul>
 
-	            <form class="form-horizontal" action="">
-	                <div class="form-group">
-	                    <div class="col-md-15">
-	                    	<textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
-	                    </div>
-	                </div>
-	                <div class="form-group">
-	                    <div class="col-md-12 text-right">
-	                    	<button class="btn btn-primary btn-lg" onclick="return submitUpcomingComment()">Post</button>
-	                	</div>
-	            	</div>
-	            </form>
+	        <form class="form-horizontal" action="">
+	          <div class="form-group">
+	            <div class="col-md-15">
+	              <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
+	            </div>
+	           </div>
 
-            </div>
+	          <div class="form-group">
+	            <div class="col-md-12 text-right">
+	              <button class="btn btn-primary btn-lg" onclick="return submitUpcomingComment()">Post</button>
+	            </div>
+	          </div>
+	        </form>
         </div>
+      </div>
 
 	    {% else %}
 			<table width="750">
-	            <tr>
+	      <tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Title: 
-					    </div>
+					  <div class="tableLabel">
+					    Title: 
+					  </div>
 					</td>
-					                    
 					<td>
-					</td>
-				                      
+				  </td>
 				</tr>     
 
 				<tr>
-				    <td width="50"></td>
-				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				            Description: 
-				        </div>
-				    </td>
+				  <td width="50"></td>
+				  <td valign="top" class="tableTitle">
+				    <div class="tableLabel">
+				      Description: 
+				    </div>
+				  </td>
 				                    
-				    <td>
-				    </td>
-				                      
+				  <td>
+				  </td>
 				</tr>
 
 				<tr>
-				    <td width="50"></td>
-				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				            Your role: 
-				        </div>
-				    </td>
+				  <td width="50"></td>
+				  <td valign="top" class="tableTitle">
+				    <div class="tableLabel">
+				      Your role: 
+				    </div>
+				  </td>
 				                    
-				    <td>
-				    </td>
-				                      
+				  <td>
+				  </td>
 				</tr>
 
 				<tr>
-				    <td width="50"></td>
-				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				        	Status:
-				        </div>
-				    </td>
+				  <td width="50"></td>
+				  <td valign="top" class="tableTitle">
+				    <div class="tableLabel">
+				      Status:
+				    </div>
+				  </td>
 				                    
-				    <td>
+				  <td>
 					</td>
-				                      
 				</tr>
 
 				<tr>
 					<td width="50"></td>
-				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				        	Keywords:
-				        </div>
-				    </td>
+				  <td valign="top" class="tableTitle">
+				    <div class="tableLabel">
+				      Keywords:
+				    </div>
+				  </td>
 				                    
-				    <td>
+				  <td>
 					</td>
-				</tr>
-
+			  </tr>
 			</table>
 
-            <h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
+      <h4 align="center" class="tableLabel">Collaborators I'd love!</h4>
 			<table width="750">
-	            <tr>
+	      <tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Collaborators: 
-					    </div>
+					  <div class="tableLabel">
+					    Collaborators: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>     
 
 				<tr>
-				    <td width="50"></td>
-				    <td valign="top" class="tableTitle">
-				        <div class="tableLabel">
-				        	Skills:
-				        </div>
-				    </td>
+				  <td width="50"></td>
+				  <td valign="top" class="tableTitle">
+				    <div class="tableLabel">
+				      Skills:
+				    </div>
+				  </td>
 				                    
-				    <td>
+				  <td>
 					</td>
-				                      
 				</tr>
-
 			</table>
-
-            
 
 			<table width="750">
 				<tr>
 					<td width="50"></td>
 					<td valign="top">
-					    <div class="tableLabel">
-					       Start date: 
-					    </div>
+					  <div class="tableLabel">
+					   Start date: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
 
 					<td valign="top">
-					    <div class="tableLabel">
-					       End date: 
-					    </div>
+					  <div class="tableLabel">
+					    End date: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>     
 			</table>
 
@@ -1112,71 +1082,65 @@ function hatClicked(event,postid){
 				<tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Frequency of work: 
-					    </div>
+					  <div class="tableLabel">
+					    Frequency of work: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>  
 
 				<tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       What I will offer: 
-					    </div>
+					  <div class="tableLabel">
+					    What I will offer: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>     
 
 				<tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Comment: 
-					    </div>
+					  <div class="tableLabel">
+					    Comment: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>  
-
 			</table>
 
 			<h4 align="center" class="tableLabel">Funding Status</h4>
 			<table width="750">
-	            <tr>
+	      <tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Funding I'm seeking: 
-					    </div>
+					  <div class="tableLabel">
+					    Funding I'm seeking: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>    
+
 				<tr>
 					<td width="50"></td>
 					<td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					       Comment: 
-					    </div>
+					  <div class="tableLabel">
+					    Comment: 
+					  </div>
 					</td>
 					                    
 					<td>
 					</td>
-				                      
 				</tr>  
-
 			</table>
 
 	    <!--div class="description-wrapper">
@@ -1201,14 +1165,12 @@ function hatClicked(event,postid){
 	      </ul>
 	    </div-->
 	    {% endif %}
-
-
 	</div>
 
 	<div class="timeline-container">
-	    <h3>Activity</h3>
-	    <ul class="timeline">
-	    </ul>
+	  <h3>Activity</h3>
+	  <ul class="timeline">
+	  </ul>
 	</div>
 
 </div>
@@ -1221,26 +1183,20 @@ function hatClicked(event,postid){
   <div class="modal-content">
     <span class="close">&times;</span>
     <h1>Add your skills and interests so that the community can find you.</h1>
-      <img src="{% static 'images/LookingFor.png' %}">  
+    <img src="{% static 'images/LookingFor.png' %}">  
   </div>
-
 </div>
 
-
 <div id="JustSignedUp2" class="modal">
-
   <!-- Modal content: New User Orientation Modal Dialogs Added by Hidekazu  -->
   <div class="modal-content">
     <span class="close">&times;</span>
     <h1>Showcase up to 10 of your past works in your portfolio.</h1>
-      <img src="{% static 'images/Portfolio.png' %}">  
+    <img src="{% static 'images/Portfolio.png' %}">  
   </div>
-
 </div>
 
-
 <div id="JustSignedUp3" class="modal">
-
   <!-- Modal content: New User Orientation Modal Dialogs Added by Hidekazu  -->
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -1254,73 +1210,67 @@ function hatClicked(event,postid){
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
-    <script type="text/javascript">
+  <script type="text/javascript">
+	  //var socket = io.connect("{{nodejs_url}}");
+	  socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+	  socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
-	      //var socket = io.connect("{{nodejs_url}}");
-	      socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-	      socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
-
-          var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
+    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
           /**
 	      socket.on('number thanks', function(count){
                   document.getElementById("thanksNum").innerHTML = count;
               });
           **/
-	      socket.on('number hatsoff', function(count){
-                  document.getElementById("hatsoffNum").innerHTML = count;
-              });
+	  socket.on('number hatsoff', function(count){
+      document.getElementById("hatsoffNum").innerHTML = count;
+    });
 
-	      socket.on('number follow', function(count){
-                  document.getElementById("followNum").innerHTML = count;
-              });
+	  socket.on('number follow', function(count){
+      document.getElementById("followNum").innerHTML = count;
+    });
 
-          function toggleUpcoming()
-          {
-            console.log("toggle");
+    function toggleUpcoming()
+    {
+      console.log("toggle");
 
-            var status = document.getElementById("upcoming-more").style.display; 
+      var status = document.getElementById("upcoming-more").style.display; 
 
-            console.log("status is "+status);
+      if (status == "none" || status == "") {
+        document.getElementById("upcoming-more").style.display = "block";
+        document.getElementById("toggleUpcoming").innerText = "";
+      } else if (status == "block") {
+        document.getElementById("upcoming-more").style.display = "none";
+        document.getElementById("toggleUpcoming").innerText = "Show More";
+      }
+    }
 
-            if (status == "none" || status == "") {
-                document.getElementById("upcoming-more").style.display = "block";
-                document.getElementById("toggleUpcoming").innerText = "";
-            } else if (status == "block") {
-                document.getElementById("upcoming-more").style.display = "none";
-                document.getElementById("toggleUpcoming").innerText = "Show More";
-            }
-          }
-
-	      function likeFunction(c_type, c_id){
-			  console.log('uid on like:'+c_type+':'+c_id);
-			  //popLike();
-	          if (c_type == 2){
-			      socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-				  console.log('like upcoming');
-                  document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
-	          }else if (c_type == 3){
-				  socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-				  console.log('like portfolio');
-                  document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
-	          }
+	  function likeFunction(c_type, c_id){
+	    if (c_type == 2){
+			  socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+				console.log('like upcoming');
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
+	    }else if (c_type == 3){
+				socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+				console.log('like portfolio');
+        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
+	    }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-	      }
+	  }
 
-          function unlikeFunction(c_type, c_id){
-            console.log('uid on like:'+c_type+':'+c_id);
-            //popLike();
-            if (c_type == 2){
-                socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-                console.log('unlike upcoming');
-                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
-            }else if (c_type == 3){
-                socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-                console.log('unlike portfolio');
-                document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
-            }
-         //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-          }
+    function unlikeFunction(c_type, c_id){
+      console.log('uid on like:'+c_type+':'+c_id);
+      //popLike();
+      if (c_type == 2){
+        socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        console.log('unlike upcoming');
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
+      }else if (c_type == 3){
+        socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        console.log('unlike portfolio');
+        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
+      }
+    }
 
 	      /*
 	      function popShare(){
@@ -1329,60 +1279,58 @@ function hatClicked(event,postid){
 	      }
 	      */
 
-	      function shareFunction(c_type, c_id){
-			 console.log('uid on share:'+c_type+':'+c_id);
-			 //popShared();
-             if (c_type == 2){
-                 shareUpcomingFunction({{user.id}}, c_id);
-                 var share = document.getElementById("sharestatus_upcoming");
-                 share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
-             }else if (c_type == 3){
-		         //socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-                 console.log('share function');
-                 sharePortfolioFunction({{user.id}}, c_id);
-                 var share = document.getElementById("sharestatus_portfolio_"+c_id);
-                 share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
-             }
+	  function shareFunction(c_type, c_id){
+			console.log('uid on share:'+c_type+':'+c_id);
+			//popShared();
+      if (c_type == 2){
+        shareUpcomingFunction({{user.id}}, c_id);
+        var share = document.getElementById("sharestatus_upcoming");
+        share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
+      }else if (c_type == 3){
+		    //socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        sharePortfolioFunction({{user.id}}, c_id);
+        var share = document.getElementById("sharestatus_portfolio_"+c_id);
+        share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
+      }
 		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-	      }
+	  }
 
-	      function popShared(){
-	      	 var popHatsoff = document.getElementById("hatsoffPop");
-			 if(popHatsoff != null){
+	  function popShared(){
+	    var popHatsoff = document.getElementById("hatsoffPop");
+			if(popHatsoff != null){
 			 	popHatsoff.style.visibility = "hidden";
-			 }
+			}
 
-			 var popFollow = document.getElementById("followPop");
-			 if(popFollow != null){
+			var popFollow = document.getElementById("followPop");
+			if(popFollow != null){
 			 	popFollow.style.visibility = "hidden";
-			 }
+			}
 
-			 var popLike = document.getElementById("likePop");
-			 if(popLike != null){
+			var popLike = document.getElementById("likePop");
+			if(popLike != null){
 			 	popLike.style.visibility = "hidden";
-			 }
+			}
 
-			 var popup = document.getElementById('sharedPop');
-			 popup.style.visibility = "visible";
+			var popup = document.getElementById('sharedPop');
+			popup.style.visibility = "visible";
 			 //popup.classList.toggle('show');
-	      }
+	  }
 
-	      function popThanks(){
-			 var popup = document.getElementById('thanksPop');
-			 popup.classList.toggle('show');
-	      }
+	  function popThanks(){
+			var popup = document.getElementById('thanksPop');
+			popup.classList.toggle('show');
+	  }
 
-	      function thanksFunction(){
-			 console.log('thanks!');
-			 popGave();
-			 socket.emit('give thanks', {to_uid:{{user.id}}, uid:{{user.id}}});
-			 console.log('thanks!');
-	      }
+	  function thanksFunction(){
+			console.log('thanks!');
+			popGave();
+			socket.emit('give thanks', {to_uid:{{user.id}}, uid:{{user.id}}});
+	  }
 
-	      function popGave(){
-			 var popup = document.getElementById('gavePop');
-			 popup.classList.toggle('show');
-	      }
+	  function popGave(){
+			var popup = document.getElementById('gavePop');
+			popup.classList.toggle('show');
+	  }
 
 	      /*
 	      function popHatsoff(){
@@ -1397,81 +1345,62 @@ function hatClicked(event,postid){
 	      }
           */
 
-          function hatsoffFunction(c_type, c_id){
-             console.log('hatsoff!', c_type);
-             socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
+    function hatsoffFunction(c_type, c_id){
+      socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 
-             if(c_type == 2){//upcoming
-                var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-                if (elemprofile){
-                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)" /></br></div>';    
-                }
-                /*
-                elemprofile.innerHTML = '';
-                
-                $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)">'));
-                document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
-                */
-               
-             }else if(c_type == 3){//portflio
-                var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
-                if(elemprofile){
-                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';   
-                    /*
-                    elemprofile.innerHTML = '';
+      if(c_type == 2){//upcoming
+        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+        if (elemprofile){
+         elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)" /></br></div>';    
+        }
+      }else if(c_type == 3){//portflio
+        var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
+        if(elemprofile){
+          elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';   
 
-                    $('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')">'));
-                    */
+        }
+      }else if(c_type == 5){
+      }
+    }
 
-                }
-             }else if(c_type == 5){
-             }
-          }
+    function unhatsoffFunction(c_type, c_id){
+      console.log('unhatsoff!', c_type);
+      socket.emit('give unhatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 
-          function unhatsoffFunction(c_type, c_id){
-             console.log('unhatsoff!', c_type);
-             socket.emit('give unhatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
+      if(c_type == 2){
+        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+        if (elemprofile){
+          elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)" /></br></div>';
+        }
+      }else if(c_type == 3){
+        var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
+        if(elemprofile){
+          elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')" /></br></div>';
+        }
+      }else if(c_type == 5){
+      }
+    }
 
-             if(c_type == 2){
-                var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-                if (elemprofile){
-                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)" /></br></div>';
-                }
-                /*
-                elemprofile.innerHTML = '';
-
-                $('#hatsoffstatus_upcoming').append($('<img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)">'));
-                */
-             }else if(c_type == 3){
-                var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
-                if(elemprofile){
-                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')" /></br></div>';
-                    //$('#hatsoffstatus_portfolio_'+c_id).append($('<img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')">'));
-                }
-             }else if(c_type == 5){
-             }
-          }
-
-	      function popGavehatsoff(){
-	      	 var popFollow = document.getElementById("followPop");
-			 if(popFollow != null){
+	  function popGavehatsoff(){
+	    var popFollow = document.getElementById("followPop");
+			if(popFollow != null){
 			 	popFollow.style.visibility = "hidden";
-			 }
+			}
 
-			 var popShared = document.getElementById("sharedPop");
-			 if(popShared != null){
+			var popShared = document.getElementById("sharedPop");
+			if(popShared != null){
 			 	popShared.style.visibility = "hidden";
-			 }
+			}
 
-			 var popLike = document.getElementById("likePop");
-			 if(popLike != null){
+			var popLike = document.getElementById("likePop");
+			if(popLike != null){
 			 	popLike.style.visibility = "hidden";
-			 }
+			}
 
-			 var popup = document.getElementById('hatsoffPop');
-			 popup.style.visibility = "visible";
+			var popup = document.getElementById('hatsoffPop');
+			popup.style.visibility = "visible";
 			 //popup.classList.toggle('show');
-	      }
+	  }
 
 	      /*
 	      function popFollow(){
@@ -1480,28 +1409,28 @@ function hatClicked(event,postid){
 	      }
 	      */
 
-	      function followFunction(){
-			 console.log('follow!');
-			 popFollowed();
+	  function followFunction(){
+			console.log('follow!');
+			popFollowed();
 		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
-	      }
+	  }
 
-	      function collaborateFunction(c_type, c_id){
-            console.log('uid on like:'+c_type+':'+c_id);
-            popCollaborate();
-            socket.emit('give collaborate', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
-          }
+	  function collaborateFunction(c_type, c_id){
+      console.log('uid on like:'+c_type+':'+c_id);
+      popCollaborate();
+      socket.emit('give collaborate', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
+    }
 
-          function popCollaborate(){
-            var popup = document.getElementById('collaboratePop');
-            popup.classList.toggle('show');
-          }
+    function popCollaborate(){
+      var popup = document.getElementById('collaboratePop');
+      popup.classList.toggle('show');
+    }
 
-	      function popFollowed(){
-			var popHatsoff = document.getElementById("hatsoffPop");
-			 if(popHatsoff != null){
+	  function popFollowed(){
+		  var popHatsoff = document.getElementById("hatsoffPop");
+			if(popHatsoff != null){
 			 	popHatsoff.style.visibility = "hidden";
-			 }
+			}
 
 			 var popShared = document.getElementById("sharedPop");
 			 if(popShared != null){
@@ -1515,641 +1444,547 @@ function hatClicked(event,postid){
 
 			 var popup = document.getElementById('followPop');
 			 popup.style.visibility = "visible";
-			 //popup.classList.toggle('show');
-	      }
+	  }
 
-          // For portfolio
-          function submitPForm(number){
-            console.log('form submit portfolio'+number);
-            var post_val = $('#c_portfolio_'+number).val();
+    // For portfolio
+    function submitPForm(number){
+      console.log('form submit portfolio'+number);
+      var post_val = $('#c_portfolio_'+number).val();
                     
-            if (post_val.length != 0){
-                console.log('if:'+number+':'+post_val);
-		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number});
-            }
-		    $('#c_portfolio_'+number).val('');
-		    return false;
-          }
+      if (post_val.length != 0){
+        console.log('if:'+number+':'+post_val);
+		    socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number});
+      }
+		  $('#c_portfolio_'+number).val('');
+		  return false;
+    }
 
-          function submitShowcaseComment(number){
-            console.log('form submit portfolio'+number);
-            var post_val = $('#c_portfolio_'+number).val();
+    function submitShowcaseComment(number){
+      console.log('form submit portfolio'+number);
+      var post_val = $('#c_portfolio_'+number).val();
                     
-            if (post_val.length != 0){
-                console.log('if:'+number+':'+post_val);
-		        socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number, uid:{{user.id}} });
-            }
-		    $('#c_portfolio_'+number).val('');
-		    return false;
-          }
+      if (post_val.length != 0){
+        console.log('if:'+number+':'+post_val);
+		    socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number, uid:{{user.id}} });
+      }
+		  $('#c_portfolio_'+number).val('');
+		  return false;
+    }
 
- 		   function submitUForm(){
-            console.log('form submit');
-
-            var com = $('#c_upcoming').val();
-            if (com.length != 0){
-		        socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
-		    } 
-		    $('#c_upcoming').val('');
-		    return false;
-	      }
+ 		function submitUForm(){
+      var com = $('#c_upcoming').val();
+      if (com.length != 0){
+		    socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
+		  } 
+		  $('#c_upcoming').val('');
+		  return false;
+	  }
 
 
-	      function submitUpcomingComment(){
-            console.log('form submit upcoming');
-            var post_val = $('#c_upcoming').val();
+	  function submitUpcomingComment(){
+      console.log('form submit upcoming');
+      var post_val = $('#c_upcoming').val();
                     
-            if (post_val.length != 0){
-                console.log('if:'+post_val);
-		        socket.emit('upcoming comment', {msg:post_val, to:{{user.id}}, uid:{{user.id}} });
-            }
-		    $('#c_upcoming').val('');
-		    return false;
-          }
+      if (post_val.length != 0){
+        console.log('if:'+post_val);
+		    socket.emit('upcoming comment', {msg:post_val, to:{{user.id}}, uid:{{user.id}} });
+      }
+		  $('#c_upcoming').val('');
+		  return false;
+    }
 
-          socket.on('hatsoff status at home', function(data){
-            var docs = data.docs;
-            var count = data.count;
-            var len = docs.length;
-            var flag1 = false;
-            var flag2 = false;
-            var flag3 = false;
-            var flag4 = false;
-            var flag5 = false;
-            var p_list = [];
+    socket.on('hatsoff status at home', function(data){
+      var docs = data.docs;
+      var count = data.count;
+      var len = docs.length;
+      var flag1 = false;
+      var flag2 = false;
+      var flag3 = false;
+      var flag4 = false;
+      var flag5 = false;
+      var p_list = [];
           
-            console.log("hatsoff docs", docs);
-            
-            for (var i = 0; i < 10; i++){
-                p_list.push(false);
-            }
+      for (var i = 0; i < 10; i++){
+        p_list.push(false);
+      }
              
-            for (var i = 0; i < len; i++){
-                if(docs[i]['content_id'] && docs[i]['content_type']){
-                    var c_id = docs[i]['content_id'];
-                    var c_type = docs[i]['content_type'];
-                    if(c_type == 1){//community post
+      for (var i = 0; i < len; i++){
+        if(docs[i]['content_id'] && docs[i]['content_type']){
+          var c_id = docs[i]['content_id'];
+          var c_type = docs[i]['content_type'];
+          if(c_type == 1){//community post
 
-                    }else if(c_type == 2){//upcoming work
-                        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-                        if (elemprofile){
-                             elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(2, 1)"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
-
-                        }
-                        flag2 = true;
-
-                    }else if(c_type == 3){//portfolio
-                        var c = parseInt(c_id);
-                        if(!isNaN(c)){
-                            var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
-                            if(elemprofile){
-                                elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(3, '+c+')"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
-
-                                p_list[c-1] = true;
-                            }
-                        }
-                        flag3 = true;
-
-                    }else if(c_type == 4){//shared post
-
-                    }else if(c_type == 5){//profile
-                        var elemprofile = document.getElementById("hatsoff-profile");
-
-                        if (elemprofile){
-                            elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(5, 1)"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
-                            flag5 = true;
-                        }
-
-                    }
-                        
-                }   
+          }else if(c_type == 2){//upcoming work
+            var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+            if (elemprofile){
+              elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(2, 1)"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
             }
-
-            if(flag2 == false){
-                var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-                if(elemprofile){
-                    elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
-
-                }
+            flag2 = true;
+          }else if(c_type == 3){//portfolio
+            var c = parseInt(c_id);
+            if(!isNaN(c)){
+              var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
+              if(elemprofile){
+                elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(3, '+c+')"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"></div>';
+                p_list[c-1] = true;
+              }
             }
+            flag3 = true;
+          }else if(c_type == 4){//shared post
+          }else if(c_type == 5){//profile
+            var elemprofile = document.getElementById("hatsoff-profile");
 
+            if (elemprofile){
+              elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(5, 1)"><img src="{% static 'images/2hats-02.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
+              flag5 = true;
+            }
+          }
+        }   
+      }
+
+      if(flag2 == false){
+        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
+        if(elemprofile){
+          elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
+        }
+      }
             //flag3
-            console.log("p_list:", p_list);
-            for (var i = 0; i < 10; i++){
-                if (p_list[i] == false){
-                    var c = i+1;
-                    var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
-                    if (elemprofile){
-                        elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>';
+      for (var i = 0; i < 10; i++){
+        if (p_list[i] == false){
+          var c = i+1;
+          var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
+          if (elemprofile){
+            elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>';
+          }
+        }
+      }
 
-                    }
-                }
-            }
+      if(flag5 == false){
+        var elemprofile = document.getElementById("hatsoff-profile");
+        if(elemprofile){
+          elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(5, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
+        }
+      }
+    });
 
-            if(flag5 == false){
-                var elemprofile = document.getElementById("hatsoff-profile");
-                if(elemprofile){
-                    elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(5, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
-
-                }
-            }
-          });
-              /**
-	      $('#portfolio_form').submit(function(e){
-                    e.preventDefault();
-                    console.log('form submit portfolio');
+    function submitComment(uid, c_id){
+      var post_val = $('#c_'+c_id).val();
                     
-                    if ($('#c_portfolio').val().length != 0){
-                        console.log('if:'+p_id+$('#c_portfolio').val());
-		        socket.emit('portfolio comment', {msg:$('#c_portfolio').val(), to:{{user.id}}, p_id:p_id});
-                    }
-		    $('#c_portfolio').val('');
-		    return false;
-              });
-              **/
+      if (post_val.length != 0){
+        socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+	      var m  = users.indexOf({{user.id}});
+	      var url_link = "{% url 'week1:get_profile' user.id %}";
+	      if (m != -1){
+	        $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	      }else{
+	        $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
+	      }
+      }
+      $('#c_'+c_id).val('');
+      return false;
+    } 
 
-          function submitComment(uid, c_id){
-            console.log('form submit comment'+c_id);
-            var post_val = $('#c_'+c_id).val();
-                    
-            if (post_val.length != 0){
-              console.log('comment:'+post_val);
-              socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
-	          var m  = users.indexOf({{user.id}});
-	          var url_link = "{% url 'week1:get_profile' user.id %}";
-	          if (m != -1){
-	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
-	          }else{
-	              $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
-	          }
-            }
-            $('#c_'+c_id).val('');
-            return false;
-          } 
+    socket.on('like status at home', function(data){
+      var upcoming = false;
+      var portfolios = [];
+      if (data){
+        for (var i = 0; i < data.length; i++){
+          var doc = data[i];
+          var content_type = doc['content_type'];
+          if (content_type == 2){
+            document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
+            upcoming = true; 
+          }
+          if (content_type == 3){
+            var p_id = parseInt(doc['content_id']);
+            document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
+            portfolios.push(p_id);
+          }
+        }
+      }
 
-          socket.on('like status at home', function(data){
-            console.log("data", data);
-            var upcoming = false;
-            var portfolios = [];
-            if (data){
-                for (var i = 0; i < data.length; i++){
-                    var doc = data[i];
-                    var content_type = doc['content_type'];
-                    if (content_type == 2){
-                        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
-                        upcoming = true; 
-                    }
-                    console.log("content_type:", content_type);
-                    if (content_type == 3){
-                        var p_id = parseInt(doc['content_id']);
-                        document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
-                        portfolios.push(p_id);
-                    }
-                }
-            }
+      if(upcoming == false){
+        var upcomingElement = document.getElementById("upcomingLike");
+        if (upcomingElement != null){
+          upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
+        }
+      }
 
-            if(upcoming == false){
-                var upcomingElement = document.getElementById("upcomingLike");
-                if (upcomingElement != null){
-                    upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
+      var p_count = $('[id^=portfolioLike_]').length;
+      for (var i = 0; i < p_count; i++){
+        var counter = i+1;
+        if (portfolios.indexOf(counter) == -1){
+          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
+        }   
+      }
+    });
 
-                }
-            }
+	  socket.on('new portfolio comment', function(data){
+      console.log('new portfolio comment on home');
+		  var uid = data.from_uid;
+      var p_id = data.p_id;
+		  var n  = users.indexOf(uid);
+		  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 
-            var p_count = $('[id^=portfolioLike_]').length;
-            for (var i = 0; i < p_count; i++){
-                var counter = i+1;
-                if (portfolios.indexOf(counter) == -1){
-                    document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
-                }   
-            }
-          });
-
-	      socket.on('new portfolio comment', function(data){
-            console.log('new portfolio comment on home');
-		    var uid = data.from_uid;
-            var p_id = data.p_id;
-            console.log(p_id);
-		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-		    var n  = users.indexOf(uid);
-		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-
-		    if ( n != -1) {
-		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          } else{
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          }
-
-		    }else{
-		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          } else {
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          }
+		  if ( n != -1) {
+		    if (uid == {{user.id}}){
+		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		    } else{
+		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    }
-	      });
+		  }else{
+		    if (uid == {{user.id}}){
+		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		    } else {
+		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		    }
+		  }
+	  });
 
-	      socket.on('update portfolio comment', function(docs){
-            console.log('socket on portfolio comment');
-		  	//var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		 	//var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	        for(var i = 0; i < docs.length; i++){
-                if (docs[i]['p_id']) {
-                    var p_id = docs[i]['p_id'];
-                    if (docs[i]['user']['uid']){
-						var uid = docs[i]['user']['uid'];
-                        console.log('If!'+uid);
+	  socket.on('update portfolio comment', function(docs){
+	    for(var i = 0; i < docs.length; i++){
+        if (docs[i]['p_id']) {
+          var p_id = docs[i]['p_id'];
+          if (docs[i]['user']['uid']){
+					  var uid = docs[i]['user']['uid'];
 						var n  = users.indexOf(uid);
 						var data = docs[i];
+            console.log('data', data);
+            var r_id = i;
 						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-						if ( n != -1) {
-						      if (uid == {{user.id}}){
-						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-						      } else{
-						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-						      }
+            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditFunction(\''+p_id+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_pf_'+p_id+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+p_id+'\', \''+r_id+'\', 0)">Delete</a><a href="#" onclick="return editPFComment(\''+{{user.id}}+'\', \''+r_id+'\', 0)">Edit</a></div></div>' : '';
+            var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_portfolio_'+p_id+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+p_id+'_'+r_id+'" onclick="closeEdit(\''+p_id+'_'+r_id+'\')">&times;</span><div id="edit_homeportfolio_'+p_id+'_'+r_id+'"><textarea id="post_text_homeportfolio_'+p_id+'_'+r_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+p_id+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
 
+						if ( n != -1) {
+              console.log('data content', data['content']);
+						  if (uid == {{user.id}}){
+                $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><hr class="divider"/>'));
+						  } else{
+						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><hr class="divider"/>'));
+						  }
 						}else{
-						      if (uid == {{user.id}}){
-						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-						      } else {
-						         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-						      }
+              console.log('data content', data['content']);
+						  if (uid == {{user.id}}){
+						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><hr class="divider"/>'));
+						  } else {
+						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><hr class="divider"/>'));
+						  }
 						}
 					}
+        } else{
+          console.log('Else!');
+        }
+	    }
+	  });
 
-                      } else{
-                          console.log('Else!');
-                      }
-	          }
-	      });
-
-	      //$('#upcoming_form').submit(function(){
-              
-
-	      socket.on('new upcoming comment', function(data){
-            console.log('new upcoming comment on home');
-		    var uid = data.from_uid;
-            console.log(uid);
-		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-		    var n  = users.indexOf(uid);
-		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		    if ( n != -1) {
-		          if (uid == {{user.id}}){
-		             //$('#communityPost').prepend($('<hr>'));
-		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          } else{
-		             $('#upcomingComment').append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          }
-
-		    }else{
-		        //$('#communityPost').prepend($('<hr>'));
-		          if (uid == {{user.id}}){
-		             $('#upcomingComment').append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          } else {
-		             $('#upcomingComment').append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		          }
+	  socket.on('new upcoming comment', function(data){
+		  var uid = data.from_uid;
+		  var n  = users.indexOf(uid);
+		  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		  if ( n != -1) {
+		    if (uid == {{user.id}}){
+		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		    } else{
+		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    }
-	      });
+		  }else{
+		    if (uid == {{user.id}}){
+		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		    } else {
+		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		    }
+		  }
+	  });
 
-	      socket.on('update upcoming comment', function(docs){
-		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-		    for(var i=0; i < docs.length; i++){
-		       if (docs[i]['user']['uid']){
+	  socket.on('update upcoming comment', function(docs){
+		  for(var i=0; i < docs.length; i++){
+        var r_id = i;
+        var data = docs[i];
+        var c_id = docs[i]['_id'];
+		    if (data['user']['uid']){
 			    var uid = docs[i]['user']['uid'];
 			    var n  = users.indexOf(uid);
-			    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+			    //var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                console.log('upcoming commnet length!', docs.length);
-			    if ( n != -1) {
-			       if (uid == {{user.id}}){
-			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
-			       } else{
-			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
-			       }
-			    } else{
-			       if (uid == {{user.id}}){
-			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</br><p">'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
-			       } else{
-			     $('#upcomingComment').prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+docs[i]['content']+'</p><br/><hr class="divider"/>'));
-			       }
-			    }
-		        }
-                    }
-	      });
+          var did = "myDelEditDropdown_pf_"+{{user.id}}+'_'+r_id;
+          var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+r_id+'\', 1, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(1, \''+c_id+'\')">Edit</a></div></div>' : '';
+          var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_up_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_up_'+c_id+'" onclick="closePFEdit(\'pf_up_'+c_id+'\')">&times;</span><div id="edit_pf_up_'+c_id+'"><textarea id="post_text_pf_up_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+r_id+'\', 1)" align="right">Edit</button></div></div>' : '';
 
-          function submitCForm(){
-                console.log('post comment');
-                if ($('#comment').val().length != 0){
-                    socket.emit('post comment', {msg:$('#comment').val(), to:{{user.id}}, from:{{user.id}}});
-                }
-                $('#comment').val('');            
-                return false;
-          }
+			    if ( n != -1) {
+			      $('#upcomingComment_'+{{user.id}}).prepend($('<li class="pf_upcoming_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_up_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<br/><hr class="divider"/>'));
+			    } else{
+			      $('#upcomingComment_'+{{user.id}}).prepend($('<li class="pf_upcoming_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p d="media-content_pf_up_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<br/><hr class="divider"/>'));
+			    }
+		    }
+      }
+	  });
+
+    function submitCForm(){
+      if ($('#comment').val().length != 0){
+        socket.emit('post comment', {msg:$('#comment').val(), to:{{user.id}}, from:{{user.id}}});
+      }
+      $('#comment').val('');            
+      return false;
+    }
 
 	  socket.on('update comment', function(docs){
-        console.log('update comment on home');
 	    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
         //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	    for(var i = 0; i < docs.length; i++){
-			if (docs[i]['from_user']['uid']){
-				var uid = docs[i]['from_user']['uid'];
-				var n  = users.indexOf(uid);
-				var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-				if ( n != -1) {
+			  if (docs[i]['from_user']['uid']){
+				  var uid = docs[i]['from_user']['uid'];
+				  var n  = users.indexOf(uid);
+				  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+				  if ( n != -1) {
 				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-				}else{
+				  }else{
 				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-
-				}
+				  }
 		    }
-	      }
+	    }
 	  });
 
 	  socket.on('new comment', function(data){
-            console.log('new comment on userpage');
-	        var uid = data.from_uid;
-            console.log(p_id);
-	        //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-	        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	        var n  = users.indexOf(uid);
+	    var uid = data.from_uid;
+	    var n  = users.indexOf(uid);
 			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-	        if ( n != -1) {
-	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
-	        }else{
-	            $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
-	        }
+	    if ( n != -1) {
+	      $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
+	    }else{
+	      $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
+	    }
 	  });
 
 	  socket.on('update timeline history', function(data){
-                console.log('update timeline history');
-                var sharedocs = data.share;
-                var communitydocs = data.community;
-                var len_share = sharedocs.length;
-                var len_community = communitydocs.length;
-		        //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-		        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-                var i_share = 0;
-                var i_community = 0;
-				var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
-                //var hatsoff = '<div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>';
-		        //var thanks = '<div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div>';
-		        //var follow = '<div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div>';
-		        var thanks = '';
-				var follow = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp</div>';
+      var sharedocs = data.share;
+      var communitydocs = data.community;
+      var len_share = sharedocs.length;
+      var len_community = communitydocs.length;
+      var i_share = 0;
+      var i_community = 0;
+			var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
+		  var thanks = '';
+			var follow = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp</div>';
 
-                while (i_share < len_share || i_community < len_community){
-                    if (i_share < len_share && i_community < len_community){
-                       
-                       var t_share = sharedocs[i_share]["created"];
-                       var t_community = communitydocs[i_community]["created"];
+      while (i_share < len_share || i_community < len_community){
+        if (i_share < len_share && i_community < len_community){
+          var t_share = sharedocs[i_share]["created"];
+          var t_community = communitydocs[i_community]["created"];
 
-                       if (t_share > t_community){
-                        
-
-                       	  //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
- 						  var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
-						  var uid = sharedocs[i_share]['to_uid'];
-			              var content = sharedocs[i_share]['content'];
-			              var c_id = sharedocs[i_share]['_id'];
-			              var created = sharedocs[i_share]['created'];
-			              var colonIndex = created.indexOf(":");
-                          var date = created.substring(0, colonIndex-3);
-                          var datels = date.split('-');
-                          var mm = months[parseInt(datels[1])-1];
-                          var dd = datels[2];
-                          var yy = datels[0];
-
-						  var n  = users.indexOf(uid);
-                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-
-                          var tag = (content['tag']) ? content['tag'] : 0;
-						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-                          var skillls = "";
-						  if (content['skillls']){
-	                          if(content['skillls'].length != 0){
-	                            var ls = content['skillls'];
-	                            skillls += "<div> Tags: ";
-	                            for (var j = 0; j < ls.length; j++){
-	                              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	                              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	                            } 
-	                            skillls += "</div><br>";
-	                          }
-                          }
-			                          
-						  $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-						  	//<div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
-						  if (content['replys']) {
-	                           var rdocs = content['replys'];
-	                           for(var j=0; j < rdocs.length; j++){
-	                              if (rdocs[j]['user']['uid']){
-	                      			var ruid = rdocs[j]['user']['uid']
-	                      			var m  = users.indexOf(ruid);
-	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	                      			if ( m != -1) {
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}else{
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}
-	                             }
-	                           }
-                          }
-
-                          i_share += 1;
-                       }else{
-                       	  var uid = {{user.id}};
-			              var content = communitydocs[i_community];
- 						  var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
-
-						  var c_id = content['_id'];
-						  var n  = users.indexOf(uid);
-                          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-                          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-
-                          var created = communitydocs[i_community]['created'];
-			              var colonIndex = created.indexOf(":");
-                          var date = created.substring(0, colonIndex-3);
-                          var datels = date.split('-');
-                          var mm = months[parseInt(datels[1])-1];
-                          var dd = datels[2];
-                          var yy = datels[0];
-
-                          var tag = (content['tag']) ? content['tag'] : 0;
-						  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-                          var skillls = "";
-						  if (content['skillls']){
-	                          if(content['skillls'].length != 0){
-	                            var ls = content['skillls'];
-	                            skillls += "<div> Tags: ";
-	                            for (var j = 0; j < ls.length; j++){
-	                              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	                              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	                            } 
-	                            skillls += "</div><br>";
-	                          }
-                          }
-
-
-						  $('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-						  //$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="timeline-body">'+communitydocs[i_community]['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
-
-						  if (content['replys']) {
-	                           var rdocs = content['replys'];
-	                           console.log('replys');
-	                           for(var j=0; j < rdocs.length; j++){
-	                              if (rdocs[j]['user']['uid']){
-	                      			var ruid = rdocs[j]['user']['uid']
-	                      			var m  = users.indexOf(ruid);
-	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	                      			if ( m != -1) {
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}else{
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}
-	                             }
-	                           }
-                          }
-
-                          i_community += 1;
-                       }
-
-                    }else if(i_share < len_share){
-
+          if (t_share > t_community){
  						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
 						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 						var uid = sharedocs[i_share]['to_uid'];
-			            var content = sharedocs[i_share]['content'];
-			            var c_id = sharedocs[i_share]['_id'];
+			      var content = sharedocs[i_share]['content'];
+			      var c_id = sharedocs[i_share]['_id'];
+			      var created = sharedocs[i_share]['created'];
+			      var colonIndex = created.indexOf(":");
+            var date = created.substring(0, colonIndex-3);
+            var datels = date.split('-');
+            var mm = months[parseInt(datels[1])-1];
+            var dd = datels[2];
+            var yy = datels[0];
 						var n  = users.indexOf(uid);
-                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+            var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+            var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
-                        var created = sharedocs[i_share]['created'];
-			            var colonIndex = created.indexOf(":");
-                        var date = created.substring(0, colonIndex-3);
-                        var datels = date.split('-');
-                        var mm = months[parseInt(datels[1])-1];
-                        var dd = datels[2];
-                        var yy = datels[0];
-
-                        var tag = (content['tag']) ? content['tag'] : 0;
+            var tag = (content['tag']) ? content['tag'] : 0;
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-                        var skillls = "";
+            var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+            var skillls = "";
 						if (content['skillls']){
-	                        if(content['skillls'].length != 0){
-	                          var ls = content['skillls'];
-	                          skillls += "<div> Tags: ";
-	                          for (var j = 0; j < ls.length; j++){
-	                            var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	                            skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	                          } 
-	                          skillls += "</div><br>";
-	                        }
-                        }
+	            if(content['skillls'].length != 0){
+	              var ls = content['skillls'];
+	              skillls += "<div> Tags: ";
+	              for (var j = 0; j < ls.length; j++){
+	                var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	                skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	              } 
+	              skillls += "</div><br>";
+	            }
+            }
 			                          
-					    $('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-
-					    if (content['replys']) {
-	                           var rdocs = content['replys'];
-	                           console.log('replys');
-	                           for(var j=0; j < rdocs.length; j++){
-	                              if (rdocs[j]['user']['uid']){
-	                      			var ruid = rdocs[j]['user']['uid']
-	                      			var m  = users.indexOf(ruid);
-	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	                      			if ( m != -1) {
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}else{
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}
-	                             }
-	                           }
-                        }
-
-                        i_share += 1;
-
-                    }else if(i_community < len_community){
-
-						var uid = {{user.id}};
-			            var content = communitydocs[i_community];
+						$('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+						//<div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
+						if (content['replys']) {
+	            var rdocs = content['replys'];
+	            for(var j=0; j < rdocs.length; j++){
+	              if (rdocs[j]['user']['uid']){
+	                var ruid = rdocs[j]['user']['uid']
+	                var m  = users.indexOf(ruid);
+	                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	                if ( m != -1) {
+	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                }else{
+	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                }
+	              }
+	            }
+            }
+            i_share += 1;
+          }else{
+            var uid = {{user.id}};
+			      var content = communitydocs[i_community];
  						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
-
+						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);
-                        var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-                        var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-                        var created = communitydocs[i_community]['created'];
-			            var colonIndex = created.indexOf(":");
-                        var date = created.substring(0, colonIndex-3);
-                        var datels = date.split('-');
-                        var mm = months[parseInt(datels[1])-1];
-                        var dd = datels[2];
-                        var yy = datels[0];
+            var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+            var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
-
-                        var tag = (content['tag']) ? content['tag'] : 0;
+            var created = communitydocs[i_community]['created'];
+			      var colonIndex = created.indexOf(":");
+            var date = created.substring(0, colonIndex-3);
+            var datels = date.split('-');
+            var mm = months[parseInt(datels[1])-1];
+            var dd = datels[2];
+            var yy = datels[0];
+            var tag = (content['tag']) ? content['tag'] : 0;
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-                        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-                        var skillls = "";
+            var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+            var skillls = "";
 						if (content['skillls']){
-	                        if(content['skillls'].length != 0){
-	                          var ls = content['skillls'];
-	                          skillls += "<div> Tags: ";
-	                          for (var j = 0; j < ls.length; j++){
-	                            var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	                            skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	                          } 
-	                          skillls += "</div><br>";
-	                        }
-                        }
+	            if(content['skillls'].length != 0){
+	              var ls = content['skillls'];
+	              skillls += "<div> Tags: ";
+	              for (var j = 0; j < ls.length; j++){
+	                var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	                skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	              } 
+	              skillls += "</div><br>";
+	            }
+            }
 
 						$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
 
 						if (content['replys']) {
-	                           var rdocs = content['replys'];
-	                           console.log('replys');
-	                           for(var j=0; j < rdocs.length; j++){
-	                              if (rdocs[j]['user']['uid']){
-	                      			var ruid = rdocs[j]['user']['uid']
-	                      			var m  = users.indexOf(ruid);
-	                      			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	                      			if ( m != -1) {
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}else{
-	                      			   $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                      			}
-	                             }
-	                           }
-                        }
+	            var rdocs = content['replys'];
+	            for(var j=0; j < rdocs.length; j++){
+	              if (rdocs[j]['user']['uid']){
+	                var ruid = rdocs[j]['user']['uid']
+	                var m  = users.indexOf(ruid);
+	                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	                if ( m != -1) {
+	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                }else{
+	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	                }
+	              }
+	            }
+            }
+            i_community += 1;
+          }
 
-                        i_community += 1;
+        }else if(i_share < len_share){
+ 					var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
+					var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
+					var uid = sharedocs[i_share]['to_uid'];
+			    var content = sharedocs[i_share]['content'];
+			    var c_id = sharedocs[i_share]['_id'];
+					var n  = users.indexOf(uid);
+          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+          var created = sharedocs[i_share]['created'];
+			    var colonIndex = created.indexOf(":");
+          var date = created.substring(0, colonIndex-3);
+          var datels = date.split('-');
+          var mm = months[parseInt(datels[1])-1];
+          var dd = datels[2];
+          var yy = datels[0];
+          var tag = (content['tag']) ? content['tag'] : 0;
+					var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+          var skillls = "";
+					if (content['skillls']){
+	          if(content['skillls'].length != 0){
+	            var ls = content['skillls'];
+	            skillls += "<div> Tags: ";
+	            for (var j = 0; j < ls.length; j++){
+	              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	            } 
+	            skillls += "</div><br>";
+	          }
+          }
+			                          
+					$('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
 
-                    }
+					if (content['replys']) {
+	          var rdocs = content['replys'];
+	          for(var j=0; j < rdocs.length; j++){
+	            if (rdocs[j]['user']['uid']){
+	              var ruid = rdocs[j]['user']['uid']
+	              var m  = users.indexOf(ruid);
+	              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	              if ( m != -1) {
+	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	              }else{
+	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	              }
+	            }
+	          }
+          }
+          i_share += 1;
+        }else if(i_community < len_community){
+					var uid = {{user.id}};
+			    var content = communitydocs[i_community];
+ 					var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
+					var like = '<div class="popupLike" onclick="popLike()"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
+					var c_id = content['_id'];
+					var n  = users.indexOf(uid);
+          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+          var created = communitydocs[i_community]['created'];
+			    var colonIndex = created.indexOf(":");
+          var date = created.substring(0, colonIndex-3);
+          var datels = date.split('-');
+          var mm = months[parseInt(datels[1])-1];
+          var dd = datels[2];
+          var yy = datels[0];
+          var tag = (content['tag']) ? content['tag'] : 0;
+					var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+          var skillls = "";
+					if (content['skillls']){
+	          if(content['skillls'].length != 0){
+	            var ls = content['skillls'];
+	            skillls += "<div> Tags: ";
+	            for (var j = 0; j < ls.length; j++){
+	              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+	              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+	            } 
+	            skillls += "</div><br>";
+	          }
+          }
 
-                }
+					$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
+
+					if (content['replys']) {
+	          var rdocs = content['replys'];
+	          for(var j=0; j < rdocs.length; j++){
+	            if (rdocs[j]['user']['uid']){
+	              var ruid = rdocs[j]['user']['uid']
+	              var m  = users.indexOf(ruid);
+	              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+	              if ( m != -1) {
+	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	              }else{
+	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
+	             	}
+	            }
+	          }
+          }
+          i_community += 1;
+        }
+      }
 	  });
 
 	  $('.timeline-panel').click(function() {
 	    $('.timeline-body', this).toggle(); // p00f
 	  });
-
-
 	</script>
-    
-    </div>
+</div>
 {% endblock %}
 

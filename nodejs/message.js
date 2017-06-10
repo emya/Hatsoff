@@ -2186,6 +2186,21 @@ io.on('connection', function(socket){
     LikePost.find({'content_id':c_id}).remove().exec();
   });
 
+  socket.on('delete upcoming comment', function(c_id){
+    console.log("delete upcoming comment", c_id);
+    UpcomingPost.find({'_id':c_id}).remove().exec();
+  });
+
+  socket.on('update upcomingComment', function(data){
+    console.log("update upcomingComment", data);
+    UpcomingPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      doc.content = data.msg;
+      doc.save();
+    });
+  });
+
   //socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:{{user.id}} });
   socket.on('update postContent', function(data){
     CommunityPost.findById(data.c_id, function(err, doc){

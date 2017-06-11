@@ -1842,6 +1842,12 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('get community shareusers', function(data){
+    SharePost.find({'content_type':1, content_id:data.c_id}).exec(function(err, docs){
+      socket.emit('list community shareusers', {c_id:data.c_id, result:docs});
+    });
+  });
+
   socket.on('unlike community', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
     CommunityPost.findById(data.c_id, function(err, doc){
@@ -1997,15 +2003,18 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-         var newPost = new CommunityPost({content:post.content, user:{uid:post.user.uid, first_name:post.user.first_name, last_name:post.user.last_name}, tag:post.tag, skillls:post.skillls, sharedBy:socket.uid, content_id:data.c_id});
-         newPost.save(function(error, newpost){
-            if (error) {
-              console.log(error);
-            } else{
-              console.log('saved:'+newpost);
+        post.shares += 1;
+        post.save();
+
+        var newPost = new CommunityPost({content:post.content, user:{uid:post.user.uid, first_name:post.user.first_name, last_name:post.user.last_name}, tag:post.tag, skillls:post.skillls, sharedBy:socket.uid, content_id:data.c_id});
+        newPost.save(function(error, newpost){
+          if (error) {
+            console.log(error);
+          } else{
+            console.log('saved:'+newpost);
               //io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
-            }
-         });
+          }
+        });
       }
     });
   });

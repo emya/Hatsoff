@@ -266,8 +266,6 @@ io.on('connection', function(socket){
      socket.firstname = data.firstname;
      socket.lastname = data.lastname;
      users[socket.uid] = socket;
-     console.log('join user:'+data.uid);
-     console.log('join first:'+data.firstname);
      updateUids();
   });
 
@@ -293,7 +291,6 @@ io.on('connection', function(socket){
         tuplestr += ")";
 
         var liststr = "("+friends.join(",")+")";
-        console.log("liststr:"+liststr);
         db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM auth_user, week1_profile WHERE week1_profile.user_id==auth_user.id AND week1_profile.user_id in "+tuplestr, friends, function(err, rows){
           //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
           socket.emit('get community members', rows);
@@ -347,7 +344,6 @@ io.on('connection', function(socket){
 
                 CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
                   if(!result){
-                    console.log("no results");
                     var friends = [];
                     socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
                     client.hmset(key, {
@@ -464,7 +460,6 @@ io.on('connection', function(socket){
       }else{
         var friends = result.friends;
         var len = friends.length;
-        console.log("friends length:", len);
         socket.emit('community members number', len);
       }
     });
@@ -523,7 +518,6 @@ io.on('connection', function(socket){
       }else{
         var friends = result.friends;
         var len = friends.length;
-        console.log("friends length:", len);
         socket.emit('community members number', len);
       }
     });
@@ -578,7 +572,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('join community post', function(data){
-    console.log('join community');
     /*
     CommunityPost.findById(data.c_id, function(err, post){
       if (err) throw err;
@@ -609,8 +602,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at community needs you', function(data){
-    console.log('at community needs you');
-
 
       /////new lines
     db.serialize(function() {
@@ -864,7 +855,6 @@ io.on('connection', function(socket){
         console.log(err);
       }else {
         if (result){
-          console.log("chat result");
           socket.emit('update chat message', result);
           for (var i = 0; i < result.length; i++){
              socket.join(result[i]._id);
@@ -1496,7 +1486,6 @@ io.on('connection', function(socket){
 
   socket.on('community post', function(data, callback){
     var d = new Date();
-    console.log('date:'+d); 
     var ls = [];
     if(data.skillls.length != 0){
       for (var i = 0; i < data.skillls.length; i++) {
@@ -1534,7 +1523,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('private post', function(data, callback){
-    console.log('private post'); 
     var ls = [];
     if(data.skillls.length != 0){
       for (var i = 0; i < data.skillls.length; i++) {
@@ -1568,7 +1556,6 @@ io.on('connection', function(socket){
       } else{
         CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
           if(!result){
-            console.log("no results");
             socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
           }else{
             var friends = result.friends;
@@ -1587,7 +1574,6 @@ io.on('connection', function(socket){
 
   socket.on('reply community', function(data, callback){
     var d = new Date();
-    console.log('date:'+d); 
     
     CommunityPost.findById(data.c_id, function(err, post){
       if (err) {
@@ -1753,7 +1739,6 @@ io.on('connection', function(socket){
 
   socket.on('give follow', function(data, callback){
     var d = new Date();
-    console.log('give follow'+socket.uid); 
 
     var uid1, uid2, action_user;
     if (socket.uid < data.to_uid){
@@ -1776,7 +1761,6 @@ io.on('connection', function(socket){
             if (err) {
               console.log(err);
             } else{
-              console.log('new history');
               socket.emit('new history', {to_uid:data.to_uid, content_type:1, action_id:8});
               if (data.to_uid in users){
                   users[data.to_uid].emit('new notification', {action_id:8, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -1863,16 +1847,13 @@ io.on('connection', function(socket){
   });
 
   socket.on('like community', function(data, callback){
-
     var d = new Date();
-    console.log('like community:'+socket.uid); 
     
     var newPost = new LikePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:1, content_id:data.c_id});
     newPost.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:4});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:4, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -1901,9 +1882,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('like upcoming', function(data, callback){
-
     var d = new Date();
-    console.log('like upcoming:'+socket.uid); 
     
     var newPost = new LikePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
     newPost.save(function(err){
@@ -1931,18 +1910,14 @@ io.on('connection', function(socket){
 
   socket.on('unlike upcoming', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':2}).remove().exec();
-    console.log('unlike upcoming');
   });
 
   socket.on('unlike portfolio', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':3, 'content_id':data.c_id}).remove().exec();
-    console.log('unlike portfolio');
   });
 
   socket.on('like portfolio', function(data, callback){
-
     var d = new Date();
-    console.log('like portfolio:'+socket.uid); 
     
     var newPost = new LikePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
     newPost.save(function(err){
@@ -1971,16 +1946,13 @@ io.on('connection', function(socket){
 
 
   socket.on('share post', function(data, callback){
-
     var d = new Date();
-    console.log('share community:'+socket.uid); 
     
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:1, content_id:data.c_id});
     newPost.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved share community:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:5});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -2020,16 +1992,13 @@ io.on('connection', function(socket){
   });
 
   socket.on('share upcoming', function(data, callback){
-
     var d = new Date();
-    console.log('share upcoming:'+socket.uid); 
     
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
     newPost.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved share community:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:5});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -2051,10 +2020,7 @@ io.on('connection', function(socket){
 
 
   socket.on('share portfolio', function(data, callback){
-
     var d = new Date();
-    console.log('share portfolio:'+socket.uid); 
-
     //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
 
     db.serialize(function() {
@@ -2087,9 +2053,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('share upcoming', function(data, callback){
-
     var d = new Date();
-    console.log('share upcoming:'+socket.uid); 
 
     //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
 
@@ -2131,7 +2095,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:'+data.msg+' touid:'+data.to+' fromuid:'+data.from+' socket.uid:'+socket.uid);
         socket.emit('new comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
 
         if (data.to in users && data.to != socket.uid){
@@ -2146,9 +2109,7 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('notification!');
         if (data.to in users){
-           console.log('new notification! to '+data.to);
            users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         } else {
         }
@@ -2157,7 +2118,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('delete community comment', function(data){
-    console.log("delete comment");
 
     CommunityPost.findById(data.c_id, function(err, post){
       if (err) {
@@ -2179,16 +2139,13 @@ io.on('connection', function(socket){
       if (err) console.log(err);
 
       comment = doc.replys[data.r_id];
-      console.log("comment", comment);
       comment.content = data.msg;
-      console.log("comment", comment);
       doc.replys[data.r_id] = comment;
       doc.save();
     });
   });
 
   socket.on('delete community post', function(c_id){
-    console.log("delete post");
     CommunityPost.find({'_id':c_id}).remove().exec();
     CommunityPost.find({'content_id':c_id}).remove().exec();
     SharePost.find({'content_id':c_id}).remove().exec();
@@ -2196,12 +2153,10 @@ io.on('connection', function(socket){
   });
 
   socket.on('delete upcoming comment', function(c_id){
-    console.log("delete upcoming comment", c_id);
     UpcomingPost.find({'_id':c_id}).remove().exec();
   });
 
   socket.on('update upcomingComment', function(data){
-    console.log("update upcomingComment", data);
     UpcomingPost.findById(data.c_id, function(err, doc){
       if (err) console.log(err);
 
@@ -2223,7 +2178,6 @@ io.on('connection', function(socket){
   socket.on('upcoming comment', function(data, callback){
     console.log('upcoming comment');
     var d = new Date();
-    console.log('date:'+d); 
     
     var newPost = new UpcomingPost({content:data.msg, to_uid:data.to, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
     newPost.save(function(err){
@@ -2236,8 +2190,6 @@ io.on('connection', function(socket){
         }
        
         if (data.uid) {
-            console.log('data.uid'+data.uid);
-            console.log('users'+users[data.uid]);
             users[data.uid].emit('new upcoming comment on userpage', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         }
       }
@@ -2248,14 +2200,12 @@ io.on('connection', function(socket){
   socket.on('portfolio comment', function(data, callback){
     console.log('portfolio comment');
     var d = new Date();
-    console.log('date:'+d); 
     
     var newPost = new PortfolioPost({content:data.msg, to_uid:data.to, p_id:data.p_id, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
     newPost.save(function(err){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:'+data.msg);
         /*
         if (users[data.to]) {
             users[data.to].emit('new portfolio comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname, p_id:data.p_id});
@@ -2263,8 +2213,6 @@ io.on('connection', function(socket){
         */
        
         if (data.uid) {
-            console.log('data.uid'+data.uid);
-            console.log('users'+users[data.uid]);
             users[data.uid].emit('new portfolio comment', {msg:data.msg, to:data.to, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname, p_id:data.p_id});
         }
       }
@@ -2347,35 +2295,29 @@ io.on('connection', function(socket){
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
     db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
       socket.emit('get search result by profession', rows);
-      console.log("search result by profession"+rows);
     });
 
     db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
       socket.emit('get search result by skill', rows);
-      console.log("search result by skill"+rows);
     });
 
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (auth_user.first_name=? OR auth_user.last_name=? ) GROUP BY week1_profile.user_id", [socket.uid, query, query], function(err, rows){
     db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (auth_user.first_name=? OR auth_user.last_name=? ) GROUP BY week1_profile.user_id ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by user name', rows);
-      console.log("search result by user name"+rows);
     });
 
     db.all("SELECT week1_showcase.user_id, auth_user.first_name, auth_user.last_name, week1_showcase.title, week1_showcase.image, week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe FROM week1_showcase, auth_user WHERE week1_showcase.user_id!=? AND week1_showcase.user_id=auth_user.id AND (week1_showcase.tag1=? OR week1_showcase.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by portfolio', rows);
-      console.log("search result by portfolio"+rows);
     });
 
     db.all("SELECT week1_upcomingwork.user_id, auth_user.first_name, auth_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, auth_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=auth_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by upcoming', rows);
-      console.log("search result by upcoming"+rows);
     });
 
   });
 
 
   socket.on('send message', function(data){
-    console.log('send message');
 
     if(data.to_uid){
       var uid1, uid2, action_user;
@@ -2388,9 +2330,6 @@ io.on('connection', function(socket){
         uid1 = data.to_uid; 
         action_user = 2;
       }
-
-      console.log('uid1:'+uid1);
-      console.log('uid2:'+uid2);
       MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
         if (err) {
           console.log(err);
@@ -2406,11 +2345,9 @@ io.on('connection', function(socket){
               if (!error) {
                 console.log('Succeed to send message!');
               }
-              console.log('sent message is saved!');
               socket.join(result._id);
               //socket.emit('new message', {uid:data.uid, content:data.msg});
               io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
-              console.log('result:'+result);
             });
 
           }else{
@@ -2436,10 +2373,8 @@ io.on('connection', function(socket){
               if (!error) {
                 console.log('Succeed to send message!');
               }
-              console.log('sent message is saved!');
               socket.join(result._id);
               io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
-              console.log('result:'+result);
             });
 
           }else{
@@ -2475,7 +2410,6 @@ io.on('connection', function(socket){
   */
 
   socket.on('get message', function(data){
-    console.log('start message');
     var uid1, uid2, action_user;
     if (socket.uid < data.to_uid){
       uid1 = socket.uid;
@@ -2494,7 +2428,6 @@ io.on('connection', function(socket){
         if (result){
           socket.join(result._id);
           socket.emit('set message', result);
-          console.log('result:'+result);
         }else{
 
           var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
@@ -2504,7 +2437,6 @@ io.on('connection', function(socket){
               console.log(error);
             }else{
               /** emmit new message to data.to_uid message.html **/
-                console.log('newdata:'+newdata);
                 socket.emit('set message', newdata) 
             }
           });
@@ -2521,7 +2453,6 @@ io.on('connection', function(socket){
   **/
 
   socket.on('start message', function(data){
-    console.log('start message');
     var uid1, uid2, action_user;
     if (socket.uid < data.to_uid){
       uid1 = socket.uid;
@@ -2539,8 +2470,6 @@ io.on('connection', function(socket){
       }else {
         if (!result){
 
-          console.log("no result");
-
           var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1, messages:{uid:socket.uid, content:data.msg}});
           newMessageRelation.save(function(error, newdata){
 
@@ -2550,7 +2479,6 @@ io.on('connection', function(socket){
               /** emmit new message to data.to_uid message.html **/
               if (users[data.to_uid]){
                 users[data.to_uid].emit('send first message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 
-                console.log("send first message!");
               }
             }
           });

@@ -358,7 +358,7 @@ function hatClicked(event,postid){
                   </div>
 
     	            <div class="well well-ssm">
-    		            <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+    		            <ul id="portfolioComment_{{user.id}}_{{forloop.counter}}" style="list-style-type:none;">
     		            </ul>
 
     		            <form class="form-horizontal" action="">
@@ -504,7 +504,7 @@ function hatClicked(event,postid){
 
               <div class="comment-container">
     	          <div class="well well-ssm">
-    		          <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+    		          <ul id="portfolioComment_{{user.id}}_{{forloop.counter}}" style="list-style-type:none;">
     		          </ul>
 
     		          <form class="form-horizontal" action="">
@@ -1602,15 +1602,15 @@ function hatClicked(event,postid){
 
 		  if ( n != -1) {
 		    if (uid == {{user.id}}){
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    } else{
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    }
 		  }else{
 		    if (uid == {{user.id}}){
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    } else {
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    }
 		  }
 	  });
@@ -1619,6 +1619,7 @@ function hatClicked(event,postid){
 	    for(var i = 0; i < docs.length; i++){
         if (docs[i]['p_id']) {
           var p_id = docs[i]['p_id'];
+          var c_id = docs[i]['_id'];
           if (docs[i]['user']['uid']){
 					  var uid = docs[i]['user']['uid'];
 						var n  = users.indexOf(uid);
@@ -1627,23 +1628,15 @@ function hatClicked(event,postid){
             var r_id = i;
 						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditFunction(\''+p_id+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_pf_'+p_id+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+p_id+'\', \''+r_id+'\', 0)">Delete</a><a href="#" onclick="return editPFComment(\''+{{user.id}}+'\', \''+r_id+'\', 0)">Edit</a></div></div>' : '';
-            var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_portfolio_'+p_id+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+p_id+'_'+r_id+'" onclick="closeEdit(\''+p_id+'_'+r_id+'\')">&times;</span><div id="edit_homeportfolio_'+p_id+'_'+r_id+'"><textarea id="post_text_homeportfolio_'+p_id+'_'+r_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+p_id+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
+            var did = "myDelEditDropdown_pf_pf_"+p_id+'_'+r_id;
+
+            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+p_id+'\', 0, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(0, \''+c_id+'\')">Edit</a></div></div>' : '';
+            var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_pf_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_pf_'+c_id+'" onclick="closePFEdit(\'pf_pf_'+c_id+'\')">&times;</span><div id="edit_pf_pf_'+c_id+'"><textarea id="post_text_pf_pf_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+p_id+'\', 0)" align="right">Edit</button></div></div>' : '';
 
 						if ( n != -1) {
-              console.log('data content', data['content']);
-						  if (uid == {{user.id}}){
-                $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  } else{
-						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  }
+              $('#portfolioComment_'+{{user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
 						}else{
-              console.log('data content', data['content']);
-						  if (uid == {{user.id}}){
-						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  } else {
-						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  }
+						  $('#portfolioComment_'+{{user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']*deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
 						}
 					}
         } else{
@@ -1684,6 +1677,7 @@ function hatClicked(event,postid){
           var did = "myDelEditDropdown_pf_"+{{user.id}}+'_'+r_id;
           var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+r_id+'\', 1, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(1, \''+c_id+'\')">Edit</a></div></div>' : '';
           var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_up_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_up_'+c_id+'" onclick="closePFEdit(\'pf_up_'+c_id+'\')">&times;</span><div id="edit_pf_up_'+c_id+'"><textarea id="post_text_pf_up_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+r_id+'\', 1)" align="right">Edit</button></div></div>' : '';
+
 
 			    if ( n != -1) {
 			      $('#upcomingComment_'+{{user.id}}).prepend($('<li class="pf_upcoming_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_up_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<br/><hr class="divider"/>'));

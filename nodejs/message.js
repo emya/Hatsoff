@@ -2165,6 +2165,19 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('update portfolioComment', function(data){
+    PortfolioPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      doc.content = data.msg;
+      doc.save();
+    });
+  });
+
+  socket.on('delete portfolio comment', function(c_id){
+    PortfolioPost.find({'_id':c_id}).remove().exec();
+  });
+  
   //socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:{{user.id}} });
   socket.on('update postContent', function(data){
     CommunityPost.findById(data.c_id, function(err, doc){
@@ -2202,7 +2215,7 @@ io.on('connection', function(socket){
     var d = new Date();
     
     var newPost = new PortfolioPost({content:data.msg, to_uid:data.to, p_id:data.p_id, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
-    newPost.save(function(err){
+    newPost.save(function(err, post){
       if (err) {
         console.log(err);
       } else{

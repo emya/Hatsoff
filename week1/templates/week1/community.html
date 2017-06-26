@@ -761,7 +761,7 @@ window.onclick = function(event) {
               var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
               var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
-              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
+              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></div>';
               var shareskill = '';
               //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
 
@@ -831,7 +831,7 @@ window.onclick = function(event) {
 	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
               var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
-              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
+              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></div>';
               var shareskill = '';
               //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img"></br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
 
@@ -994,9 +994,9 @@ window.onclick = function(event) {
 
                       var hatsoff = '';
                       if (hatsoffls.indexOf(c_id) != -1){
-                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                       }else{
-                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                       }
                       //var shareskill = '<div class="popupShareSkill" onclick="popShareSkill()"><img src="{% static 'images/contribute.png'%}" class="icons-img">&nbsp</br><span class="popuptextShareSkill" id="shareskillPop">Share your skill?</br><button onclick="shareskillFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupThankyou"><span class="popuptextThankyou" id="thankyouPop">Thank you!</span></div>';
                       var shareskill = '';
@@ -1107,9 +1107,9 @@ window.onclick = function(event) {
 
                         hatsoff = '';
                         if (hatsoffls.indexOf(content_id) != -1){
-                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/2hats-02.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
                         }else{
-                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
                         }
 
                         collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+content_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div>';

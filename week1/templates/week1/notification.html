@@ -130,9 +130,9 @@
                       }
                     }
                     if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupLike" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupLike" onclick="hatsoffFunction('+uid+')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
                     }else{
-                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp tipped off a hat to you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></br></div>'+commonNum+' mutual friends</span>'));
                     }
                    }
                    else if (docs[i]['action_id'] === 3){
@@ -188,9 +188,9 @@
                       }
                     }
                     if( n != -1 && photos[n] != "None" && photos[n] != ""){
-                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
+                      $('#notifications').append($('<li><img src="{{media_url}}'+photos[n]+'" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
                     }else{
-                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
+                      $('#notifications').append($('<li><img src="{% static 'images/profileimage.png' %}" class="notification_img"><span class="error">'+docs[i]['action_user']['first_name']+'&nbsp'+docs[i]['action_user']['last_name']+'&nbsp followed you.'+'<br>'+fstatus+' <div class="popupHatsoff" onclick="hatsoffFunction('+uid+')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></div></span> '+commonNum+' mutual friends</span><br/>'));
                     }
                    }
                 }

@@ -352,7 +352,8 @@ function hatClicked(event,postid){
                                 
                   <div class="actionbutton-container">
                     <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                    <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
+                    <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
+                    <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div-->
                     <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
                     <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
                   </div>
@@ -380,6 +381,7 @@ function hatClicked(event,postid){
 					    </blockquote>
 				    </div>
             <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
+            <div id="portfolio_shareModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_shareClose_{{forloop.counter}}" onclick="closePFShareList(0, {{forloop.counter}})">&times;</span><h3>Users who shared</h3><div id="portfolio_share_users_{{forloop.counter}}"></div></div></div>
 
 	          {% else %}
 				    <div class="item">
@@ -492,7 +494,8 @@ function hatClicked(event,postid){
               <div class="actionbutton-container">
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
+                <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
+                <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div-->
                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
@@ -529,6 +532,7 @@ function hatClicked(event,postid){
 					  </blockquote>
 				  </div>
           <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
+          <div id="portfolio_shareModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_shareClose_{{forloop.counter}}" onclick="closePFShareList(0, {{forloop.counter}})">&times;</span><h3>Users who shared</h3><div id="portfolio_share_users_{{forloop.counter}}"></div></div></div>
 	                {% endif %}
 	                {% endfor %}
                 {% else %}
@@ -911,7 +915,8 @@ function hatClicked(event,postid){
       <div class="actionbutton-container">
             <!--div class="popupLike" onclick="likeFunction(2, 1)"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
         <div id="upcomingLike" class="popupLike"></div> 
-        <div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div>
+        <div id="upcomingShare" class="popupLike"></div> 
+        <!--div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div-->
             <!-- <div class="popupHatsoff" id="hatsoffstatus_upcoming"></div> -->
         <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
     	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
@@ -1141,6 +1146,7 @@ function hatClicked(event,postid){
 	    </div-->
 	    {% endif %}
       <div id="upcoming_likeModal" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closePFLikeList(1, 0)">&times;</span><h3>Users who liked</h3><div id="upcoming_like_users"></div></div></div>
+      <div id="upcoming_shareModal" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closePFShareList(1, 0)">&times;</span><h3>Users who shared</h3><div id="upcoming_share_users"></div></div></div>
 	</div>
 
 	<div class="timeline-container">
@@ -1225,11 +1231,11 @@ function hatClicked(event,postid){
 	    if (c_type == 2){
 			  socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				console.log('like upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
 	    }else if (c_type == 3){
 				socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				console.log('like portfolio');
-        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
+        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
 	    }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	  }
@@ -1240,21 +1246,36 @@ function hatClicked(event,postid){
       if (c_type == 2){
         socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
       }else if (c_type == 3){
         socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike portfolio');
-        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
+        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
       }
     }
 
-	      /*
-	      function popShare(){
-			 var popup = document.getElementById('sharePop');
-			 popup.classList.toggle('show');
-	      }
-	      */
+    function shareFunction(c_type, c_id){
+      if (c_type == 2){
+        socket.emit('share upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"> <a class="icons-img like-btn activelike-btn" onclick="unshareFunction(2, 1)"/></br></div>';
+      }else if (c_type == 3){
+        socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+c_id+')" /></br></div>';
+      }
+     //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+    }
 
+    function unshareFunction(c_type, c_id){
+      if (c_type == 2){
+        socket.emit('unshare upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"><a class="icons-img like-btn inactivelike-btn" onclick="shareFunction(2, 1)" /></br></div>';
+      }else if (c_type == 3){
+        socket.emit('unshare portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+c_id+')"></br></div>';
+      }
+    }
+
+/*
 	  function shareFunction(c_type, c_id){
 			console.log('uid on share:'+c_type+':'+c_id);
 			//popShared();
@@ -1270,6 +1291,7 @@ function hatClicked(event,postid){
       }
 		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	  }
+*/
 
 	  function popShared(){
 	    var popHatsoff = document.getElementById("hatsoffPop");
@@ -1565,7 +1587,6 @@ function hatClicked(event,postid){
       var upcoming_likes = 0;
       var portfolios = [];
       var portfolios_likes = {};
-      console.log("data", data)
       if (data){
         for (var i = 0; i < data.length; i++){
           var doc = data[i];
@@ -1612,9 +1633,82 @@ function hatClicked(event,postid){
           document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
         }else{
           document.getElementById("portfolio_"+counter+"_likes").innerHTML = portfolios_likes[counter];
-      }  
+        }  
+      }
+    });
+
+    socket.on('shares at home', function(data){
+      var upcoming = false;
+      var upcoming_shares = 0;
+      var portfolios = [];
+      var portfolios_shares = {};
+      console.log("share data", data)
+      if (data){
+        for (var i = 0; i < data.length; i++){
+          var doc = data[i];
+          var content_type = doc['content_type'];
+          if (content_type == 2){
+            if (doc['user']['uid'] == {{user.id}}){
+              document.getElementById("upcomingShare").innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png' %}" class="icons-img" onclick="unshareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)"></div>';
+              upcoming = true; 
+            }
+            upcoming_shares += 1; 
+          }
+          if (content_type == 3){
+            var p_id = parseInt(doc['content_id']);
+            console.log("p_id", p_id);
+            console.log("portfolios", portfolios);
+            if (doc['user']['uid'] == {{user.id}}){
+              if (portfolios.indexOf(p_id) == -1){
+                var elem = document.getElementById("portfolioShare_"+p_id);
+                if ( elem != undefined ){
+                  console.log("defined!", p_id);
+                  elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+                }else{
+                  console.log("undefined!", p_id);
+                }
+                portfolios.push(p_id);
+              }else{
+                console.log("else!", p_id);
+                var elem = document.getElementById("portfolioShare_"+p_id);
+                if ( elem != undefined ){
+                  elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+                }
+              }
+            }
+            if (p_id in portfolios_shares){
+              portfolios_shares[p_id] += 1;
+            }else{
+              portfolios_shares[p_id] = 1;
+            }
+          }
+        }
       }
 
+      if(upcoming == false){
+        console.log("upcoming", upcoming);
+        var upcomingElement = document.getElementById("upcomingShare");
+        if (upcomingElement != null){
+          upcomingElement.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
+        }
+      }else{
+        document.getElementById("upcoming_shares").innerHTML = upcoming_shares;
+      }
+
+      var p_count = $('[id^=portfolioShare_]').length;
+      console.log("portfolios", portfolios);
+      for (var i = 0; i < p_count; i++){
+        var counter = i+1;
+        console.log("counter", counter);
+        if (portfolios.indexOf(counter) == -1){
+          document.getElementById("portfolioShare_"+counter).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
+        }else{
+          var elem = document.getElementById("portfolio_"+counter+"_shares");
+          if (elem != undefined){
+            elem.innerHTML = portfolios_shares[counter];
+          }
+        }  
+      }
     });
 
   socket.on('list upcoming likeusers', function(data){
@@ -1652,6 +1746,39 @@ function hatClicked(event,postid){
     }
   });
 
+  socket.on('list upcoming shareusers', function(data){
+    if (data.uid == {{user.id}}){
+      var modal = document.getElementById('upcoming_shareModal');  
+      modal.style.display = "block";
+      var content = document.getElementById('upcoming_share_users');  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#upcoming_share_users').append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  socket.on('list portfolio shareusers', function(data){
+    if (data.uid == {{user.id}}){
+      var p_id = data.p_id
+      var modal = document.getElementById('portfolio_shareModal_'+p_id);  
+      modal.style.display = "block";
+      var content = document.getElementById('portfolio_share_users_'+p_id);  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#portfolio_share_users_'+p_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
   function closePFLikeList(type, p_id){
     console.log("close like list");
     if (type == 0){
@@ -1660,6 +1787,18 @@ function hatClicked(event,postid){
     }else if (type == 1){
       var span = document.getElementById('upcoming_likeClose');
       var modal = document.getElementById('upcoming_likeModal');  
+    }
+    modal.style.display = "none";
+  }
+
+  function closePFShareList(type, p_id){
+    console.log("close share list");
+    if (type == 0){
+      var span = document.getElementById('portfolio_shareClose_'+p_id);
+      var modal = document.getElementById('portfolio_shareModal_'+p_id);  
+    }else if (type == 1){
+      var span = document.getElementById('upcoming_shareClose');
+      var modal = document.getElementById('upcoming_shareModal');  
     }
     modal.style.display = "none";
   }

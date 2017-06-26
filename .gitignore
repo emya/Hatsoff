@@ -2,6 +2,7 @@
 hatsoff/settings.py
 #hatsoff/db.sqlite3
 week1/*2.py
+week1/migrations/*
 #db.sqlite3
 *.swp
 *.pyc

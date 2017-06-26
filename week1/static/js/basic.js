@@ -190,6 +190,15 @@ function getPFLikeusers(uid, type, p_id){
   }
 }
 
+function getPFShareusers(uid, type, p_id){
+  console.log("get pf share users");
+  if (type == 0){
+    socket.emit('get portfolio shareusers', {uid:uid, p_id:p_id});
+  }else if(type == 1){
+    socket.emit('get upcoming shareusers', {uid:uid});
+  }
+}
+
 function isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))

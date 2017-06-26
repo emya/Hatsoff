@@ -981,6 +981,14 @@ io.on('connection', function(socket){
       }
     });
 
+    SharePost.find({'to_uid':socket.uid}).exec(function(error, result){
+      if(error) throw error;
+
+      if(result){
+        socket.emit('shares at home', result);
+      }
+    });
+
     // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
     var query_cp = CommunityPost.find({'user.uid':socket.uid});
     async.waterfall([
@@ -1852,6 +1860,18 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('get upcoming shareusers', function(data){
+    SharePost.find({'content_type':2, to_uid:data.uid}).exec(function(err, docs){
+      socket.emit('list upcoming shareusers', {uid:data.uid, result:docs});
+    });
+  });
+
+  socket.on('get portfolio shareusers', function(data){
+    SharePost.find({'content_type':3, 'content_id':data.p_id, to_uid:data.uid}).exec(function(err, docs){
+      socket.emit('list portfolio shareusers', {uid:data.uid, result:docs, p_id:data.p_id});
+    });
+  });
+
   socket.on('unlike community', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
     CommunityPost.findById(data.c_id, function(err, doc){
@@ -1963,7 +1983,13 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('unshare upcoming', function(data, callback){
+    SharePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':2}).remove().exec();
+  });
 
+  socket.on('unshare portfolio', function(data, callback){
+    SharePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':3, 'content_id':data.c_id}).remove().exec();
+  });
 
   socket.on('share post', function(data, callback){
     var d = new Date();
@@ -2012,9 +2038,12 @@ io.on('connection', function(socket){
   });
 
   socket.on('share upcoming', function(data, callback){
+    console.log("share upcoming");
     var d = new Date();
     
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
+    newPost.save();
+
     newPost.save(function(err){
       if (err) {
         console.log(err);
@@ -2038,10 +2067,12 @@ io.on('connection', function(socket){
     });
   });
 
-
   socket.on('share portfolio', function(data, callback){
     var d = new Date();
     //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
+    newPost.save();
 
     db.serialize(function() {
       //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){

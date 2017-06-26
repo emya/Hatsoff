@@ -963,6 +963,7 @@ io.on('connection', function(socket){
       socket.emit('number follow', count);
     }); 
 
+/*
     LikePost.find({'to_uid':socket.uid, 'user.uid':socket.uid}).exec(function(error, result){
       if(error) throw error;
 
@@ -970,8 +971,15 @@ io.on('connection', function(socket){
         socket.emit('like status at home', result);
       }
     }); 
+*/
 
-    
+    LikePost.find({'to_uid':socket.uid}).exec(function(error, result){
+      if(error) throw error;
+
+      if(result){
+        socket.emit('likes at home', result);
+      }
+    });
 
     // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
     var query_cp = CommunityPost.find({'user.uid':socket.uid});
@@ -1832,6 +1840,18 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('get upcoming likeusers', function(data){
+    LikePost.find({'content_type':2, to_uid:data.uid}).exec(function(err, docs){
+      socket.emit('list upcoming likeusers', {uid:data.uid, result:docs});
+    });
+  });
+
+  socket.on('get portfolio likeusers', function(data){
+    LikePost.find({'content_type':3, 'content_id':data.p_id, to_uid:data.uid}).exec(function(err, docs){
+      socket.emit('list portfolio likeusers', {uid:data.uid, result:docs, p_id:data.p_id});
+    });
+  });
+
   socket.on('unlike community', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
     CommunityPost.findById(data.c_id, function(err, doc){
@@ -2177,7 +2197,7 @@ io.on('connection', function(socket){
   socket.on('delete portfolio comment', function(c_id){
     PortfolioPost.find({'_id':c_id}).remove().exec();
   });
-  
+
   //socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:{{user.id}} });
   socket.on('update postContent', function(data){
     CommunityPost.findById(data.c_id, function(err, doc){

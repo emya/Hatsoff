@@ -379,6 +379,7 @@ function hatClicked(event,postid){
 
 					    </blockquote>
 				    </div>
+            <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
 
 	          {% else %}
 				    <div class="item">
@@ -527,6 +528,7 @@ function hatClicked(event,postid){
 					</div-->
 					  </blockquote>
 				  </div>
+          <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
 	                {% endif %}
 	                {% endfor %}
                 {% else %}
@@ -1138,6 +1140,7 @@ function hatClicked(event,postid){
 	      </ul>
 	    </div-->
 	    {% endif %}
+      <div id="upcoming_likeModal" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closePFLikeList(1, 0)">&times;</span><h3>Users who liked</h3><div id="upcoming_like_users"></div></div></div>
 	</div>
 
 	<div class="timeline-container">
@@ -1557,6 +1560,110 @@ function hatClicked(event,postid){
       return false;
     } 
 
+    socket.on('likes at home', function(data){
+      var upcoming = false;
+      var upcoming_likes = 0;
+      var portfolios = [];
+      var portfolios_likes = {};
+      console.log("data", data)
+      if (data){
+        for (var i = 0; i < data.length; i++){
+          var doc = data[i];
+          var content_type = doc['content_type'];
+          if (content_type == 2){
+            if (doc['user']['uid'] == {{user.id}}){
+              document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)"></div>';
+              upcoming = true; 
+            }
+            upcoming_likes += 1; 
+          }
+          if (content_type == 3){
+            var p_id = parseInt(doc['content_id']);
+            if (doc['user']['uid'] == {{user.id}}){
+              if ((p_id in portfolios) == false){
+                document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+                portfolios.push(p_id);
+              }
+            }
+            if (p_id in portfolios_likes){
+              portfolios_likes[p_id] += 1;
+            }else{
+              portfolios_likes[p_id] = 1;
+            }
+          }
+        }
+      }
+
+      if(upcoming == false){
+        console.log("upcoming", upcoming);
+        var upcomingElement = document.getElementById("upcomingLike");
+        if (upcomingElement != null){
+          upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
+        }
+      }else{
+        document.getElementById("upcoming_likes").innerHTML = upcoming_likes;
+      }
+
+      var p_count = $('[id^=portfolioLike_]').length;
+      console.log("portfolios", portfolios);
+      for (var i = 0; i < p_count; i++){
+        var counter = i+1;
+        if (portfolios.indexOf(counter) == -1){
+          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
+        }else{
+          document.getElementById("portfolio_"+counter+"_likes").innerHTML = portfolios_likes[counter];
+      }  
+      }
+
+    });
+
+  socket.on('list upcoming likeusers', function(data){
+    if (data.uid == {{user.id}}){
+      var modal = document.getElementById('upcoming_likeModal');  
+      console.log("modal", modal);
+      modal.style.display = "block";
+      var content = document.getElementById('upcoming_like_users');  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#upcoming_like_users').append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  socket.on('list portfolio likeusers', function(data){
+    if (data.uid == {{user.id}}){
+      var p_id = data.p_id
+      var modal = document.getElementById('portfolio_likeModal_'+p_id);  
+      console.log("modal", modal);
+      modal.style.display = "block";
+      var content = document.getElementById('portfolio_like_users_'+p_id);  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#portfolio_like_users_'+p_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  function closePFLikeList(type, p_id){
+    console.log("close like list");
+    if (type == 0){
+      var span = document.getElementById('portfolio_likeClose_'+p_id);
+      var modal = document.getElementById('portfolio_likeModal_'+p_id);  
+    }else if (type == 1){
+      var span = document.getElementById('upcoming_likeClose');
+      var modal = document.getElementById('upcoming_likeModal');  
+    }
+    modal.style.display = "none";
+  }
+/*
     socket.on('like status at home', function(data){
       var upcoming = false;
       var portfolios = [];
@@ -1591,6 +1698,7 @@ function hatClicked(event,postid){
         }   
       }
     });
+*/
 
 	  socket.on('new portfolio comment', function(data){
       console.log('new portfolio comment on home');
@@ -1624,7 +1732,6 @@ function hatClicked(event,postid){
 					  var uid = docs[i]['user']['uid'];
 						var n  = users.indexOf(uid);
 						var data = docs[i];
-            console.log('data', data);
             var r_id = i;
 						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);

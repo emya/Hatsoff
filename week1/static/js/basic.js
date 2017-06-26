@@ -181,6 +181,15 @@ function submitcommentPFEdit(c_id, p_id, type){
   return false;
 }
 
+function getPFLikeusers(uid, type, p_id){
+  console.log("get pf likeusers");
+  if (type == 0){
+    socket.emit('get portfolio likeusers', {uid:uid, p_id:p_id});
+  }else if(type == 1){
+    socket.emit('get upcoming likeusers', {uid:uid});
+  }
+}
+
 function isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))

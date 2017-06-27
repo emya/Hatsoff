@@ -129,9 +129,9 @@ function myDropDownDelEditPFFunction(id) {
 function deletePFComment(uid, r_id, type, c_id){
   var clname, eid;
   if ( type == 0 ){
-    clname = 'pf_portfolio_'+r_id;
-    eid = 'pf_portfolio_'+uid;
-    socket.emit('delete portfolio comment', {c_id:c_id, r_id:r_id});
+    clname = 'pf_portfolio_'+c_id;
+    eid = 'portfolioComment_'+uid+'_'+r_id;
+    socket.emit('delete portfolio comment', c_id);
   } else if ( type == 1 ) {
     clname = 'pf_upcoming_'+r_id;
     eid = 'upcomingComment_'+uid;
@@ -142,7 +142,8 @@ function deletePFComment(uid, r_id, type, c_id){
 }
 
 function editPFComment(type, c_id){
-  var modalid = (type == 0) ? 'editModal_pf_portfolio_'+c_id+'_'+r_id : 'editModal_pf_up_'+c_id;
+  var modalid = (type == 0) ? 'editModal_pf_pf_'+c_id : 'editModal_pf_up_'+c_id;
+  console.log("modalid:", modalid);
   var modal = document.getElementById(modalid);  
   modal.style.display = "block";
 }
@@ -154,11 +155,18 @@ function closePFEdit(id){
   modal.style.display = "none";
 }
 
-function submitcommentPFEdit(c_id, r_id, type){
+function submitcommentPFEdit(c_id, p_id, type){
   var pid, post_val;
+  console.log(c_id, p_id, type);
 
   if ( type == 0 ){
-
+    pid =  '#post_text_pf_pf_'+c_id;
+    post_val = $(pid).val();
+    if (post_val.length != 0){
+      socket.emit('update portfolioComment', {msg:post_val, c_id:c_id });
+      document.getElementById("media-content_pf_pf_"+c_id).innerHTML = post_val;
+      closePFEdit('pf_pf_'+c_id);
+    }
   } else if ( type == 1 ){
     pid =  '#post_text_pf_up_'+c_id;
     post_val = $(pid).val();
@@ -171,6 +179,24 @@ function submitcommentPFEdit(c_id, r_id, type){
 
   $('#status_message').val('');
   return false;
+}
+
+function getPFLikeusers(uid, type, p_id){
+  console.log("get pf likeusers");
+  if (type == 0){
+    socket.emit('get portfolio likeusers', {uid:uid, p_id:p_id});
+  }else if(type == 1){
+    socket.emit('get upcoming likeusers', {uid:uid});
+  }
+}
+
+function getPFShareusers(uid, type, p_id){
+  console.log("get pf share users");
+  if (type == 0){
+    socket.emit('get portfolio shareusers', {uid:uid, p_id:p_id});
+  }else if(type == 1){
+    socket.emit('get upcoming shareusers', {uid:uid});
+  }
 }
 
 function isEmpty(obj) {

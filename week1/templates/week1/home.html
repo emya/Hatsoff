@@ -352,13 +352,14 @@ function hatClicked(event,postid){
                                 
                   <div class="actionbutton-container">
                     <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                    <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
+                    <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
+                    <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div-->
                     <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
                     <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
                   </div>
 
     	            <div class="well well-ssm">
-    		            <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+    		            <ul id="portfolioComment_{{user.id}}_{{forloop.counter}}" style="list-style-type:none;">
     		            </ul>
 
     		            <form class="form-horizontal" action="">
@@ -379,6 +380,8 @@ function hatClicked(event,postid){
 
 					    </blockquote>
 				    </div>
+            <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
+            <div id="portfolio_shareModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_shareClose_{{forloop.counter}}" onclick="closePFShareList(0, {{forloop.counter}})">&times;</span><h3>Users who shared</h3><div id="portfolio_share_users_{{forloop.counter}}"></div></div></div>
 
 	          {% else %}
 				    <div class="item">
@@ -491,7 +494,8 @@ function hatClicked(event,postid){
               <div class="actionbutton-container">
                                 <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div>
+                <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
+                <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div-->
                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
@@ -504,7 +508,7 @@ function hatClicked(event,postid){
 
               <div class="comment-container">
     	          <div class="well well-ssm">
-    		          <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+    		          <ul id="portfolioComment_{{user.id}}_{{forloop.counter}}" style="list-style-type:none;">
     		          </ul>
 
     		          <form class="form-horizontal" action="">
@@ -527,6 +531,8 @@ function hatClicked(event,postid){
 					</div-->
 					  </blockquote>
 				  </div>
+          <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
+          <div id="portfolio_shareModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_shareClose_{{forloop.counter}}" onclick="closePFShareList(0, {{forloop.counter}})">&times;</span><h3>Users who shared</h3><div id="portfolio_share_users_{{forloop.counter}}"></div></div></div>
 	                {% endif %}
 	                {% endfor %}
                 {% else %}
@@ -909,7 +915,8 @@ function hatClicked(event,postid){
       <div class="actionbutton-container">
             <!--div class="popupLike" onclick="likeFunction(2, 1)"><img src="{% static 'images/thumbsUp-02.png'%}" class="icons-img"></div-->
         <div id="upcomingLike" class="popupLike"></div> 
-        <div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div>
+        <div id="upcomingShare" class="popupLike"></div> 
+        <!--div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div-->
             <!-- <div class="popupHatsoff" id="hatsoffstatus_upcoming"></div> -->
         <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
     	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
@@ -1138,6 +1145,8 @@ function hatClicked(event,postid){
 	      </ul>
 	    </div-->
 	    {% endif %}
+      <div id="upcoming_likeModal" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closePFLikeList(1, 0)">&times;</span><h3>Users who liked</h3><div id="upcoming_like_users"></div></div></div>
+      <div id="upcoming_shareModal" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closePFShareList(1, 0)">&times;</span><h3>Users who shared</h3><div id="upcoming_share_users"></div></div></div>
 	</div>
 
 	<div class="timeline-container">
@@ -1222,11 +1231,11 @@ function hatClicked(event,postid){
 	    if (c_type == 2){
 			  socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				console.log('like upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"> <a class="icons-img like-btn activelike-btn" onclick="unlikeFunction(2, 1)"/></br></div>';
 	    }else if (c_type == 3){
 				socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
 				console.log('like portfolio');
-        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
+        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
 	    }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	  }
@@ -1237,21 +1246,36 @@ function hatClicked(event,postid){
       if (c_type == 2){
         socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
       }else if (c_type == 3){
         socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike portfolio');
-        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
+        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
       }
     }
 
-	      /*
-	      function popShare(){
-			 var popup = document.getElementById('sharePop');
-			 popup.classList.toggle('show');
-	      }
-	      */
+    function shareFunction(c_type, c_id){
+      if (c_type == 2){
+        socket.emit('share upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"> <a class="icons-img like-btn activelike-btn" onclick="unshareFunction(2, 1)"/></br></div>';
+      }else if (c_type == 3){
+        socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+c_id+')" /></br></div>';
+      }
+     //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+    }
 
+    function unshareFunction(c_type, c_id){
+      if (c_type == 2){
+        socket.emit('unshare upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"><a class="icons-img like-btn inactivelike-btn" onclick="shareFunction(2, 1)" /></br></div>';
+      }else if (c_type == 3){
+        socket.emit('unshare portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
+        document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+c_id+')"></br></div>';
+      }
+    }
+
+/*
 	  function shareFunction(c_type, c_id){
 			console.log('uid on share:'+c_type+':'+c_id);
 			//popShared();
@@ -1267,6 +1291,7 @@ function hatClicked(event,postid){
       }
 		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	  }
+*/
 
 	  function popShared(){
 	    var popHatsoff = document.getElementById("hatsoffPop");
@@ -1557,6 +1582,218 @@ function hatClicked(event,postid){
       return false;
     } 
 
+    socket.on('likes at home', function(data){
+      var upcoming = false;
+      var upcoming_likes = 0;
+      var portfolios = [];
+      var portfolios_likes = {};
+      if (data){
+        for (var i = 0; i < data.length; i++){
+          var doc = data[i];
+          var content_type = doc['content_type'];
+          if (content_type == 2){
+            if (doc['user']['uid'] == {{user.id}}){
+              document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)"></div>';
+              upcoming = true; 
+            }
+            upcoming_likes += 1; 
+          }
+          if (content_type == 3){
+            var p_id = parseInt(doc['content_id']);
+            if (doc['user']['uid'] == {{user.id}}){
+              document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+              if (portfolios.indexOf(p_id) == -1){
+                portfolios.push(p_id);
+              }
+            }
+            if (p_id in portfolios_likes){
+              portfolios_likes[p_id] += 1;
+            }else{
+              portfolios_likes[p_id] = 1;
+            }
+          }
+        }
+      }
+
+      if(upcoming == false){
+        console.log("upcoming", upcoming);
+        var upcomingElement = document.getElementById("upcomingLike");
+        if (upcomingElement != null){
+          upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
+        }
+      }else{
+        document.getElementById("upcoming_likes").innerHTML = upcoming_likes;
+      }
+
+      var p_count = $('[id^=portfolioLike_]').length;
+      console.log("portfolios", portfolios);
+      for (var i = 0; i < p_count; i++){
+        var counter = i+1;
+        if (portfolios.indexOf(counter) == -1){
+          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
+        }else{
+          document.getElementById("portfolio_"+counter+"_likes").innerHTML = portfolios_likes[counter];
+        }  
+      }
+    });
+
+    socket.on('shares at home', function(data){
+      var upcoming = false;
+      var upcoming_shares = 0;
+      var portfolios = [];
+      var portfolios_shares = {};
+      console.log("share data", data)
+      if (data){
+        for (var i = 0; i < data.length; i++){
+          var doc = data[i];
+          var content_type = doc['content_type'];
+          if (content_type == 2){
+            if (doc['user']['uid'] == {{user.id}}){
+              document.getElementById("upcomingShare").innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png' %}" class="icons-img" onclick="unshareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)"></div>';
+              upcoming = true; 
+            }
+            upcoming_shares += 1; 
+          }
+          if (content_type == 3){
+            var p_id = parseInt(doc['content_id']);
+            console.log("p_id", p_id);
+            console.log("portfolios", portfolios);
+            if (doc['user']['uid'] == {{user.id}}){
+              var elem = document.getElementById("portfolioShare_"+p_id);
+              if ( elem != undefined ){
+                elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+              }
+              if (portfolios.indexOf(p_id) == -1){
+                portfolios.push(p_id);
+              }
+            }
+            if (p_id in portfolios_shares){
+              portfolios_shares[p_id] += 1;
+            }else{
+              portfolios_shares[p_id] = 1;
+            }
+          }
+        }
+      }
+
+      if(upcoming == false){
+        console.log("upcoming", upcoming);
+        var upcomingElement = document.getElementById("upcomingShare");
+        if (upcomingElement != null){
+          upcomingElement.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
+        }
+      }else{
+        document.getElementById("upcoming_shares").innerHTML = upcoming_shares;
+      }
+
+      var p_count = $('[id^=portfolioShare_]').length;
+      console.log("portfolios", portfolios);
+      for (var i = 0; i < p_count; i++){
+        var counter = i+1;
+        console.log("counter", counter);
+        if (portfolios.indexOf(counter) == -1){
+          document.getElementById("portfolioShare_"+counter).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
+        }else{
+          var elem = document.getElementById("portfolio_"+counter+"_shares");
+          if (elem != undefined){
+            elem.innerHTML = portfolios_shares[counter];
+          }
+        }  
+      }
+    });
+
+  socket.on('list upcoming likeusers', function(data){
+    if (data.uid == {{user.id}}){
+      var modal = document.getElementById('upcoming_likeModal');  
+      console.log("modal", modal);
+      modal.style.display = "block";
+      var content = document.getElementById('upcoming_like_users');  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#upcoming_like_users').append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  socket.on('list portfolio likeusers', function(data){
+    if (data.uid == {{user.id}}){
+      var p_id = data.p_id
+      var modal = document.getElementById('portfolio_likeModal_'+p_id);  
+      console.log("modal", modal);
+      modal.style.display = "block";
+      var content = document.getElementById('portfolio_like_users_'+p_id);  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#portfolio_like_users_'+p_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  socket.on('list upcoming shareusers', function(data){
+    if (data.uid == {{user.id}}){
+      var modal = document.getElementById('upcoming_shareModal');  
+      modal.style.display = "block";
+      var content = document.getElementById('upcoming_share_users');  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#upcoming_share_users').append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  socket.on('list portfolio shareusers', function(data){
+    if (data.uid == {{user.id}}){
+      var p_id = data.p_id
+      var modal = document.getElementById('portfolio_shareModal_'+p_id);  
+      modal.style.display = "block";
+      var content = document.getElementById('portfolio_share_users_'+p_id);  
+      for (var i = 0; i < data.result.length; i++){
+        console.log(data.result[i]);
+        if(data.result[i]['user']){
+          var first = data.result[i]['user']['first_name'];
+          var last = data.result[i]['user']['last_name'];
+          $('#portfolio_share_users_'+p_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
+        }
+      } 
+    }
+  });
+
+  function closePFLikeList(type, p_id){
+    console.log("close like list");
+    if (type == 0){
+      var span = document.getElementById('portfolio_likeClose_'+p_id);
+      var modal = document.getElementById('portfolio_likeModal_'+p_id);  
+    }else if (type == 1){
+      var span = document.getElementById('upcoming_likeClose');
+      var modal = document.getElementById('upcoming_likeModal');  
+    }
+    modal.style.display = "none";
+  }
+
+  function closePFShareList(type, p_id){
+    console.log("close share list");
+    if (type == 0){
+      var span = document.getElementById('portfolio_shareClose_'+p_id);
+      var modal = document.getElementById('portfolio_shareModal_'+p_id);  
+    }else if (type == 1){
+      var span = document.getElementById('upcoming_shareClose');
+      var modal = document.getElementById('upcoming_shareModal');  
+    }
+    modal.style.display = "none";
+  }
+/*
     socket.on('like status at home', function(data){
       var upcoming = false;
       var portfolios = [];
@@ -1591,6 +1828,7 @@ function hatClicked(event,postid){
         }   
       }
     });
+*/
 
 	  socket.on('new portfolio comment', function(data){
       console.log('new portfolio comment on home');
@@ -1602,15 +1840,15 @@ function hatClicked(event,postid){
 
 		  if ( n != -1) {
 		    if (uid == {{user.id}}){
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    } else{
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    }
 		  }else{
 		    if (uid == {{user.id}}){
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    } else {
-		      $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		    }
 		  }
 	  });
@@ -1619,31 +1857,23 @@ function hatClicked(event,postid){
 	    for(var i = 0; i < docs.length; i++){
         if (docs[i]['p_id']) {
           var p_id = docs[i]['p_id'];
+          var c_id = docs[i]['_id'];
           if (docs[i]['user']['uid']){
 					  var uid = docs[i]['user']['uid'];
 						var n  = users.indexOf(uid);
 						var data = docs[i];
-            console.log('data', data);
             var r_id = i;
 						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditFunction(\''+p_id+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_pf_'+p_id+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+p_id+'\', \''+r_id+'\', 0)">Delete</a><a href="#" onclick="return editPFComment(\''+{{user.id}}+'\', \''+r_id+'\', 0)">Edit</a></div></div>' : '';
-            var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_portfolio_'+p_id+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+p_id+'_'+r_id+'" onclick="closeEdit(\''+p_id+'_'+r_id+'\')">&times;</span><div id="edit_homeportfolio_'+p_id+'_'+r_id+'"><textarea id="post_text_homeportfolio_'+p_id+'_'+r_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+p_id+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
+            var did = "myDelEditDropdown_pf_pf_"+p_id+'_'+r_id;
+
+            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+p_id+'\', 0, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(0, \''+c_id+'\')">Edit</a></div></div>' : '';
+            var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_pf_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_pf_'+c_id+'" onclick="closePFEdit(\'pf_pf_'+c_id+'\')">&times;</span><div id="edit_pf_pf_'+c_id+'"><textarea id="post_text_pf_pf_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+p_id+'\', 0)" align="right">Edit</button></div></div>' : '';
 
 						if ( n != -1) {
-              console.log('data content', data['content']);
-						  if (uid == {{user.id}}){
-                $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  } else{
-						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  }
+              $('#portfolioComment_'+{{user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
 						}else{
-              console.log('data content', data['content']);
-						  if (uid == {{user.id}}){
-						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  } else {
-						    $('#portfolioComment_'+p_id).prepend($('<li class="pf_pf_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><hr class="divider"/>'));
-						  }
+						  $('#portfolioComment_'+{{user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']*deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
 						}
 					}
         } else{
@@ -1684,6 +1914,7 @@ function hatClicked(event,postid){
           var did = "myDelEditDropdown_pf_"+{{user.id}}+'_'+r_id;
           var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+r_id+'\', 1, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(1, \''+c_id+'\')">Edit</a></div></div>' : '';
           var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_up_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_up_'+c_id+'" onclick="closePFEdit(\'pf_up_'+c_id+'\')">&times;</span><div id="edit_pf_up_'+c_id+'"><textarea id="post_text_pf_up_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+r_id+'\', 1)" align="right">Edit</button></div></div>' : '';
+
 
 			    if ( n != -1) {
 			      $('#upcomingComment_'+{{user.id}}).prepend($('<li class="pf_upcoming_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_up_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<br/><hr class="divider"/>'));

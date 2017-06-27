@@ -479,7 +479,7 @@
 
 							<div class="comment-container">
 		                        <div class="well well-ssm">
-			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+			                        <ul id="portfolioComment_{{t_user.id}}_{{forloop.counter}}" style="list-style-type:none;">
 			                        	
 			                        </ul>
 
@@ -621,7 +621,7 @@
 
 							<div class="comment-container">
 		                        <div class="well well-ssm">
-			                        <ul id="portfolioComment_{{forloop.counter}}" style="list-style-type:none;">
+			                        <ul id="portfolioComment_{{t_user.id}}_{{forloop.counter}}" style="list-style-type:none;">
 			                        	
 			                        </ul>
 
@@ -1760,13 +1760,9 @@
             					}
             				}
             			}
-
             		}
-
             	}
-
             }
-
 		  });
 
 		  socket.on('follow status', function(data){
@@ -1922,54 +1918,50 @@
 		    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 		    if ( n != -1) {
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+{{t_user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else{
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+{{t_user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 
 		    }else{
 		          if (uid == {{user.id}}){
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+{{t_user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          } else {
-		             $('#portfolioComment_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
+		             $('#portfolioComment_'+{{t_user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
 		          }
 		    }
 	      });
 
 	      socket.on('update portfolio comment', function(docs){
-            console.log('socket on portfolio comment:'+p_id);
 		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	        for(var i = 0; i < docs.length; i++){
                 if (docs[i]['p_id']) {
                     var p_id = docs[i]['p_id'];
+                    var c_id = docs[i]['_id'];
                     console.log('If!');
 		            if (docs[i]['user']['uid']){
 						var uid = docs[i]['user']['uid'];
+                        var r_id = i;
 						var n  = users.indexOf(uid);
 						var data = docs[i];
 						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-				if ( n != -1) {
-				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      } else{
-				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      }
+                        var did = "myDelEditDropdown_pf_pf_"+p_id+'_'+r_id;
 
-				}else{
-				      if (uid == {{user.id}}){
-				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'</br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      } else {
-				         $('#portfolioComment_'+p_id).prepend($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data['content']+'</p><br/><hr class="divider"/>'));
-				      }
-				}
-                          }
+                        var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{t_user.id}}+'\', \''+p_id+'\', 0, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(0, \''+c_id+'\')">Edit</a></div></div>' : '';
+                        var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_pf_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_pf_'+c_id+'" onclick="closePFEdit(\'pf_pf_'+c_id+'\')">&times;</span><div id="edit_pf_pf_'+c_id+'"><textarea id="post_text_pf_pf_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+p_id+'\', 0)" align="right">Edit</button></div></div>' : '';
 
-                      } else{
-                          console.log('Else!');
-                      }
-	          }
+                        if ( n != -1) {
+                          $('#portfolioComment_'+{{t_user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
+                        }else{
+                          $('#portfolioComment_'+{{t_user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']*deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
+                        }
+                    }
+                } else{
+                    console.log('Else!');
+                }
+	        }
 	      });
 
 

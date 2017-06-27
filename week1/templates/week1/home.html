@@ -1601,8 +1601,8 @@ function hatClicked(event,postid){
           if (content_type == 3){
             var p_id = parseInt(doc['content_id']);
             if (doc['user']['uid'] == {{user.id}}){
-              if ((p_id in portfolios) == false){
-                document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+              document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+              if (portfolios.indexOf(p_id) == -1){
                 portfolios.push(p_id);
               }
             }
@@ -1659,21 +1659,12 @@ function hatClicked(event,postid){
             console.log("p_id", p_id);
             console.log("portfolios", portfolios);
             if (doc['user']['uid'] == {{user.id}}){
+              var elem = document.getElementById("portfolioShare_"+p_id);
+              if ( elem != undefined ){
+                elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+              }
               if (portfolios.indexOf(p_id) == -1){
-                var elem = document.getElementById("portfolioShare_"+p_id);
-                if ( elem != undefined ){
-                  console.log("defined!", p_id);
-                  elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
-                }else{
-                  console.log("undefined!", p_id);
-                }
                 portfolios.push(p_id);
-              }else{
-                console.log("else!", p_id);
-                var elem = document.getElementById("portfolioShare_"+p_id);
-                if ( elem != undefined ){
-                  elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
-                }
               }
             }
             if (p_id in portfolios_shares){

@@ -1477,7 +1477,7 @@
              }else if(c_type == 3){//portflio
                 var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
                 if(elemprofile){
-                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';
+                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';
                     /*
                     elemprofile.innerHTML = '';
 
@@ -1495,22 +1495,22 @@
              if(c_type == 2){
                 var elemprofile = document.getElementById("hatsoffstatus_upcoming");
                 if (elemprofile){
-                   elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)" /></br></div>';
+                   elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)" /></br></div>';
                 }
                 /*
                 elemprofile.innerHTML = '';
 
-                $('#hatsoffstatus_upcoming').append($('<div class="popupHatsoff" onclick="hatsoffedFunction(2, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>'));
+                $('#hatsoffstatus_upcoming').append($('<div class="popupHatsoff" onclick="hatsoffedFunction(2, 1)"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"></div>'));
                 */
 
              }else if(c_type == 3){
                 var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
                 if(elemprofile){
-                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/2hats-01.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')" /></br></div>';
+                    elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')" /></br></div>';
                     /*
                     elemprofile.innerHTML = '';
 
-                    $('#hatsoffstatus_portfolio_'+c_id).append($('<div class="popupHatsoff" onclick="hatsoffedFunction(3, '+c_id+')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>'));
+                    $('#hatsoffstatus_portfolio_'+c_id).append($('<div class="popupHatsoff" onclick="hatsoffedFunction(3, '+c_id+')"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"></div>'));
                     */
 
                 }
@@ -1849,7 +1849,7 @@
 		  	if(flag2 == false){
 		  		var elemprofile = document.getElementById("hatsoffstatus_upcoming");
 		  		if(elemprofile){
-		  			elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></div>';
+		  			elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"></div>';
 		  		}
 		  	}
 
@@ -1859,7 +1859,7 @@
 		  			var c = i+1;
 		  			var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
 		  			if (elemprofile){
-		  				elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"></br></div>';
+		  				elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"></br></div>';
 		  			}
 
 		  		}
@@ -1867,7 +1867,7 @@
 
 		  	if(flag5 == false){
 		  		var elemprofile = document.getElementById("hatsoff-profile");
-		  		elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(5, 1)"><img src="{% static 'images/2hats-01.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
+		  		elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(5, 1)"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
 
 		  	}
 		  });

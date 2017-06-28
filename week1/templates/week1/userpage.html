@@ -1640,7 +1640,6 @@
             var post_val = $('#c_'+c_id).val();
                     
             if (post_val.length != 0){
-              console.log('comment:'+post_val);
               socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
 	          var m  = users.indexOf({{user.id}});
 	          var url_link = "{% url 'week1:get_profile' user.id %}";
@@ -1940,7 +1939,7 @@
                     var p_id = docs[i]['p_id'];
                     var c_id = docs[i]['_id'];
                     console.log('If!');
-		            if (docs[i]['user']['uid']){
+		            if (docs[i]['user'] && docs[i]['user']['uid']){
 						var uid = docs[i]['user']['uid'];
                         var r_id = i;
 						var n  = users.indexOf(uid);
@@ -1983,7 +1982,8 @@
             var r_id = i;
             var data = docs[i];
             var c_id = docs[i]['_id'];
-            if (data['user']['uid']){
+            console.log(data['user']);
+            if (data['user'] && data['user']['uid']){
               var uid = docs[i]['user']['uid'];
               var n  = users.indexOf(uid);
                 //var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
@@ -2042,7 +2042,7 @@
 	    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
         var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	    for(var i = 0; i < docs.length; i++){
-		if (docs[i]['from_user']['uid']){
+		if (docs[i]['from_user'] && docs[i]['from_user']['uid']){
 			var uid = docs[i]['from_user']['uid'];
 			var n  = users.indexOf(uid);
 			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);

@@ -1594,7 +1594,7 @@ function hatClicked(event,postid){
           var doc = data[i];
           var content_type = doc['content_type'];
           if (content_type == 2){
-            if (doc['user']['uid'] == {{user.id}}){
+            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
               document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)"></div>';
               upcoming = true; 
             }
@@ -1602,7 +1602,7 @@ function hatClicked(event,postid){
           }
           if (content_type == 3){
             var p_id = parseInt(doc['content_id']);
-            if (doc['user']['uid'] == {{user.id}}){
+            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
               document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
               if (portfolios.indexOf(p_id) == -1){
                 portfolios.push(p_id);
@@ -1650,7 +1650,7 @@ function hatClicked(event,postid){
           var doc = data[i];
           var content_type = doc['content_type'];
           if (content_type == 2){
-            if (doc['user']['uid'] == {{user.id}}){
+            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
               document.getElementById("upcomingShare").innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png' %}" class="icons-img" onclick="unshareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)"></div>';
               upcoming = true; 
             }
@@ -1660,7 +1660,7 @@ function hatClicked(event,postid){
             var p_id = parseInt(doc['content_id']);
             console.log("p_id", p_id);
             console.log("portfolios", portfolios);
-            if (doc['user']['uid'] == {{user.id}}){
+            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
               var elem = document.getElementById("portfolioShare_"+p_id);
               if ( elem != undefined ){
                 elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
@@ -1860,7 +1860,7 @@ function hatClicked(event,postid){
         if (docs[i]['p_id']) {
           var p_id = docs[i]['p_id'];
           var c_id = docs[i]['_id'];
-          if (docs[i]['user']['uid']){
+          if (docs[i]['user'] && docs[i]['user']['uid']){
 					  var uid = docs[i]['user']['uid'];
 						var n  = users.indexOf(uid);
 						var data = docs[i];
@@ -1908,7 +1908,7 @@ function hatClicked(event,postid){
         var r_id = i;
         var data = docs[i];
         var c_id = docs[i]['_id'];
-		    if (data['user']['uid']){
+		    if (data['user'] && data['user']['uid']){
 			    var uid = docs[i]['user']['uid'];
 			    var n  = users.indexOf(uid);
 			    //var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
@@ -2017,7 +2017,7 @@ function hatClicked(event,postid){
 						if (content['replys']) {
 	            var rdocs = content['replys'];
 	            for(var j=0; j < rdocs.length; j++){
-	              if (rdocs[j]['user']['uid']){
+	              if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
 	                var ruid = rdocs[j]['user']['uid']
 	                var m  = users.indexOf(ruid);
 	                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
@@ -2068,7 +2068,7 @@ function hatClicked(event,postid){
 						if (content['replys']) {
 	            var rdocs = content['replys'];
 	            for(var j=0; j < rdocs.length; j++){
-	              if (rdocs[j]['user']['uid']){
+	              if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
 	                var ruid = rdocs[j]['user']['uid']
 	                var m  = users.indexOf(ruid);
 	                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
@@ -2120,7 +2120,7 @@ function hatClicked(event,postid){
 					if (content['replys']) {
 	          var rdocs = content['replys'];
 	          for(var j=0; j < rdocs.length; j++){
-	            if (rdocs[j]['user']['uid']){
+	            if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
 	              var ruid = rdocs[j]['user']['uid']
 	              var m  = users.indexOf(ruid);
 	              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
@@ -2170,7 +2170,7 @@ function hatClicked(event,postid){
 					if (content['replys']) {
 	          var rdocs = content['replys'];
 	          for(var j=0; j < rdocs.length; j++){
-	            if (rdocs[j]['user']['uid']){
+	            if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
 	              var ruid = rdocs[j]['user']['uid']
 	              var m  = users.indexOf(ruid);
 	              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);

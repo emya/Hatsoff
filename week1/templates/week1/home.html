@@ -343,21 +343,14 @@ function hatClicked(event,postid){
 					                      
 					          </tr>
 				          </table>
-							    <!--ul style="list-style-type:none; padding-left:0px;">
-								<li>Title:{{showcase.title}}</li>
-								<li>Description:{{showcase.describe}}</li>
-								<li>Your role:{{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}</li>
-								<li>Year of completion:{{showcase.completion}}</li>
-							    </ul-->
                                 
                   <div class="actionbutton-container">
                     <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
 
                     <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
-                    <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div-->
-                    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_64x64.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
+                    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
 
-                    <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+                    <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
                   </div>
 
     	            <div class="well well-ssm">
@@ -494,18 +487,10 @@ function hatClicked(event,postid){
 	            <hr class="divider"/>
 
               <div class="actionbutton-container">
-                                <!--div class="popupLike" onclick="likeFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img"></div-->
                 <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
                 <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
-                <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div-->
-                               <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
                 <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
-                                <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
-    	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-    						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
-    						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
-    						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-    	         	<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
+    	         	<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="20px"></button><span class="popuptextCollaborate" id="collaboratePop">Collaborated<br></span></div>
               </div>
 
               <div class="comment-container">
@@ -611,9 +596,7 @@ function hatClicked(event,postid){
           {% endif %}
         </div>
 
-                <!-- Carousel Buttons Next/Prev -->
-                <!--a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a-->
+        <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a-->
         <a data-slide="prev" href="#quote-carousel" class="carousel-control left">&lsaquo;</a>
         <a data-slide="next" href="#quote-carousel" class="carousel-control right">&rsaquo;</a>
       </div>
@@ -915,15 +898,10 @@ function hatClicked(event,postid){
       <hr class="divider"/>
 
       <div class="actionbutton-container">
-            <!--div class="popupLike" onclick="likeFunction(2, 1)"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img"></div-->
         <div id="upcomingLike" class="popupLike"></div> 
         <div id="upcomingShare" class="popupLike"></div> 
-        <!--div class="popupShare" id="sharestatus_upcoming"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(2, 1)"></div-->
-            <!-- <div class="popupHatsoff" id="hatsoffstatus_upcoming"></div> -->
         <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
-    	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
-    		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
-        <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(2, 1)"><img src="{% static 'images/inactive_grey_collab_48x48.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
+        <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(2, 1)"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button><br><span class="popuptextCollaborate" id="collaboratePop">Collaborated</span></div>
 
       </div>
              
@@ -1125,27 +1103,6 @@ function hatClicked(event,postid){
 				</tr>  
 			</table>
 
-	    <!--div class="description-wrapper">
-              <ul>
-		        <li>Description:</li>
-		        <li>Your role:</li>
-		        <li>Status:</li>
-		        <li>Comment:</li>
-	      	  </ul>
-
-              <ul>
-	        <h4 align="center">Looking for</h4>
-            <li>Collaborators:</li>
-	        <li>Skills:</li>
-	        <li>Preferred city location of collaborator:</li>
-	        <li>Start date:</li>
-	        <li>End date:</li>
-	        <li>How often to work with collaborator:</li>
-	        <li>How to give back to collaborator:</li>
-	        <li>Funding:</li>
-	        <li>Comment:</li>
-	      </ul>
-	    </div-->
 	    {% endif %}
       <div id="upcoming_likeModal" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closePFLikeList(1, 0)">&times;</span><h3>Users who liked</h3><div id="upcoming_like_users"></div></div></div>
       <div id="upcoming_shareModal" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closePFShareList(1, 0)">&times;</span><h3>Users who shared</h3><div id="upcoming_share_users"></div></div></div>
@@ -1201,11 +1158,6 @@ function hatClicked(event,postid){
 
     var users = [{% for u in users %} {{ u }} ,{% endfor %}];
     var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-          /**
-	      socket.on('number thanks', function(count){
-                  document.getElementById("thanksNum").innerHTML = count;
-              });
-          **/
 	  socket.on('number hatsoff', function(count){
       document.getElementById("hatsoffNum").innerHTML = count;
     });
@@ -1239,7 +1191,6 @@ function hatClicked(event,postid){
 				console.log('like portfolio');
         document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
 	    }
-		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	  }
 
     function unlikeFunction(c_type, c_id){
@@ -1264,7 +1215,6 @@ function hatClicked(event,postid){
         socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+c_id+')" /></br></div>';
       }
-     //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
     }
 
     function unshareFunction(c_type, c_id){
@@ -1276,24 +1226,6 @@ function hatClicked(event,postid){
         document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+c_id+')"></br></div>';
       }
     }
-
-/*
-	  function shareFunction(c_type, c_id){
-			console.log('uid on share:'+c_type+':'+c_id);
-			//popShared();
-      if (c_type == 2){
-        shareUpcomingFunction({{user.id}}, c_id);
-        var share = document.getElementById("sharestatus_upcoming");
-        share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
-      }else if (c_type == 3){
-		    //socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        sharePortfolioFunction({{user.id}}, c_id);
-        var share = document.getElementById("sharestatus_portfolio_"+c_id);
-        share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img">';
-      }
-		 //socket.emit('share upcoming', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-	  }
-*/
 
 	  function popShared(){
 	    var popHatsoff = document.getElementById("hatsoffPop");
@@ -1332,19 +1264,6 @@ function hatClicked(event,postid){
 			popup.classList.toggle('show');
 	  }
 
-	      /*
-	      function popHatsoff(){
-			 var popup = document.getElementById('hatsoffPop');
-			 popup.classList.toggle('show');
-	      }
-
-	      function hatsoffFunction(c_type, c_id){
-			 console.log('hatsoff!');
-			 popGavehatsoff();
-			 socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
-	      }
-          */
-
     function hatsoffFunction(c_type, c_id){
       socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 
@@ -1357,7 +1276,6 @@ function hatClicked(event,postid){
         var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
         if(elemprofile){
           elemprofile.innerHTML = '<div class="popupLike"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';   
-
         }
       }else if(c_type == 5){
       }
@@ -1401,13 +1319,6 @@ function hatClicked(event,postid){
 			popup.style.visibility = "visible";
 			 //popup.classList.toggle('show');
 	  }
-
-	      /*
-	      function popFollow(){
-			 var popup = document.getElementById('followPop');
-			 popup.classList.toggle('show');
-	      }
-	      */
 
 	  function followFunction(){
 			console.log('follow!');
@@ -1795,42 +1706,6 @@ function hatClicked(event,postid){
     }
     modal.style.display = "none";
   }
-/*
-    socket.on('like status at home', function(data){
-      var upcoming = false;
-      var portfolios = [];
-      if (data){
-        for (var i = 0; i < data.length; i++){
-          var doc = data[i];
-          var content_type = doc['content_type'];
-          if (content_type == 2){
-            document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
-            upcoming = true; 
-          }
-          if (content_type == 3){
-            var p_id = parseInt(doc['content_id']);
-            document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
-            portfolios.push(p_id);
-          }
-        }
-      }
-
-      if(upcoming == false){
-        var upcomingElement = document.getElementById("upcomingLike");
-        if (upcomingElement != null){
-          upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
-        }
-      }
-
-      var p_count = $('[id^=portfolioLike_]').length;
-      for (var i = 0; i < p_count; i++){
-        var counter = i+1;
-        if (portfolios.indexOf(counter) == -1){
-          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
-        }   
-      }
-    });
-*/
 
 	  socket.on('new portfolio comment', function(data){
       console.log('new portfolio comment on home');
@@ -1869,7 +1744,7 @@ function hatClicked(event,postid){
 						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
             var did = "myDelEditDropdown_pf_pf_"+p_id+'_'+r_id;
 
-            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+p_id+'\', 0, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(0, \''+c_id+'\')">Edit</a></div></div>' : '';
+            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+p_id+'\', 0, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(0, \''+c_id+'\')">Edit</a></div></div>' : '';
             var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_pf_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_pf_'+c_id+'" onclick="closePFEdit(\'pf_pf_'+c_id+'\')">&times;</span><div id="edit_pf_pf_'+c_id+'"><textarea id="post_text_pf_pf_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+p_id+'\', 0)" align="right">Edit</button></div></div>' : '';
 
 						if ( n != -1) {
@@ -1914,7 +1789,7 @@ function hatClicked(event,postid){
 			    //var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
 			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
           var did = "myDelEditDropdown_pf_"+{{user.id}}+'_'+r_id;
-          var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+r_id+'\', 1, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(1, \''+c_id+'\')">Edit</a></div></div>' : '';
+          var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+r_id+'\', 1, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(1, \''+c_id+'\')">Edit</a></div></div>' : '';
           var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_up_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_up_'+c_id+'" onclick="closePFEdit(\'pf_up_'+c_id+'\')">&times;</span><div id="edit_pf_up_'+c_id+'"><textarea id="post_text_pf_up_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+r_id+'\', 1)" align="right">Edit</button></div></div>' : '';
 
 
@@ -1936,8 +1811,6 @@ function hatClicked(event,postid){
     }
 
 	  socket.on('update comment', function(docs){
-	    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-        //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 	    for(var i = 0; i < docs.length; i++){
 			  if (docs[i]['from_user']['uid']){
 				  var uid = docs[i]['from_user']['uid'];

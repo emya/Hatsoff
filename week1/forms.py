@@ -48,7 +48,7 @@ class LoginForm(forms.Form):
             userexist = User.objects.get(username=username)
             user = authenticate(username=username, password=password)
             if not user or not user.is_active:
-                raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+                raise forms.ValidationError("Please check that your username or password is correct.")
         except User.DoesNotExist:
             raise forms.ValidationError("Sorry, Your email is not registered. Please sign up.")
         return self.cleaned_data
@@ -125,7 +125,7 @@ class Step4(forms.ModelForm):
                     try:
                         validate(url)
                     except ValidationError, e:
-                        raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+                        raise forms.ValidationError("Please check that your username or password is correct.")
         return cleaned_data
 
 class Step5(forms.ModelForm):

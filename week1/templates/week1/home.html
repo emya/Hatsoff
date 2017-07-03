@@ -1195,7 +1195,6 @@ function hatClicked(event,postid){
 
     function unlikeFunction(c_type, c_id){
       console.log('uid on like:'+c_type+':'+c_id);
-      //popLike();
       if (c_type == 2){
         socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike upcoming');
@@ -1506,7 +1505,7 @@ function hatClicked(event,postid){
           var content_type = doc['content_type'];
           if (content_type == 2){
             if (doc['user'] && doc['user']['uid'] == {{user.id}}){
-              document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)"></div>';
+              document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)"></div>';
               upcoming = true; 
             }
             upcoming_likes += 1; 
@@ -1514,7 +1513,7 @@ function hatClicked(event,postid){
           if (content_type == 3){
             var p_id = parseInt(doc['content_id']);
             if (doc['user'] && doc['user']['uid'] == {{user.id}}){
-              document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
+              document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
               if (portfolios.indexOf(p_id) == -1){
                 portfolios.push(p_id);
               }
@@ -1532,7 +1531,7 @@ function hatClicked(event,postid){
         console.log("upcoming", upcoming);
         var upcomingElement = document.getElementById("upcomingLike");
         if (upcomingElement != null){
-          upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
+          upcomingElement.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
         }
       }else{
         document.getElementById("upcoming_likes").innerHTML = upcoming_likes;
@@ -1543,7 +1542,7 @@ function hatClicked(event,postid){
       for (var i = 0; i < p_count; i++){
         var counter = i+1;
         if (portfolios.indexOf(counter) == -1){
-          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
+          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
         }else{
           document.getElementById("portfolio_"+counter+"_likes").innerHTML = portfolios_likes[counter];
         }  
@@ -1854,7 +1853,7 @@ function hatClicked(event,postid){
 
           if (t_share > t_community){
  						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
+						var like = '<div class="popupLike"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 						var uid = sharedocs[i_share]['to_uid'];
 			      var content = sharedocs[i_share]['content'];
 			      var c_id = sharedocs[i_share]['_id'];
@@ -1907,7 +1906,7 @@ function hatClicked(event,postid){
             var uid = {{user.id}};
 			      var content = communitydocs[i_community];
  						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
+						var like = '<div class="popupLike"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);
             var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
@@ -1958,7 +1957,7 @@ function hatClicked(event,postid){
 
         }else if(i_share < len_share){
  					var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-					var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
+					var like = '<div class="popupLike"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
 					var uid = sharedocs[i_share]['to_uid'];
 			    var content = sharedocs[i_share]['content'];
 			    var c_id = sharedocs[i_share]['_id'];
@@ -2010,7 +2009,7 @@ function hatClicked(event,postid){
 					var uid = {{user.id}};
 			    var content = communitydocs[i_community];
  					var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-					var like = '<div class="popupLike" onclick="popLike()"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
+					var like = '<div class="popupLike"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
 					var c_id = content['_id'];
 					var n  = users.indexOf(uid);
           var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';

@@ -593,7 +593,7 @@
 	                        <hr class="divider"/>
 
 						    <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-							<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
+							<div class="popupLike"><button onclick="likeFunction(3, {{forloop.counter}})">Like</button><br><span class="popuptextLike" id="likePop">You Liked it<br></span></div>
 						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
                             <div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div>
                             <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div>
@@ -1324,11 +1324,11 @@
 			    socket.emit('like upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like upcoming');
 			    //<img src="{% static 'images/hat.png'%}" class="icons-img">
-			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></div>';
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)" /></div>';
             }else if (c_type == 3){
 			    socket.emit('like portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('like portfolio');
-			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></div>';
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1340,11 +1340,11 @@
             if (c_type == 2){
 			    socket.emit('unlike upcoming', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('unlike upcoming');
-			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></div>';
+			    document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></div>';
             }else if (c_type == 3){
 			    socket.emit('unlike portfolio', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id});
 			    console.log('unlike portfolio');
-			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></div>';
+			    document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></div>';
             }
 		 //socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
 	      }
@@ -1670,13 +1670,13 @@
           			var doc = data[i];
           			var content_type = doc['content_type'];
           			if (content_type == 2){
-          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
+          				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
           				upcoming = true; 
           			}
           			console.log("content_type:", content_type);
           			if (content_type == 3){
           				var p_id = parseInt(doc['content_id']);
-          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
+          				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
           				portfolios.push(p_id);
           			}
           		}
@@ -1685,7 +1685,7 @@
           	if(upcoming == false){
           		var upcomingElement = document.getElementById("upcomingLike");
           		if (upcomingElement != null){
-          			upcomingElement.innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
+          			upcomingElement.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div>';
 
           		}
           	}
@@ -1694,7 +1694,7 @@
           	for (var i = 0; i < p_count; i++){
           		var counter = i+1;
           		if (portfolios.indexOf(counter) == -1){
-          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike" onclick="popLike()"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
+          			document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div>';
           		}	
           	}
           });
@@ -2060,7 +2060,7 @@
                        if (t_share > t_community){
                        	  //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
  						  var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></div>';
+						  var like = '<div class="popupLike"><button onclick="likeFunction(4, 1)">Like</button></div>';
 						  var uid = sharedocs[i_share]['to_uid'];
 			              var content = sharedocs[i_share]['content'];
 			              var c_id = sharedocs[i_share]['_id'];
@@ -2116,7 +2116,7 @@
 			              var content = communitydocs[i_community];
                        	  //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
  						  var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp</div>';
-						  var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></div>';
+						  var like = '<div class="popupLike"><button onclick="likeFunction(1, 1)">Like</button></div>';
 
 						  var c_id = content['_id'];
 						  var n  = users.indexOf(uid);
@@ -2174,7 +2174,7 @@
 
 						//var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(4, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
  						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(4, 1)">Like</button></br></div>';
+						var like = '<div class="popupLike"><button onclick="likeFunction(4, 1)">Like</button></br></div>';
 						var uid = sharedocs[i_share]['to_uid'];
 			            var content = sharedocs[i_share]['content'];
 			            var c_id = sharedocs[i_share]['_id'];
@@ -2232,7 +2232,7 @@
 			            var content = communitydocs[i_community];
  						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
                        	//var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(1, 1)" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>';
-						var like = '<div class="popupLike" onclick="popLike()"><button onclick="likeFunction(1, 1)">Like</button></div>';
+						var like = '<div class="popupLike"><button onclick="likeFunction(1, 1)">Like</button></div>';
 
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);

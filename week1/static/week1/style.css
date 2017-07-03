@@ -801,6 +801,10 @@ to here
    line-height: 1.4;
 }
 
+#home-main .tableLabel.center{
+   width: auto;
+}
+
 .tableValue{
 width: 500px
 }

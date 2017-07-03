@@ -139,7 +139,6 @@ def about(request):
 
                 #template = loader.get_template('week1/discover.html')
                 return render_to_response('week1/about.html', variables, )
-        
 
         elif 'signup' in request.POST:
             form = RegistrationForm(request.POST)

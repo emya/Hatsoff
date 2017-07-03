@@ -1598,7 +1598,6 @@ io.on('connection', function(socket){
         post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
         post.save(function (err) {
           if (!err) {
-            console.log('Success!');
             io.emit('new reply community', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
           }
         });
@@ -1632,8 +1631,6 @@ io.on('connection', function(socket){
     newPost.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved:');
       }
     });
 
@@ -1655,8 +1652,6 @@ io.on('connection', function(socket){
     newPost.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved:');
       }
     });
 
@@ -1665,8 +1660,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved:');
       }
     }); 
     
@@ -1692,8 +1685,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        //console.log('saved:');
       }
     });
   });
@@ -1743,8 +1734,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        //console.log('saved:');
       }
     });
   });
@@ -1816,12 +1805,8 @@ io.on('connection', function(socket){
                 })
               }
             });
-
-          }else{
-            console.log("status:"+result.status); 
           }
          }
-
       }
     });
 
@@ -1830,8 +1815,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('notification saved:');
       }
     });
   });
@@ -1882,8 +1865,6 @@ io.on('connection', function(socket){
         doc.save(callback);
       }
     });
-
-    console.log('unlike community');
   });
 
   socket.on('like community', function(data, callback){
@@ -1915,8 +1896,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved notification:');
       }
     });
   });
@@ -1929,7 +1908,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:4});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:4, content_type:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -1942,8 +1920,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved notification:');
       }
     });
   });
@@ -1964,7 +1940,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:4});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:4, content_type:3, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -2012,8 +1987,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved notification:');
       }
     });
 
@@ -2028,9 +2001,6 @@ io.on('connection', function(socket){
         newPost.save(function(error, newpost){
           if (error) {
             console.log(error);
-          } else{
-            console.log('saved:'+newpost);
-              //io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
           }
         });
       }
@@ -2038,7 +2008,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('share upcoming', function(data, callback){
-    console.log("share upcoming");
     var d = new Date();
     
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
@@ -2139,7 +2108,6 @@ io.on('connection', function(socket){
 
 
   socket.on('post comment', function(data, callback){
-    console.log('post aomment');
     var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newComment.save(function(err){
@@ -2185,7 +2153,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('update postComment', function(data){
-    console.log("update postComment", data);
     CommunityPost.findById(data.c_id, function(err, doc){
       if (err) console.log(err);
 
@@ -2240,7 +2207,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('upcoming comment', function(data, callback){
-    console.log('upcoming comment');
     var d = new Date();
     
     var newPost = new UpcomingPost({content:data.msg, to_uid:data.to, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -2248,7 +2214,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved');
         if (users[data.to]) {
             users[data.to].emit('new upcoming comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         }
@@ -2262,7 +2227,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('portfolio comment', function(data, callback){
-    console.log('portfolio comment');
     var d = new Date();
     
     var newPost = new PortfolioPost({content:data.msg, to_uid:data.to, p_id:data.p_id, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -2344,9 +2308,6 @@ io.on('connection', function(socket){
                 })
               }
             });
-
-          }else{
-            console.log("status:"+result.status); 
           }
          }
       }
@@ -2642,8 +2603,6 @@ io.on('connection', function(socket){
 
     delete chatusers[socket.uid];
     updatechatUids();
-
-    console.log('user disconnected');
   });
 });
 

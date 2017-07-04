@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth import authenticate
 
 from django.core.validators import URLValidator
@@ -276,3 +276,22 @@ class FeedbackForm(forms.ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         return cleaned_data
+
+class ValidatingPasswordChangeForm(SetPasswordForm):
+    def clean_new_password2(self):
+        MIN_LENGTH = 8
+        MIN_NUMBER = 2
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                )
+            if len(password1) < MIN_LENGTH:
+                raise forms.ValidationError(_("The new password must be at least %d characters long." % MIN_LENGTH))
+            if sum(p.isdigit() for p in password1) < MIN_NUMBER:
+                raise forms.ValidationError(_("The new password must include at least %d numbers." % MIN_NUMBER))
+        password_validation.validate_password(password2, self.user)
+        return password2

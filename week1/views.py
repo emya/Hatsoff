@@ -26,7 +26,7 @@ from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 
 from .models import Profile, Hatsoff, FavoriteFolder, Showcase, UpcomingWork, Profession, Feedback
-from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm, FeedbackForm
+from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhoto, Step1, Step2, Step3, Step4, Step5, Step6, Step7, PersonalInfo, ProfessionForm, FeedbackForm, ValidatingPasswordChangeForm
 
 # Create your views here.
 #@csrf_exempt
@@ -1255,7 +1255,7 @@ def home_edit_upcoming(request):
     return render_to_response('week1/homeedit_upcoming.html', variables, )
 
 def reset_confirm(request, uidb64=None, token=None):
-    return password_reset_confirm(request, template_name='week1/password_reset_confirm.html', uidb64=uidb64, token=token, set_password_form=SetPasswordForm, post_reset_redirect='/week1/')
+    return password_reset_confirm(request, template_name='week1/password_reset_confirm.html', uidb64=uidb64, token=token, set_password_form=ValidatingPasswordChangeForm, post_reset_redirect='/week1/')
 
 @csrf_protect
 def reset(request):
@@ -1274,18 +1274,13 @@ def reset(request):
             else:
                 request.user = User.objects.get(username=validemail)
                 password_reset(request, from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', subject_template_name='week1/password_reset_subject.txt', template_name='week1/password_reset_form.html', post_reset_redirect='week1/reset_sent/')
-                print "password sent", request.user
-                print "password email", request.user.email
-                #form.save(from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', request=request)
                 return render_to_response('week1/password_reset_email_sent.html')
 
     else:
-        #form = ForgotPasswordForm()
         form = PasswordResetForm()
 
     variables = RequestContext(request, {'form':form, 'message':message})
 
-    #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/password_reset.html', variables, )
 
 def reset_sent(request):

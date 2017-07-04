@@ -955,16 +955,16 @@ window.onclick = function(event) {
 
                       var share = '';
                       if (sharels.indexOf(c_id) != -1){
-                        share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_grey_hat_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
+                        share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
                       }else{
-                        share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
+                        share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
                       }
 
                       var hatsoff = '';
                       if (hatsoffls.indexOf(c_id) != -1){
                         hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                       }else{
-                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                       }
                       var shareskill = '';
                       var collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div>';
@@ -1075,7 +1075,7 @@ window.onclick = function(event) {
                         if (hatsoffls.indexOf(content_id) != -1){
                           hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
                         }else{
-                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
                         }
 
                         collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+content_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div>';

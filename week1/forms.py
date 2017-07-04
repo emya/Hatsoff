@@ -276,16 +276,3 @@ class FeedbackForm(forms.ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         return cleaned_data
-"""
-class Funfact(forms.Form):
-    funaboutyou = forms.CharField(max_length=200, required=False)
-    hobby = forms.CharField(max_length=200, required=False)
-    fQuote = forms.CharField(max_length=200, required=False)
-    fFilm = forms.CharField(max_length=200, required=False)
-    fTV = forms.CharField(max_length=200, required=False)
-    fYoutube= forms.CharField(max_length=200, required=False)
-    fBook= forms.CharField(max_length=200, required=False)
-
-class PersonalPhoto(forms.Form):
-    photo = forms.ImageField(required=False)
-"""

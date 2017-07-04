@@ -15,6 +15,7 @@ urlpatterns = [
     #url(r'^edit/$', views.home_edit, name='homeedit'),
     url(r'^reset/$', views.reset, name='reset'),
     url(r'^reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', views.reset_confirm, name='reset_confirm'),
+    url(r'^reset/sent$', views.reset_sent, name='reset_sent'),
     url(r'^welcome/$', views.welcome, name='welcome'),#temporary
     url(r'^step1/$', views.step1, name='step1'),
     url(r'^step2/$', views.step2, name='step2'),

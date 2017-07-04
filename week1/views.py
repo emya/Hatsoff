@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.decorators.csrf import requires_csrf_token, ensure_csrf_cookie
 
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 
 from django.core.urlresolvers import reverse
 from django.contrib.auth.views import password_reset, password_reset_confirm
@@ -76,6 +76,7 @@ def index(request):
 
                 user = User.objects.create_user(
                      username = username,
+                     email = username,
                      first_name = first_name,
                      last_name = last_name,
                      password = password,
@@ -150,6 +151,7 @@ def about(request):
 
                 user = User.objects.create_user(
                      username = username,
+                     email = username,
                      first_name = first_name,
                      last_name = last_name,
                      password = password,
@@ -219,6 +221,7 @@ def signup(request):
 
             user = User.objects.create_user(
                  username = username,
+                 email = username,
                  first_name = first_name,
                  last_name = last_name,
                  password = password,
@@ -1252,10 +1255,7 @@ def home_edit_upcoming(request):
     return render_to_response('week1/homeedit_upcoming.html', variables, )
 
 def reset_confirm(request, uidb64=None, token=None):
-    if uidb64 != None and token != None:
-        print "uidb", uidb64
-        print "token", token
-    return password_reset_confirm(request, template_name='week1/password_reset_confirm.html', uidb64=uidb64, token=token, set_password_form=SetPasswordForm, post_reset_redirect='/week1/login/')
+    return password_reset_confirm(request, template_name='week1/password_reset_confirm.html', uidb64=uidb64, token=token, set_password_form=SetPasswordForm, post_reset_redirect='/week1/')
 
 @csrf_protect
 def reset(request):
@@ -1272,7 +1272,10 @@ def reset(request):
                 message.append("The email is not registered.")
 
             else:
-                password_reset(request, from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', subject_template_name=None, template_name=None, post_reset_redirect='week1/password_reset_email_sent.html')
+                request.user = User.objects.get(username=validemail)
+                password_reset(request, from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', subject_template_name='week1/password_reset_subject.txt', template_name='week1/password_reset_form.html', post_reset_redirect='week1/reset_sent/')
+                print "password sent", request.user
+                print "password email", request.user.email
                 #form.save(from_email='MatchHat.tmp@gmail.com', email_template_name='week1/password_reset_email.html', request=request)
                 return render_to_response('week1/password_reset_email_sent.html')
 
@@ -1284,6 +1287,9 @@ def reset(request):
 
     #template = loader.get_template('week1/discover.html')
     return render_to_response('week1/password_reset.html', variables, )
+
+def reset_sent(request):
+    return render_to_response('week1/password_reset_email_sent.html', request)
 
 @login_required
 def results_search(request, query):

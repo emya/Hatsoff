@@ -948,14 +948,14 @@ window.onclick = function(event) {
                       var like = '<hr class="divider"/>';
                       if (likels.indexOf(c_id) != -1){
                         //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
-                        like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/active_grey_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
+                        like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
                       }else{
                         like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
                       }
 
                       var share = '';
                       if (sharels.indexOf(c_id) != -1){
-                        share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
+                        share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
                       }else{
                         share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
                       }
@@ -1059,14 +1059,14 @@ window.onclick = function(event) {
                         like = '<hr class="divider"/>';
                         if (likels.indexOf(content_id) != -1){
                         //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
-                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/active_grey_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+content_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+content_id+'\')">'+count_likes+'</div></div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+content_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+content_id+'\')">'+count_likes+'</div></div>';
                         }else{
                           like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+content_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+content_id+'\')">'+count_likes+'</div></div>';
                         }
 
                         share = '';
                         if (sharels.indexOf(content_id) != -1){
-                          share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
+                          share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
                         }else{
                           share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+content_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
                         }

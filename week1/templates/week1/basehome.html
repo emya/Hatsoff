@@ -80,7 +80,7 @@
 				<a href="{% url 'week1:home' %}">{{user.first_name}}</a>
 				<img src="{% static 'images/profileimage.png'%}" class="profile_img">
 				{% endif %}
-				<a href="{% url 'week1:logout' %}">Log out</a>
+				<a href="{% url 'week1:logout' %}" onclick="logoutFunction()">Log out</a>
 			</div>
 	   </div>
             

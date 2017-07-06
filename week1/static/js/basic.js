@@ -44,6 +44,11 @@ socket.on('new community member', function(){
 	document.getElementById('num-cmembers').innerHTML = cmembers+1;
 });
 
+function logoutFunction() {
+    console.log("logout");
+    localStorage.removeItem("num-cmembers");
+}
+
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function sharePortfolioFunction(uid, c_id){

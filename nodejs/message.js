@@ -300,7 +300,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('join community', function(data){
-    console.log('join community');
     var query = CommunityPost.find({});
     /*
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -643,7 +642,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at collaborators you need', function(data){
-    console.log('at community needs you');
 
     db.each("SELECT collaborator1, collaborator2, collaborator3, collaborator4, collaborator5, collaborator_skill1, collaborator_skill2, collaborator_skill3, collaborator_skill4, collaborator_skill5, collaborator_skill6, collaborator_skill7, collaborator_skill8, collaborator_skill9, collaborator_skill10 FROM week1_upcomingwork where user_id=? limit 1", socket.uid, function(err, row) {
         if(err){
@@ -924,7 +922,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at home', function(data){
-    console.log("at home");
 
     var query = CommentPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -1852,6 +1849,50 @@ io.on('connection', function(socket){
   socket.on('get portfolio shareusers', function(data){
     SharePost.find({'content_type':3, 'content_id':data.p_id, to_uid:data.uid}).exec(function(err, docs){
       socket.emit('list portfolio shareusers', {uid:data.uid, result:docs, p_id:data.p_id});
+    });
+  });
+
+  socket.on('unshare community', function(data, callback){
+    SharePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      if (doc.likes > 0){
+        doc.shares -= 1;
+        doc.save(callback);
+      }
+    });
+  });
+
+  socket.on('share community', function(data, callback){
+    var d = new Date();
+    
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:1, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:5});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      doc.shares += 1;
+      doc.save(callback);
+    });
+
+    var newNotification = new NotificationPost({action_id:5, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      }
     });
   });
 

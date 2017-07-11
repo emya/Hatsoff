@@ -191,14 +191,6 @@ window.onclick = function(event) {
 	        }
           */
 
-          function shareFunction(uid, c_id){
-            console.log('uid on share:'+uid+':'+c_id);
-            //popShared();
-	          socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
-            var share = document.getElementById("share_"+c_id);
-            share.innerHTML = "Shared &nbsp";
-          }
-
           function popShared(){
             var popHatsoff = document.getElementById("hatsoffPop");
             if(popHatsoff != null){
@@ -740,10 +732,8 @@ window.onclick = function(event) {
               var follow = '<div class="popupLike" onclick="followFunction('+uid+')">Follow</div>';
               //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
               var thanks = '';
-              var share = '<div class="popupLike" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
-              //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
+              var share = '<div class="popupLike" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
-              //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
               var collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"></div>';
               var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
@@ -807,8 +797,7 @@ window.onclick = function(event) {
               var follow = '<div class="popupLike" onclick="followFunction('+uid+')">Follow</div>';
               //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
               var thanks = '';
-              var share = '<div class="popupLike" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
-              //var share = '<div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this post on your messageboard?</br><button onclick="shareFunction(\''+uid+'\',\''+c_id+'\')" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">You shared!</span></div>';
+              var share = '<div class="popupLike" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
               //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
               var collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"></div>';
@@ -957,7 +946,7 @@ window.onclick = function(event) {
                       if (sharels.indexOf(c_id) != -1){
                         share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
                       }else{
-                        share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
+                        share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
                       }
 
                       var hatsoff = '';
@@ -1068,7 +1057,7 @@ window.onclick = function(event) {
                         if (sharels.indexOf(content_id) != -1){
                           share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
                         }else{
-                          share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareFunction(\''+uid+'\',\''+content_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
+                          share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareCommunityFunction(\''+uid+'\',\''+content_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
                         }
 
                         hatsoff = '';
@@ -1107,7 +1096,7 @@ window.onclick = function(event) {
                       var imageText = '';
 
                       if (docs[i]['image'] && docs[i]['image']['data']){
-                        var bytes = new Uint8Array(docs[i]['image']['data']['data']);
+                        var bytes = new Uint8Array(docs[i]['image']['data']);
                         var enc = encode(bytes);
                         var ctype = docs[i]['image']['contentType'];
                         imageText = '<embed id="ItemPreview_'+c_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';

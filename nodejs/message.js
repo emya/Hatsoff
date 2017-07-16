@@ -916,9 +916,6 @@ io.on('connection', function(socket){
       portfoliodocs = docs;
       //socket.emit('update portfolio comment history', docs);
     }); 
-
-
-
   });
 
   socket.on('at home', function(data){
@@ -1018,7 +1015,6 @@ io.on('connection', function(socket){
     				      });
     			     },
     			     function(post){
-        				 console.log("second");
         				 docs.set('content', post.toJSON(), {strict: false});
         				 newdocs.push(docs);
         				 //console.log("****newdocs****:"+newdocs);
@@ -1577,7 +1573,6 @@ io.on('connection', function(socket){
               if (friends[i] in users){
                 users[friends[i]].emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
               }
-
             }
           }
         });
@@ -2066,6 +2061,32 @@ io.on('connection', function(socket){
       }
     });
 
+    db.serialize(function() {
+      //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
+      db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_upcomingwork s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
+        if (err) console.log("error", err);
+        if(row){
+          newPost = new CommunityPost({ upcoming:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
+          newPost.save(function(err, post){
+            if (err) console.log(err);
+
+            CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+              if(result){
+                var friends = result.friends;
+
+                for (var i = 0; i < friends.length; i++){
+                  if (friends[i] in users){
+                    users[friends[i]].emit('new share', { type: 'upcoming', content :{community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
+                    socket.emit('new share', { type: 'upcoming', content :{community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
+                  }
+                }
+              }
+            });
+          });
+        }
+      });
+    });
+
     var newNotification = new NotificationPost({action_id:5, content_type:2, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
@@ -2090,48 +2111,23 @@ io.on('connection', function(socket){
         if (err) console.log("error", err);
         if(row){
           newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-           newPost.save(function(err, post){
-            if (err) {
-              console.log(err);
-            } else{
-            }
+          newPost.save(function(err, post){
+            if (err) console.log(err);
+
+            CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+              if(result){
+                var friends = result.friends;
+
+                for (var i = 0; i < friends.length; i++){
+                  if (friends[i] in users){
+                    users[friends[i]].emit('new share', { type: 'portfolio', content: {community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
+                    socket.emit('new share', { type: 'portfolio', content: {community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
+                  }
+                }
+              }
+            });
           });
         }
-        
-      });
-    });
-
-    var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
-
-    newNotification.save(function(err){
-      if (err) {
-        console.log(err);
-      } else{
-        console.log('saved notification:');
-      }
-    });
-
-  });
-
-  socket.on('share upcoming', function(data, callback){
-    var d = new Date();
-
-    //var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
-
-    db.serialize(function() {
-      //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
-      db.each("SELECT a.first_name, a.last_name, w.title, w.image, w.describe FROM week1_upcomingwork w, auth_user a WHERE w.user_id='"+data.to_uid+"' AND w.number='"+data.content_id+"' AND w.user_id=a.id GROUP BY w.user_id", function(err, row){
-        if (err) console.log("error", err);
-        if(row){
-          newPost = new CommunityPost({ upcoming:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-           newPost.save(function(err, post){
-            if (err) {
-              console.log(err);
-            } else{
-            }
-          });
-        }
-        
       });
     });
 

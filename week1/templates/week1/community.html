@@ -701,6 +701,32 @@ window.onclick = function(event) {
               }
           });
 
+          socket.on('new share', function(data){
+            var content = data.content;
+            var c_id = content.community_id;
+
+            var imageText = '';
+            if (content.image){
+              imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+content.image+'" width="350px" /></object>';
+            }
+
+            var uid = data.sharedBy; 
+            if(uid == {{user.id}}){
+              shared_info = '<li class="media">You shared</li>';
+            }else{
+              var sn  = users.indexOf(s_user.toString());
+              shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
+            }
+            var n  = users.indexOf(uid.toString());
+
+            var usr = data.user; 
+
+            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+
+            $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+photos[n]+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+usr.first_name+'&nbsp'+usr.last_name+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li><li class="mm"></li><li class="aaaa"></li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+data.title+'<br>'+'Description: '+data.description+'</p>'+imageText+'</a></div></div></li>'));
+          });
+
           socket.on('new community comment', function(data){
               var uid = data.uid;
               var c_id = data.community_id;

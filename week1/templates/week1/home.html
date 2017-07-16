@@ -1198,7 +1198,7 @@ function hatClicked(event,postid){
       if (c_type == 2){
         socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><a class="icons-img like-btn inactivelike-btn" onclick="likeFunction(2, 1)" /></br></div>';
+        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
       }else if (c_type == 3){
         socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         console.log('unlike portfolio');
@@ -1207,9 +1207,10 @@ function hatClicked(event,postid){
     }
 
     function shareFunction(c_type, c_id){
+      console.log("share function!", c_type, c_id);
       if (c_type == 2){
         socket.emit('share upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"> <a class="icons-img like-btn activelike-btn" onclick="unshareFunction(2, 1)"/></br></div>';
+        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"> <img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(2, 1)"/></br></div>';
       }else if (c_type == 3){
         socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+c_id+')" /></br></div>';
@@ -1219,7 +1220,7 @@ function hatClicked(event,postid){
     function unshareFunction(c_type, c_id){
       if (c_type == 2){
         socket.emit('unshare upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"><a class="icons-img like-btn inactivelike-btn" onclick="shareFunction(2, 1)" /></br></div>';
+        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(2, 1)" /></br></div>';
       }else if (c_type == 3){
         socket.emit('unshare portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
         document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+c_id+')"></br></div>';

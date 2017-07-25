@@ -293,5 +293,4 @@ class ValidatingPasswordChangeForm(SetPasswordForm):
                 raise forms.ValidationError(_("The new password must be at least %d characters long." % MIN_LENGTH))
             if sum(p.isdigit() for p in password1) < MIN_NUMBER:
                 raise forms.ValidationError(_("The new password must include at least %d numbers." % MIN_NUMBER))
-        password_validation.validate_password(password2, self.user)
         return password2

@@ -355,9 +355,9 @@ function hatClicked(event,postid){
 
                     <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
                     <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div-->
-                    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><div class="popupLike popupLike-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div></div>
+                    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><div class="popupHat popupHat-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div></div>
 
-                    <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div>
+                    <div class="popupCollaborate" id="collaboratestatus_portfolio_{{forloop.counter}}"><div class="popupCollaborate popupCollaborate-inactive"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img" onclick="collaborateFunction(3, {{forloop.counter}})"></div></div>
                   </div>
 
     	            <div class="well well-ssm">
@@ -499,13 +499,17 @@ function hatClicked(event,postid){
                 <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
                 <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div-->
                                <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
-                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
+                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><div class="popupHat popupHat-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div></div>
                                 <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
     	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
     						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
     						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
     						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-    	         	<div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="20px"></button></div>
+    	         	
+
+                <!-- <div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="20px"></button></div> -->
+
+                <div class="popupCollaborate" id="collaboratestatus_portfolio_{{forloop.counter}}"><div class="popupCollaborate popupCollaborate-inactive"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img" onclick="collaborateFunction(3, {{forloop.counter}})"></div></div>
               </div>
 
               <div class="comment-container">
@@ -1970,7 +1974,7 @@ function hatClicked(event,postid){
       var len_community = communitydocs.length;
       var i_share = 0;
       var i_community = 0;
-			var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
+			var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
 		  var thanks = '';
 			var follow = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp</div>';
 
@@ -2037,7 +2041,7 @@ function hatClicked(event,postid){
 						var like = '<div class="popupLike" onclick="popLike()"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
 						var c_id = content['_id'];
 						var n  = users.indexOf(uid);
-            var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+            var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
             var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
             var created = communitydocs[i_community]['created'];
@@ -2090,7 +2094,7 @@ function hatClicked(event,postid){
 			    var content = sharedocs[i_share]['content'];
 			    var c_id = sharedocs[i_share]['_id'];
 					var n  = users.indexOf(uid);
-          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
           var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
           var created = sharedocs[i_share]['created'];
 			    var colonIndex = created.indexOf(":");
@@ -2140,7 +2144,7 @@ function hatClicked(event,postid){
 					var like = '<div class="popupLike" onclick="popLike()"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
 					var c_id = content['_id'];
 					var n  = users.indexOf(uid);
-          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/OriginalCollaboration-01.png'%}" class="icons-img"></button></div><hr class="divider"/>';
+          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
           var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
           var created = communitydocs[i_community]['created'];
 			    var colonIndex = created.indexOf(":");

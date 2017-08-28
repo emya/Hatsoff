@@ -1389,7 +1389,7 @@ img.notification_img {
 .popupCollaborate .popuptextCollaborate {
    
 
-   
+
 }
 
 .popupCollaborate .popuptextCollaborate::after {
@@ -1621,6 +1621,20 @@ img.notification_img {
 
 .popupLike:hover::before {
 content: "";
+background: url(/static/images/likeinactivetext_64x64.png) no-repeat;
+display: inline-block;
+position: absolute;
+bottom: 40%;
+right: 100%;
+transform: translateX(75%);
+width: 64px;
+height: 64px;
+z-index:-1;
+}
+
+
+.popupHat:hover::before {
+content: "";
 background: url(/static/images/tiphattext64x64.png) no-repeat;
 display: inline-block;
 position: absolute;
@@ -1632,9 +1646,35 @@ height: 64px;
 z-index:-1;
 }
 
+.popupCollaborate:hover::before {
+content: "";
+background: url(/static/images/collaborate_inactivetext_64x64.png) no-repeat;
+display: inline-block;
+position: absolute;
+bottom: 40%;
+right: 100%;
+transform: translateX(75%);
+width: 64px;
+height: 64px;
+z-index:-1;
+}
+
+
+
 .popupLike-active:hover::before {
 background-image: url(/static/images/tippedhattext64x64.png);
 }
+
+
+.popupHat-active:hover::before {
+background-image: url(/static/images/tippedhattext64x64.png);
+}
+
+
+.popupCollaborate-active:hover::before {
+background-image: url(/static/images/requestsentcollab_64x64.png);
+}
+
 
 
 .popupHatsoff .popuptextHatsoff {
@@ -2540,9 +2580,9 @@ hr .solid-divider{
    display:inline;
 }
 
-#hatsoffstatus_portfolio_1, #hatsoffstatus_portfolio_2, #hatsoffstatus_portfolio_3, #hatsoffstatus_portfolio_4, #hatsoffstatus_portfolio_5, #hatsoffstatus_portfolio_6, #hatsoffstatus_portfolio_7, #hatsoffstatus_portfolio_8, #hatsoffstatus_portfolio_9, #hatsoffstatus_portfolio_10{
+/*#hatsoffstatus_portfolio_1, #hatsoffstatus_portfolio_2, #hatsoffstatus_portfolio_3, #hatsoffstatus_portfolio_4, #hatsoffstatus_portfolio_5, #hatsoffstatus_portfolio_6, #hatsoffstatus_portfolio_7, #hatsoffstatus_portfolio_8, #hatsoffstatus_portfolio_9, #hatsoffstatus_portfolio_10{
    display:inline;
-}
+}*/
 
 #hatsoffstatus_upcoming{
    display:inline;

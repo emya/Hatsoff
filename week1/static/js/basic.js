@@ -44,6 +44,11 @@ socket.on('new community member', function(){
 	document.getElementById('num-cmembers').innerHTML = cmembers+1;
 });
 
+function logoutFunction() {
+    console.log("logout");
+    localStorage.removeItem("num-cmembers");
+}
+
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function sharePortfolioFunction(uid, c_id){
@@ -56,6 +61,23 @@ function shareUpcomingFunction(uid, c_id){
     socket.emit('share upcoming', {to_uid:uid, uid:socket.uid, content_id:c_id});
 }
 
+function shareCommunityFunction(uid, c_id){
+    socket.emit('share community', {to_uid:uid, uid:socket.uid, c_id:c_id});
+    var count = document.getElementById("share_count_"+c_id).innerHTML;
+    var count_shares = parseInt(count)+1; 
+    console.log("count_shares is", count_shares);
+    var share = document.getElementById("share_"+c_id);
+    share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img" onclick="unshareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="share_count_'+c_id+'">'+count_shares+'</div>';
+}
+
+function unshareCommunityFunction(uid, c_id){
+    socket.emit('unshare community', {to_uid:uid, uid:socket.uid, c_id:c_id});
+    var count = document.getElementById("share_count_"+c_id).innerHTML;
+    var count_shares = parseInt(count)-1; 
+    var share = document.getElementById("share_"+c_id);
+    share.innerHTML = '<img src="/static/images/inactive_grey_share_32x32.png" class="icons-img" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="share_count_'+c_id+'">'+count_shares+'</div>';
+}
+
 function likeCommunityFunction(uid, c_id){
     console.log('uid on like:'+uid+':'+c_id);
 	socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});
@@ -63,7 +85,7 @@ function likeCommunityFunction(uid, c_id){
     var count_likes = parseInt(count)+1; 
     console.log("count_likes is", count_likes);
     var like = document.getElementById("like_"+c_id);
-    like.innerHTML = '<img src="/static/images/thumbsUp-01.png" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div>';
+    like.innerHTML = '<img src="/static/images/active_blue_thumb_32x32.png" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div>';
 }
 
 function unlikeCommunityFunction(uid, c_id){
@@ -72,7 +94,7 @@ function unlikeCommunityFunction(uid, c_id){
     var count = document.getElementById("like_count_"+c_id).innerHTML;
     var count_likes = parseInt(count)-1; 
     var like = document.getElementById("like_"+c_id);
-    like.innerHTML = '<img src="/static/images/thumbsUp-02.png" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div>';
+    like.innerHTML = '<img src="/static/images/inactive_grey_thumb_32x32.png" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div>';
 }
 
 function hatsoffCommunityFunction(uid, c_id){

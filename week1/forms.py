@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth import authenticate
 
 from django.core.validators import URLValidator
@@ -48,7 +48,7 @@ class LoginForm(forms.Form):
             userexist = User.objects.get(username=username)
             user = authenticate(username=username, password=password)
             if not user or not user.is_active:
-                raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+                raise forms.ValidationError("Please check that your username or password is correct.")
         except User.DoesNotExist:
             raise forms.ValidationError("Sorry, Your email is not registered. Please sign up.")
         return self.cleaned_data
@@ -125,7 +125,7 @@ class Step4(forms.ModelForm):
                     try:
                         validate(url)
                     except ValidationError, e:
-                        raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+                        raise forms.ValidationError("Please check that your username or password is correct.")
         return cleaned_data
 
 class Step5(forms.ModelForm):
@@ -276,16 +276,22 @@ class FeedbackForm(forms.ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         return cleaned_data
-"""
-class Funfact(forms.Form):
-    funaboutyou = forms.CharField(max_length=200, required=False)
-    hobby = forms.CharField(max_length=200, required=False)
-    fQuote = forms.CharField(max_length=200, required=False)
-    fFilm = forms.CharField(max_length=200, required=False)
-    fTV = forms.CharField(max_length=200, required=False)
-    fYoutube= forms.CharField(max_length=200, required=False)
-    fBook= forms.CharField(max_length=200, required=False)
 
-class PersonalPhoto(forms.Form):
-    photo = forms.ImageField(required=False)
-"""
+class ValidatingPasswordChangeForm(SetPasswordForm):
+    def clean_new_password2(self):
+        MIN_LENGTH = 8
+        MIN_NUMBER = 2
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                )
+            if len(password1) < MIN_LENGTH:
+                raise forms.ValidationError(_("The new password must be at least %d characters long." % MIN_LENGTH))
+            if sum(p.isdigit() for p in password1) < MIN_NUMBER:
+                raise forms.ValidationError(_("The new password must include at least %d numbers." % MIN_NUMBER))
+        password_validation.validate_password(password2, self.user)
+        return password2

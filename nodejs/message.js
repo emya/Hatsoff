@@ -300,7 +300,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('join community', function(data){
-    console.log('join community');
     var query = CommunityPost.find({});
     /*
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -643,7 +642,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at collaborators you need', function(data){
-    console.log('at community needs you');
 
     db.each("SELECT collaborator1, collaborator2, collaborator3, collaborator4, collaborator5, collaborator_skill1, collaborator_skill2, collaborator_skill3, collaborator_skill4, collaborator_skill5, collaborator_skill6, collaborator_skill7, collaborator_skill8, collaborator_skill9, collaborator_skill10 FROM week1_upcomingwork where user_id=? limit 1", socket.uid, function(err, row) {
         if(err){
@@ -924,7 +922,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('at home', function(data){
-    console.log("at home");
 
     var query = CommentPost.find({'to_uid':socket.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
@@ -1598,7 +1595,6 @@ io.on('connection', function(socket){
         post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
         post.save(function (err) {
           if (!err) {
-            console.log('Success!');
             io.emit('new reply community', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
           }
         });
@@ -1632,8 +1628,6 @@ io.on('connection', function(socket){
     newPost.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved:');
       }
     });
 
@@ -1655,8 +1649,6 @@ io.on('connection', function(socket){
     newPost.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved:');
       }
     });
 
@@ -1665,8 +1657,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved:');
       }
     }); 
     
@@ -1692,8 +1682,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        //console.log('saved:');
       }
     });
   });
@@ -1743,8 +1731,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        //console.log('saved:');
       }
     });
   });
@@ -1816,12 +1802,8 @@ io.on('connection', function(socket){
                 })
               }
             });
-
-          }else{
-            console.log("status:"+result.status); 
           }
          }
-
       }
     });
 
@@ -1830,8 +1812,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('notification saved:');
       }
     });
   });
@@ -1872,6 +1852,50 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('unshare community', function(data, callback){
+    SharePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      if (doc.likes > 0){
+        doc.shares -= 1;
+        doc.save(callback);
+      }
+    });
+  });
+
+  socket.on('share community', function(data, callback){
+    var d = new Date();
+    
+    var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:1, content_id:data.c_id});
+    newPost.save(function(err){
+      if (err) {
+        console.log(err);
+      } else{
+        socket.emit('new history', {to_uid:data.to_uid, content_type:1, content_id:data.c_id, action_id:5});
+        if (data.to_uid in users){
+            users[data.to_uid].emit('new notification', {action_id:5, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+           //users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+        }
+      }
+    });
+
+    CommunityPost.findById(data.c_id, function(err, doc){
+      if (err) console.log(err);
+
+      doc.shares += 1;
+      doc.save(callback);
+    });
+
+    var newNotification = new NotificationPost({action_id:5, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+
+    newNotification.save(function(err){
+      if (err) {
+        console.log(err);
+      }
+    });
+  });
+
   socket.on('unlike community', function(data, callback){
     LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid, 'content_type':1}).remove().exec();
     CommunityPost.findById(data.c_id, function(err, doc){
@@ -1882,8 +1906,6 @@ io.on('connection', function(socket){
         doc.save(callback);
       }
     });
-
-    console.log('unlike community');
   });
 
   socket.on('like community', function(data, callback){
@@ -1915,8 +1937,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved notification:');
       }
     });
   });
@@ -1929,7 +1949,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:4});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:4, content_type:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -1942,8 +1961,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved notification:');
       }
     });
   });
@@ -1964,7 +1981,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved:');
         socket.emit('new history', {to_uid:data.to_uid, content_type:2, content_id:data.c_id, action_id:4});
         if (data.to_uid in users){
             users[data.to_uid].emit('new notification', {action_id:4, content_type:3, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
@@ -2012,8 +2028,6 @@ io.on('connection', function(socket){
     newNotification.save(function(err){
       if (err) {
         console.log(err);
-      } else{
-        console.log('saved notification:');
       }
     });
 
@@ -2028,9 +2042,6 @@ io.on('connection', function(socket){
         newPost.save(function(error, newpost){
           if (error) {
             console.log(error);
-          } else{
-            console.log('saved:'+newpost);
-              //io.emit('new community post', {msg:data.msg, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
           }
         });
       }
@@ -2038,7 +2049,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('share upcoming', function(data, callback){
-    console.log("share upcoming");
     var d = new Date();
     
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:2, content_id:data.c_id});
@@ -2139,7 +2149,6 @@ io.on('connection', function(socket){
 
 
   socket.on('post comment', function(data, callback){
-    console.log('post aomment');
     var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newComment.save(function(err){
@@ -2185,7 +2194,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('update postComment', function(data){
-    console.log("update postComment", data);
     CommunityPost.findById(data.c_id, function(err, doc){
       if (err) console.log(err);
 
@@ -2240,7 +2248,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('upcoming comment', function(data, callback){
-    console.log('upcoming comment');
     var d = new Date();
     
     var newPost = new UpcomingPost({content:data.msg, to_uid:data.to, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -2248,7 +2255,6 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
-        console.log('saved');
         if (users[data.to]) {
             users[data.to].emit('new upcoming comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
         }
@@ -2262,7 +2268,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('portfolio comment', function(data, callback){
-    console.log('portfolio comment');
     var d = new Date();
     
     var newPost = new PortfolioPost({content:data.msg, to_uid:data.to, p_id:data.p_id, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
@@ -2344,9 +2349,6 @@ io.on('connection', function(socket){
                 })
               }
             });
-
-          }else{
-            console.log("status:"+result.status); 
           }
          }
       }
@@ -2642,8 +2644,6 @@ io.on('connection', function(socket){
 
     delete chatusers[socket.uid];
     updatechatUids();
-
-    console.log('user disconnected');
   });
 });
 

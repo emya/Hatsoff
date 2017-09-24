@@ -701,6 +701,32 @@ window.onclick = function(event) {
               }
           });
 
+          socket.on('new share', function(data){
+            var content = data.content;
+            var c_id = content.community_id;
+
+            var imageText = '';
+            if (content.image){
+              imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+content.image+'" width="350px" /></object>';
+            }
+
+            var uid = data.sharedBy; 
+            if(uid == {{user.id}}){
+              shared_info = '<li class="media">You shared</li>';
+            }else{
+              var sn  = users.indexOf(s_user.toString());
+              shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
+            }
+            var n  = users.indexOf(uid.toString());
+
+            var usr = data.user; 
+
+            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+
+            $('#communityPost').prepend($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+photos[n]+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+usr.first_name+'&nbsp'+usr.last_name+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li><li class="mm"></li><li class="aaaa"></li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+data.title+'<br>'+'Description: '+data.description+'</p>'+imageText+'</a></div></div></li>'));
+          });
+
           socket.on('new community comment', function(data){
               var uid = data.uid;
               var c_id = data.community_id;
@@ -734,7 +760,7 @@ window.onclick = function(event) {
               var thanks = '';
               var share = '<div class="popupLike" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
-              var collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+              var collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')" class="icons-img"></div>';
               var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
               var skillls = '';
@@ -800,7 +826,7 @@ window.onclick = function(event) {
               var share = '<div class="popupLike" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
               var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
               //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
-              var collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+              var collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')" class="icons-img"></div>';
               var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
 
               var skillls = '';
@@ -956,7 +982,7 @@ window.onclick = function(event) {
                         hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
                       }
                       var shareskill = '';
-                      var collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div>';
+                      var collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')" class="icons-img"></div>';
 
                       var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
                       var skillls = '';
@@ -1067,7 +1093,7 @@ window.onclick = function(event) {
                           hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
                         }
 
-                        collaborate = '<div class="popupLike" onclick="collaborateFunction(\''+uid+'\',\''+content_id+'\')"><button class="collaborate-btn">Collaborate &nbsp</button></div>';
+                        collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+content_id+'\')" class="icons-img"></div>';
                         
                         $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[j]['user']['first_name']+'&nbsp'+docs[j]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+content_id+'">'+docs[j]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+collaborate+'</div></div></li>'));
                         continue;

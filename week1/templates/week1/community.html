@@ -3,7 +3,6 @@
 {% block content %}
 {% load staticfiles %}
 
-
 <script type="text/javascript">
   $(document).ready(function() {
     $("#myTags").tagit();
@@ -28,6 +27,16 @@ function myDropDownDelEditFunction(c_id) {
     console.log(document.getElementById("myDelEditDropdown_"+c_id).classList.contains("show"));
     return false;
 }
+
+// Detect tag
+$(function(){ // this will be called when the DOM is ready
+  $('#p').keyup(function() {
+    //alert('Handler for .keyup() called.');
+    var cs = $(this).val().length;
+    console.log("keyup", cs); 
+    console.log("keyup value", $(this).val()); 
+  });
+});
 
 // Close the dropdown menu if the user clicks outside of it
 

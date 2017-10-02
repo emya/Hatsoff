@@ -1,0 +1,238 @@
+{% extends request.user.is_authenticated|yesno:"week1/base_indexhome.html,week1/base_index.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<script type="text/javascript">
+  $(window).load(function(){
+    var p_type = "{{p_type}}";
+    console.log("p_type");
+    if (p_type != "-1"){
+      //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
+      $('.bd-mymodal-lg').modal();
+      console.log("hey:"+p_type+' : '+typeof(p_type));
+    }else{
+      console.log("hey else:"+p_type+' : '+typeof(p_type));
+    }
+  });
+  
+</script>
+
+<div class="img-container"></div><!-- IMAGE CONTAINER -->
+
+<!--div class="row header-img">
+        <br>
+        
+</div-->
+
+
+    <img src="{% static 'images/LandingPageHowItWorks.png' %}" class="explanation">
+        <br><br>
+
+    <img src="{% static 'images/LandingPageCommunityOfTalent.png' %}" width="100%">
+
+    <br><br>
+    
+     <div class="row" align="center" class="explanation">
+        <H2><img src="{% static 'images/LandingPageMatchHatText.png'%}" width="200px"> is free!</H2>
+         
+        <H2>Create your profile on  <img src="{% static 'images/LandingPageMatchHatText.png'%}" width="200px"> to connect with collaborators or be a collaborator!</H2>
+    </div>
+    
+    <br><br>
+
+    <div class="home-footer">
+        <br/>
+        <div class="row">
+            
+            <div class="col-md-1">
+            </div>
+            
+            <div class="col-md-2">
+                <A HREF="#">COMPANY</A><Br/>
+                <A HREF="#">About</A><Br/>
+                <A HREF="#">Terms</A><Br/>
+                <A HREF="#">Privacy</A><Br/>
+                <A HREF="#">Careers</A><Br/>
+            </div>
+             <div class="col-md-2">
+                 <A HREF="#">FOLLOW US</A>
+            </div>
+            
+             <div class="col-md-2">
+                 <A HREF="{% url 'week1:feedback' %}">FEEDBACK</A>
+            </div>
+             <div class="col-md-2">
+                 <A HREF="#">CONTACT</A>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+    </div>
+   
+   
+    <!-- Google map -->
+    <!--div class="paragraph">
+    <iframe
+      width="600"
+      height="450"
+      frameborder="0" style="border:0"
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9F738pj56xErPEMpC0KyCn5BdbGRUpgU&q=Space+Needle,Seattle+WA" allowfullscreen>
+    </iframe>
+    </div-->
+
+    <!--button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Login modal</button-->
+    <div class="modal fadei bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <!--h4 class="modal-title" id="myModalLabel"-->
+                    <h4 class="signupLabel">
+                        Login/SignUp to MatchHat</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
+                        <div class="col-md-10">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                {% if p_type %}
+                                    {% if p_type == 0 %}
+                        				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                        				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                    {% else %}
+                        				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                        				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                    {% endif %}
+                                {% else %}
+                                <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                                <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                                {% endif %}
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content" style="text-align:center;">
+                                {% if p_type %}
+                                    {% if p_type == 0 %}
+                                        <div class="tab-pane active" id="LoginTop">
+                                    {% else %}
+                                        <div class="tab-pane" id="LoginTop">
+                                    {% endif %}
+                                {% else %}
+                                   <div class="tab-pane active" id="LoginTop">
+                                {% endif %}
+                                    <!--form role="form" class="form-horizontal"-->
+                                <form role="form" class="login-form" name="login" method="POST">
+                                {% csrf_token %}
+                				    {% if loginform.non_field_errors  %}
+                				    <ul style="list-style-type:none">
+                				       {% for error in loginform.non_field_errors %}
+                					  <li>{{error}}</li>
+                				       {% endfor %}
+                				    </ul>
+                				    {% endif %}
+
+                				    <div class="form-group">
+                					  <br>
+                					  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
+                                      {{ loginform.username }}
+                					  <br>
+                					  <br>
+                					  <!--input type="password" name="password" placeholder=" Password"-->
+                                      {{ loginform.password }}
+                				    </div>
+
+                				    <div class="row">
+                    					<a href="{% url 'week1:reset' %}">Forgot password?</a>
+                    					<div class="login-wrapper">
+                    					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
+                    					</div>
+                    					<input type="hidden" name="next" value="/home/" />
+                				    </div>
+                                 </form>
+                             </div>
+                                {% if p_type %}
+                                    {% if p_type == 0 %}
+                                        <div class="tab-pane" id="Signup">
+                                    {% else %}
+                                        <div class="tab-pane active" id="Signup">
+                                    {% endif %}
+                                {% else %}
+                                    <div class="tab-pane" id="Signup">
+                                {% endif %}
+
+
+                                <form role="form" class="login-form" name="signup" method="POST">
+                                {% csrf_token %}
+                                    {% if signupform.non_field_errors  %}
+                                    <ul style="list-style-type:none">
+                                       {% for error in signupform.non_field_errors %}
+                                      <li>{{error}}</li>
+                                       {% endfor %}
+                                    </ul>
+                                    {% endif %}
+
+                                      <div class="form-group">
+                    				  <br>
+                    				  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
+                                      {{ signupform.username }}
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="text" name="first_name" placeholder=" First Name" class="sign-text"-->
+                                      {{ signupform.first_name }}
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="text" name="last_name" placeholder=" Last Name" class="sign-text"-->
+                                      {{ signupform.last_name }}
+                    				  <br>
+                    				  <br>
+                    				  <div class="popup" onclick="popFunction()">
+                    				  <!--input type="password" name="password1" placeholder=" Password"-->
+                                      {{ signupform.password1 }}
+                    				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+                    				  </div>
+                    				  <br>
+                    				  <br>
+                    				  <!--input type="password" name="password2" placeholder=" Confirm Password"-->
+                                      {{ signupform.password2 }}
+                    				  <br>
+                    				  <br>
+
+                                                    </div>
+                                                    <div class="row">
+                    				    <div class="login-wrapper">
+                    				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+                    				    </div>
+                                        </div>
+                                    </form>
+                                    <h3> Sign up with <a href="{% url 'social:begin' 'facebook' %}">FACEBOOK</a> </h3>
+                                </div>
+                                </div>
+                            </div>
+                            <!--div id="OR" class="hidden-xs">
+                                OR</div-->
+                        </div>
+                        <!--div class="col-md-4">
+                            <div class="row text-center sign-with">
+                                <div class="col-md-12">
+                                    <h3>
+                                        Sign in with</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="btn-group btn-group-justified">
+                                        <a href="#" class="btn btn-primary">Facebook</a> <a href="#" class="btn btn-danger">
+                                            Google</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+
+{% endblock %}

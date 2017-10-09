@@ -1,238 +1,2153 @@
-{% extends request.user.is_authenticated|yesno:"week1/base_indexhome.html,week1/base_index.html" %}
 {% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<script type="text/javascript">
-  $(window).load(function(){
-    var p_type = "{{p_type}}";
-    console.log("p_type");
-    if (p_type != "-1"){
-      //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
-      $('.bd-mymodal-lg').modal();
-      console.log("hey:"+p_type+' : '+typeof(p_type));
-    }else{
-      console.log("hey else:"+p_type+' : '+typeof(p_type));
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Match Hat">
+    <meta name="author" content="Find your collaborator, complete your project.">
+
+    <title>Match Hat - Find your collaborator, complete your project.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom fonts for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
+
+  <style id="jsbin-css">
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,500,700');
+body {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  color:#444;
+}
+p {
+    font-size: 20px
+}
+p.small {
+    font-size: 16px
+}
+a,
+a.active,
+a:active,
+a:focus,
+a:hover {
+    color: #48A8E1;
+    outline: 0
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  color:#444;
+    
+}
+/*h1{font-size:.75em;}*/
+hr.star-light,
+hr.star-primary {
+    max-width: 230px;
+    margin: 25px auto 30px;
+    padding: 0;
+    text-align: center;
+    border: none;
+    border-top: solid 1px
+}
+/*hr.star-light:after,
+hr.star-primary:after {
+    font-family: FontAwesome;
+    font-size: 2em;
+    position: relative;
+    top: -.8em;
+    display: inline-block;
+    padding: 0 .25em;
+    content: '\f005'*/
+}
+hr.star-light {
+    border-color: #fff
+}
+hr.star-light:after {
+    color: #fff;
+    background-color: #18bc9c
+}
+hr.star-primary {
+    border-color: #2c3e50
+}
+hr.star-primary:after {
+    color: #2c3e50;
+    background-color: #fff
+}
+.img-centered {
+    margin: 0 auto
+}
+section {
+    padding: 100px 0
+}
+section h2 {
+    font-size: 3em;
+    margin: 0
+}
+/*section.itsFree {
+    color: #fff;
+    background: #18bc9c
+}*/
+@media (max-width: 767px) {
+    section {
+        padding: 75px 0
+    }
+    section.first {
+        padding-top: 75px
+    }
+}
+.scroll-top {
+    position: fixed;
+    z-index: 1049;
+    right: 2%;
+    bottom: 2%;
+    width: 50px;
+    height: 50px
+}
+.scroll-top .btn {
+    font-size: 16px;
+    line-height: 28px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 100%
+}
+.scroll-top .btn:focus {
+    outline: 0
+}
+#mainNav {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    border: none;
+    background: #ffffff;
+  border-bottom:solid 1px #9B9B9B;
+}
+#mainNav a:focus {
+    outline: 0
+}
+#mainNav .navbar-brand {
+    font-size: 1.1rem;
+    color: #fff
+}
+#mainNav .navbar-brand.active,
+#mainNav .navbar-brand:active,
+#mainNav .navbar-brand:focus,
+#mainNav .navbar-brand:hover {
+    color: #fff
+}
+#mainNav .navbar-nav {
+    letter-spacing: 1px
+}
+#mainNav .navbar-nav li.nav-item a.nav-link {
+    color: #444;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:hover {
+    color: #48A8E1;
+    outline: 0
+}
+#mainNav .navbar-nav li.nav-item a.nav-link {
+  display: inline-block;
+  position: relative;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom:0;
+  display: inline-block;
+  height: 1em;
+  width: 70%;
+  border-bottom: 3px solid #48A8E1;
+    
+    left: 50%;
+    transform: translateX(-50%);
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:active,
+#mainNav .navbar-nav li.nav-item a.nav-link:focus {
+    color: #444;
+}
+#mainNav .navbar-toggler {
+    font-size: 14px;
+    padding: 11px;
+    text-transform: uppercase;
+    color: #444444;
+    border-color: #fff
+}
+#mainNav .navbar-toggler:focus,
+#mainNav .navbar-toggler:hover {
+    color: #444444;
+    border-color: #18bc9c;
+    background-color: #18bc9c
+}
+@media (min-width: 992px) {
+    #mainNav {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        -webkit-transition: padding-top .3s, padding-bottom .3s;
+        -moz-transition: padding-top .3s, padding-bottom .3s;
+        transition: padding-top .3s, padding-bottom .3s
+    }
+    #mainNav .navbar-brand {
+        font-size: 2em;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s
+    }
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active {
+        color: #000;
+        /*border-radius: 3px;*/
+       /* background: #18bc9c*/
+      
+    }
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active:active,
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active:focus,
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active:hover {
+        color: #444444;
+       /* background: #18bc9c*/
+    }
+    #mainNav.navbar-shrink {
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
+    #mainNav.navbar-shrink .navbar-brand {
+        font-size: 1.5em
+    }
+}
+/* Header - Section 000 */
+header.masthead {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    color: #444444;
+}
+header.masthead p{
+color:#545454
+}
+header.masthead img {
+    display: block;
+    margin: 0 auto 20px
+}
+/*@media (min-width: 768px) {
+    header.masthead {
+        padding-top: 100px;
+        padding-bottom: 50px
+    }
+  
+}*/      
+#howItWorks{background-color:#f8f8f8;}
+/* How it works - Section 001 */
+#howItWorks .howItWorks-item {
+    right: 0;
+    margin: 0 0 15px;
+    color:#444;
+}
+#howItWorks .howItWorks-item h3{text-align:center; text-transform:uppercase; font-size:1.5rem; margin: 1em 0 2em 0;}
+#howItWorks .howItWorks-item .howItWorks-link {
+    position: relative;
+    display: block;
+    max-width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+    color:#444;
+}
+#howItWorks .howItWorks-item .howItWorks-link:hover{
+  text-decoration:none;
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all ease .5s;
+    -moz-transition: all ease .5s;
+    transition: all ease .5s;
+    opacity: 0;
+    background: rgba(72, 168, 225, .5);
+    top:0;
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption:hover {
+    opacity: 1
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content {
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 20px;
+    margin-top: -12px;
+    text-align: center;
+    color: #fff;
+  
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content i {
+    margin-top: -12px
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content h3,
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content h4 {
+    margin: 0
+}
+#howItWorks * {
+    z-index: 2
+}
+@media (min-width: 767px) {
+    #howItWorks .howItWorks-item {
+        margin: 0 0 30px
+    }
+}
+.howItWorks-modal .modal-dialog {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    background-clip: border-box;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+.howItWorks-modal .modal-dialog .modal-content {
+    padding: 100px 0;
+    border: 0;
+    border-radius: 0
+}
+.howItWorks-modal .modal-dialog .modal-content h2 {
+    font-size: 3em;
+    margin: 0
+}
+.howItWorks-modal .modal-dialog .modal-content img {
+    margin-bottom: 30px
+}
+.howItWorks-modal .modal-dialog .modal-content .item-details {
+    margin: 30px 0
+}
+.howItWorks-modal .close-modal {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    background-color: transparent
+}
+.howItWorks-modal .close-modal:hover {
+    opacity: .3
+}
+.howItWorks-modal .close-modal .lr {
+    z-index: 1051;
+    width: 1px;
+    height: 75px;
+    margin-left: 35px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #2c3e50
+}
+.howItWorks-modal .close-modal .lr .rl {
+    z-index: 1052;
+    width: 1px;
+    height: 75px;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    background-color: #2c3e50
+}
+.howItWorks-modal .modal-backdrop {
+    display: none;
+    opacity: 0
+}
+/* o */
+#joinAPoolOfTalent{background-color:#f8f8f8;}
+/* fl label */
+.floating-label-form-group {
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: .5em;
+    border-bottom: 1px solid #eee
+}
+.floating-label-form-group input,
+.floating-label-form-group textarea {
+    font-size: 1.5em;
+    position: relative;
+    z-index: 1;
+    padding-right: 0;
+    padding-left: 0;
+    resize: none;
+    border: none;
+    border-radius: 0;
+    background: 0 0;
+    box-shadow: none!important
+}
+.floating-label-form-group label {
+    font-size: .85em;
+    line-height: 1.764705882em;
+    position: relative;
+    z-index: 0;
+    top: 2em;
+    display: block;
+    margin: 0;
+    -webkit-transition: top .3s ease, opacity .3s ease;
+    -moz-transition: top .3s ease, opacity .3s ease;
+    -ms-transition: top .3s ease, opacity .3s ease;
+    transition: top .3s ease, opacity .3s ease;
+    vertical-align: middle;
+    vertical-align: baseline;
+    opacity: 0
+}
+.floating-label-form-group:not(:first-child) {
+    padding-left: 14px;
+    border-left: 1px solid #eee
+}
+.floating-label-form-group-with-value label {
+    top: 0;
+    opacity: 1
+}
+.floating-label-form-group-with-focus label {
+    color: #18bc9c
+}
+form .row:first-child .floating-label-form-group {
+    border-top: 1px solid #eee
+}
+/* Footer */
+footer {
+    color: #fff
+}
+footer h3 {
+    margin-bottom: 30px;
+    font-size:1.5rem;
+}
+footer .footer-above {
+    padding-top: 50px;
+    background-color: #dbdbdb
+}
+footer .footer-col {
+    margin-bottom: 50px
+}
+footer .footer-below {
+    padding: 25px 0;
+    background-color: #dbdbdb;
+  color:#444;
+}
+footer a{color:#444; font-size:1.25rem; }
+.btn-outline {
+    font-size: 20px;
+    margin-top: 15px;
+    transition: all .3s ease-in-out;
+    color: #fff;
+    border: solid 2px #28A8E2;
+    background-color: #28A8E2;
+      border-radius: 2rem;
+}
+.btn-outline.active,
+.btn-outline:active,
+.btn-outline:focus,
+.btn-outline:hover {
+    color: #28A8E2;
+    border: solid 2px #28A8E2;
+    background: #fff
+}
+.btn-primary {
+    font-weight: 700;
+    color: #fff;
+    border-color: #2c3e50;
+    background-color: #2c3e50
+}
+.btn-primary.focus,
+.btn-primary:focus {
+    color: #fff;
+    border-color: #000;
+    background-color: #1a252f
+}
+.btn-primary:hover {
+    color: #fff;
+    border-color: #161f29;
+    background-color: #1a252f;
+}
+.btn-primary.active,
+.btn-primary:active,
+.open>.btn-primary.dropdown-toggle {
+    color: #fff;
+    border-color: #161f29;
+    background-color: #1a252f
+}
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open>.btn-primary.dropdown-toggle.focus,
+.open>.btn-primary.dropdown-toggle:focus,
+.open>.btn-primary.dropdown-toggle:hover {
+    color: #fff;
+    border-color: #000;
+   /* background-color: #0d1318*/
+  border-bottom:solid 1px #48A8E1;
+}
+.btn-primary.active,
+.btn-primary:active,
+.open>.btn-primary.dropdown-toggle {
+    background-image: none
+}
+.btn-primary.disabled.focus,
+.btn-primary.disabled:focus,
+.btn-primary.disabled:hover,
+.btn-primary[disabled].focus,
+.btn-primary[disabled]:focus,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary.focus,
+fieldset[disabled] .btn-primary:focus,
+fieldset[disabled] .btn-primary:hover {
+    border-color: #2c3e50;
+    background-color: #2c3e50
+}
+.btn-primary .badge {
+    color: #2c3e50;
+    background-color: #fff
+}
+.btn-itsFree {
+    font-weight: 700;
+    color: #fff;
+    border-color: #18bc9c;
+    background-color: #18bc9c
+}
+.btn-itsFree.focus,
+.btn-itsFree:focus {
+    color: #fff;
+    border-color: #0a4b3e;
+    background-color: #128f76
+}
+.btn-itsFree:hover {
+    color: #fff;
+    border-color: #11866f;
+    background-color: #128f76
+}
+.btn-itsFree.active,
+.btn-itsFree:active,
+.open>.btn-itsFree.dropdown-toggle {
+    color: #fff;
+    border-color: #11866f;
+    background-color: #128f76
+}
+.btn-itsFree.active.focus,
+.btn-itsFree.active:focus,
+.btn-itsFree.active:hover,
+.btn-itsFree:active.focus,
+.btn-itsFree:active:focus,
+.btn-itsFree:active:hover,
+.open>.btn-itsFree.dropdown-toggle.focus,
+.open>.btn-itsFree.dropdown-toggle:focus,
+.open>.btn-itsFree.dropdown-toggle:hover {
+    color: #fff;
+    border-color: #0a4b3e;
+    background-color: #0e6f5c
+}
+.btn-itsFree.active,
+.btn-itsFree:active,
+.open>.btn-itsFree.dropdown-toggle {
+    background-image: none
+}
+.btn-itsFree.disabled.focus,
+.btn-itsFree.disabled:focus,
+.btn-itsFree.disabled:hover,
+.btn-itsFree[disabled].focus,
+.btn-itsFree[disabled]:focus,
+.btn-itsFree[disabled]:hover,
+fieldset[disabled] .btn-itsFree.focus,
+fieldset[disabled] .btn-itsFree:focus,
+fieldset[disabled] .btn-itsFree:hover {
+    border-color: #18bc9c;
+    background-color: #18bc9c
+}
+.btn-itsFree .badge {
+    color: #18bc9c;
+    background-color: #fff
+}
+.btn-social {
+    font-size: 20px;
+    line-height: 45px;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border: 2px solid #28A8E2;
+    border-radius: 20%;
+      background-color:#28A8E2;
+}
+.btn.active,
+.btn:active,
+.btn:focus {
+    outline: 0
+}
+</style>
+</head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    
+     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="http://disputebills.com"><img src="https://ul5f2q-ch3301.files.1drv.com/y4mUqiIX4D6a8tU3QFxV2WMYRI3p0swyMt2cZKLYXJcLlyH8um7ymBSDBeaZXMDoUbe3qQin-TF5uiXZCot_YtvUQljMAg_XjV3zD6kcmdoBMGe1s6STSQYuM6OvGbpO7vK6zbysuSX73vTOl9KRNcPl01JVdSDyFvJ2t_Ra5jlXADw9JYB4AsOBVZHlfr4twHX7siuhkoazcRMJ8cPthU7WQ?width=286&height=48&cropmode=none" alt="Match Hat">
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#howItWorks">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#traceMap">Leave a Trace</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#joinAPoolOfTalent">Join Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#itsFree">Its free</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+      <div class="row align-items-center">
+          <div class="col-md-7 order-2">
+            
+              <img class="img-fluid" src="https://ul5g2q-ch3301.files.1drv.com/y4mCbWni8-d5rcPHZ9nlVjCLHb_81sigt8T9_pZfST__sIjpMgyOGpB09R9i6AnU3ja-bbpPmDhGXIUS6t-0MOeUbzN0XJIdnOpTz-9iAPXrIPvVbEJ631VNc_idG_IP7x7q8uZSyu6cfDSUIvQ5eBD0ZyLnVpSgo153PipoPfVOMrD6gGHhcD2ezuNmLvSrOD6uelhh4y_RnGyZovMbhgfXA?width=840&height=700&cropmode=none" alt="">
+            
+          </div>
+          <div class="col-md-5 order-1">
+            
+              <h1>Find your collaborator, complete your project.</h1>
+              <p>Articles, films, websites. Anything. Connect, Collaborate, Create</p>
+            
+          </div>
+        </div>
+      </div>
+  
+      
+    </header>
+
+    <!-- howItWorks Grid Section -->
+    <section id="howItWorks">
+      <div class="container">
+        <h2 class="text-center">How it works?</h2>
+        <hr class="star-primary">
+        <div class="row">
+          
+          <div class="col-sm-4 howItWorks-item">  
+            <a class="howItWorks-link" href="#howItWorksModal1" data-toggle="modal">
+              <h3>showcase portfolio</h3>
+              <div class="caption">
+                <div class="caption-content">
+                  <i class="fa fa-plus-square fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="https://u14unw-ch3301.files.1drv.com/y4mne8TW3Sp3itSwZz7Q-gHwNSHTdzTpB_vDIvIgJ5sQS5zdhwbXxuOBFS_5doxbM5hgm-mCEa_NtBX5VH0R1CCU8Err5JKIxXbJ8tRfDmDlHop5-yXsm7QltRHekxA_flcoIy4bIGbDVoWZlLhLhZRrdoZ0DmMW6NMvEnwF0iTWyCYeWW6KEB0RM6p_15I_ab4dyx1u1QruX-QUutfBwFIWA?width=358&height=118&cropmode=none" alt="">  
+            <p>Showcase your portfolio and your upcoming project</p>
+            </a>
+          </div>
+
+          <div class="col-sm-4 howItWorks-item">
+            <a class="howItWorks-link" href="#howItWorksModal2" data-toggle="modal">
+            <h3>find collaborators</h3>
+              <div class="caption">
+                <div class="caption-content">
+                  <i class="fa fa-plus-square fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="https://u14vnw-ch3301.files.1drv.com/y4mrz6iyzHCaC3JY_jNVxy_smSqng0PWVrN0CXmR_RK7Kp9me2vbZ411DK7L4vRv6-pwqFhph9uLXjJREj11jATksZMoavYtEmMPeDiRAZKV0Kdmeb792yLVSFWWFmUg_JNPyl5O3ahiQwyykj5rxSmFnYSvEVAcVzcZUgTvtAjNaoTUS7MuL0rI0JYX32QKB9GR3NED6ERYBnLN1pFmuubeg?width=358&height=118&cropmode=none" alt="">      
+            <p>Find a collaborator to complete your project</p>
+              </a>
+          </div>
+
+          <div class="col-sm-4 howItWorks-item">
+            <a class="howItWorks-link" href="#howItWorksModal3" data-toggle="modal">
+            <h3>complete projects</h3>
+            
+              <div class="caption">
+                <div class="caption-content">
+                  <i class="fa fa-plus-square fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="https://u14xnw-ch3301.files.1drv.com/y4maIggvmhSEqUrQHao-OH1nL2aMGGJO40AEhzrDnS6Js0V70Cepl8F3RY9H_BRkYePzekrRFBAyZx7yKO8xfq0BR5_H7k4LbEmlw18SnContKCEMSzJNir5vP5Fk_VWiwTXbbuQ358RxjrrXkFvhXsgxyHIYc0HgJ0f92xwa9lcI6AUo2LqmEBTBLweTCSXEi5kZk31e8hLTBv-uFwrYcbWg?width=358&height=118&cropmode=none" alt="">
+            <p>Give back to your collaborator by paying or exchanging skills</p>
+                          </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- Trace Map Section -->
+    <section class="traceMap" id="traceMap">
+      <div class="container">
+        
+        <div class="row align-items-center">
+          <div class="col-md-7 order-1">
+            
+            <style>
+    .google-maps {
+        position: relative;
+        padding-bottom: 75%;
+        height: 0;
+        overflow: hidden;
+    }
+    .google-maps iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+      overflow:hidden !important;
+    }
+</style>
+
+<div class="google-maps">
+            
+             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d51861.078345036265!2d139.70134940000003!3d35.669186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1504925821531" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+  
+            </div>
+          </div>
+          <div class="col-md-5 order-2">
+            
+              <h1>Leave a trace in the world with what you create</h1>
+              <p>Our mission is to create a collaborative community that empowers creators, entrepreneurs and dreamers to do what they love, and suceed</p>
+            
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+      <!-- Join a Pool of talent Section -->
+    <section class="joinAPoolOfTalent" id="joinAPoolOfTalent">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7 order-1">
+            
+              <img class="img-fluid" src="https://u14knw-ch3301.files.1drv.com/y4mSuIPKM7sBV63-UC4H7TD4mpxSq5mcu1MH4bukb4kPyKMquT-8ocDF-I86RFjs_IdVSqT4iFBptYhp8J3Ya0Gb8RnsG_rwhQPkRzUJlS6tAX9HKl3qvHG_aZM9cT_uM9OYHgxUl31-YntOGTXFiesX_UWW7IjchGP4nLHmtgwK2Ool-U9MgojxkjYMFlqrQ9wqJ096Z7Y2SZz4K5KK8mFig?width=558&height=460&cropmode=none" alt="">
+            
+          </div>
+          <div class="col-md-5 order-2">
+            
+              <h1>Join a Pool of Talent</h1>
+              <p>Artist, Designers, Illustrators, Animators, Filmakers, Editors. Imagine an artist collaborating with a projection mapping artist on a theater project or a writer collaborating with a scientist on an article on genes. The possibilities are limitless.</p>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <!-- Its Free Section -->
+    <section class="itsFree" id="itsFree">
+      <div class="container">
+        <h2 class="text-center"><img src="https://u14lnw-ch3301.files.1drv.com/y4mQWkIi7F0bTlvoMWk9NHwypYJCB0Q48ebBdmMMaS9VImLgwqBmprJNa3BMf8Vh-YmDGlen_9vtY112i9qn8efZ5IHF5RhIQOB_3Gz4_qID6_ch0P2AGN4J7F7hcWPdq9hvGtdsYZKgM-GbLB9Kd-g2vaa8frk5L_Dwg_ClOVvar3GypTzdrXdXDH2TdA8swLt7_dYdu6uayHgdJrGmBPRGA?width=306&height=43&cropmode=none" alt="Match Hat" title="MAtch Hat" />is Free</h2>
+        <hr class="star-light">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <p>100% of funds and earned income goes directly to the creatives.</p>
+              <p>Create your profile to connect with collaborators</p>
+          </div>
+          
+          <div class="col-lg-8 mx-auto text-center">
+          <a href="#myModal" class="btn btn-lg btn-outline" data-toggle="modal">
+              <i class="fa fa-user-plus"></i>
+             Sign up for free
+            </a>
+          </div>
+
+          <!-- Modal for sign up -->
+          <div class="modal fadei bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="signupLabel">
+                  Login/SignUp to MatchHat</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-11">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                      {% if p_type %}
+                        {% if p_type == 0 %}
+                          <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                          <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                        {% else %}
+                           <li><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                           <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                        {% endif %}
+                      {% else %}
+                        <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
+                        <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
+                      {% endif %}
+                    </ul>
+                    <!-- Tab panes -->
+                  <div class="tab-content" style="text-align:center;">
+                    {% if p_type %}
+                      {% if p_type == 0 %}
+                        <div class="tab-pane active" id="LoginTop">
+                      {% else %}
+                        <div class="tab-pane" id="LoginTop">
+                      {% endif %}
+                    {% else %}
+                       <div class="tab-pane active" id="LoginTop">
+                    {% endif %}
+                    <form role="form" class="login-form" name="login" method="POST">
+                      {% csrf_token %}
+                      {% if loginform.non_field_errors  %}
+                        <ul style="list-style-type:none">
+                          {% for error in loginform.non_field_errors %}
+                            <li>{{error}}</li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+
+                      <div class="form-group">
+                        <br>
+                        {{ loginform.username }}
+                        <br>
+                        <br>
+                        {{ loginform.password }}
+                      </div>
+
+                      <div class="row">
+                        <a href="{% url 'week1:reset' %}">Forgot password?</a>
+                        <br>
+                        <div class="login-wrapper">
+                          <input type="submit" value="Log me in" name="login" class="login-submit"/>
+                        </div>
+                        <input type="hidden" name="next" value="/home/" />
+                      </div>
+                    </form>
+                  </div>
+                    {% if p_type %}
+                      {% if p_type == 0 %}
+                        <div class="tab-pane" id="Signup">
+                      {% else %}
+                        <div class="tab-pane active" id="Signup">
+                      {% endif %}
+                    {% else %}
+                      <div class="tab-pane" id="Signup">
+                    {% endif %}
+
+                    <form role="form" class="login-form" name="signup" method="POST">
+                      {% csrf_token %}
+                      {% if signupform.non_field_errors  %}
+                      <ul style="list-style-type:none">
+                        {% for error in signupform.non_field_errors %}
+                          <li>{{error}}</li>
+                        {% endfor %}
+                      </ul>
+                      {% endif %}
+
+                      <div class="form-group">
+                        <br>
+                        {{ signupform.username }}
+                        <br>
+                        <br>
+                        {{ signupform.first_name }}
+                        <br>
+                        <br>
+                        {{ signupform.last_name }}
+                        <br>
+                        <br>
+                        <div class="popup" onclick="popFunction()">
+                          {{ signupform.password1 }}
+                          <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+                        </div>
+                          <br>
+                          <br>
+                          {{ signupform.password2 }}
+                          <br>
+                          <br>
+                      </div>
+                      <div class="row">
+                        <div class="login-wrapper">
+                          <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+                        </div>
+                      </div>
+                    </form>
+                    <h3> Sign up with <a href="{% url 'social:begin' 'facebook' %}">FACEBOOK</a> </h3>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="footer-above">
+        <div class="container">
+          <div class="row">
+            <div class="footer-col col-md-3">
+              <h3>Location</h3>
+              <ul class="list-unstyled">
+                <li><a href="@">About</a></li>
+                <li><a href="@">Terms</a></li>
+                <li><a href="@">Privacy</a></li>
+                <li><a href="@">Careers</a></li>
+              </ul>
+            </div>
+            <div class="footer-col col-md-3">
+              <h3>Follow Us</h3>
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-google-plus"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-dribbble"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer-col col-md-3">
+              <h3>Feedback</h3>
+                <a href="@">Feedback</a>
+            </div>
+            <div class="footer-col col-md-3">
+              <h3>Contact</h3>
+                <a href="@">Feedback</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-below">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              Copyright &copy; Match Hat 2017
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top d-lg-none">
+      <a class="btn btn-primary js-scroll-trigger" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+      </a>
+    </div>
+
+    <!-- howItWorks Modal windows -->
+    <div class="howItWorks-modal modal fade" id="howItWorksModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Showcase Portfolio</h2>
+                  <hr class="star-primary">
+                  <img class="img-fluid img-centered" src="img/howItWorks/cabin.png" alt="">
+                  <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
+                    <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                  
+                  <button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="howItWorks-modal modal fade" id="howItWorksModal2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Find Collaborators</h2>
+                  <hr class="star-primary">
+                  <img class="img-fluid img-centered" src="img/howItWorks/cake.png" alt="">
+                  <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
+                    <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                 
+                  <button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="howItWorks-modal modal fade" id="howItWorksModal3" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Complete Projects</h2>
+                  <hr class="star-primary">
+                  <img class="img-fluid img-centered" src="img/howItWorks/circus.png" alt="">
+                  <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
+                    <a href="#">Sign up here!</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                  
+                  <button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+        
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <!--<script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>-->
+
+    <!-- Custom scripts for this template -->
+    <script>
+    $('#myModal').modal('show');
+
+    function popFunction(){
+      var popup = document.getElementById('passwordPop');
+      popup.classList.toggle('show');
+    }
+    // For Login Modal
+    $(window).load(function(){
+      var p_type = "{{p_type}}";
+      console.log("p_type", p_type, typeof p_type);
+      if (p_type != "-1"){
+        //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
+        $('.bd-mymodal-lg').modal();
+      }
+    });
+
+
+    (function($) {
+  "use strict"; // Start of use strict
+  // Smooth scrolling using jQuery easing
+  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: (target.offset().top - 48)
+        }, 1000, "easeInOutExpo");
+        return false;
+      }
     }
   });
+  // Closes responsive menu when a scroll trigger link is clicked
+  $('.js-scroll-trigger').click(function() {
+    $('.navbar-collapse').collapse('hide');
+  });
+  // Activate scrollspy to add active class to navbar items on scroll
+  $('body').scrollspy({
+    target: '#mainNav',
+    offset: 54
+  });
+  // Collapse the navbar when page is scrolled
+  $(window).scroll(function() {
+    if ($("#mainNav").offset().top > 100) {
+      $("#mainNav").addClass("navbar-shrink");
+    } else {
+      $("#mainNav").removeClass("navbar-shrink");
+    }
+  });
+  // Floating label headings for the contact form
+  $(function() {
+    $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+      $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+    }).on("focus", ".floating-label-form-group", function() {
+      $(this).addClass("floating-label-form-group-with-focus");
+    }).on("blur", ".floating-label-form-group", function() {
+      $(this).removeClass("floating-label-form-group-with-focus");
+    });
+  });
+})(jQuery); // End of use strict
+    </script>
+
   
+<script id="jsbin-source-html" type="text/html"><!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Match Hat">
+    <meta name="author" content="Find your collaborator, complete your project.">
+
+    <title>Match Hat - Find your collaborator, complete your project.</title>
+
+    <\!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <\!-- Custom fonts for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  </head>
+
+  <body id="page-top">
+
+    <\!-- Navigation -->
+    
+     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="http://disputebills.com"><img src="https://ul5f2q-ch3301.files.1drv.com/y4mUqiIX4D6a8tU3QFxV2WMYRI3p0swyMt2cZKLYXJcLlyH8um7ymBSDBeaZXMDoUbe3qQin-TF5uiXZCot_YtvUQljMAg_XjV3zD6kcmdoBMGe1s6STSQYuM6OvGbpO7vK6zbysuSX73vTOl9KRNcPl01JVdSDyFvJ2t_Ra5jlXADw9JYB4AsOBVZHlfr4twHX7siuhkoazcRMJ8cPthU7WQ?width=286&height=48&cropmode=none" alt="Match Hat">
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#howItWorks">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#traceMap">Leave a Trace</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#joinAPoolOfTalent">Join Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#itsFree">Its free</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
+
+    <\!-- Header -->
+    <header class="masthead">
+      <div class="container">
+      <div class="row align-items-center">
+          <div class="col-md-7 order-2">
+            
+              <img class="img-fluid" src="https://ul5g2q-ch3301.files.1drv.com/y4mCbWni8-d5rcPHZ9nlVjCLHb_81sigt8T9_pZfST__sIjpMgyOGpB09R9i6AnU3ja-bbpPmDhGXIUS6t-0MOeUbzN0XJIdnOpTz-9iAPXrIPvVbEJ631VNc_idG_IP7x7q8uZSyu6cfDSUIvQ5eBD0ZyLnVpSgo153PipoPfVOMrD6gGHhcD2ezuNmLvSrOD6uelhh4y_RnGyZovMbhgfXA?width=840&height=700&cropmode=none" alt="">
+            
+          </div>
+          <div class="col-md-5 order-1">
+            
+              <h1>Find your collaborator, complete your project.</h1>
+              <p>Articles, films, websites. Anything. Connect, Collaborate, Create</p>
+            
+          </div>
+        </div>
+      </div>
+  
+      
+    </header>
+
+    <\!-- howItWorks Grid Section -->
+    <section id="howItWorks">
+      <div class="container">
+        <h2 class="text-center">How it works?</h2>
+        <hr class="star-primary">
+        <div class="row">
+          
+          <div class="col-sm-4 howItWorks-item">  
+            <a class="howItWorks-link" href="#howItWorksModal1" data-toggle="modal">
+              <h3>showcase portfolio</h3>
+              <div class="caption">
+                <div class="caption-content">
+                  <i class="fa fa-plus-square fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="https://u14unw-ch3301.files.1drv.com/y4mne8TW3Sp3itSwZz7Q-gHwNSHTdzTpB_vDIvIgJ5sQS5zdhwbXxuOBFS_5doxbM5hgm-mCEa_NtBX5VH0R1CCU8Err5JKIxXbJ8tRfDmDlHop5-yXsm7QltRHekxA_flcoIy4bIGbDVoWZlLhLhZRrdoZ0DmMW6NMvEnwF0iTWyCYeWW6KEB0RM6p_15I_ab4dyx1u1QruX-QUutfBwFIWA?width=358&height=118&cropmode=none" alt="">  
+            <p>Showcase your portfolio and your upcoming project</p>
+            </a>
+          </div>
+
+          <div class="col-sm-4 howItWorks-item">
+            <a class="howItWorks-link" href="#howItWorksModal2" data-toggle="modal">
+            <h3>find collaborators</h3>
+              <div class="caption">
+                <div class="caption-content">
+                  <i class="fa fa-plus-square fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="https://u14vnw-ch3301.files.1drv.com/y4mrz6iyzHCaC3JY_jNVxy_smSqng0PWVrN0CXmR_RK7Kp9me2vbZ411DK7L4vRv6-pwqFhph9uLXjJREj11jATksZMoavYtEmMPeDiRAZKV0Kdmeb792yLVSFWWFmUg_JNPyl5O3ahiQwyykj5rxSmFnYSvEVAcVzcZUgTvtAjNaoTUS7MuL0rI0JYX32QKB9GR3NED6ERYBnLN1pFmuubeg?width=358&height=118&cropmode=none" alt="">      
+            <p>Find a collaborator to complete your project</p>
+              </a>
+          </div>
+
+          <div class="col-sm-4 howItWorks-item">
+            <a class="howItWorks-link" href="#howItWorksModal3" data-toggle="modal">
+            <h3>complete projects</h3>
+            
+              <div class="caption">
+                <div class="caption-content">
+                  <i class="fa fa-plus-square fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="https://u14xnw-ch3301.files.1drv.com/y4maIggvmhSEqUrQHao-OH1nL2aMGGJO40AEhzrDnS6Js0V70Cepl8F3RY9H_BRkYePzekrRFBAyZx7yKO8xfq0BR5_H7k4LbEmlw18SnContKCEMSzJNir5vP5Fk_VWiwTXbbuQ358RxjrrXkFvhXsgxyHIYc0HgJ0f92xwa9lcI6AUo2LqmEBTBLweTCSXEi5kZk31e8hLTBv-uFwrYcbWg?width=358&height=118&cropmode=none" alt="">
+            <p>Give back to your collaborator by paying or exchanging skills</p>
+                          </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+    <\!-- Trace Map Section -->
+    <section class="traceMap" id="traceMap">
+      <div class="container">
+        
+        <div class="row align-items-center">
+          <div class="col-md-7 order-1">
+            
+            <style>
+    .google-maps {
+        position: relative;
+        padding-bottom: 75%;
+        height: 0;
+        overflow: hidden;
+    }
+    .google-maps iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+      overflow:hidden !important;
+    }
+</style>
+
+<div class="google-maps">
+            
+             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d51861.078345036265!2d139.70134940000003!3d35.669186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1504925821531" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+  
+            </div>
+          </div>
+          <div class="col-md-5 order-2">
+            
+              <h1>Leave a trace in the world with what you create</h1>
+              <p>Our mission is to create a collaborative community that empowers creators, entrepreneurs and dreamers to do what they love, and suceed</p>
+            
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+      <\!-- Join a Pool of talent Section -->
+    <section class="joinAPoolOfTalent" id="joinAPoolOfTalent">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-7 order-1">
+            
+              <img class="img-fluid" src="https://u14knw-ch3301.files.1drv.com/y4mSuIPKM7sBV63-UC4H7TD4mpxSq5mcu1MH4bukb4kPyKMquT-8ocDF-I86RFjs_IdVSqT4iFBptYhp8J3Ya0Gb8RnsG_rwhQPkRzUJlS6tAX9HKl3qvHG_aZM9cT_uM9OYHgxUl31-YntOGTXFiesX_UWW7IjchGP4nLHmtgwK2Ool-U9MgojxkjYMFlqrQ9wqJ096Z7Y2SZz4K5KK8mFig?width=558&height=460&cropmode=none" alt="">
+            
+          </div>
+          <div class="col-md-5 order-2">
+            
+              <h1>Join a Pool of Talent</h1>
+              <p>Artist, Designers, Illustrators, Animators, Filmakers, Editors. Imagine an artist collaborating with a projection mapping artist on a theater project or a writer collaborating with a scientist on an article on genes. The possibilities are limitless.</p>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <\!-- Its Free Section -->
+    <section class="itsFree" id="itsFree">
+      <div class="container">
+        <h2 class="text-center"><img src="https://u14lnw-ch3301.files.1drv.com/y4mQWkIi7F0bTlvoMWk9NHwypYJCB0Q48ebBdmMMaS9VImLgwqBmprJNa3BMf8Vh-YmDGlen_9vtY112i9qn8efZ5IHF5RhIQOB_3Gz4_qID6_ch0P2AGN4J7F7hcWPdq9hvGtdsYZKgM-GbLB9Kd-g2vaa8frk5L_Dwg_ClOVvar3GypTzdrXdXDH2TdA8swLt7_dYdu6uayHgdJrGmBPRGA?width=306&height=43&cropmode=none" alt="Match Hat" title="MAtch Hat" />is Free</h2>
+        <hr class="star-light">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <p>100% of funds and earned income goes directly to the creatives.</p>
+              <p>Create your profile to connect with collaborators</p>
+          </div>
+          
+          <div class="col-lg-8 mx-auto text-center">
+            <a href="#signupModal" class="btn btn-lg btn-outline" data-toggle="modal">
+              <i class="fa fa-user-plus"></i>
+             Sign up for free
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+
+    <\!-- Footer -->
+    <footer class="text-center">
+      <div class="footer-above">
+        <div class="container">
+          <div class="row">
+            <div class="footer-col col-md-3">
+              <h3>Location</h3>
+              <ul class="list-unstyled">
+                <li><a href="@">About</a></li>
+                <li><a href="@">Terms</a></li>
+                <li><a href="@">Privacy</a></li>
+                <li><a href="@">Careers</a></li>
+              </ul>
+            </div>
+            <div class="footer-col col-md-3">
+              <h3>Follow Us</h3>
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-google-plus"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn-social btn-outline" href="#">
+                    <i class="fa fa-fw fa-dribbble"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer-col col-md-3">
+              <h3>Feedback</h3>
+                <a href="@">Feedback</a>
+            </div>
+            <div class="footer-col col-md-3">
+              <h3>Contact</h3>
+                <a href="@">Feedback</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-below">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              Copyright &copy; Match Hat 2017
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <\!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top d-lg-none">
+      <a class="btn btn-primary js-scroll-trigger" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+      </a>
+    </div>
+
+    <\!-- howItWorks Modal windows -->
+    <div class="howItWorks-modal modal fade" id="howItWorksModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Showcase Portfolio</h2>
+                  <hr class="star-primary">
+                  <img class="img-fluid img-centered" src="img/howItWorks/cabin.png" alt="">
+                  <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
+                    <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                  
+                  <button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="howItWorks-modal modal fade" id="howItWorksModal2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Find Collaborators</h2>
+                  <hr class="star-primary">
+                  <img class="img-fluid img-centered" src="img/howItWorks/cake.png" alt="">
+                  <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
+                    <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                 
+                  <button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="howItWorks-modal modal fade" id="howItWorksModal3" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Complete Projects</h2>
+                  <hr class="star-primary">
+                  <img class="img-fluid img-centered" src="img/howItWorks/circus.png" alt="">
+                  <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
+                    <a href="#">Sign up here!</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                  
+                  <button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <\!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery.min.js"><\/script>
+        
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"><\/script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"><\/script>
+    <\!-- Plugin JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"><\/script>
+    <\!-- Contact Form JavaScript -->
+    <\!--<script src="js/jqBootstrapValidation.js"><\/script>
+    <script src="js/contact_me.js"><\/script>-->
+    <\!-- Custom scripts for this template -->
+    <script>
+    (function($) {
+  "use strict"; // Start of use strict
+  // Smooth scrolling using jQuery easing
+  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: (target.offset().top - 48)
+        }, 1000, "easeInOutExpo");
+        return false;
+      }
+    }
+  });
+  // Closes responsive menu when a scroll trigger link is clicked
+  $('.js-scroll-trigger').click(function() {
+    $('.navbar-collapse').collapse('hide');
+  });
+  // Activate scrollspy to add active class to navbar items on scroll
+  $('body').scrollspy({
+    target: '#mainNav',
+    offset: 54
+  });
+  // Collapse the navbar when page is scrolled
+  $(window).scroll(function() {
+    if ($("#mainNav").offset().top > 100) {
+      $("#mainNav").addClass("navbar-shrink");
+    } else {
+      $("#mainNav").removeClass("navbar-shrink");
+    }
+  });
+  // Floating label headings for the contact form
+  $(function() {
+    $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+      $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+    }).on("focus", ".floating-label-form-group", function() {
+      $(this).addClass("floating-label-form-group-with-focus");
+    }).on("blur", ".floating-label-form-group", function() {
+      $(this).removeClass("floating-label-form-group-with-focus");
+    });
+  });
+})(jQuery); // End of use strict
+    <\/script>
+  </body>
+</html>
 </script>
 
-<div class="img-container"></div><!-- IMAGE CONTAINER -->
-
-<!--div class="row header-img">
-        <br>
-        
-</div-->
-
-
-    <img src="{% static 'images/LandingPageHowItWorks.png' %}" class="explanation">
-        <br><br>
-
-    <img src="{% static 'images/LandingPageCommunityOfTalent.png' %}" width="100%">
-
-    <br><br>
+<script id="jsbin-source-css" type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,500,700');
+body {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  color:#444;
+}
+p {
+    font-size: 20px
+}
+p.small {
+    font-size: 16px
+}
+a,
+a.active,
+a:active,
+a:focus,
+a:hover {
+    color: #48A8E1;
+    outline: 0
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  color:#444;
     
-     <div class="row" align="center" class="explanation">
-        <H2><img src="{% static 'images/LandingPageMatchHatText.png'%}" width="200px"> is free!</H2>
-         
-        <H2>Create your profile on  <img src="{% static 'images/LandingPageMatchHatText.png'%}" width="200px"> to connect with collaborators or be a collaborator!</H2>
-    </div>
+}
+/*h1{font-size:.75em;}*/
+hr.star-light,
+hr.star-primary {
+    max-width: 230px;
+    margin: 25px auto 30px;
+    padding: 0;
+    text-align: center;
+    border: none;
+    border-top: solid 1px
+}
+/*hr.star-light:after,
+hr.star-primary:after {
+    font-family: FontAwesome;
+    font-size: 2em;
+    position: relative;
+    top: -.8em;
+    display: inline-block;
+    padding: 0 .25em;
+    content: '\f005'*/
+}
+hr.star-light {
+    border-color: #fff
+}
+hr.star-light:after {
+    color: #fff;
+    background-color: #18bc9c
+}
+hr.star-primary {
+    border-color: #2c3e50
+}
+hr.star-primary:after {
+    color: #2c3e50;
+    background-color: #fff
+}
+.img-centered {
+    margin: 0 auto
+}
+section {
+    padding: 100px 0
+}
+section h2 {
+    font-size: 3em;
+    margin: 0
+}
+/*section.itsFree {
+    color: #fff;
+    background: #18bc9c
+}*/
+@media (max-width: 767px) {
+    section {
+        padding: 75px 0
+    }
+    section.first {
+        padding-top: 75px
+    }
+}
+.scroll-top {
+    position: fixed;
+    z-index: 1049;
+    right: 2%;
+    bottom: 2%;
+    width: 50px;
+    height: 50px
+}
+.scroll-top .btn {
+    font-size: 16px;
+    line-height: 28px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 100%
+}
+.scroll-top .btn:focus {
+    outline: 0
+}
+#mainNav {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    border: none;
+    background: #ffffff;
+  border-bottom:solid 1px #9B9B9B;
+}
+#mainNav a:focus {
+    outline: 0
+}
+#mainNav .navbar-brand {
+    font-size: 1.1rem;
+    color: #fff
+}
+#mainNav .navbar-brand.active,
+#mainNav .navbar-brand:active,
+#mainNav .navbar-brand:focus,
+#mainNav .navbar-brand:hover {
+    color: #fff
+}
+#mainNav .navbar-nav {
+    letter-spacing: 1px
+}
+#mainNav .navbar-nav li.nav-item a.nav-link {
+    color: #444;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:hover {
+    color: #48A8E1;
+    outline: 0
+}
+#mainNav .navbar-nav li.nav-item a.nav-link {
+  display: inline-block;
+  position: relative;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom:0;
+  display: inline-block;
+  height: 1em;
+  width: 70%;
+  border-bottom: 3px solid #48A8E1;
     
-    <br><br>
+    left: 50%;
+    transform: translateX(-50%);
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:active,
+#mainNav .navbar-nav li.nav-item a.nav-link:focus {
+    color: #444;
+}
+#mainNav .navbar-toggler {
+    font-size: 14px;
+    padding: 11px;
+    text-transform: uppercase;
+    color: #444444;
+    border-color: #fff
+}
+#mainNav .navbar-toggler:focus,
+#mainNav .navbar-toggler:hover {
+    color: #444444;
+    border-color: #18bc9c;
+    background-color: #18bc9c
+}
+@media (min-width: 992px) {
+    #mainNav {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        -webkit-transition: padding-top .3s, padding-bottom .3s;
+        -moz-transition: padding-top .3s, padding-bottom .3s;
+        transition: padding-top .3s, padding-bottom .3s
+    }
+    #mainNav .navbar-brand {
+        font-size: 2em;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s
+    }
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active {
+        color: #000;
+        /*border-radius: 3px;*/
+       /* background: #18bc9c*/
+      
+    }
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active:active,
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active:focus,
+    #mainNav .navbar-nav>li.nav-item>a.nav-link.active:hover {
+        color: #444444;
+       /* background: #18bc9c*/
+    }
+    #mainNav.navbar-shrink {
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
+    #mainNav.navbar-shrink .navbar-brand {
+        font-size: 1.5em
+    }
+}
+/* Header - Section 000 */
+header.masthead {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    color: #444444;
+}
+header.masthead p{
+color:#545454
+}
+header.masthead img {
+    display: block;
+    margin: 0 auto 20px
+}
+/*@media (min-width: 768px) {
+    header.masthead {
+        padding-top: 100px;
+        padding-bottom: 50px
+    }
+  
+}*/      
+#howItWorks{background-color:#f8f8f8;}
+/* How it works - Section 001 */
+#howItWorks .howItWorks-item {
+    right: 0;
+    margin: 0 0 15px;
+    color:#444;
+}
+#howItWorks .howItWorks-item h3{text-align:center; text-transform:uppercase; font-size:1.5rem; margin: 1em 0 2em 0;}
+#howItWorks .howItWorks-item .howItWorks-link {
+    position: relative;
+    display: block;
+    max-width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+    color:#444;
+}
+#howItWorks .howItWorks-item .howItWorks-link:hover{
+  text-decoration:none;
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all ease .5s;
+    -moz-transition: all ease .5s;
+    transition: all ease .5s;
+    opacity: 0;
+    background: rgba(72, 168, 225, .5);
+    top:0;
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption:hover {
+    opacity: 1
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content {
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 20px;
+    margin-top: -12px;
+    text-align: center;
+    color: #fff;
+  
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content i {
+    margin-top: -12px
+}
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content h3,
+#howItWorks .howItWorks-item .howItWorks-link .caption .caption-content h4 {
+    margin: 0
+}
+#howItWorks * {
+    z-index: 2
+}
+@media (min-width: 767px) {
+    #howItWorks .howItWorks-item {
+        margin: 0 0 30px
+    }
+}
+.howItWorks-modal .modal-dialog {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    background-clip: border-box;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+.howItWorks-modal .modal-dialog .modal-content {
+    padding: 100px 0;
+    border: 0;
+    border-radius: 0
+}
+.howItWorks-modal .modal-dialog .modal-content h2 {
+    font-size: 3em;
+    margin: 0
+}
+.howItWorks-modal .modal-dialog .modal-content img {
+    margin-bottom: 30px
+}
+.howItWorks-modal .modal-dialog .modal-content .item-details {
+    margin: 30px 0
+}
+.howItWorks-modal .close-modal {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    background-color: transparent
+}
+.howItWorks-modal .close-modal:hover {
+    opacity: .3
+}
+.howItWorks-modal .close-modal .lr {
+    z-index: 1051;
+    width: 1px;
+    height: 75px;
+    margin-left: 35px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #2c3e50
+}
+.howItWorks-modal .close-modal .lr .rl {
+    z-index: 1052;
+    width: 1px;
+    height: 75px;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    background-color: #2c3e50
+}
+.howItWorks-modal .modal-backdrop {
+    display: none;
+    opacity: 0
+}
+/* o */
+#joinAPoolOfTalent{background-color:#f8f8f8;}
+/* fl label */
+.floating-label-form-group {
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: .5em;
+    border-bottom: 1px solid #eee
+}
+.floating-label-form-group input,
+.floating-label-form-group textarea {
+    font-size: 1.5em;
+    position: relative;
+    z-index: 1;
+    padding-right: 0;
+    padding-left: 0;
+    resize: none;
+    border: none;
+    border-radius: 0;
+    background: 0 0;
+    box-shadow: none!important
+}
+.floating-label-form-group label {
+    font-size: .85em;
+    line-height: 1.764705882em;
+    position: relative;
+    z-index: 0;
+    top: 2em;
+    display: block;
+    margin: 0;
+    -webkit-transition: top .3s ease, opacity .3s ease;
+    -moz-transition: top .3s ease, opacity .3s ease;
+    -ms-transition: top .3s ease, opacity .3s ease;
+    transition: top .3s ease, opacity .3s ease;
+    vertical-align: middle;
+    vertical-align: baseline;
+    opacity: 0
+}
+.floating-label-form-group:not(:first-child) {
+    padding-left: 14px;
+    border-left: 1px solid #eee
+}
+.floating-label-form-group-with-value label {
+    top: 0;
+    opacity: 1
+}
+.floating-label-form-group-with-focus label {
+    color: #18bc9c
+}
+form .row:first-child .floating-label-form-group {
+    border-top: 1px solid #eee
+}
+/* Footer */
+footer {
+    color: #fff
+}
+footer h3 {
+    margin-bottom: 30px;
+    font-size:1.5rem;
+}
+footer .footer-above {
+    padding-top: 50px;
+    background-color: #dbdbdb
+}
+footer .footer-col {
+    margin-bottom: 50px
+}
+footer .footer-below {
+    padding: 25px 0;
+    background-color: #dbdbdb;
+  color:#444;
+}
+footer a{color:#444; font-size:1.25rem; }
+.btn-outline {
+    font-size: 20px;
+    margin-top: 15px;
+    transition: all .3s ease-in-out;
+    color: #fff;
+    border: solid 2px #28A8E2;
+    background-color: #28A8E2;
+      border-radius: 2rem;
+}
+.btn-outline.active,
+.btn-outline:active,
+.btn-outline:focus,
+.btn-outline:hover {
+    color: #28A8E2;
+    border: solid 2px #28A8E2;
+    background: #fff
+}
+.btn-primary {
+    font-weight: 700;
+    color: #fff;
+    border-color: #2c3e50;
+    background-color: #2c3e50
+}
+.btn-primary.focus,
+.btn-primary:focus {
+    color: #fff;
+    border-color: #000;
+    background-color: #1a252f
+}
+.btn-primary:hover {
+    color: #fff;
+    border-color: #161f29;
+    background-color: #1a252f;
+}
+.btn-primary.active,
+.btn-primary:active,
+.open>.btn-primary.dropdown-toggle {
+    color: #fff;
+    border-color: #161f29;
+    background-color: #1a252f
+}
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open>.btn-primary.dropdown-toggle.focus,
+.open>.btn-primary.dropdown-toggle:focus,
+.open>.btn-primary.dropdown-toggle:hover {
+    color: #fff;
+    border-color: #000;
+   /* background-color: #0d1318*/
+  border-bottom:solid 1px #48A8E1;
+}
+.btn-primary.active,
+.btn-primary:active,
+.open>.btn-primary.dropdown-toggle {
+    background-image: none
+}
+.btn-primary.disabled.focus,
+.btn-primary.disabled:focus,
+.btn-primary.disabled:hover,
+.btn-primary[disabled].focus,
+.btn-primary[disabled]:focus,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary.focus,
+fieldset[disabled] .btn-primary:focus,
+fieldset[disabled] .btn-primary:hover {
+    border-color: #2c3e50;
+    background-color: #2c3e50
+}
+.btn-primary .badge {
+    color: #2c3e50;
+    background-color: #fff
+}
+.btn-itsFree {
+    font-weight: 700;
+    color: #fff;
+    border-color: #18bc9c;
+    background-color: #18bc9c
+}
+.btn-itsFree.focus,
+.btn-itsFree:focus {
+    color: #fff;
+    border-color: #0a4b3e;
+    background-color: #128f76
+}
+.btn-itsFree:hover {
+    color: #fff;
+    border-color: #11866f;
+    background-color: #128f76
+}
+.btn-itsFree.active,
+.btn-itsFree:active,
+.open>.btn-itsFree.dropdown-toggle {
+    color: #fff;
+    border-color: #11866f;
+    background-color: #128f76
+}
+.btn-itsFree.active.focus,
+.btn-itsFree.active:focus,
+.btn-itsFree.active:hover,
+.btn-itsFree:active.focus,
+.btn-itsFree:active:focus,
+.btn-itsFree:active:hover,
+.open>.btn-itsFree.dropdown-toggle.focus,
+.open>.btn-itsFree.dropdown-toggle:focus,
+.open>.btn-itsFree.dropdown-toggle:hover {
+    color: #fff;
+    border-color: #0a4b3e;
+    background-color: #0e6f5c
+}
+.btn-itsFree.active,
+.btn-itsFree:active,
+.open>.btn-itsFree.dropdown-toggle {
+    background-image: none
+}
+.btn-itsFree.disabled.focus,
+.btn-itsFree.disabled:focus,
+.btn-itsFree.disabled:hover,
+.btn-itsFree[disabled].focus,
+.btn-itsFree[disabled]:focus,
+.btn-itsFree[disabled]:hover,
+fieldset[disabled] .btn-itsFree.focus,
+fieldset[disabled] .btn-itsFree:focus,
+fieldset[disabled] .btn-itsFree:hover {
+    border-color: #18bc9c;
+    background-color: #18bc9c
+}
+.btn-itsFree .badge {
+    color: #18bc9c;
+    background-color: #fff
+}
+.btn-social {
+    font-size: 20px;
+    line-height: 45px;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border: 2px solid #28A8E2;
+    border-radius: 20%;
+      background-color:#28A8E2;
+}
+.btn.active,
+.btn:active,
+.btn:focus {
+    outline: 0
+}
+</script>
+</body>
 
-    <div class="home-footer">
-        <br/>
-        <div class="row">
-            
-            <div class="col-md-1">
-            </div>
-            
-            <div class="col-md-2">
-                <A HREF="#">COMPANY</A><Br/>
-                <A HREF="#">About</A><Br/>
-                <A HREF="#">Terms</A><Br/>
-                <A HREF="#">Privacy</A><Br/>
-                <A HREF="#">Careers</A><Br/>
-            </div>
-             <div class="col-md-2">
-                 <A HREF="#">FOLLOW US</A>
-            </div>
-            
-             <div class="col-md-2">
-                 <A HREF="{% url 'week1:feedback' %}">FEEDBACK</A>
-            </div>
-             <div class="col-md-2">
-                 <A HREF="#">CONTACT</A>
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
-    </div>
-   
-   
-    <!-- Google map -->
-    <!--div class="paragraph">
-    <iframe
-      width="600"
-      height="450"
-      frameborder="0" style="border:0"
-      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9F738pj56xErPEMpC0KyCn5BdbGRUpgU&q=Space+Needle,Seattle+WA" allowfullscreen>
-    </iframe>
-    </div-->
-
-    <!--button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Login modal</button-->
-    <div class="modal fadei bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <!--h4 class="modal-title" id="myModalLabel"-->
-                    <h4 class="signupLabel">
-                        Login/SignUp to MatchHat</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <!--div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;"-->
-                        <div class="col-md-10">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                {% if p_type %}
-                                    {% if p_type == 0 %}
-                        				    <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
-                        				    <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                    {% else %}
-                        				    <li><a href="#LoginTop" data-toggle="tab">Login</a></li>
-                        				    <li class="active"><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                    {% endif %}
-                                {% else %}
-                                <li class="active"><a href="#LoginTop" data-toggle="tab">Login</a></li>
-                                <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
-                                {% endif %}
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content" style="text-align:center;">
-                                {% if p_type %}
-                                    {% if p_type == 0 %}
-                                        <div class="tab-pane active" id="LoginTop">
-                                    {% else %}
-                                        <div class="tab-pane" id="LoginTop">
-                                    {% endif %}
-                                {% else %}
-                                   <div class="tab-pane active" id="LoginTop">
-                                {% endif %}
-                                    <!--form role="form" class="form-horizontal"-->
-                                <form role="form" class="login-form" name="login" method="POST">
-                                {% csrf_token %}
-                				    {% if loginform.non_field_errors  %}
-                				    <ul style="list-style-type:none">
-                				       {% for error in loginform.non_field_errors %}
-                					  <li>{{error}}</li>
-                				       {% endfor %}
-                				    </ul>
-                				    {% endif %}
-
-                				    <div class="form-group">
-                					  <br>
-                					  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
-                                      {{ loginform.username }}
-                					  <br>
-                					  <br>
-                					  <!--input type="password" name="password" placeholder=" Password"-->
-                                      {{ loginform.password }}
-                				    </div>
-
-                				    <div class="row">
-                    					<a href="{% url 'week1:reset' %}">Forgot password?</a>
-                    					<div class="login-wrapper">
-                    					   <input type="submit" value="Log me in" name="login" class="login-submit"/>
-                    					</div>
-                    					<input type="hidden" name="next" value="/home/" />
-                				    </div>
-                                 </form>
-                                            </div>
-                                            {% if p_type %}
-                                                {% if p_type == 0 %}
-                                                    <div class="tab-pane" id="Signup">
-                                                {% else %}
-                                                    <div class="tab-pane active" id="Signup">
-                                                {% endif %}
-                                            {% else %}
-                                               <div class="tab-pane" id="Signup">
-                                            {% endif %}
-
-
-                                <form role="form" class="login-form" name="signup" method="POST">
-                                {% csrf_token %}
-                                    {% if signupform.non_field_errors  %}
-                                    <ul style="list-style-type:none">
-                                       {% for error in signupform.non_field_errors %}
-                                      <li>{{error}}</li>
-                                       {% endfor %}
-                                    </ul>
-                                    {% endif %}
-
-                                      <div class="form-group">
-                    				  <br>
-                    				  <!--input type="email" name="username" placeholder=" Email" class="sign-text"-->
-                                      {{ signupform.username }}
-                    				  <br>
-                    				  <br>
-                    				  <!--input type="text" name="first_name" placeholder=" First Name" class="sign-text"-->
-                                      {{ signupform.first_name }}
-                    				  <br>
-                    				  <br>
-                    				  <!--input type="text" name="last_name" placeholder=" Last Name" class="sign-text"-->
-                                      {{ signupform.last_name }}
-                    				  <br>
-                    				  <br>
-                    				  <div class="popup" onclick="popFunction()">
-                    				  <!--input type="password" name="password1" placeholder=" Password"-->
-                                      {{ signupform.password1 }}
-                    				  <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
-                    				  </div>
-                    				  <br>
-                    				  <br>
-                    				  <!--input type="password" name="password2" placeholder=" Confirm Password"-->
-                                      {{ signupform.password2 }}
-                    				  <br>
-                    				  <br>
-
-                                                    </div>
-                                                    <div class="row">
-                    				    <div class="login-wrapper">
-                    				        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
-                    				    </div>
-                                        </div>
-                                    </form>
-                                    <h3> Sign up with <a href="{% url 'social:begin' 'facebook' %}">FACEBOOK</a> </h3>
-                                </div>
-                                </div>
-                            </div>
-                            <!--div id="OR" class="hidden-xs">
-                                OR</div-->
-                        </div>
-                        <!--div class="col-md-4">
-                            <div class="row text-center sign-with">
-                                <div class="col-md-12">
-                                    <h3>
-                                        Sign in with</h3>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="btn-group btn-group-justified">
-                                        <a href="#" class="btn btn-primary">Facebook</a> <a href="#" class="btn btn-danger">
-                                            Google</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
- 
-
-{% endblock %}
+</html>

@@ -653,6 +653,7 @@ to here
 
 .login-wrapper {
    padding-top: 10px;
+   padding-left: 200px;
    text-align: center;
 }
 
@@ -2801,6 +2802,6 @@ hr .solid-divider{
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    /* width: 80%; */
     min-height: 100px;
 }

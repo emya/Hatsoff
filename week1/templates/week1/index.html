@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +18,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
 
   <style id="jsbin-css">
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,500,700');
@@ -785,7 +787,7 @@ fieldset[disabled] .btn-itsFree:hover {
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <div class="col-md-10">
+                  <div class="col-md-11">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
                       {% if p_type %}
@@ -832,6 +834,7 @@ fieldset[disabled] .btn-itsFree:hover {
 
                       <div class="row">
                         <a href="{% url 'week1:reset' %}">Forgot password?</a>
+                        <br>
                         <div class="login-wrapper">
                           <input type="submit" value="Log me in" name="login" class="login-submit"/>
                         </div>
@@ -894,8 +897,6 @@ fieldset[disabled] .btn-itsFree:hover {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </section>
@@ -1080,6 +1081,23 @@ fieldset[disabled] .btn-itsFree:hover {
 
     <!-- Custom scripts for this template -->
     <script>
+    $('#myModal').modal('show');
+
+    function popFunction(){
+      var popup = document.getElementById('passwordPop');
+      popup.classList.toggle('show');
+    }
+    // For Login Modal
+    $(window).load(function(){
+      var p_type = "{{p_type}}";
+      console.log("p_type", p_type, typeof p_type);
+      if (p_type != "-1"){
+        //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
+        $('.bd-mymodal-lg').modal();
+      }
+    });
+
+
     (function($) {
   "use strict"; // Start of use strict
   // Smooth scrolling using jQuery easing

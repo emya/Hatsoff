@@ -21,9 +21,10 @@
     <link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
 
   <style id="jsbin-css">
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700');
+
 body {
-    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
     overflow-x: hidden;
   color:#444;
 }
@@ -231,13 +232,24 @@ header.masthead {
     padding-bottom: 50px;
     color: #444444;
 }
-header.masthead p{
-color:#545454
+header.masthead p:nth-child(1){
+color:#545454;
+  font-size:1.125rem;
+  margin:1.5rem 0 2.75rem 0;
+}
+header.masthead p.haveAccLogin{
+margin-top:2.75rem;
+ 
+}
+header.masthead p.haveAccLogin a{
+ color:#f00;
+  text-decoration:underline;
 }
 header.masthead img {
     display: block;
     margin: 0 auto 20px
 }
+
 /*@media (min-width: 768px) {
     header.masthead {
         padding-top: 100px;
@@ -366,7 +378,74 @@ header.masthead img {
     display: none;
     opacity: 0
 }
+
+/* _ */
+
+.signUp-modal .modal-dialog {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    background-clip: border-box;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+.signUp-modal .modal-dialog .modal-content {
+    padding: 100px 0;
+    border: 0;
+    border-radius: 0
+}
+.signUp-modal .modal-dialog .modal-content h2 {
+    font-size: 3em;
+    margin: 0
+}
+.signUp-modal .modal-dialog .modal-content img {
+    margin-bottom: 30px
+}
+.signUp-modal .modal-dialog .modal-content .item-details {
+    margin: 30px 0
+}
+.signUp-modal .close-modal {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    background-color: transparent
+}
+.signUp-modal .close-modal:hover {
+    opacity: .3
+}
+.signUp-modal .close-modal .lr {
+    z-index: 1051;
+    width: 1px;
+    height: 75px;
+    margin-left: 35px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #2c3e50
+}
+.signUp-modal .close-modal .lr .rl {
+    z-index: 1052;
+    width: 1px;
+    height: 75px;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    background-color: #2c3e50
+}
+.signUp-modal .modal-backdrop {
+    display: none;
+    opacity: 0
+}
+
 /* o */
+
 #joinAPoolOfTalent{background-color:#f8f8f8;}
 /* fl label */
 .floating-label-form-group {
@@ -598,7 +677,9 @@ fieldset[disabled] .btn-itsFree:hover {
     
      <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="http://disputebills.com"><img src="https://ul5f2q-ch3301.files.1drv.com/y4mUqiIX4D6a8tU3QFxV2WMYRI3p0swyMt2cZKLYXJcLlyH8um7ymBSDBeaZXMDoUbe3qQin-TF5uiXZCot_YtvUQljMAg_XjV3zD6kcmdoBMGe1s6STSQYuM6OvGbpO7vK6zbysuSX73vTOl9KRNcPl01JVdSDyFvJ2t_Ra5jlXADw9JYB4AsOBVZHlfr4twHX7siuhkoazcRMJ8cPthU7WQ?width=286&height=48&cropmode=none" alt="Match Hat">
+        <a class="navbar-brand" href="http://disputebills.com">
+        <!--img src="https://ul5f2q-ch3301.files.1drv.com/y4mUqiIX4D6a8tU3QFxV2WMYRI3p0swyMt2cZKLYXJcLlyH8um7ymBSDBeaZXMDoUbe3qQin-TF5uiXZCot_YtvUQljMAg_XjV3zD6kcmdoBMGe1s6STSQYuM6OvGbpO7vK6zbysuSX73vTOl9KRNcPl01JVdSDyFvJ2t_Ra5jlXADw9JYB4AsOBVZHlfr4twHX7siuhkoazcRMJ8cPthU7WQ?width=286&height=48&cropmode=none" alt="Match Hat"-->
+        <img src="{% static 'images/MatchHat Logo-01.png'%}" width=286 height=48 alt="Match Hat">
         </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
@@ -607,6 +688,13 @@ fieldset[disabled] .btn-itsFree:hover {
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+              <a class="nav-link signUp-link" href="#signUpModal1" data-toggle="modal">Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link logIn-link" href="#logInModal1" data-toggle="modal">Log in</a>
+            </li>
+
+            <!--li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#howItWorks">How it works</a>
             </li>
             <li class="nav-item">
@@ -617,7 +705,7 @@ fieldset[disabled] .btn-itsFree:hover {
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#itsFree">Its free</a>
-            </li>
+            </li-->
           </ul>
         </div>
       </div>
@@ -635,13 +723,16 @@ fieldset[disabled] .btn-itsFree:hover {
           <div class="col-md-5 order-1">
             
               <h1>Find your collaborator, complete your project.</h1>
-              <p>Articles, films, websites. Anything. Connect, Collaborate, Create</p>
+              <p>Articles, films, websites. Anything. <br />Connect, Collaborate, Create.</p>
             
+              <a href="#signUpModal1" class="btn btn-lg btn-outline" data-toggle="modal">
+             Let's start
+            </a>
+            <p class="haveAccLogin">Already have an account? <a href="#logInModal1" data-toggle="modal">Login</a></p> 
           </div>
         </div>
       </div>
   
-      
     </header>
 
     <!-- howItWorks Grid Section -->
@@ -660,7 +751,7 @@ fieldset[disabled] .btn-itsFree:hover {
                 </div>
               </div>
               <img class="img-fluid" src="https://u14unw-ch3301.files.1drv.com/y4mne8TW3Sp3itSwZz7Q-gHwNSHTdzTpB_vDIvIgJ5sQS5zdhwbXxuOBFS_5doxbM5hgm-mCEa_NtBX5VH0R1CCU8Err5JKIxXbJ8tRfDmDlHop5-yXsm7QltRHekxA_flcoIy4bIGbDVoWZlLhLhZRrdoZ0DmMW6NMvEnwF0iTWyCYeWW6KEB0RM6p_15I_ab4dyx1u1QruX-QUutfBwFIWA?width=358&height=118&cropmode=none" alt="">  
-            <p>Showcase your portfolio and your upcoming project</p>
+              <p>Showcase your portfolio and <br> your upcoming project.</p>
             </a>
           </div>
 
@@ -673,7 +764,7 @@ fieldset[disabled] .btn-itsFree:hover {
                 </div>
               </div>
               <img class="img-fluid" src="https://u14vnw-ch3301.files.1drv.com/y4mrz6iyzHCaC3JY_jNVxy_smSqng0PWVrN0CXmR_RK7Kp9me2vbZ411DK7L4vRv6-pwqFhph9uLXjJREj11jATksZMoavYtEmMPeDiRAZKV0Kdmeb792yLVSFWWFmUg_JNPyl5O3ahiQwyykj5rxSmFnYSvEVAcVzcZUgTvtAjNaoTUS7MuL0rI0JYX32QKB9GR3NED6ERYBnLN1pFmuubeg?width=358&height=118&cropmode=none" alt="">      
-            <p>Find a collaborator to complete your project</p>
+            <p>Find a collaborator to<br> complete your project.</p>
               </a>
           </div>
 
@@ -687,7 +778,7 @@ fieldset[disabled] .btn-itsFree:hover {
                 </div>
               </div>
               <img class="img-fluid" src="https://u14xnw-ch3301.files.1drv.com/y4maIggvmhSEqUrQHao-OH1nL2aMGGJO40AEhzrDnS6Js0V70Cepl8F3RY9H_BRkYePzekrRFBAyZx7yKO8xfq0BR5_H7k4LbEmlw18SnContKCEMSzJNir5vP5Fk_VWiwTXbbuQ358RxjrrXkFvhXsgxyHIYc0HgJ0f92xwa9lcI6AUo2LqmEBTBLweTCSXEi5kZk31e8hLTBv-uFwrYcbWg?width=358&height=118&cropmode=none" alt="">
-            <p>Give back to your collaborator by paying or exchanging skills</p>
+            <p>Give back to your collaborator<br> by paying or exchanging skills.</p>
                           </a>
           </div>
 
@@ -728,8 +819,8 @@ fieldset[disabled] .btn-itsFree:hover {
           </div>
           <div class="col-md-5 order-2">
             
-              <h1>Leave a trace in the world with what you create</h1>
-              <p>Our mission is to create a collaborative community that empowers creators, entrepreneurs and dreamers to do what they love, and suceed</p>
+              <h1>Leave a trace in the world <br> with what you create</h1>
+              <p>Our mission is to create a collaborative community that empowers creators, entrepreneurs and dreamers to do what they love, and succeed.</p>
             
           </div>
         </div>
@@ -750,7 +841,7 @@ fieldset[disabled] .btn-itsFree:hover {
             
               <h1>Join a Pool of Talent</h1>
               <p>Artist, Designers, Illustrators, Animators, Filmakers, Editors. Imagine an artist collaborating with a projection mapping artist on a theater project or a writer collaborating with a scientist on an article on genes. The possibilities are limitless.</p>
-            
+
           </div>
         </div>
       </div>
@@ -765,18 +856,18 @@ fieldset[disabled] .btn-itsFree:hover {
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
             <p>100% of funds and earned income goes directly to the creatives.</p>
-              <p>Create your profile to connect with collaborators</p>
+              <p>Create your profile to connect with collaborators!</p>
           </div>
           
           <div class="col-lg-8 mx-auto text-center">
-          <a href="#myModal" class="btn btn-lg btn-outline" data-toggle="modal">
+          <a href="#signUpModal1" class="btn btn-lg btn-outline" data-toggle="modal">
               <i class="fa fa-user-plus"></i>
              Sign up for free
             </a>
           </div>
 
           <!-- Modal for sign up -->
-          <div class="modal fadei bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+          <!--div class="modal fadei bd-mymodal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
 
@@ -788,7 +879,6 @@ fieldset[disabled] .btn-itsFree:hover {
               <div class="modal-body">
                 <div class="row">
                   <div class="col-md-11">
-                    <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
                       {% if p_type %}
                         {% if p_type == 0 %}
@@ -803,7 +893,6 @@ fieldset[disabled] .btn-itsFree:hover {
                         <li><a href="#Signup" data-toggle="tab">SignUp</a></li>
                       {% endif %}
                     </ul>
-                    <!-- Tab panes -->
                   <div class="tab-content" style="text-align:center;">
                     {% if p_type %}
                       {% if p_type == 0 %}
@@ -896,7 +985,7 @@ fieldset[disabled] .btn-itsFree:hover {
 
               </div>
             </div>
-          </div>
+          </div-->
         </div>
       </div>
     </section>
@@ -974,6 +1063,135 @@ fieldset[disabled] .btn-itsFree:hover {
       <a class="btn btn-primary js-scroll-trigger" href="#page-top">
         <i class="fa fa-chevron-up"></i>
       </a>
+    </div>
+
+
+    <!-- Sign up Modal Window -->
+    
+    <div class="signUp-modal modal fade" id="signUpModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Sign up</h2>
+                  <hr class="star-primary">
+
+                  <form role="form" class="login-form" name="signup" method="POST">
+                    {% csrf_token %}
+                    {% if signupform.non_field_errors  %}
+                    <ul style="list-style-type:none">
+                      {% for error in signupform.non_field_errors %}
+                        <li>{{error}}</li>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <div class="form-group">
+                      <br>
+                      {{ signupform.username }}
+                      <br>
+                      <br>
+                      {{ signupform.first_name }}
+                      <br>
+                      <br>
+                      {{ signupform.last_name }}
+                      <br>
+                      <br>
+                      <div class="popup" onclick="popFunction()">
+                       {{ signupform.password1 }}
+                        <span class="popuptext" id="passwordPop">Create password with minimum of 8 letters and 2 numbers</span>
+                      </div>
+                        <br>
+                        <br>
+                        {{ signupform.password2 }}
+                        <br>
+                        <br>
+                    </div>
+                    <div class="row">
+                      <div class="login-wrapper">
+                        <input type="submit" value="Sign up" name="signup" class='login-submit'/>
+                      </div>
+                    </div>
+                  </form>
+                  <br>
+                  <h5> Sign up with <a href="{% url 'social:begin' 'facebook' %}">FACEBOOK</a> </h5>
+
+                  <a href="#" onclick="switchModal(false)">Already have an account? </a>
+                  
+                  <!--button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Log in  Modal Window -->
+    
+    <div class="signUp-modal modal fade" id="logInModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <h2>Log In</h2>
+                  <hr class="star-primary">
+                  <form role="form" class="login-form" name="login" method="POST">
+                      {% csrf_token %}
+                      {% if loginform.non_field_errors  %}
+                        <ul style="list-style-type:none">
+                          {% for error in loginform.non_field_errors %}
+                            <li>{{error}}</li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+
+                      <div class="form-group">
+                        <br>
+                        {{ loginform.username }}
+                        <br>
+                        <br>
+                        {{ loginform.password }}
+                      </div>
+
+                      <div class="row">
+                        <div class="login-wrapper">
+                          <input type="submit" value="Log me in" name="login" class="login-submit"/>
+                        </div>
+                        <input type="hidden" name="next" value="/home/" />
+                      </div>
+                    </form>
+
+                    <a href="{% url 'week1:reset' %}">Forgot password?</a>
+                    <br>
+                    <a href="#" onclick="switchModal(true)">Sign up for free?</a>
+                  
+                  <!--button class="btn btn-itsFree" type="button" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Close</button-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- howItWorks Modal windows -->
@@ -1081,19 +1299,35 @@ fieldset[disabled] .btn-itsFree:hover {
 
     <!-- Custom scripts for this template -->
     <script>
-    $('#myModal').modal('show');
+    //$('#myModal').modal('show');
 
     function popFunction(){
       var popup = document.getElementById('passwordPop');
       popup.classList.toggle('show');
     }
+
+    // login is flag parameter
+    function switchModal(login){
+      if (login){
+        $('#logInModal1').modal('hide');
+        $('#signUpModal1').modal('show');
+      }else{
+        $('#signUpModal1').modal('hide');
+        $('#logInModal1').modal('show');
+      }
+    }
+
     // For Login Modal
     $(window).load(function(){
       var p_type = "{{p_type}}";
-      console.log("p_type", p_type, typeof p_type);
-      if (p_type != "-1"){
+
+      if (p_type == "1"){
+        // signup error
         //var mymodel = document.getElementsByClassName('.bd-mymodal-lg');
-        $('.bd-mymodal-lg').modal();
+        $('#signUpModal1').modal('show');
+      } else if(p_type == "0"){
+        // login error
+        $('#logInModal1').modal('show');
       }
     });
 

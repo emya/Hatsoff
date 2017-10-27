@@ -113,24 +113,28 @@ function unhatsoffCommunityFunction(uid, c_id){
     hatsoff.innerHTML = '<img src="/static/images/inactive_grey_hat_32x32.png" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')">';
 }
 
-function addCommunityFunction(uid){
-    console.log('follow!');
+// Status
+// 0: new request
+// 1: accept request
+function addCommunityFunction(uid, status = 0){
     socket.emit('give follow', {to_uid:uid, uid:socket.uid});
 
     var elem = document.getElementsByClassName('follow_status_'+uid);
 
     for(var i = 0; i < elem.length; i++){
-        elem[i].innerHTML = '';
+      if (status == 0) {
+        elem[i].innerHTML = 'Request Sent';
+      }else{
+        elem[i].innerHTML = 'Community Member';
+      }
     }
-    $('.follow_status_'+uid).append($('<div class="following"><span>Request Sent &nbsp<span></div>'));
+    //$('.follow_status_'+uid).append($('<div class="following"><span>Request Sent &nbsp<span></div>'));
 
     var addstatus = document.getElementById('add-request');
-    if (addstatus){
-        if (addstatus.innerHTML == 'Confirm request'){
-            addstatus.innerHTML = 'Community member';   
-        }else{
-            addstatus.innerHTML = 'Request Sent';   
-        }
+    if (status == 0){
+      addstatus.innerHTML = 'Request Sent';   
+    }else{
+      addstatus.innerHTML = 'Community Member';   
     }
 }
 

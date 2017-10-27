@@ -1470,7 +1470,6 @@
 	      }
 
           function unhatsoffFunction(c_type, c_id){
-             console.log('unhatsoff!', c_type);
              socket.emit('give unhatsoff', {to_uid:{{t_user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
 
              if(c_type == 2){
@@ -1500,7 +1499,6 @@
           }
 
 	      function popGavehatsoff(){
-	      	 console.log("popup hatsoff");
 
 			 var popFollow = document.getElementById("followPop");
 			 if(popFollow != null){
@@ -1535,8 +1533,6 @@
 	      */
 
 	      function followFunction(){
-			 console.log('follow!');
-
 			 popFollowed();
 		     socket.emit('give follow', {to_uid:{{t_user.id}}, uid:{{user.id}}});
 
@@ -1577,7 +1573,6 @@
 	      }
 
 	      function collaborateFunction(c_type, c_id){
-            console.log('uid on like:'+c_type+':'+c_id);
             //popCollaborate();
             socket.emit('give collaborate', {to_uid:{{t_user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
 		    $('#qnimate').addClass('popup-box-on');
@@ -1593,11 +1588,9 @@
 
           // For portfolio
 		  function submitShowcaseComment(number){
-            console.log('form submit portfolio'+number);
             var post_val = $('#c_portfolio_'+number).val();
                     
             if (post_val.length != 0){
-                console.log('if:'+number+':'+post_val);
 		        socket.emit('portfolio comment', {msg:post_val, to:{{t_user.id}}, p_id:number, uid:{{user.id}} });
             }
 		    $('#c_portfolio_'+number).val('');
@@ -1605,7 +1598,6 @@
           }
 
           function submitUpcomingComment(){
-            console.log('form submit upcoming');
             var post_val = $('#c_upcoming').val();
                     
             if (post_val.length != 0){
@@ -1617,7 +1609,6 @@
           }
 
           function submitComment(uid, c_id){
-            console.log('form submit comment'+c_id);
             var post_val = $('#c_'+c_id).val();
                     
             if (post_val.length != 0){
@@ -1635,11 +1626,9 @@
           } 
 
           function sendMessage(){
-            console.log('send message');
             var post_val = $('#status_message').val();
                     
             if (post_val.length != 0){
-                console.log('if:'+post_val);
                 var files = document.getElementById('image_in_message').files;
 	            var file = files[0];
 
@@ -1662,7 +1651,6 @@
 
           // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
           socket.on('like status', function(data){
-          	console.log("data", data);
           	var upcoming = false;
           	var portfolios = [];
           	if (data){
@@ -1673,7 +1661,6 @@
           				document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div>';
           				upcoming = true; 
           			}
-          			console.log("content_type:", content_type);
           			if (content_type == 3){
           				var p_id = parseInt(doc['content_id']);
           				document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div>';
@@ -1707,8 +1694,6 @@
           });
 
 		  socket.on('set message', function(data){
-            console.log('set message');
-            console.log(data['_id']);
 
             if(data){
             	if(data['messages']){
@@ -1751,11 +1736,13 @@
 		  	elemprofile.innerHTML = '';
 		  	elem.innerHTML = '';
 		  	if(data.status == 2){
+                // Already community members
 		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
 				document.getElementById('add-request').innerHTML = "Community member";
 				document.getElementById('add-request').setAttribute("onclick", "");
 		  	}else if(data.status == 1){
+                // Sent a request
 		  		$('.followstatus').append($('<div class="following"><span>Following &nbsp<span></div>'));
 		  		$('#follow-profile').append($('<div class="following">Following &nbsp</div><span id="followNum">'+data.count+'</span>'));
 				document.getElementById('add-request').innerHTML = "Request sent";
@@ -1763,12 +1750,14 @@
 		  		//var str = '<span class="following">Following</span><span id="followNum">'+data.count+'</span>';
 				//elem.insertAdjacentHTML('beforeend', str);
 		  	}else if(data.status == 11){
-		  		$('.followstatus').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Confirm request &nbsp</div>'));
-		  		$('#follow-profile').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Confirm request &nbsp<span id="followNum">'+data.count+'</span></div>'));
+                // Got a request
+		  		$('.followstatus').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+', 1)">Confirm request &nbsp</div>'));
+		  		$('#follow-profile').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+', 1)">Confirm request &nbsp<span id="followNum">'+data.count+'</span></div>'));
 				document.getElementById('add-request').innerHTML = "Confirm request";
 		  	}else{
-		  		$('.followstatus').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Add &nbsp</div>'));
-		  		$('#follow-profile').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+')">Add &nbsp<span id="followNum">'+data.count+'</span></div>'));
+                // Nothing happens 
+		  		$('.followstatus').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+'), 0">Add &nbsp</div>'));
+		  		$('#follow-profile').append($('<div class="popupFollow" onclick="addCommunityFunction('+{{t_user.id}}+', 0)">Add &nbsp<span id="followNum">'+data.count+'</span></div>'));
 				//var str = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp<span class="popuptextFollow" id="followPop">Following</span><span id="followNum">'+data.count+'</span></div>';
 				//elem.insertAdjacentHTML('beforeend', str);
 		  	}
@@ -1853,7 +1842,6 @@
 		  });
 
 		  socket.on('new message', function(data){
-            console.log('new message');
 
 			var n  = users.indexOf(data.uid);
 
@@ -1887,10 +1875,8 @@
 		  });
 
 	      socket.on('new portfolio comment', function(data){
-            console.log('new portfolio comment on home');
 		    var uid = data.from_uid;
             var p_id = data.p_id;
-            console.log(p_id);
 		    //var users = [{% for u in users %} {{ u }} ,{% endfor %}];
 		    //var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
 		    var n  = users.indexOf(uid);
@@ -1917,7 +1903,6 @@
                 if (docs[i]['p_id']) {
                     var p_id = docs[i]['p_id'];
                     var c_id = docs[i]['_id'];
-                    console.log('If!');
 		            if (docs[i]['user'] && docs[i]['user']['uid']){
 						var uid = docs[i]['user']['uid'];
                         var r_id = i;
@@ -1943,7 +1928,6 @@
 	      });
 
           function submitUForm(){
-            console.log('form submit');
             var com = $('#c_upcoming').val();
             if (com.length != 0){
 		        socket.emit('upcoming comment', {msg:com, to:{{t_user.id}}, uid:{{user.id}}});
@@ -1957,7 +1941,6 @@
             var r_id = i;
             var data = docs[i];
             var c_id = docs[i]['_id'];
-            console.log(data['user']);
             if (data['user'] && data['user']['uid']){
               var uid = docs[i]['user']['uid'];
               var n  = users.indexOf(uid);
@@ -1977,7 +1960,6 @@
 	     });
 
 	     socket.on('new upcoming comment on userpage', function(data){
-	     	console.log('new upcoming comment on userpage');
 		    var uid = data.from_uid;
 		    var n  = users.indexOf(uid);
 		    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
@@ -1999,7 +1981,6 @@
 	     });
  
       function submitCForm(){
-            console.log('post comment');
             if ($('#comment').val().length != 0){
                 socket.emit('post comment', {msg:$('#comment').val(), to:{{uid}}, from:{{user.id}}});
             }
@@ -2027,9 +2008,7 @@
 	  });
 
 	  socket.on('new comment', function(data){
-        console.log('new comment on userpage');
 	    var uid = data.from;
-        console.log(p_id);
 	    var n  = users.indexOf(uid);
 		var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
 	        if ( n != -1) {
@@ -2041,7 +2020,6 @@
 
 
 	  socket.on('update user timeline history', function(data){
-                console.log('update user timeline history');
                 var sharedocs = data.share;
                 var communitydocs = data.community;
                 var len_share = sharedocs.length;
@@ -2209,7 +2187,6 @@
 
 					    if (content['replys']) {
 	                           var rdocs = content['replys'];
-	                           console.log('replys');
 	                           for(var j=0; j < rdocs.length; j++){
 	                              if (rdocs[j]['user']['uid']){
 	                      			var ruid = rdocs[j]['user']['uid']

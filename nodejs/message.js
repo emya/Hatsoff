@@ -1057,7 +1057,6 @@ io.on('connection', function(socket){
   });
  
   socket.on('at userpage', function(data){
-
     var query = CommentPost.find({'to_uid':data.to_uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -1076,10 +1075,12 @@ io.on('connection', function(socket){
       socket.emit('update portfolio comment', docs);
     }); 
 
+    /*
     ThanksPost.find({'to_uid':data.to_uid}).count(function(err, count){
       if (err) throw err;
       socket.emit('number user thanks', count);
     }); 
+    */
 
     /*
     HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){

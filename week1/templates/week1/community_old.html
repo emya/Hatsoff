@@ -1,0 +1,1276 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#myTags").tagit();
+  });
+    
+    
+function myDropDownPostFunction() {
+    console.log("post", document.getElementById("myPostDropdown").classList);
+    document.getElementById("myPostDropdown").classList.toggle("show");
+    console.log("post", typeof document.getElementById("myPostDropdown"));
+    console.log("post", document.getElementById("myPostDropdown"));
+    return false;
+}
+
+    
+function myDropDownDelEditFunction(c_id) {
+    console.log("press!");
+    console.log("document", document.getElementById("myDelEditDropdown_"+c_id).classList);
+    document.getElementById("myDelEditDropdown_"+c_id).classList.toggle("show");
+    console.log("document", typeof document.getElementById("myDelEditDropdown_"+c_id));
+    console.log("document", document.getElementById("myDelEditDropdown_"+c_id));
+    console.log(document.getElementById("myDelEditDropdown_"+c_id).classList.contains("show"));
+    return false;
+}
+
+// Close the dropdown menu if the user clicks outside of it
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropPostBtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-PostContent");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+  if (!event.target.matches('.dropDelEditIcon')) {
+    var dropdowns = document.getElementsByClassName("dropdown-DelEditContent");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script> 
+
+<!--div class="community-container"-->
+<div id="home-main">
+
+<div class="community-container">
+  <div class="row">
+      <div class="col-md-8 col-md-offset-1">
+        <div class="well well-sm">
+          <form class="form-horizontal" action="" method="">
+           
+          <fieldset>
+            <legend class="text-center">
+	           Community whiteboard--Connect; Collaborate; Create
+            </legend>
+    
+            <!-- Post body -->
+            <div class="form-group">
+              <div class="col-md-9">
+                <textarea class="form-control" id="p" autocomplete="off" name="message" placeholder="Enter your message to the community here..." rows="3" style="width:680px;"></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-9">
+                <label for="imageupload">Image file:</label>
+                <!--input name="imageupload" id="imageupload" type="file" /><br /-->
+                <input id="imageupload" type="file" />
+              </div>
+            </div>
+
+             
+            <label>Skill tag (up to 5)</label><ul id="myTags">
+            </ul>
+    
+            <!-- Form actions -->
+            <div class="form-group">
+              <div class="col-md-12 text-right">
+                <select id="tag2nextproject">
+                  <option value="" disabled="disabled" selected="selected">Want to tag your next project to this post?</option>
+                  <option value="1">Yes</option>
+                  <option value="-1">No</option>
+                </select>
+                  
+                <!-- button class="btn btn-primary btn-lg" onclick="return publicPost()">Share with the public</button-->
+                <!-- button class="btn btn-primary btn-lg" onclick="return privatePost()">Share with your community</button-->
+              </div>
+            </div>
+              
+          </fieldset>
+          </form>
+            <div align="right">
+                <div class="dropdown">
+                    <button onclick="myDropDownPostFunction()" class="dropPostBtn">Post</button>
+                    <div id="myPostDropdown" class="dropdown-PostContent">
+                        <a href="#" onclick="return publicPost()">Share with the public        <img src="{% static 'images/internet.png'%}" width="20px" height="20px" align="right"></a>
+                            
+                        <a href="#" onclick="return privatePost()">Share with your community<img src="{% static 'images/about-us.svg'%}" width="20px" height="20px" align="right"></a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+      </div>
+  </div>
+
+  <!--div class="row">
+    <div class="col-md-8 col-md-offset-1" style="text-align: center;">
+      <a href="{% url 'week1:community_needyou' %}"><h4>Projects that need your help</h4></a>
+    </div>
+  </div-->
+
+
+
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-1" id="logout">
+        <div class="comment-tabs">
+            <div class="tab-content">
+                <div class="tab-pane active" id="comments-logout">                
+                    <ul class="media-list" id="communityPost">
+                    </ul> 
+                </div>
+            </div>
+        </div>
+	    </div>
+  </div>
+</div>
+
+<div class="suggested">
+  <!--h4>Suggested Projects</h4>
+  <ul id="suggested_project" style="padding-left: 10px;">
+  </ul>
+  <a href="{% url 'week1:community_needyou' %}" >View more</a>
+  <br>
+  <br-->
+
+  <h4>Collaborators who may need you</h4>
+  <!--ul id="collaborators_needyou">
+  </ul-->
+  <a href="{% url 'week1:collaborators_need_you' %}">View more</a>
+  <br>
+  <br>
+
+  <h4>Collaborators you may need</h4>
+  <ul id="collaborators_youneed">
+  </ul>
+  <a href="{% url 'week1:collaborators_you_need' %}">View more</a>
+  <br>
+  <br>
+</div>
+
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <!--script src="http://code.jquery.com/jquery-1.11.1.js"></script-->
+    <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
+    <script type="text/javascript">
+	  /*var socket = io();*/
+          //var socket = io.connect("{{nodejs_url}}");
+          console.log("community socket");
+
+          /***new lines***/
+          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          /***to here***/
+
+          var users = [{% for u in users %} "{{ u }}" ,{% endfor %}];
+          var names = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
+          var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
+
+          //var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          /*
+          function popShare(){
+	          var popup = document.getElementById('sharePop');
+            popup.classList.toggle('show');
+	        }
+          */
+
+          function popShared(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+              popHatsoff.style.visibility = "hidden";
+            }
+
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+              popLike.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
+	          var popup = document.getElementById('sharedPop');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
+	        }
+
+          function popShareSkill(){
+	          var popup = document.getElementById('shareskillPop');
+            popup.classList.toggle('show');
+	        }
+
+          function shareskillFunction(uid, c_id){
+            console.log('uid on shareskill:'+uid+':'+c_id);
+            popThankyou();
+	          socket.emit('share skill', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+          }
+
+          function popThankyou(){
+	          var popup = document.getElementById('thankyouPop');
+            popup.classList.toggle('show');
+	        }
+
+          function popHatsoff(){
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+              popShared.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+              popLike.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
+	          var popup = document.getElementById('hatsoffPop');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
+	        }
+
+          function thanksFunction(uid){
+            console.log('uid on thanks:'+uid);
+            popThanks();
+	          socket.emit('give thanks', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popThanks(){
+	          var popup = document.getElementById('thanksPop');
+            popup.classList.toggle('show');
+	        }
+
+          function followFunction(uid){
+            console.log('uid on follow:'+uid);
+            popFollow();
+            socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
+          }
+
+          function popFollow(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+             popHatsoff.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+             popShared.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+             popLike.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
+	          var popup = document.getElementById('followPop');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
+	        }
+
+          function popLike(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+              popHatsoff.style.visibility = "hidden";
+            }
+
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+              popShared.style.visibility = "hidden";
+            }
+
+            var popCollabo = document.getElementById('collaboratePop');
+            if(popCollabo != null){
+              popCollabo.style.visibility = "hidden"; 
+            }
+
+	          var popup = document.getElementById('likePop');
+            popup.style.visibility = "visible";
+            //popup.classList.toggle('show');
+	        }
+
+          function collaborateFunction(uid, c_id){
+            console.log('uid on like:'+uid+':'+c_id);
+            //popCollaborate();
+            socket.emit('give collaborate', {to_uid:uid, uid:{{user.id}}, c_id:c_id, c_type:1});
+            $('#qnimate').addClass('popup-box-on');
+            var index = users.indexOf(uid);
+            document.getElementById('status_message').value = 'Hello I\'m interested in Collaborating.';
+            var elements = document.getElementsByClassName('popup-head-left pull-left');
+            elements[0].innerHTML = names[index][0]+'&nbsp'+names[index][1];
+            socket.emit('get message', {to_uid:uid})
+
+            var elems = document.getElementsByClassName('btn-footer');
+            elems[0].innerHTML = '<button class="btn btn-primary btn-lg pull-right" onclick="sendMessage('+uid+')">Send </button>';
+          }
+
+          function closeChat(){
+            $('#qnimate').removeClass('popup-box-on');
+          }
+
+          function sendMessage(uid){
+            console.log('send message');
+            var post_val = $('#status_message').val();
+                    
+            if (post_val.length != 0){
+              console.log('if:'+post_val);
+              socket.emit('send message', {msg:post_val, to_uid:uid, uid:{{user.id}} });
+            }
+            $('#status_message').val('');
+            return false;
+          }
+
+          function getMessage(){
+            console.log('get message');
+        //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
+          }
+
+          socket.on('set message', function(data){
+            console.log('set message');
+            console.log(data['_id']);
+
+            if(data){
+              if(data['messages']){
+                for (var i=0; i < data['messages'].length; i++){
+                  if (data['messages'][i]['content']){
+                    var n  = users.indexOf(data['messages'][i]['uid'].toString());
+                    console.log("n:"+n);
+                    if(data['messages'][i]['uid'] == {{user.id}}){
+                      if (n != -1){
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+                      }else{
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+
+                      }
+                    }else{
+                      if ( n != -1){
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+                      }else{
+                        $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data['messages'][i]['content']+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+                      }
+                    }
+                  }
+
+                }
+
+              }
+
+            }
+
+        });
+
+        socket.on('new message', function(data){
+            console.log('new message');
+
+            var n  = users.indexOf(data.uid.toString());
+            if(data.uid == {{user.id}}){
+              if (n != -1){
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+              }else{
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2015</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">You</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span></div></div>'));
+              }
+
+            }else{
+              if (n != -1){
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{{media_url}}'+photos[n]+'" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+              }else{
+                $('#chat_room').append($('<div class="chat-box-single-line"><abbr class="timestamp">October 9th, 2016</abbr></div><div class="direct-chat-msg doted-border"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+names[n][0]+'&nbsp'+names[n][1]+'</span></div><img alt="iamgurdeeposahan" src="{% static 'images/profileimage.png' %}" class="direct-chat-img"><div class="direct-chat-text">'+data.content+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-left">3.36 PM</span></div></div>'));
+              }
+
+            }
+
+        });
+
+          function popCollaborate(){
+            var popHatsoff = document.getElementById("hatsoffPop");
+            if(popHatsoff != null){
+              popHatsoff.style.visibility = "hidden";
+            }
+
+            var popFollow = document.getElementById("followPop");
+            if(popFollow != null){
+              popFollow.style.visibility = "hidden";
+            }
+
+            var popShared = document.getElementById("sharedPop");
+            if(popShared != null){
+              popShared.style.visibility = "hidden";
+            }
+
+            var popLike = document.getElementById("likePop");
+            if(popLike != null){
+             popLike.style.visibility = "hidden";
+            }
+
+            var popup = document.getElementById('collaboratePop');
+            //popup.classList.toggle('show');
+            popup.style.visibility = "visible";
+          }
+
+          function replyFunction(uid, c_id){
+            console.log('reply uid:'+uid+':'+c_id);
+            console.log('reply comment:'+$('#replyComment_'+c_id).val());
+            var reply = $('#replyComment_'+c_id).val();
+
+	          socket.emit('reply community', {to_uid:uid, uid:{{user.id}}, c_id:c_id, msg:reply});
+            $('#replyComment_'+c_id).val('');
+          }
+
+          function getLikeusers(c_id){
+            console.log("get likeusers");
+            socket.emit('get community likeusers', {c_id:c_id, content_type:1});
+          }
+
+          function getShareusers(c_id){
+            console.log("get shareusers");
+            socket.emit('get community shareusers', {c_id:c_id, content_type:1});
+          }
+
+          function submitComment(uid, c_id){
+            console.log('form submit comment'+c_id);
+            var post_val = $('#c_'+c_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('comment:'+post_val);
+              socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+            }
+            $('#c_'+c_id).val('');
+            return false;
+          }
+
+      	  //$('form').submit(function(){
+          function publicPost(){
+            var tag = document.getElementById("tag2nextproject");
+            var tagvalue = tag.options[tag.selectedIndex].value;
+            var tagInt = 0;
+            if (tagvalue) {
+              tagInt = parseInt(tagvalue);
+            }
+
+            var skillls = [];
+            var lis = document.getElementById("myTags").getElementsByTagName("li");
+
+            console.log('lis:'+lis.length);
+            for (var i = 0; i < lis.length; i++){
+              var t = lis[i].childNodes[0].textContent;
+              if ( t!= "" ){
+                 skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
+                 console.log('lis:'+t);
+              }
+            }
+
+            var files = document.getElementById('imageupload').files;
+            var file = files[0];
+
+            var data = {};
+            if (file){
+              data = {'file':file, 'fileName':file.name, 'type':file.type};
+              console.log("files:",files);
+              console.log("file:",file);
+              console.log("fileName:",file.name);
+            }
+
+            console.log('tag:'+tagvalue);
+            if ($('#p').val().length != 0){
+      		    socket.emit('community post', {msg:$('#p').val(), data:data, uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
+      		    //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+      		    });
+      		    $('#p').val('');
+              $('#imageupload').val('');
+            //$('#myTags').empty();              
+      	    }
+            return false;
+      	  }
+
+          function privatePost(){
+            var tag = document.getElementById("tag2nextproject");
+            var tagvalue = tag.options[tag.selectedIndex].value;
+            var tagInt = 0;
+            if (tagvalue) {
+              tagInt = parseInt(tagvalue);
+            }
+
+            var skillls = [];
+            var lis = document.getElementById("myTags").getElementsByTagName("li");
+
+            console.log('lis:'+lis.length);
+            console.log('private post');
+            for (var i = 0; i < lis.length; i++){
+              var t = lis[i].childNodes[0].textContent;
+              if ( t!= "" ){
+                 skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
+                 console.log('lis:'+t);
+              }
+            }
+
+            var files = document.getElementById('imageupload').files;
+            var file = files[0];
+
+            var data = {};
+            if (file){
+              data = {'file':file, 'fileName':file.name, 'type':file.type};
+              console.log("files:",files);
+              console.log("file:",file);
+              console.log("fileName:",file.name);
+            }
+
+            console.log('tag:'+tagvalue);
+            if ($('#p').val().length != 0){
+              socket.emit('private post', {msg:$('#p').val(), data:data, uid:{{user.id}}, tag:tagInt, skillls:skillls}, function(data){
+              //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+              });
+              $('#p').val('');
+              $('#imageupload').val('');
+            //$('#myTags').empty();              
+            }
+            return false;
+          }
+
+          function deletePost(c_id){
+            console.log("delete post");
+            socket.emit('delete community post', c_id);
+            document.getElementById("media_"+c_id).innerHTML = '';
+          }
+
+          function editPost(c_id){
+            var modal = document.getElementById('editModal_'+c_id);  
+            modal.style.display = "block";
+          }
+
+          function deleteComment(c_id, r_id){
+            console.log("delete comment");
+            socket.emit('delete community comment', {c_id:c_id, r_id:r_id});
+            //document.getElementById("media-content_"+c_id+'_'+r_id).innerHTML = '';
+            document.getElementById("commentHistory_"+c_id).getElementsByClassName("community_comment_"+r_id)[0].innerHTML = '';
+          }
+
+          function editComment(c_id, r_id){
+            var modal = document.getElementById('editModal_'+c_id+'_'+r_id);  
+            modal.style.display = "block";
+          }
+
+          function submitcommentEdit(c_id, r_id){
+            var post_val = $('#post_text_'+c_id+'_'+r_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('if:'+post_val);
+              socket.emit('update postComment', {msg:post_val, c_id:c_id, r_id:r_id, uid:{{user.id}} });
+              document.getElementById("media-content_"+c_id+'_'+r_id).innerHTML = post_val;
+              closeEdit(c_id+'_'+r_id);
+            }
+            $('#status_message').val('');
+            return false;
+          }
+
+          function submitEdit(c_id){
+            var post_val = $('#post_text_'+c_id).val();
+                    
+            if (post_val.length != 0){
+              console.log('if:'+post_val);
+              socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:{{user.id}} });
+              document.getElementById("media-content_"+c_id).innerHTML = post_val;
+              closeEdit(c_id);
+            }
+            $('#status_message').val('');
+            return false;
+          }
+
+          socket.on('list community likeusers', function(data){
+            console.log("list likeusers:", data.result);
+            var modal = document.getElementById('likeModal_'+data.c_id);  
+            console.log("modal", modal);
+            modal.style.display = "block";
+            var content = document.getElementById('like_users_'+data.c_id);  
+            for (var i = 0; i < data.result.length; i++){
+              console.log(data.result[i]);
+              if(data.result[i]['user']){
+                var first = data.result[i]['user']['first_name'];
+                var last = data.result[i]['user']['last_name'];
+                $('#like_users_'+data.c_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
+              }
+            }
+          });
+
+          socket.on('list community shareusers', function(data){
+            console.log("list shareusers:", data.result);
+            var modal = document.getElementById('shareModal_'+data.c_id);  
+            console.log("modal", modal);
+            modal.style.display = "block";
+            var content = document.getElementById('share_users_'+data.c_id);  
+            for (var i = 0; i < data.result.length; i++){
+              console.log(data.result[i]);
+              if(data.result[i]['user']){
+                var first = data.result[i]['user']['first_name'];
+                var last = data.result[i]['user']['last_name'];
+                $('#share_users_'+data.c_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
+              }
+            }
+          });
+
+          socket.on('community members number', function(len){
+            console.log("length :", len);
+            document.getElementById('num-cmembers').innerHTML = len;
+            localStorage.setItem("num-cmembers", len); 
+            var cmembers = localStorage.getItem("num-cmembers");
+            console.log(cmembers);
+          });
+
+
+          function closeLikeList(c_id){
+            console.log("close like list");
+            var span = document.getElementById('likeClose_'+c_id);
+            var modal = document.getElementById('likeModal_'+c_id);  
+            modal.style.display = "none";
+          }
+
+          function closeShareList(c_id){
+            console.log("close share list");
+            var span = document.getElementById('shareClose_'+c_id);
+            var modal = document.getElementById('shareModal_'+c_id);  
+            modal.style.display = "none";
+          }
+
+          function closeEdit(c_id){
+            console.log("close like list");
+            var span = document.getElementById('editClose_'+c_id);
+            var modal = document.getElementById('editModal_'+c_id);  
+            modal.style.display = "none";
+          }
+
+	        socket.on('new reply community', function(data){
+              var uid = data.uid;
+              var c_id = data.community_id;
+              console.log('new reply community c_id:'+c_id);
+              var n  = users.indexOf(uid);
+      	      var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+      	      var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+              if ( n != -1) {
+                    if (uid == {{user.id}}){
+	               //$('#communityPost').prepend($('<hr>'));
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    } else{
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    }
+
+              }else{
+	          //$('#communityPost').prepend($('<hr>'));
+                    if (uid == {{user.id}}){
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    } else {
+	               $('#replyHistory_'+c_id).prepend($('<li><div class="reply-wrapper"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp <a href="'+url_mask+'">folder</a></br><p class="reply-content">'+data.msg+'</p></br></div><br/>'));
+                    }
+              }
+          });
+
+          socket.on('new share', function(data){
+            var content = data.content;
+            var c_id = content.community_id;
+
+            var imageText = '';
+            if (content.image){
+              imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+content.image+'" width="350px" /></object>';
+            }
+
+            var uid = data.sharedBy; 
+            if(uid == {{user.id}}){
+              shared_info = '<li class="media">You shared</li>';
+            }else{
+              var sn  = users.indexOf(s_user.toString());
+              shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
+            }
+            var n  = users.indexOf(uid.toString());
+
+            var usr = data.user; 
+
+            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+
+            $('#communityPost').prepend($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+photos[n]+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+usr.first_name+'&nbsp'+usr.last_name+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li><li class="mm"></li><li class="aaaa"></li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+data.title+'<br>'+'Description: '+data.description+'</p>'+imageText+'</a></div></div></li>'));
+          });
+
+          socket.on('new community comment', function(data){
+              var uid = data.uid;
+              var c_id = data.community_id;
+              console.log('new community comment c_id:'+c_id);
+              var n  = users.indexOf(uid);
+              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+              var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+              if ( n != -1) {
+                 //$('#communityPost').prepend($('<hr>'));
+                 $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp</br><p>'+data.msg+'</p>'));
+              }else{
+            //$('#communityPost').prepend($('<hr>'));
+                 $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+data.first_name+'&nbsp'+data.last_name+'</a>&nbsp</br><p>'+data.msg+'</p>'));
+              }
+          });
+
+          socket.on('new private post', function(data){
+              var uid = data.uid;
+              var c_id = data.community_id;
+              console.log("data:", data);
+              var n  = users.indexOf(uid.toString());
+              var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+              var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
+              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></div>';
+              var shareskill = '';
+
+              var like = '<hr class="divider"/><div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">0</div></div>';
+              var follow = '<div class="popupLike" onclick="followFunction('+uid+')">Follow</div>';
+              //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
+              var thanks = '';
+              var share = '<div class="popupLike" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
+              var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
+              var collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')" class="icons-img"></div>';
+              var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+              var skillls = '';
+              var imageText = '';
+              var dells = '';
+              var deleteOrEdit = '';
+              
+              if (uid == {{user.id}}){
+                //dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
+                deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+data.msg+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
+              }
+
+              if (data.skillls){
+                if(data.skillls.length != 0){
+                  var ls = data.skillls;
+                  skillls += "<div> Tags: ";
+                  for (var j = 0; j < ls.length; j++){
+                    var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+                    skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+                  } 
+                  skillls += "</div><br>";
+                }
+              }
+              if (data.image && data.image.file){
+                var bytes = new Uint8Array(data.image.file);
+                var enc = encode(bytes);
+                imageText = '<embed id="ItemPreview" src="data:'+data.image.type+';base64,'+enc+'" class="postImage" ></embed>';
+              }
+
+              if ( n != -1) {
+                    if (uid == {{user.id}}){
+                      $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
+                    } else{
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                    }
+
+              }else{
+                    if (uid == {{user.id}}){
+                       $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
+                    } else {
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body">Private post<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                    }
+              }
+            });
+
+
+	        socket.on('new community post', function(data){
+              var uid = data.uid;
+              var c_id = data.community_id;
+              console.log("data:", data);
+              var n  = users.indexOf(uid.toString());
+	            var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+	            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+              var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+data.tag+"&u="+uid;
+              var hatsoff = '<div class="popupHatsoff" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'inactive_grey_hat_32x32.png'%}" class="icons-img"></div>';
+              var shareskill = '';
+
+              var like = '<hr class="divider"/><div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">0</div></div>';
+              var follow = '<div class="popupLike" onclick="followFunction('+uid+')">Follow</div>';
+              //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
+              var thanks = '';
+              var share = '<div class="popupLike" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"></div>';
+              var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
+              //var reply = '<div class="popupReply" onclick="popReply()">Reply<span class="popuptextReply" id="replyPop">Reply to the post</br><textarea id="replyComment" ></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button>&nbsp<button>Not Now</button></span></div>';
+              var collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')" class="icons-img"></div>';
+              var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+              var skillls = '';
+              var imageText = '';
+
+              if (data.skillls){
+                if(data.skillls.length != 0){
+                  var ls = data.skillls;
+                  skillls += "<div> Tags: ";
+                  for (var j = 0; j < ls.length; j++){
+                    var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
+                    skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
+                  } 
+                  skillls += "</div><br>";
+                }
+              }
+              if (data.image && data.image.file){
+                var bytes = new Uint8Array(data.image.file);
+                var enc = encode(bytes);
+                imageText = '<embed id="ItemPreview" src="data:'+data.image.type+';base64,'+enc+'" class="postImage" ></embed>';
+              }
+
+              var dells = '';
+              if (uid == {{user.id}}){
+                deleteOrEdit = '<div class="dropdown"><button onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditBtn">Post</button><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+data.msg+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
+              }
+
+              if ( n != -1) {
+                    if (uid == {{user.id}}){
+                       //Reply
+                      $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
+                    } else{
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                    }
+
+              }else{
+                    if (uid == {{user.id}}){
+                       $('#communityPost').prepend($('<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+edit+'</div></div></li>'));
+                    } else {
+                       $('#communityPost').prepend($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+data.first_name+'&nbsp'+data.last_name+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">Now</li></ul><a href="'+post_link+'"><p class="media-comment">'+data.msg+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
+                    }
+              }
+        	  });
+                
+        	  socket.on('update community post', function(data){
+              //console.log("data", data);
+              var docs = (typeof data["docs"] == "string") ? JSON.parse(data["docs"]) : data["docs"];
+              var sharedocs = (typeof data["sharedocs"] == "string") ? JSON.parse(data["sharedocs"]) : data["sharedocs"];
+              var likedocs = (typeof data["likedocs"] == "string") ? JSON.parse(data["likedocs"]) : data["likedocs"];
+              var hatsoffdocs = (typeof data["hatsoffdocs"] == "string") ? JSON.parse(data["hatsoffdocs"]) : data["hatsoffdocs"];
+
+              var sharels = [];
+              var likels = [];
+              var hatsoffls = [];
+              var friends = data.friends;
+
+              for (var i=0; i < sharedocs.length; i++){
+                sharels.push(sharedocs[i]['content_id']);
+              }
+              for (var i=0; i < likedocs.length; i++){
+                likels.push(likedocs[i]['content_id']);
+              }
+              for (var i=0; i < hatsoffdocs.length; i++){
+                hatsoffls.push(hatsoffdocs[i]['content_id']);
+              }
+
+              for(var i=0; i < docs.length; i++){
+                 if (docs[i]['user'] && docs[i]['user']['uid']) {
+	                  var uid = docs[i]['user']['uid'];
+                    var c_id = docs[i]['_id'];
+	                  var n  = users.indexOf(uid.toString());
+                    var created = docs[i]['created'];
+                    var colonIndex = created.indexOf(":");
+                    var date = created.substring(0, colonIndex-3);
+                    var datels = date.split('-');
+                    var mm = months[parseInt(datels[1])-1];
+                    var dd = datels[2];
+                    var yy = datels[0];
+                    var shared_info = '';
+                    var count_likes = 0;
+                    var count_shares = 0;
+
+                    var privateShow = 0;
+
+                    if (docs[i]['communityFlag']){
+                      if (docs[i]['communityFlag'] == 1){
+                        if (friends.indexOf(uid) != -1 || uid == {{user.id}}){
+                          privateShow = 1;
+                        } else{
+                          privateShow = -1;
+                        }
+                      }
+                    }
+
+                    if (privateShow != -1){
+                      if (docs[i]['likes']){
+                        count_likes = docs[i]['likes']; 
+                      }
+
+                      if (docs[i]['shares']){
+                        count_shares = docs[i]['shares']; 
+                      }
+
+                      var privateText = '';
+                      if (privateShow == 1){
+                        privateText = 'Private post';
+                      }
+
+                      if(docs[i]['sharedBy']){
+                        var s_user = docs[i]['sharedBy']; 
+                        if(s_user == {{user.id}}){
+                          shared_info = '<li class="media">You shared</li>';
+
+                        }else{
+                          var sn  = users.indexOf(s_user.toString());
+                          shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
+                        }
+                      }
+
+                      if(docs[i]['content_id']){
+                        c_id = docs[i]['content_id']; 
+                      }
+
+                      var tag = (docs[i]['tag']) ? docs[i]['tag'] : 0;
+		                  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+		                  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                      var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                      var profile_link = "{% static 'images/profileimage.png' %}";
+                      //var thanks = '<div class="popupThanks" onclick="thanksFunction('+uid+')">Thanks &nbsp</br><span class="popuptextThanks" id="thanksPop">Gave a Thanks!</br></span></div>';
+                      var thanks = '';
+                      var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
+
+                      var like = '<hr class="divider"/>';
+                      if (likels.indexOf(c_id) != -1){
+                        //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                        like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
+                      }else{
+                        like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+c_id+'\')">'+count_likes+'</div></div>';
+                      }
+
+                      var share = '';
+                      if (sharels.indexOf(c_id) != -1){
+                        share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
+                      }else{
+                        share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+c_id+'\')">'+count_shares+'</div></div>';
+                      }
+
+                      var hatsoff = '';
+                      if (hatsoffls.indexOf(c_id) != -1){
+                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+                      }else{
+                        hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')"></div>';
+                      }
+                      var shareskill = '';
+                      var collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')" class="icons-img"></div>';
+
+                      var reply = '<div class="reply-wrapper">Reply to the post</br><textarea id="replyComment_'+c_id+'" rows="3" cols="40"></textarea><button onclick="replyFunction(\''+uid+'\',\''+c_id+'\')" >Reply</button><div id="replyHistory_'+c_id+'"></div></div>';
+                      var skillls = '';
+                      var comment = '<div class="well well-smm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-9"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter your comment here..." rows="3" style="width:570px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="return submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
+
+                      var listlikes = '<div id="likeModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closeLikeList(\''+c_id+'\')">&times;</span><h3>Users who liked</h3><div id="like_users_'+c_id+'"></div></div></div>';
+
+                      var listshares = '<div id="shareModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closeShareList(\''+c_id+'\')">&times;</span><h3>Users who shared</h3><div id="share_users_'+c_id+'"></div></div></div>';
+
+                      var dells = '';
+                      var editls = '';
+                      var edit = '';
+                        
+                      var deleteOrEdit = '';
+
+                      if (docs[i]['portfolio']){
+                        var portfolio = docs[i]['portfolio'];
+
+                        var imageText = '';
+                        if (portfolio.image){
+                          imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+portfolio.image+'" width="350px" /></object>';
+                        }
+
+                        $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+portfolio.title+'<br>'+'Description: '+portfolio.description+'</p>'+imageText+'</a>'+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
+                        continue;                            
+                      }
+
+                      if (docs[i]['upcoming']){
+                        var upcoming = docs[i]['upcoming'];
+
+                        var imageText = '';
+                        if (upcoming.image){
+                          imageText = '<object id="ItemPreview_'+c_id+'" data="{{media_url}}'+upcoming.image+'" width="350px" /></object>';
+                        }
+
+                        $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+upcoming.title+'<br>'+'Description: '+upcoming.description+'</p>'+imageText+'</a>'+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
+                        continue;                            
+                      }
+
+                      if (docs[i]['sharedBy']){
+                        var content_id = docs[i]['content_id'];
+                        for(var j=0; j < docs.length; j++){
+                          if ( docs[j]['_id'] == content_id ){
+                            break; 
+                          }
+                        }
+                        uid = docs[j]['user']['uid'];
+                        tag = (docs[j]['tag']) ? docs[j]['tag'] : 0;
+                        url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
+                        url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        post_link = "{% url 'week1:community_post'%}?c_id="+content_id+"&tag="+tag+"&u="+uid;
+                        created = docs[j]['created'];
+                        colonIndex = created.indexOf(":");
+                        date = created.substring(0, colonIndex-3);
+                        datels = date.split('-');
+                        mm = months[parseInt(datels[1])-1];
+                        dd = datels[2];
+                        yy = datels[0];
+
+                        var imageText = '';
+                        if (docs[j]['image'] && docs[j]['image']['data']){
+                          var bytes = new Uint8Array(docs[j]['image']['data']);
+                          var enc = encode(bytes);
+                          var ctype = docs[j]['image']['contentType'];
+                          imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
+                        }
+
+                        var skillls = '';
+                        if (docs[j]['skillls']){
+                          if(docs[j]['skillls'].length != 0){
+                            var ls = docs[j]['skillls'];
+                            skillls += "<div> Tags: ";
+                            for (var k = 0; k < docs[j]['skillls'].length; k++){
+                              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, docs[j]['skillls'][k]);
+                              skillls += "<a href='"+skill_link+"'>"+docs[j]['skillls'][k]+"</a>" + "&nbsp";
+                            } 
+                            skillls += "</div><br>";
+                          }
+                        }
+
+                        if (docs[j]['likes']){
+                          count_likes = docs[j]['likes']; 
+                        }
+
+                        if (docs[j]['shares']){
+                          count_shares = docs[j]['shares']; 
+                        }
+
+                        like = '<hr class="divider"/>';
+                        if (likels.indexOf(content_id) != -1){
+                        //like += '<div class="popupLike" id="like_'+c_id+'">Liked &nbsp</div>';
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+content_id+'\')"><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+content_id+'\')">'+count_likes+'</div></div>';
+                        }else{
+                          like += '<div class="popupLike" id="like_'+c_id+'" ><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+content_id+'\')" /><div class="popupCount" id="like_count_'+c_id+'" onclick="getLikeusers(\''+content_id+'\')">'+count_likes+'</div></div>';
+                        }
+
+                        share = '';
+                        if (sharels.indexOf(content_id) != -1){
+                          share = '<div class="popupLike" id="share_'+c_id+'"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
+                        }else{
+                          share = '<div class="popupLike" id="share_'+c_id+'" onclick="shareCommunityFunction(\''+uid+'\',\''+content_id+'\')"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img"><div class="popupCount" id="share_count_'+c_id+'" onclick="getShareusers(\''+content_id+'\')">'+count_shares+'</div></div>';
+                        }
+
+                        hatsoff = '';
+                        if (hatsoffls.indexOf(content_id) != -1){
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
+                        }else{
+                          hatsoff = '<div class="popupLike" id="hatsoff_'+c_id+'"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+content_id+'\')"></div>';
+                        }
+
+                        collaborate = '<div class="popupLike"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" onclick="collaborateFunction(\''+uid+'\',\''+content_id+'\')" class="icons-img"></div>';
+                        
+                        $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[j]['user']['first_name']+'&nbsp'+docs[j]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+content_id+'">'+docs[j]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+collaborate+'</div></div></li>'));
+                        continue;
+                      }
+                        
+                      if (uid == {{user.id}}){
+                        deleteOrEdit = '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
+                        //dells = '<li><button class="btn btn-primary" onclick="return deletePost(\''+c_id+'\')" align="right">Delete</button></li>';
+                        //editls = '<li><button class="btn btn-primary" onclick="return editPost(\''+c_id+'\')" align="right">Edit</button></li>';
+
+                        edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+docs[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
+                      }
+
+                      if (docs[i]['skillls']){
+                        if(docs[i]['skillls'].length != 0){
+                          var ls = docs[i]['skillls'];
+                          skillls += "<div> Tags: ";
+                          for (var j = 0; j < docs[i]['skillls'].length; j++){
+                            var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, docs[i]['skillls'][j]);
+                            skillls += "<a href='"+skill_link+"'>"+docs[i]['skillls'][j]+"</a>" + "&nbsp";
+                          } 
+                          skillls += "</div><br>";
+                        }
+                      }
+
+                      var imageText = '';
+
+                      if (docs[i]['image'] && docs[i]['image']['data']){
+                        var bytes = new Uint8Array(docs[i]['image']['data']);
+                        var enc = encode(bytes);
+                        var ctype = docs[i]['image']['contentType'];
+                        imageText = '<embed id="ItemPreview_'+c_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
+                      }
+
+                			if ( n != -1) {
+                			   if (uid == {{user.id}}){
+
+                            //Reply
+                            var imageUrl = '{{media_url}}'+photos[n];
+                            $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+edit+'</div></div></li>'));
+                             
+		                     } else{
+                            var imageUrl = '{{media_url}}'+photos[n];
+                            $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
+                			   }
+                			} else{
+                			   if (uid == {{user.id}}){
+                            $('#communityPost').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+edit+'</div></div></li>'));
+		                       } else{
+                            $('#communityPost').append($(shared_info+'<li class="media"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
+                			   }
+                			}
+                      if (docs[i]['replys']) {
+                         var rdocs = docs[i]['replys'];
+                         for(var j=0; j < rdocs.length; j++){
+                            if (rdocs[j]['user']['uid']){
+                    				  var r_id = j;
+                              var ruid = rdocs[j]['user']['uid'];
+                              var deleteOrEdit_cmt = (ruid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deleteComment(\''+c_id+'\', \''+r_id+'\')">Delete</a><a href="#" onclick="return editComment(\''+c_id+'\', \''+r_id+'\')">Edit</a></div></div>' : '';
+                              var edit_cmt = (ruid == {{user.id}}) ? '<div id="editModal_'+c_id+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'_'+r_id+'" onclick="closeEdit(\''+c_id+'_'+r_id+'\')">&times;</span><div id="edit_post_'+c_id+'_'+r_id+'"><textarea id="post_text_'+c_id+'_'+r_id+'" rows="20" cols="40" name="message">'+rdocs[j]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+c_id+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
+                    				  var m  = users.indexOf(ruid);
+                    				  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+                    				  if ( m != -1) {
+                    				     $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li class="community_comment_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp'+deleteOrEdit_cmt+'</br><p id="media-content_'+c_id+'_'+r_id+'">'+rdocs[j]['content']+edit_cmt+'</p>'));
+                    				   }else{
+                    				     $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li class="community_comment_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp'+deleteOrEdit_cmt+'</br><p id="media-content_'+c_id+'_'+r_id+'">'+rdocs[j]['content']+edit_cmt+'</p>'));
+                    				  }
+                            }
+                         }
+                      }
+                  }
+             }
+	      }
+	  });
+  
+    socket.on('three collaborators need you', function(docs){
+      for(var i=0; i < docs.length; i++){
+        console.log("top collaborators:"+docs[i].user_id);
+        var uid = docs[i].user_id;
+        var first_name = docs[i].first_name;
+        var last_name = docs[i].last_name;
+        var profession = docs[i].profession1;
+        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var n  = users.indexOf(uid);
+        if ( n != -1 ){
+          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
+        }else{
+          $('#collaborators_needyou').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
+
+        }
+      }
+    });
+
+    socket.on('three collaborators you need', function(docs){
+      for(var i=0; i < docs.length; i++){
+        var uid = docs[i].user_id;
+        var first_name = docs[i].first_name;
+        var last_name = docs[i].last_name;
+        var profession = docs[i].profession1;
+        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var n  = users.indexOf(uid);
+        if ( n != -1 ){
+          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
+        }else{
+          $('#collaborators_youneed').append($('<li class="media"><a href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png'%}"  alt="profile">'+first_name+'</a><p>'+profession+'</p></li>'));
+
+        }
+      }
+    });
+        
+    function encode (input) {
+      var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+      var output = "";
+      var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+      var i = 0;
+
+      while (i < input.length) {
+          chr1 = input[i++];
+          chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index 
+          chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
+
+          enc1 = chr1 >> 2;
+          enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+          enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+          enc4 = chr3 & 63;
+
+          if (isNaN(chr2)) {
+              enc3 = enc4 = 64;
+          } else if (isNaN(chr3)) {
+              enc4 = 64;
+          }
+          output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                    keyStr.charAt(enc3) + keyStr.charAt(enc4);
+      }
+      return output;
+    }
+
+    function imageExists(url) {
+      var http = new XMLHttpRequest();
+      http.open('HEAD', url, false);
+      http.send();
+      return http.status!=404;
+    }
+
+    $(window).unload(function() {
+      console.log("Bye now!");
+      socket.emit('leave community', {{user.id}});
+      return "Bye now!";
+    });
+
+    </script>
+</div>
+
+<div class="popup-box chat-popup" id="qnimate">
+        <div class="popup-head">
+        <div class="popup-head-left pull-left">
+          
+        </div>
+
+          <div class="popup-head-right pull-right">
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button" onclick="closeChat()">x</button>
+          </div>
+          </div>
+        <div class="popup-messages">
+        
+          <div class="direct-chat-messages" id="chat_room">
+          
+          </div>
+      
+        </div>
+      <div class="popup-messages-footer">
+        <textarea id="status_message" placeholder="Type a message..." rows="20" cols="40" name="message"></textarea>
+        <div class="btn-footer">
+          <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
+        </div>
+      </div>
+</div>
+
+
+{% endblock %}

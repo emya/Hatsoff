@@ -11,6 +11,7 @@
                             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
                             <!-- Custom fonts for this template -->
                             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
                             <style id="jsbin-css">
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700');
 body {
@@ -808,6 +809,14 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
   section.communityBody .communityBodyLeft{background-color:transparent;}
   .panel.panel-communityLeft{padding:0 15px 15px 15px; background-color:#ffffff;}
 }
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
 </style>
 </head>
 <body id="page-top">
@@ -876,9 +885,9 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                         <div class="panel-heading">
                             <h2>Collaborators</h2>
                         </div>
-                        <div class="panel-body clearfix">
+                        <div class="panel-body clearfix" id="collaborators_needyou">
                             <h3>Collaborators looking for you</h3>
-                            <div class="well well-sm personEntity">
+                            <!--div class="well well-sm personEntity">
                                 <div class="media">
                                     <a class="thumbnail pull-left" href="#">
                                         <img class="media-object" src="http://www.fillmurray.com/67/67">
@@ -903,15 +912,15 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div-->
                             <p class="small">
                                 <a class="pull-right" href="#">show more</a>
                             </p>
                         </div>
                         <hr>
-                        <div class="panel-body clearfix">
+                        <div class="panel-body clearfix" id="collaborators_youneed">
                             <h3>Suggested collaborators</h3>
-                            <div class="well well-sm personEntity">
+                            <!-- div class="well well-sm personEntity">
                                 <div class="media">
                                     <a class="thumbnail pull-left" href="#">
                                         <img class="media-object" src="http://placekitten.com/67/67">
@@ -936,7 +945,7 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div-->
                             <p class="small">
                                 <a class="pull-right" href="#">show more</a>
                             </p>
@@ -957,8 +966,13 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                                             </a>
                                             <div class="media-body">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" placeholder="Enter your message"></textarea>
-                                                    <button class="btn btn-lg btn-outline pull-right" type="button">Post</button>
+                                                    <textarea class="form-control" id="p" placeholder="Enter your message"></textarea>
+                                                    <!-- button class="btn btn-lg btn-outline pull-right" type="button">Post</button-->
+                                                    <button onclick="return publicPost()" class="btn btn-lg btn-outline pull-right">Post</button>
+                                                    
+                                                    <label>Skill tag (up to 5)</label><ul id="myTags">
+                                                    </ul>
+    
                                                     <ul class="list-inline communityActionListBig pull-left">
                                                         <li class="list-inline-item">
                                                             <a href="#">
@@ -981,9 +995,10 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <a href="#">
+                                                            <label for="imageupload" class="custom-file-upload">
                                                                 <i class="fa fa-paperclip"></i>
-                                                            </a>
+                                                                <input id="imageupload" type="file" />
+                                                            </label>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -1332,6 +1347,10 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
         <i class="fa fa-chevron-up"></i>
    </a>
 </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
+
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
@@ -1390,6 +1409,10 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
         });
     })(jQuery); // End of use strict
 
+    $(document).ready(function() {
+        $("#myTags").tagit();
+    });
+
     socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
     socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
 
@@ -1397,10 +1420,85 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
     var names = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
     var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];1
 
+    function myDropDownPostFunction() {
+        document.getElementById("myPostDropdown").classList.toggle("show");
+        return false;
+    }
+
+    function submitComment(uid, c_id){
+        var post_val = $('#c_'+c_id).val();
+        console.log("post_val", post_val);
+                    
+        if (post_val.length != 0){
+            socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+        }
+        $('#c_'+c_id).val('');
+        return false;
+    }
+
+    function publicPost(){
+        var skillls = [];
+        var lis = document.getElementById("myTags").getElementsByTagName("li");
+
+        /* Use this again once jquery issue is fixed
+        for (var i = 0; i < lis.length; i++){
+            var t = lis[i].childNodes[0].textContent;
+            if ( t!= "" ){
+                skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
+            }
+        }
+        */
+
+        var files = document.getElementById('imageupload').files;
+        var file = files[0];
+
+        var data = {};
+        if (file){
+            data = {'file':file, 'fileName':file.name, 'type':file.type};
+        }
+
+        if ($('#p').val().length != 0){
+              socket.emit('community post', {msg:$('#p').val(), data:data, uid:{{user.id}}, skillls:skillls}, function(data){
+                  //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
+              });
+              $('#p').val('');
+            $('#imageupload').val('');
+          }
+        return false;
+    }
+
+    function privatePost(){
+        var skillls = [];
+        var lis = document.getElementById("myTags").getElementsByTagName("li");
+
+        for (var i = 0; i < lis.length; i++){
+            var t = lis[i].childNodes[0].textContent;
+            if ( t!= "" ){
+                skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
+            }
+        }
+
+        var files = document.getElementById('imageupload').files;
+        var file = files[0];
+
+        var data = {};
+        if (file){
+            data = {'file':file, 'fileName':file.name, 'type':file.type};
+        }
+
+        if ($('#p').val().length != 0){
+            socket.emit('private post', {msg:$('#p').val(), data:data, uid:{{user.id}}, skillls:skillls}, function(data){
+            });
+            $('#p').val('');
+            $('#imageupload').val('');
+        }
+        return false;
+    }
+
     function createNormalBody(uid, cid, data, yy, mm, dd, content_id = null){
-    	if ( content_id == null ){
-    	    content_id = cid;
-    	}
+        if ( content_id == null ){
+            content_id = cid;
+        }
         var imageText = '';
         if (data['image'] && data['image']['data']){
             var bytes = new Uint8Array(data['image']['data']);
@@ -1411,6 +1509,35 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
         var content = data['content'];
         var first_name = data['user']['first_name'];
         var last_name = data['user']['last_name'];
+        //<ul class="media-date text-uppercase reviews list-inline"><li class="dd">${dd}</li><li class="mm">${mm}</li><li class="aaaa">${yy}</li></ul>
+        var body = `<h3 class="media-heading">${first_name} ${last_name} 
+                    </h3>
+                    <h6> ${dd} ${mm} ${yy} </h6>
+                    <p>
+                        <strong>
+                            ${content}
+                        </strong>
+                    </p>
+                    ${imageText}
+                   `;
+        return body;
+
+    }
+
+    function createNewPostBody(uid, cid, data, yy, mm, dd, content_id = null){
+        if ( content_id == null ){
+            content_id = cid;
+        }
+        var imageText = '';
+        if (data['image'] && data['image']['data']){
+            var bytes = new Uint8Array(data['image']['data']);
+            var enc = encode(bytes);
+            var ctype = data['image']['contentType'];
+            imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
+        }
+        var content = data.msg;
+        var first_name = data.first_name;
+        var last_name = data.last_name;
         //<ul class="media-date text-uppercase reviews list-inline"><li class="dd">${dd}</li><li class="mm">${mm}</li><li class="aaaa">${yy}</li></ul>
         var body = `<h3 class="media-heading">${first_name} ${last_name} 
                     </h3>
@@ -1605,6 +1732,57 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
         return thread;
     }
 
+    socket.on('new private post', function(data){
+        var uid = data.uid;
+        var c_id = data.community_id;
+        var today = new Date();
+        var yy = today.getFullYear();
+        var mm = months[today.getMonth()];
+        var dd = today.getDate();
+        var actionList = createActionList(uid, c_id, 0, 0, false, false, false);
+        var replyList = createReplyList(uid, c_id, null)
+        var body = createNormalBody(uid, c_id, data, yy, mm, dd)
+        var thread = create_thread(uid, c_id, body, actionList, replyList)
+
+        $('#communityThread').prepend($(thread));
+    });
+
+    socket.on('new community post', function(data){
+    	console.log("data", data);
+        var uid = data.uid;
+        var c_id = data.community_id;
+        var today = new Date();
+        var yy = today.getFullYear();
+        var mm = months[today.getMonth()];
+        var dd = today.getDate();
+        var actionList = createActionList(uid, c_id, 0, 0, false, false, false);
+        var replyList = createReplyList(uid, c_id, null)
+        var body = createNewPostBody(uid, c_id, data, yy, mm, dd)
+        var thread = create_thread(uid, c_id, body, actionList, replyList)
+
+        $('#communityThread').prepend($(thread));
+    });
+
+    socket.on('new community comment', function(data){
+        var uid = data.uid;
+        var c_id = data.community_id;
+        console.log('new community comment c_id:'+c_id);
+        var n  = users.indexOf(uid);
+        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var first_name = data.first_name;
+        var last_name = data.last_name;
+        var msg = data.msg;
+        var body = `
+                    <div class="replyBody" class="community_comment">
+                        <p class="replyUsername"><a href="${url_link}"><strong>${first_name} ${last_name}</strong></a></p>
+                        <p>  <strong> ${msg}
+                            </strong>
+                        </p>
+                    </div>`;
+
+        $('#commentHistory_'+c_id).append($(body));
+    });
+
     socket.on('update community post', function(data){
         //console.log("data", data);
         var docs = (typeof data["docs"] == "string") ? JSON.parse(data["docs"]) : data["docs"];
@@ -1635,8 +1813,6 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                 var created = docs[i]['created'];
                 var colonIndex = created.indexOf(":");
                 var date = created.substring(0, colonIndex-3);
-                console.log("date", date);
-                console.log("months", months);
                 var datels = date.split('-');
                 var mm = months[parseInt(datels[1])-1];
                 var dd = datels[2];
@@ -1740,7 +1916,6 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                         var thread = create_thread(uid, c_id, body, actionList, replyList)
                         $('#communityThread').append($(thread));
 
-                        //$('#communityThread').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+'Title: '+upcoming.title+'<br>'+'Description: '+upcoming.description+'</p>'+imageText+'</a>'+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
                         continue;                            
                     }
 
@@ -1794,16 +1969,16 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                         }
 
                         if (likels.indexOf(content_id) != -1){
-                        	isLike = true;
+                            isLike = true;
                         }else{
-                        	isLike = false;
+                            isLike = false;
                         }
 
                         share = '';
                         if (sharels.indexOf(content_id) != -1){
-                        	isShare = true;
+                            isShare = true;
                         }else{
-                        	isShare = false;
+                            isShare = false;
                         }
 
                         hatsoff = '';
@@ -1845,57 +2020,70 @@ section.communityBody .communityBodyRight .paddingCommunityThread{padding:0;}
                     var body = createNormalBody(uid, c_id, docs[i], yy, mm, dd)
                     var thread = create_thread(uid, c_id, body, actionList, replyList)
 
-                    console.log('thread', thread);
                     $('#communityThread').append($(thread));
 
-                    /*var imageText = '';
-
-                    if (docs[i]['image'] && docs[i]['image']['data']){
-                        var bytes = new Uint8Array(docs[i]['image']['data']);
-                        var enc = encode(bytes);
-                        var ctype = docs[i]['image']['contentType'];
-                        imageText = '<embed id="ItemPreview_'+c_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
-                    }
-
-                    if ( n != -1) {
-                        if (uid == {{user.id}}){
-                            //Reply
-                            var imageUrl = '{{media_url}}'+photos[n];
-                            $('#communityThread').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment" style="display: block;" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+edit+'</div></div></li>'));
-                           
-                        } else{
-                            var imageUrl = '{{media_url}}'+photos[n];
-                            $('#communityThread').append($(shared_info+'<li class="media"><div class="media-body">'+privateText+'<div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="'+imageUrl+'" alt="profile" onerror="this.src=\'{% static 'images/profileimage.png' %}\'"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
-                        }
-                    } else{
-                        if (uid == {{user.id}}){
-                            $('#communityThread').append($(shared_info+'<li class="media" id="media_'+c_id+'"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li>'+deleteOrEdit+'</ul><a href="'+post_link+'"><p class="media-comment" id="media-content_'+c_id+'">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+edit+'</div></div></li>'));
-                        } else{
-                            $('#communityThread').append($(shared_info+'<li class="media"><div class="media-body">'+privateText+'<div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p>'+imageText+'</a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+listlikes+listshares+'</div></div></li>'));
-                        }
-                    }
-
-                    if (docs[i]['replys']) {
-                        var rdocs = docs[i]['replys'];
-                        for(var j=0; j < rdocs.length; j++){
-                            if (rdocs[j]['user']['uid']){
-                                var r_id = j;
-                                var ruid = rdocs[j]['user']['uid'];
-                                var deleteOrEdit_cmt = (ruid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deleteComment(\''+c_id+'\', \''+r_id+'\')">Delete</a><a href="#" onclick="return editComment(\''+c_id+'\', \''+r_id+'\')">Edit</a></div></div>' : '';
-                                var edit_cmt = (ruid == {{user.id}}) ? '<div id="editModal_'+c_id+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'_'+r_id+'" onclick="closeEdit(\''+c_id+'_'+r_id+'\')">&times;</span><div id="edit_post_'+c_id+'_'+r_id+'"><textarea id="post_text_'+c_id+'_'+r_id+'" rows="20" cols="40" name="message">'+rdocs[j]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+c_id+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
-                                var m  = users.indexOf(ruid);
-                                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-                                if ( m != -1) {
-                                    $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li class="community_comment_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp'+deleteOrEdit_cmt+'</br><p id="media-content_'+c_id+'_'+r_id+'">'+rdocs[j]['content']+edit_cmt+'</p>'));
-                                }else{
-                                    $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li class="community_comment_'+r_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp'+deleteOrEdit_cmt+'</br><p id="media-content_'+c_id+'_'+r_id+'">'+rdocs[j]['content']+edit_cmt+'</p>'));
-                                }
-                            }
-                        }
-                    }
-                    */
                 }
             }
+        }
+    });
+
+    socket.on('three collaborators you need', function(docs){
+    	for(var i=0; i < docs.length; i++){
+            console.log("top collaborators:"+docs[i].user_id);
+            var uid = docs[i].user_id;
+            var first_name = docs[i].first_name;
+            var last_name = docs[i].last_name;
+            var profession = docs[i].profession1;
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+            var n  = users.indexOf(uid);
+
+            var body = `
+                        <div class="well well-sm personEntity">
+                            <div class="media">
+                                <a class="thumbnail pull-left" href="#">
+                                    <img class="media-object" src="http://www.fillmurray.com/67/67">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">${first_name} ${last_name}</h4>
+                                    <p class="small">
+                                        ${profession} <br>
+                                        <a href="#">3 mutual community members</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                       `;
+            $('#collaborators_youneed').append($(body));
+        }
+    });
+
+    socket.on('three collaborators need you', function(docs){
+        for(var i=0; i < docs.length; i++){
+            console.log("top collaborators:"+docs[i].user_id);
+            var uid = docs[i].user_id;
+            var first_name = docs[i].first_name;
+            var last_name = docs[i].last_name;
+            var profession = docs[i].profession1;
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+            var n  = users.indexOf(uid);
+
+            var body = `
+                        <div class="well well-sm personEntity">
+                            <div class="media">
+                                <a class="thumbnail pull-left" href="#">
+                                    <img class="media-object" src="http://www.fillmurray.com/67/67">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">${first_name} ${last_name}</h4>
+                                    <p class="small">
+                                        ${profession} <br>
+                                        <a href="#">3 mutual community members</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                       `;
+            $('#collaborators_needyou').append($(body));
         }
     });
 </script>

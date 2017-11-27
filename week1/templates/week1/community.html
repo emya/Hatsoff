@@ -817,6 +817,7 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+
 </style>
 </head>
 <body id="page-top">
@@ -862,7 +863,7 @@ input[type="file"] {
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user"></i>&nbsp;Naotomo
+                        <i class="fa fa-user"></i>&nbsp;{{user.first_name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" href="#">Action</a>
@@ -899,19 +900,6 @@ input[type="file"] {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="well well-sm personEntity">
-                                <div class="media">
-                                    <a class="thumbnail pull-left" href="#">
-                                        <img class="media-object" src="http://www.placecage.com/c/67/67">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Steven Williams, Filmmaker</h4>
-                                        <p class="small">
-                                            <a href="#">5 mutual community members</a>
-                                        </p>
-                                    </div>
-                                </div>
                             </div-->
                             <p class="small">
                                 <a class="pull-right" href="#">show more</a>
@@ -928,20 +916,8 @@ input[type="file"] {
                                     <div class="media-body">
                                         <h4 class="media-heading">Ciara Simons, UX Designer</h4>
                                         <p class="small">
+                                            # Note: dont use this at this point
                                             <a href="#">3 mutual community members</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="well well-sm personEntity">
-                                <div class="media">
-                                    <a class="thumbnail pull-left" href="#">
-                                        <img class="media-object" src="http://www.placecage.com/67/67">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Karen Sarabena, UI Designer</h4>
-                                        <p class="small">
-                                            <a href="#">5 mutual community members</a>
                                         </p>
                                     </div>
                                 </div>
@@ -974,7 +950,7 @@ input[type="file"] {
                                                     </ul>
     
                                                     <ul class="list-inline communityActionListBig pull-left">
-                                                        <li class="list-inline-item">
+                                                        <!-- li class="list-inline-item">
                                                             <a href="#">
                                                                 <i class="fa fa-camera"></i>
                                                             </a>
@@ -993,7 +969,7 @@ input[type="file"] {
                                                             <a href="#">
                                                                 <i class="fa fa-picture-o"></i>
                                                             </a>
-                                                        </li>
+                                                        </li -->
                                                         <li class="list-inline-item">
                                                             <label for="imageupload" class="custom-file-upload">
                                                                 <i class="fa fa-paperclip"></i>
@@ -1096,170 +1072,7 @@ input[type="file"] {
                                 </form>
                             </div>
                         </div-->
-
-
                         </div>
-                        <!--div class="panel panel-white clearfix">
-                            <div class="panel-body">
-                                <div class="well well-sm personEntity">
-                                    <div class="media">
-                                        <a class="thumbnail pull-left" href="#">
-                                            <img class="media-object" src="http://www.fillmurray.com/67/67">
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading">Sandro Litt - 
-                                                <em>Model</em>
-                                            </h4>
-                                            <p>
-                                            <strong>Looking for 
-                                                <a href="#">filmmaker</a> who is familiar with 360 filmmaking
-                                            </strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr />
-                                <ul class="list-inline matchHatActionList">
-                                    <li class="list-inline-item">
-                                        <span>128</span>
-                                        <a href="#">
-                                            <i class="faMatchHatbtn fa-hat"></i>Tip-hat
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span>128k</span>
-                                        <a href="#">
-                                            <i class="faMatchHatbtn fa-collaborate"></i>Collaborate
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span>128</span>
-                                        <a href="#">
-                                            <i class="faMatchHatbtn fa-sharez"></i>Share
-                                        </a>
-                                    </li>
-                                </ul>
-                                <form class="form-horizontal" role="form">
-                                    <div class="form-group">
-                                        <textarea class="form-control" placeholder="Enter your message here"></textarea>
-                                        <button class="btn btn-lg btn-outline pull-right" type="button">Post</button>
-                                        <ul class="list-inline communityActionListSmall">
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-camera"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-smile-o"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-star"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-picture-o"></i>
-                                                </a>
-                                                </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-paperclip"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="panel panel-white clearfix">
-                            <div class="panel-body">
-                                <div class="well well-sm personEntity">
-                                    <div class="media">
-                                        <a class="thumbnail pull-left" href="#">
-                                            <img class="media-object" src=" http://placebeard.it/67x67">
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading">Gabriel Davidson - 
-                                                <em>Photographer</em>
-                                            </h4>
-                                            <p>
-                                                <strong>Does anyone know a good <a href="#">hair stylist</a>  who is available next Friday for a fashion show?
-                                                </strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr />
-                                <ul class="list-inline matchHatActionList">
-                                    <li class="list-inline-item">
-                                        <span>128</span>
-                                        <a href="#">
-                                            <i class="faMatchHatbtn fa-hat"></i>Tip-hat
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span>128k</span>
-                                        <a href="#">
-                                            <i class="faMatchHatbtn fa-collaborate"></i>Collaborate
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span>128</span>
-                                        <a href="#">
-                                            <i class="faMatchHatbtn fa-sharez"></i>Share
-                                        </a>
-                                   </li>
-                                </ul>
-                                <div class="communityReply">
-                                    <a class="thumbnail pull-left" href="#">
-                                       <img class="media-object" src=" http://placebeard.it/57x57">
-                                    </a>
-                                   <div class="replyBody">
-                                       <p class="replyUsername"><a href="#"><strong>Naotomo Umewaka</strong></a></p>
-                                       <p>        <strong>I can introduce you to a friend. I will send you a message
-                                                </strong>
-                                        </p>
-                                   </div>
-                                </div>
-
-                                <form class="form-horizontal communityReplyForm" role="form">
-                                    <div class="form-group">
-                                        <textarea class="form-control" placeholder="Enter your message here"></textarea>
-                                        <button class="btn btn-lg btn-outline pull-right" type="button">Post</button>
-                                        <ul class="list-inline communityActionListSmall">
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-camera"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-smile-o"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-star"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-picture-o"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="">
-                                                    <i class="fa fa-paperclip"></i>
-                                                </a>
-                                           </li>
-                                        </ul>
-                                    </div>
-                                </form>
-                            </div>
-                        </div-->
                     </div>
                     <!-- paddingCommunityThread ende -->
                 </div>
@@ -1409,9 +1222,11 @@ input[type="file"] {
         });
     })(jQuery); // End of use strict
 
+    /* Use this agagin for tag function
     $(document).ready(function() {
         $("#myTags").tagit();
     });
+    */
 
     socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
     socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
@@ -1427,7 +1242,6 @@ input[type="file"] {
 
     function submitComment(uid, c_id){
         var post_val = $('#c_'+c_id).val();
-        console.log("post_val", post_val);
                     
         if (post_val.length != 0){
             socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
@@ -1639,10 +1453,7 @@ input[type="file"] {
 
     function createReplyList(uid, cid, replys){
         if (replys){
-            var replyList = `<div class="communityReply" id="commentHistory_${cid}">
-                                <a class="thumbnail pull-left" href="#">
-                                    <img class="media-object" src=" http://placebeard.it/57x57">
-                                </a>
+            var replyList = `<div id="commentHistory_${cid}">
                             `;
             for(var i=0; i < replys.length; i++){
                 if (replys[i]['user']['uid']){
@@ -1650,13 +1461,19 @@ input[type="file"] {
                     var ruid = replys[i]['user']['uid'];
                     var deleteOrEdit_cmt = (ruid == uid) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditFunction(\''+cid+'_'+r_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+cid+'_'+r_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deleteComment(\''+cid+'\', \''+r_id+'\')">Delete</a><a href="#" onclick="return editComment(\''+cid+'\', \''+r_id+'\')">Edit</a></div></div>' : '';
 
-                    var edit_cmt = (ruid == uid) ? '<div id="editModal_'+cid+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'_'+r_id+'" onclick="closeEdit(\''+cid+'_'+r_id+'\')">&times;</span><div id="edit_post_'+cid+'_'+r_id+'"><textarea id="post_text_'+cid+'_'+r_id+'" rows="20" cols="40" name="message">'+replys[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+cid+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
+                    var edit_cmt = (ruid == uid) ? '<div id="editModal_'+cid+'_'+r_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+cid+'_'+r_id+'" onclick="closeEdit(\''+cid+'_'+r_id+'\')">&times;</span><div id="edit_post_'+cid+'_'+r_id+'"><textarea id="post_text_'+cid+'_'+r_id+'" rows="20" cols="40" name="message">'+replys[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentEdit(\''+cid+'\', \''+r_id+'\')" align="right">Edit</button></div></div>' : '';
+
+                    deleteOrEdit_cmt = '';
+                    edit_cmt = '';
                     var m  = users.indexOf(ruid);
                     var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
                     var first_name = replys[i]['user']['first_name'];
                     var last_name = replys[i]['user']['last_name'];
                     var body = replys[i]['content'];
-                    var replyBodies = `<div class="replyBody" class="community_comment_${r_id}">
+                    var replyBodies = `<div class="communityReply" class="community_comment_${r_id}">
+                                           <a class="thumbnail pull-left" href="#">
+                                                <img class="media-object" src=" http://placebeard.it/57x57">
+                                           </a>
                                            <p class="replyUsername"><a href="${url_link}"><strong>${first_name} ${last_name}</strong></a>${deleteOrEdit_cmt}</p>
                                            <p>  <strong> ${body}
                                                 </strong>
@@ -1673,11 +1490,12 @@ input[type="file"] {
         }
     }
 
-    function create_thread(uid, c_id, body, actionList, replyList){
+    function create_thread(uid, cid, body, actionList, replyList, privateText = ''){
         var thread = `
            <div class="panel panel-white clearfix">
+              ${privateText}
               <div class="panel-body">
-                  <div class="well well-sm personEntity" id="media_${c_id}"">
+                  <div class="well well-sm personEntity" id="media_${cid}"">
                       <div class="media">
                           <a class="thumbnail pull-left" href="#">
                               <img class="media-object" src=" http://placebeard.it/67x67">
@@ -1695,8 +1513,8 @@ input[type="file"] {
 
                   <form class="form-horizontal communityReplyForm" role="form">
                       <div class="form-group">
-                          <textarea class="form-control" placeholder="Enter your comment here" id="c_${c_id}" autocomplete="off" name="message"></textarea>
-                          <button class="btn btn-lg btn-outline pull-right" type="button" onclick="return submitComment(\'${uid}\', \'${c_id}\')">Post</button>
+                          <textarea class="form-control" placeholder="Enter your comment here" id="c_${cid}" autocomplete="off" name="message"></textarea>
+                          <button class="btn btn-lg btn-outline pull-right" type="button" onclick="return submitComment(\'${uid}\', \'${cid}\')">Post</button>
                           <ul class="list-inline communityActionListSmall">
                               <li class="list-inline-item">
                                   <a href="">
@@ -1732,6 +1550,13 @@ input[type="file"] {
         return thread;
     }
 
+    function delete_edit_dropdown(ruid, uid){
+
+    }
+
+    function delete_edit(){
+    }
+
     socket.on('new private post', function(data){
         var uid = data.uid;
         var c_id = data.community_id;
@@ -1742,7 +1567,7 @@ input[type="file"] {
         var actionList = createActionList(uid, c_id, 0, 0, false, false, false);
         var replyList = createReplyList(uid, c_id, null)
         var body = createNormalBody(uid, c_id, data, yy, mm, dd)
-        var thread = create_thread(uid, c_id, body, actionList, replyList)
+        var thread = create_thread(uid, c_id, body, actionList, replyList, 'Private post')
 
         $('#communityThread').prepend($(thread));
     });
@@ -1752,6 +1577,7 @@ input[type="file"] {
         var uid = data.uid;
         var c_id = data.community_id;
         var today = new Date();
+        console.log("today", today);
         var yy = today.getFullYear();
         var mm = months[today.getMonth()];
         var dd = today.getDate();
@@ -1784,7 +1610,6 @@ input[type="file"] {
     });
 
     socket.on('update community post', function(data){
-        //console.log("data", data);
         var docs = (typeof data["docs"] == "string") ? JSON.parse(data["docs"]) : data["docs"];
         var sharedocs = (typeof data["sharedocs"] == "string") ? JSON.parse(data["sharedocs"]) : data["sharedocs"];
         var likedocs = (typeof data["likedocs"] == "string") ? JSON.parse(data["likedocs"]) : data["likedocs"];
@@ -1904,7 +1729,7 @@ input[type="file"] {
                     if (docs[i]['portfolio']){
                         var portfolio = docs[i]['portfolio'];
                         var body = createPortfolioBody(uid, c_id, portfolio, docs[i], yy, mm, dd)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList)
+                        var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
 
                         $('#communityThread').append($(thread));
                         continue;                            
@@ -1913,7 +1738,7 @@ input[type="file"] {
                     if (docs[i]['upcoming']){
                         var upcoming = docs[i]['upcoming'];
                         var body = createPortfolioBody(uid, c_id, upcoming, docs[i], yy, mm, dd)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList)
+                        var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
                         $('#communityThread').append($(thread));
 
                         continue;                            
@@ -1991,7 +1816,7 @@ input[type="file"] {
                         var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
                         var replyList = createReplyList(uid, c_id, docs[i]['replys'])
                         var body = createNormalBody(uid, c_id, docs[j], yy, mm, dd, content_id)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList)
+                        var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
 
                         $('#communityThread').append($(thread));
                         continue;
@@ -2018,7 +1843,7 @@ input[type="file"] {
                     var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
                     var replyList = createReplyList(uid, c_id, docs[i]['replys'])
                     var body = createNormalBody(uid, c_id, docs[i], yy, mm, dd)
-                    var thread = create_thread(uid, c_id, body, actionList, replyList)
+                    var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
 
                     $('#communityThread').append($(thread));
 
@@ -2047,7 +1872,6 @@ input[type="file"] {
                                     <h4 class="media-heading">${first_name} ${last_name}</h4>
                                     <p class="small">
                                         ${profession} <br>
-                                        <a href="#">3 mutual community members</a>
                                     </p>
                                 </div>
                             </div>
@@ -2077,7 +1901,6 @@ input[type="file"] {
                                     <h4 class="media-heading">${first_name} ${last_name}</h4>
                                     <p class="small">
                                         ${profession} <br>
-                                        <a href="#">3 mutual community members</a>
                                     </p>
                                 </div>
                             </div>

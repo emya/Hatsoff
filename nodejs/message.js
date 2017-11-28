@@ -242,7 +242,7 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  //console.log('a user connected');
 });
 
 io.on('connection', function(socket){
@@ -320,13 +320,22 @@ io.on('connection', function(socket){
       }
     });
 */
+    var currentDate = new Date();
+    var is_sent = false;
 
     client.exists(key, function(err, reply) {
       if (reply === 1) {
         client.hgetall(key, function(err, data) {
-          socket.emit('update community post', data);
+          var diffMs = currentDate - data.last_update;
+          var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+          if (diffMins > 2){
+            socket.emit('update community post', data);
+            is_sent = true;
+          }
         });
-      } else {
+      }
+
+      if (!is_sent) {
         query.sort('-created').limit(30).exec(function(err, docs){
           if (err) throw err;
           var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
@@ -342,27 +351,20 @@ io.on('connection', function(socket){
                 if (err3) throw err3;
 
                 CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-                  if(!result){
-                    var friends = [];
-                    socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
-                    client.hmset(key, {
-                      'sharedocs': JSON.stringify(sharedocs),
-                      'likedocs': JSON.stringify(likedocs),
-                      'hatsoffdocs': JSON.stringify(hatsoffdocs),
-                      'docs': JSON.stringify(docs),
-                      'friends': JSON.stringify(friends)
-                    });
-                  }else{
+                  var friends = [];
+                  if(result){
                     var friends = result.friends;
-                    socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
-                    client.hmset(key, {
+                  }
+                  var friends = result.friends;
+                  socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
+                  client.hmset(key, {
                       'sharedocs': JSON.stringify(sharedocs),
                       'likedocs': JSON.stringify(likedocs),
                       'hatsoffdocs': JSON.stringify(hatsoffdocs),
                       'docs': JSON.stringify(docs),
-                      'friends': JSON.stringify(friends)
-                    });
-                  }
+                      'friends': JSON.stringify(friends),
+                      'last_update': new Date() 
+                  });
                 });
               });
             });

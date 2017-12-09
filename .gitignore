@@ -7,3 +7,4 @@ week1/migrations/*
 *.swp
 *.pyc
 week1/*.pyc
+hatsoff/*.pyc

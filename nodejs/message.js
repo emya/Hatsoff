@@ -47,13 +47,13 @@ mongoose.connect('mongodb://localhost/communitypost', function(err){
 });
 
 var replySchema = mongoose.Schema({
-  user: {uid: Number, first_name: String, last_name: String},
+  user: {uid: String, first_name: String, last_name: String},
   content: String,
   created: {type: Date, default:Date.now}
 });
 
 var communitySchema = mongoose.Schema({
-  user: {uid: Number, first_name: String, last_name: String},
+  user: {uid: String, first_name: String, last_name: String},
   content: String,
   portfolio : { image: String, title: String, description: String},
   upcoming : { image: String, title: String, description: String},
@@ -72,8 +72,8 @@ var communitySchema = mongoose.Schema({
 var CommunityPost = mongoose.model('CommunityPost', communitySchema);
 
 var commentSchema = mongoose.Schema({
-  to_uid: Number,
-  from_user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  from_user: {uid: String, first_name: String, last_name: String},
   content: String,
   created: {type: Date, default:Date.now}
 });
@@ -82,8 +82,8 @@ var CommentPost = mongoose.model('CommentPost', commentSchema);
 
 // action id  1:comment, 2:hatsoff, 3:shareskill, 4:like, 5:share, 6:thanks, 7:collaborate, 8:follow
 var notificationSchema = mongoose.Schema({
-  to_uid: Number,
-  action_user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  action_user: {uid: String, first_name: String, last_name: String},
   action_id: Number,
   content_type: Number,
   content_id: String,
@@ -93,8 +93,8 @@ var notificationSchema = mongoose.Schema({
 var NotificationPost = mongoose.model('NotificationPost', notificationSchema);
 
 var upcomingSchema = mongoose.Schema({
-  to_uid: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  user: {uid: String, first_name: String, last_name: String},
   content: String,
   created: {type: Date, default:Date.now}
 });
@@ -102,9 +102,9 @@ var upcomingSchema = mongoose.Schema({
 var UpcomingPost = mongoose.model('UpcomingPost', upcomingSchema);
 
 var portfolioSchema = mongoose.Schema({
-  to_uid: Number,
+  to_uid: String,
   p_id: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  user: {uid: String, first_name: String, last_name: String},
   content: String,
   created: {type: Date, default:Date.now}
 });
@@ -112,8 +112,8 @@ var portfolioSchema = mongoose.Schema({
 var PortfolioPost = mongoose.model('PortfolioPost', portfolioSchema);
 
 var shareskillSchema = mongoose.Schema({
-  to_uid: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  user: {uid: String, first_name: String, last_name: String},
   community_id: String,
   created: {type: Date, default:Date.now}
 });
@@ -121,8 +121,8 @@ var shareskillSchema = mongoose.Schema({
 var ShareSkillPost = mongoose.model('ShareSkillPost', shareskillSchema);
 
 var collaborateSchema = mongoose.Schema({
-  to_uid: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  user: {uid: String, first_name: String, last_name: String},
   content_type: Number,
   content_id: String,
   created: {type: Date, default:Date.now}
@@ -131,8 +131,8 @@ var collaborateSchema = mongoose.Schema({
 var CollaboratePost = mongoose.model('CollaboratePost', collaborateSchema);
 
 var likeSchema = mongoose.Schema({
-  to_uid: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  user: {uid: String, first_name: String, last_name: String},
   content_type: Number,
   content_id: String,
   created: {type: Date, default:Date.now}
@@ -142,8 +142,8 @@ var likeSchema = mongoose.Schema({
 var LikePost = mongoose.model('LikePost', likeSchema);
 
 var ShareSchema = mongoose.Schema({
-  to_uid: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  user: {uid: String, first_name: String, last_name: String},
   content_type: Number,
   content_id: String,
   created: {type: Date, default:Date.now}
@@ -153,8 +153,8 @@ var ShareSchema = mongoose.Schema({
 var SharePost = mongoose.model('SharePost', ShareSchema);
 
 var thanksSchema = mongoose.Schema({
-  to_uid: Number,
-  user: {uid: Number, first_name: String, last_name: String},
+  to_uid: String,
+  user: {uid: String, first_name: String, last_name: String},
   created: {type: Date, default:Date.now}
 });
 // content_type 1:community post
@@ -163,8 +163,8 @@ var ThanksPost = mongoose.model('ThanksPost', thanksSchema);
 
 //Status 1:only action user follows, 2:follow each other 
 var followSchema = mongoose.Schema({
-  uid1: Number,
-  uid2: Number,
+  uid1: String,
+  uid2: String,
   action_user: Number,//1 or 2
   status: Number,//1: sent request, 2:accepted, 3:blocked
   //to_uid: Number,
@@ -176,10 +176,10 @@ var followSchema = mongoose.Schema({
 var FollowPost = mongoose.model('FollowPost', followSchema);
 
 var hatsoffSchema = mongoose.Schema({
-  to_uid: Number,
+  to_uid: String,
   content_type: Number,
   content_id: String,
-  user: {uid: Number, first_name: String, last_name: String},
+  user: {uid: String, first_name: String, last_name: String},
   created: {type: Date, default:Date.now}
 });
 
@@ -187,7 +187,7 @@ var hatsoffSchema = mongoose.Schema({
 var HatsoffPost = mongoose.model('HatsoffPost', hatsoffSchema);
 
 var messageSchema = mongoose.Schema({
-  uid: Number,
+  uid: String,
   content: String,//1: sent request, 2:accepted, 3:blocked
   image: { data: Buffer, contentType: String },
   created: {type: Date, default:Date.now}
@@ -196,8 +196,8 @@ var messageSchema = mongoose.Schema({
 var MessagePost = mongoose.model('MessagePost', messageSchema);
 
 var messageRelationSchema = mongoose.Schema({
-  uid1: Number,
-  uid2: Number,
+  uid1: String,
+  uid2: String,
   action_user: Number,//1 or 2
   status: Number,//1: sent request, 2:accepted, 3:blocked
   messages: [messageSchema],
@@ -208,7 +208,7 @@ var messageRelationSchema = mongoose.Schema({
 var MessageRelation = mongoose.model('MessageRelation', messageRelationSchema);
 
 var communityMemberSchema = mongoose.Schema({
-  uid: Number,
+  uid: String,
   friends: [Number],
   created: {type: Date, default:Date.now}
 });
@@ -248,7 +248,7 @@ io.on('connection', function(socket){
 io.on('connection', function(socket){
 
   socket.on('join message', function(data){
-     /**
+    /*
      PortfolioPost.find({p_id:2}).remove().exec();
      PortfolioPost.find({}).remove().exec();
      CommunityPost.find({}).remove().exec();
@@ -259,8 +259,7 @@ io.on('connection', function(socket){
      NotificationPost.find({}).remove().exec();
      CommunityMember.find({}).remove().exec();
      FollowPost.find({}).remove().exec();
-     **/
-     
+     */
 
      socket.uid = data.uid;
      socket.firstname = data.firstname;
@@ -301,6 +300,7 @@ io.on('connection', function(socket){
 
   socket.on('join community', function(data){
     var query = CommunityPost.find({});
+
     /*
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -353,9 +353,8 @@ io.on('connection', function(socket){
                 CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
                   var friends = [];
                   if(result){
-                    var friends = result.friends;
+                    friends = result.friends;
                   }
-                  var friends = result.friends;
                   socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
                   client.hmset(key, {
                       'sharedocs': JSON.stringify(sharedocs),

@@ -845,17 +845,17 @@ input[type="file"] {
             </form>
             <ul class="navbar-nav mx-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'week1:community_members' %}">
                         <i class="fa fa-users"></i>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!--li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="fa fa-user-plus"></i>
                     </a>
-                </li>
+                </li-->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'week1:messages' %}">
                         <i class="fa fa-comment-o"></i>
                     </a>
                 </li>
@@ -866,9 +866,8 @@ input[type="file"] {
                         <i class="fa fa-user"></i>&nbsp;{{user.first_name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
+                        <a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -1228,8 +1227,8 @@ input[type="file"] {
     });
     */
 
-    socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-    socket.emit('join community', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+    socket.emit('join message', {uid:"{{user.uid}}", firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+    socket.emit('join community', {uid:"{{user.uid}}", uname:"{{user.first_name}}"});
 
     var users = [{% for u in users %} "{{ u }}" ,{% endfor %}];
     var names = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
@@ -1244,7 +1243,7 @@ input[type="file"] {
         var post_val = $('#c_'+c_id).val();
                     
         if (post_val.length != 0){
-            socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+            socket.emit('community comment', {msg:post_val, user:"{{user.uid}}", c_id:c_id});
         }
         $('#c_'+c_id).val('');
         return false;
@@ -1272,7 +1271,7 @@ input[type="file"] {
         }
 
         if ($('#p').val().length != 0){
-              socket.emit('community post', {msg:$('#p').val(), data:data, uid:{{user.id}}, skillls:skillls}, function(data){
+              socket.emit('community post', {msg:$('#p').val(), data:data, uid:"{{user.uid}}", skillls:skillls}, function(data){
                   //$('#communityPost').append($('<li><span class="error"><br>'+data.nick+':'+data.msg+'</span><br/>'));
               });
               $('#p').val('');
@@ -1301,7 +1300,7 @@ input[type="file"] {
         }
 
         if ($('#p').val().length != 0){
-            socket.emit('private post', {msg:$('#p').val(), data:data, uid:{{user.id}}, skillls:skillls}, function(data){
+            socket.emit('private post', {msg:$('#p').val(), data:data, uid:"{{user.uid}}", skillls:skillls}, function(data){
             });
             $('#p').val('');
             $('#imageupload').val('');
@@ -1466,7 +1465,7 @@ input[type="file"] {
                     deleteOrEdit_cmt = '';
                     edit_cmt = '';
                     var m  = users.indexOf(ruid);
-                    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
+                    var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.id}}", ruid);
                     var first_name = replys[i]['user']['first_name'];
                     var last_name = replys[i]['user']['last_name'];
                     var body = replys[i]['content'];
@@ -1594,7 +1593,7 @@ input[type="file"] {
         var c_id = data.community_id;
         console.log('new community comment c_id:'+c_id);
         var n  = users.indexOf(uid);
-        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
         var first_name = data.first_name;
         var last_name = data.last_name;
         var msg = data.msg;
@@ -1610,6 +1609,7 @@ input[type="file"] {
     });
 
     socket.on('update community post', function(data){
+    	console.log("users", users);
         var docs = (typeof data["docs"] == "string") ? JSON.parse(data["docs"]) : data["docs"];
         var sharedocs = (typeof data["sharedocs"] == "string") ? JSON.parse(data["sharedocs"]) : data["sharedocs"];
         var likedocs = (typeof data["likedocs"] == "string") ? JSON.parse(data["likedocs"]) : data["likedocs"];
@@ -1650,7 +1650,7 @@ input[type="file"] {
 
                 if (docs[i]['communityFlag']){
                     if (docs[i]['communityFlag'] == 1){
-                        if (friends.indexOf(uid) != -1 || uid == {{user.id}}){
+                        if (friends.indexOf(uid) != -1 || uid == "{{user.uid}}"){
                             privateShow = 1;
                         } else{
                             privateShow = -1;
@@ -1674,11 +1674,13 @@ input[type="file"] {
 
                     if(docs[i]['sharedBy']){
                        var s_user = docs[i]['sharedBy']; 
-                       if(s_user == {{user.id}}){
+                       if(s_user == "{{user.id}}"){
                            shared_info = '<li class="media">You shared</li>';
 
                         }else{
                            var sn  = users.indexOf(s_user.toString());
+                           console.log("sn", sn)
+                           console.log("users", users)
                            shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
                         }
                     }
@@ -1688,8 +1690,8 @@ input[type="file"] {
                     }
 
                     var tag = (docs[i]['tag']) ? docs[i]['tag'] : 0;
-                    var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-                    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                    var url_mask = "{% url 'week1:add_folder' user.id %}".replace("{{user.uid}}", uid);
+                    var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
                     var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
                     var profile_link = "{% static 'images/profileimage.png' %}";
                     var thanks = '';
@@ -1753,8 +1755,8 @@ input[type="file"] {
                         }
                         uid = docs[j]['user']['uid'];
                         tag = (docs[j]['tag']) ? docs[j]['tag'] : 0;
-                        url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-                        url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+                        url_mask = "{% url 'week1:add_folder' user.id %}".replace("{{user.uid}}", uid);
+                        url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
                         post_link = "{% url 'week1:community_post'%}?c_id="+content_id+"&tag="+tag+"&u="+uid;
                         created = docs[j]['created'];
                         colonIndex = created.indexOf(":");
@@ -1859,7 +1861,7 @@ input[type="file"] {
             var first_name = docs[i].first_name;
             var last_name = docs[i].last_name;
             var profession = docs[i].profession1;
-            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
             var n  = users.indexOf(uid);
 
             var body = `
@@ -1888,7 +1890,7 @@ input[type="file"] {
             var first_name = docs[i].first_name;
             var last_name = docs[i].last_name;
             var profession = docs[i].profession1;
-            var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+            var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
             var n  = users.indexOf(uid);
 
             var body = `

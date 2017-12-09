@@ -1,5 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
+import uuid
+
+class User(AbstractUser):
+    uid = models.CharField(max_length=100, blank=True, unique=True) 
+    USERNAME_FIELD = 'uid'
 
 # Create your models here.
 class Profile(models.Model):
@@ -139,4 +145,3 @@ class Profession(models.Model):
 class Skill(models.Model):
     skill = models.CharField(max_length=30, blank=False, unique=True)
     count = models.IntegerField(null=True, default=0)
-    

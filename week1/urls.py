@@ -5,12 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.about, name='about'),
-    #url(r'^discover/$', views.discover, name='discover'),
-    #url(r'^discover/success/$', views.signup_success, name='signup_success'),
-    url(r'^login/$', views.signin, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout', kwargs={'next_page': '/week1/'}),
-    url(r'^signup/$', views.signup, name='signup'),
     url(r'^home/$', views.home, name='home'),
     #url(r'^edit/$', views.home_edit, name='homeedit'),
     url(r'^reset/$', views.reset, name='reset'),
@@ -20,10 +15,6 @@ urlpatterns = [
     url(r'^step1/$', views.step1, name='step1'),
     url(r'^step2/$', views.step2, name='step2'),
     url(r'^step3/$', views.step3, name='step3'),
-    url(r'^step4/$', views.step4, name='step4'),
-    url(r'^step5/$', views.step5, name='step5'),
-    url(r'^step6/$', views.step6, name='step6'),
-    url(r'^step7/$', views.step7, name='step7'),
     url(r'^search/results/(?P<query>[\w ]+)/$', views.results_search, name='resultsfriends'),
     url(r'^talent/list/(?P<query>\w+)/$', views.talent_list, name='talent_list'),
     #url(r'^hatsoff/(?P<user2>\d+)/$', views.hatsoff, name='hatsoff'),

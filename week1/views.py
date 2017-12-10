@@ -45,21 +45,30 @@ def index(request):
             username = request.POST["username"]
             password = request.POST["password"]
 
-            login_user = User.objects.get(email=username)
-            user = authenticate(username=login_user.uid, password=password)
+            try:
+                login_user = User.objects.get(email=username)
+                user = authenticate(username=login_user.uid, password=password)
 
-            if user:
-                if user.is_active:
-                    login(request, user)
-                    variables = RequestContext(request, {})
-                    return HttpResponseRedirect('/week1/community/')
+                if user:
+                    if user.is_active:
+                        login(request, user)
+                        variables = RequestContext(request, {})
+                        return HttpResponseRedirect('/week1/community/')
 
-            # When user is None
-            else:
+                # When user is None
+                else:
+                    message = []
+                    signupform = RegistrationForm()
+                    message.append("The username or password is incorrect.")
+                    #variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
+                    variables = {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0}
+
+                    return render(request, 'week1/index.html', variables)
+
+            except User.DoesNotExist:
                 message = []
                 signupform = RegistrationForm()
-                message.append("The username or password is incorrect.")
-                #variables = RequestContext(request, {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0})
+                message.append("Sorry, Your email is not registered. Please sign up.")
                 variables = {'message':message, 'loginform':form, 'signupform':signupform, 'p_type':0}
 
                 return render(request, 'week1/index.html', variables)

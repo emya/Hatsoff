@@ -1,2087 +1,611 @@
-{% extends 'week1/basehome.html'%}
-
-{% block content %}
 {% load staticfiles %}
 
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="Match Hat">
+      <meta name="author" content="Find your collaborator, complete your project.">
+      <title>Match Hat - Community Page</title>
+      <!-- Bootstrap core CSS -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+      <!-- Custom fonts for this template -->
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <!-- tokenfield field autocomplete -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
+      <link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">
 
-
-
-<script>
-function iconToggle(event)
-{
-    if(event.target.classList.contains('inactive-icon'))
-    {
-        event.target.classList.remove('inactive-icon');
-        event.target.classList.add('active-icon');
-    }
-    else
-    {
-        event.target.classList.remove('active-icon');
-        event.target.classList.add('inactive-icon');        
-    }
-
-}
-function likeClicked(event,postid){
-    iconToggle(event)
-}
-    
-function shareClicked(event,postid){
-    iconToggle(event)
-}
-function hatClicked(event,postid){
-    iconToggle(event)
-}
-
-</script>
-
-<!--div id="body-home"-->
-
-<div id="home-main">
-  <div style="border: none">
-    <div style="border: none">
-
-
-    </div> 
-    <div style="border: none"></div> 
-    <div style="border: none"></div> 
-    <div id="home-firstcolumn">
-      
-    <div class="home-step">
-      <br>
-    <div id="home-firstcolumn">
-      <table width="600" class="fixed">
-
-      <tr class="visible_pencil">
-        <td class="tableLabel">Skills:</td>
-        <td class="wrap">{% if profile.skill1 and profile.skill1 != ""%}  
-          {{profile.skill1}}
-          {% endif %}
-          {% if profile.skill2 and profile.skill2 != ""%}  
-          &nbsp{{profile.skill2}}
-          {% endif %}
-          {% if profile.skill3 and profile.skill3 != ""%}  
-          &nbsp{{profile.skill3}}
-          {% endif %}
-          {% if profile.skill4 and profile.skill4 != ""%}  
-          &nbsp{{profile.skill4}}
-          {% endif %}
-          {% if profile.skill5 and profile.skill5 != ""%}  
-          &nbsp{{profile.skill5}}
-          {% endif %}
-          {% if profile.skill6 and profile.skill6 != ""%}  
-          &nbsp{{profile.skill6}}
-          {% endif %}
-          {% if profile.skill7 and profile.skill7 != ""%}  
-          &nbsp{{profile.skill7}}
-          {% endif %}
-          {% if profile.skill8 and profile.skill8 != ""%}  
-          &nbsp{{profile.skill8}}
-          {% endif %}
-          {% if profile.skill9 and profile.skill9 != ""%}  
-          &nbsp{{profile.skill9}}
-          {% endif %}
-          {% if profile.skill10 and profile.skill10 != ""%}    
-          &nbsp{{profile.skill10}}
-          {% endif %} <a class="pencil" href="{% url 'week1:edit_professionskills' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-      </tr>
-      <tr class="visible_pencil">
-        <td class="tableLabel">City:</td>
-        <td class="tableValue">{{profile.city}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
-      </tr>
-      <tr class="visible_pencil">
-        <td class="tableLabel">Work at:</td>
-        <td class="tableValue">{{profile.worksAt}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil" aria-hidden="true" ></i></a></td>
-      </tr>
-      <tr class="visible_pencil">
-        <td class="tableLabel">Education:</td>
-        <td class="tableValue">{{profile.education}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-      </tr>
-      <tr class="visible_pencil">
-        <td class="tableLabel">Language:</td>
-        <td class="tableValue">{{profile.language}} <a class="pencil" href="{% url 'week1:edit_personalinfo' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-      </tr>
-                
-      <tr class="visible_pencil">
-        <td class="tableLabel">Website:</td>
-        <td class="truncate"><a href="{{ profile.weburl }}" color=blue>{{ profile.weburl }}</a></td>
-        <td valign="top">
-          <a href="{% url 'week1:edit_url' %}" class="pencil"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-        </td>
-      </tr>
-           
-      <tr class="visible_pencil">   
-        <td class="tableLabel">
-          Interested in: 
-        </td>
+   </head>
+   <body id="page-top">
+      <!-- Navigation -->
+      <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
+          <div class="container">
+              <a class="navbar-brand" href="#">
+                  <img src="https://vf4snw-ch3301.files.1drv.com/y4mo70eGO7aWASskNPfFFWo5UQEcEa_dOkSUSbCdssOduW0Na0olPNZ5XUsEd5Zt_Ck_JOkH4EmcHblWsRVynWIMrUM5oaza4PD5f1u7AoFbsyqusonxY6gaEGWTcvpH7-uqUOQPv7Q0bjNnE5o-G7w6oerjJEUNDdz3kKYZS0uYm8XYJ99z_x3d_RZOLMbPcp3Mx0IUWEn6YWiirGCz3aJsA?width=265&height=48&cropmode=none" alt="Match Hat">
+              </a>
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              Menu
+              <i class="fa fa-bars"></i>
+              </button>
             
-        <td class="tableValue">
-                    
-          {% if profile.interestproject == 1%}
-            Side projects
-          {% endif %}
-
-          {% if profile.interestproject == 2 %}  
-            Short term projects
-          {% endif %}
-
-          {% if profile.interestproject == 3 %}  
-            Long term projects
-          {% endif %}
-
-          {% if profile.interestproject == 4 %}  
-            Full-time projects
-          {% endif %}
-        </td>
-
-        <td valign="top"><a class="pencil" href="{% url 'week1:edit_funfact' %}"><i class="fa fa-pencil " aria-hidden="true" text-align="right"></i></a>
-        </td>
-          
-        <tr class="visible_pencil">
-          <td class="tableLabel">Want to explore:</td>
-          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-        </tr>
-
-        <tr class="visible_pencil">
-          <td class="tableLabel">Hobby:</td>
-          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-        </tr>
-
-        <tr class="visible_pencil">
-          <td class="tableLabel">Favorite quote:</td>
-          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-        </tr>
-
-        <tr class="visible_pencil">
-          <td class="tableLabel">Films I love:</td>
-          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-        </tr>
-
-        <tr class="visible_pencil">
-          <td class="tableLabel">Books I love:</td>
-          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-        </tr>
-                
-        <tr class="visible_pencil">
-          <td class="tableLabel">Lived in:</td>
-          <td class="tableValue">{{profile.hobby}} <a class="pencil" href="{% url 'week1:edit_funfact' %}" text-align="right" style="float: right"><i class="fa fa-pencil " aria-hidden="true" ></i></a></td>
-        </tr>
-            
-      </table></div>  	
-	        
-	</div>
-	
-    </div>
-
-    <div id="home-secondcolumn">
-      <div class="home-step">
-        <table>
-          <tr class="visible_pencil">
-            <td width="10px">
-            </td>
-            <td>
-              <br>
-              {% if profile.photo %}
-                <img src="{{ profile.photo.url }}" class="mainprofile">
-              {% else %}
-                <img src="{% static 'images/profileimage.png'%}" class="mainprofile" width="180">
-              {% endif %}
-            </td>
-            <td valign="top">
-              <a class="pencil" href="{% url 'week1:edit_photo' %}"><i class="fa fa-pencil " aria-hidden="true" align="right"></i></a>
-            </td>
-          </tr>
-        </table>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto ">
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                          <div class="input-group-btn">
+                              <button class="btn btn-default" type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                          </div>
+                      </div>
+                  </form>
+              <ul class="navbar-nav mx-auto nav-flex-icons">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'week1:community_members' %}">
+                          <i class="fa fa-users"></i>
+                      </a>
+                  </li>
+                  <!--li class="nav-item">
+                      <a class="nav-link" href="#">
+                          <i class="fa fa-user-plus"></i>
+                      </a>
+                  </li-->
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'week1:messages' %}">
+                          <i class="fa fa-comment-o"></i>
+                      </a>
+                  </li>
+              </ul>
+              <ul class="navbar-nav navbar-right">
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fa fa-user"></i>&nbsp;{{user.first_name}}
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdown04">
+                          <a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
+                          <a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
+                      </div>
+                  </li>
+              </ul>
+          </div>
       </div>
-      <div class="home-step-out">
-        <table>
-          <tr class="visible_pencil">
-            <td width="20px"></td>
-            <td width="250px" >
-              <h3 halign="center">{{user.first_name}}&nbsp{{user.last_name}}</h3> 
-              <h4 halign="center">{{profile.profession1}} &nbsp {{profile.profession2}} &nbsp {{profile.profession3}} &nbsp {{profile.profession4}} &nbsp {{profile.profession5}}</h4>
-              <p halign="center">{{profile.describe}}</p>
-            </td>
-            <td valign="top"><a class="pencil" href="{% url 'week1:edit_profession' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-  <div id="home-thirdcolumn">
-    <ul style="list-style-type:none">
-	    <li><a href="{% url 'week1:hatsoff_list'%}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" width="33px"><span id="hatsoffNum"></span></a></li>
-         <!--li><a href="{% url 'week1:thanks_list'%}">Thanks &nbsp<span id="thanksNum"></span></a></li-->
-      <li><a href="{% url 'week1:follow_list'%}">Follow &nbsp<span id="followNum"></span></a></li>
-		  <li><a href="{% url 'week1:messages' %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a></li>
-		  <li><a href=""><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="33px"></a></li>
-		  <li><a href=""><i class="fa fa-handshake-o fa-2x" aria-hidden="true" ></i></a></li>
-     </ul>
-  </div>
-<hr>
-<div id="home-main-center">
-
-<!--div class="portfolio-container"-->
-  <div class="home-step">
-    <!--div class="row"-->
-    <h3>Portfolio</h3>
-      <!--div class="col-md-12" data-wow-delay="0.6s"-->
-      <div class="carousel slide" data-ride="carousel" id="quote-carousel" data-interval="false">
-        <!-- Carousel Slides / Quotes -->
-        <div class="carousel-inner text-center">
-
-	                    <!-- Quote 1 -->
-			    {% if showcases %}
-					  {% for showcase in showcases %}
-				      {% if forloop.counter == 1 %}
-				        <div class="item active">
-	                    
-					        <blockquote>
-					    <!--div class="row">
-						<div class="col-sm-8 col-sm-offset-2"-->
-						        <div class="right-edit">
-		                  <a href="{% url 'week1:edit_previouswork' forloop.counter %}" align="right"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-		                </div>
-						    {% if showcase.image or showcase.video or showcase.youtube %}
-
-							    {% if showcase.image %}
-							   	  <div class="display-image">
-									    {% if '.pdf' in showcase.image.url %}
-								    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
-								      <object data="{{ showcase.image.url }}" width="350px" height="450px" />
-								      </object>
-								      {% else %}
-								      <object data="{{ showcase.image.url }}" width="350px" />
-								      </object>
-								    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
-								      {% endif %}
-							   	  </div>
-							    {% endif %}
-
-							  {% if showcase.video %}
-							    <video controls id="video">
-							      <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
-							    </video>
-							  {% endif %}
-
-							  {% if showcase.youtube %}
-							   <!--object style="height: 320px; width: 500px"><param name="movie" value="{{showcase.youtube}}"><param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always"><embed src="{{showcase.youtube}}" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="400" height="300"></object-->
-							   <div class="display-image">
-							     <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-							   </div>
-							  {% endif %}
-
-	            {% else %}
-							  <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	            {% endif %}
-              <br><br>
-                    
-              <div class="comment-container">
-                            
-	              <table align="left" width="750">
-		              <tr>
-					          <td valign="top" class="tableTitle">
-					            <div class="tableLabel">
-					              Title: 
-					            </div>
-					          </td>
-					                    
-					          <td>
-					            {{showcase.title}}
-					          </td>
-					                      
-					        </tr>     
-
-					        <tr>
-					          <td valign="top" class="tableTitle">
-					            <div class="tableLabel">
-					              Description: 
-					            </div>
-					          </td>
-					                    
-					          <td>
-					            {{showcase.describe}}
-					          </td>
-					                      
-					        </tr>
-
-					        <tr>
-					          <td valign="top" class="tableTitle">
-					            <div class="tableLabel">
-					              Your role: 
-					            </div>
-					          </td>
-					                    
-					          <td>
-					            {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
-					          </td>
-					                      
-					        </tr>
-
-					        <tr>
-					          <td valign="top" class="tableTitle">
-					            <div class="tableLabel">
-					              Year of completion: 
-					            </div>
-					          </td>
-					                    
-					          <td>
-					            {{showcase.completion}}
-					          </td>
-					                      
-					          </tr>
-
-					          <tr>
-					            <td valign="top" class="tableTitle">
-					              <div class="tableLabel">
-					                Keywords: 
-					              </div>
-					            </td>
-					                    
-					            <td>
-					              {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
-					            </td>
-					                      
-					          </tr>
-				          </table>
-                                
-                  <div class="actionbutton-container">
-                    <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-
-                    <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
-
-                    <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"> </div-->
-                    <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><div class="popupHat popupHat-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div></div>
-
-                    <div class="popupCollaborate" id="collaboratestatus_portfolio_{{forloop.counter}}"><div class="popupCollaborate popupCollaborate-inactive"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img" onclick="collaborateFunction(3, {{forloop.counter}})"></div></div>
-
+      </nav>
+      <!-- content -->
+      <section class="profileBody">
+          <div class="container">
+          <!-- <div class="column col-sm-12 col-xs-12" id="main"> -->
+               <div class="row flex-column-reverse flex-md-row">
+                  <!-- main col left -->
+                  <div class="profileBodyLeft col-sm-12 col-md-4">
+                     <div class="panel panel-profileLeft">
+                        <div class="panel-heading">
+                           <h2>community members</h2>
+                        </div>
+                        <div class="panel-body clearfix">
+                           <div class="well well-sm commMembersDataEntity">
+                              <div class="media">
+                                 <div class="thumbnail pull-left">
+                                    <img class="media-object" src="http://gdurl.com/c-iU">
+                                 </div>
+                                 <div class="media-body">
+                                    <p class="big">
+                                       <a href="#">0</a>
+                                    </p>
+                                    <h4 class="media-heading">Community members</h4>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="panel panel-profileLeft projects">
+                        <div class="panel-heading">
+                           <h2>projects</h2>
+                        </div>
+                        <div class="panel-body clearfix">
+                           <div class="well well-sm projectsEntity">
+                              <div class="media">
+                                 <div class="thumbnail pull-left">
+                                    <img class="media-object" src="http://gdurl.com/qfEm">
+                                 </div>
+                                 <div class="media-body">
+                                    <h3>Projects you took on</h3>
+                                    <div class="projectProgressEntity clearfix">
+                                       <h4>3D printing project</h4>
+                                       <div class="progress-outer progress-striped-outer">
+                                          <div class="progPercentageNumb"></div>
+                                          <div class="progress progress-striped">
+                                             <div class="progress-bar progress-bar-custom" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" >
+                                                <span class="sr-only">58</span>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!-- project entity -->
+                                    <div class="projectProgressEntity clearfix">
+                                       <h4>Sculpture project</h4>
+                                       <div class="progress-outer progress-striped-outer">
+                                          <div class="progPercentageNumb"></div>
+                                          <div class="progress progress-striped">
+                                             <div class="progress-bar progress-bar-custom" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >
+                                                <span class="sr-only">25</span>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="panel-body clearfix">
+                           <div class="well well-sm projectsEntity">
+                              <div class="media">
+                                 <div class="thumbnail pull-left">
+                                    <img class="media-object" src="http://gdurl.com/QZUi">
+                                 </div>
+                                 <div class="media-body suggestedProjects">
+                                    <h3>Suggested Projects</h3>
+									                  <h3 class="subHeading">Science documentary</h3>
+                                    <div class="projectProgressEntity clearfix">
+									                     <p class="big pull-left">
+                                          <a href="#">30</a>
+                                       </p>
+                                       <h4 class="media-heading">mutual community members</h4>
+                                    </div>
+                                    <!-- project entity -->
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="panel-body clearfix">
+                           <div class="well well-sm projectsEntity">
+                              <div class="media">
+                                 <div class="thumbnail pull-left">
+                                    <img class="media-object" src="http://gdurl.com/rUxk">
+                                 </div>
+                                 <div class="media-body">
+                                    <h3>Shootouts</h3>
+                                    <div class="projectProgressEntity clearfix">
+                                    </div>
+                                    <!-- project entity -->
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
                   </div>
+				  
+                  <!-- main col right -->
+                  <div class="profileBodyRight col-sm-12 col-md-8">
+                     <div class="paddingProfileBody">
+                        <div class="panel panel-white clearfix">
+                           <div class="well">
+                              <form class="form-horizontal" role="form" method="GET">
+                                 <div class="well well-sm personEntity">
+                                    <div class="row">
+									
+                                       <div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
+                                          <div class="thumbnail">
+                                             <img class="media-object" src="http://gdurl.com/l4r0">
+                                          </div>
+                                          <button class="btn btn-sm btn-outline" type="button" onclick="location.href='{% url 'week1:edit_personalinfo' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit profile</span></button>
+                                       </div>
+									   
+                                       <div class="media-body dataProfile-outer col-xs-6 col-sm-6 col-md-6 ">
+                                          <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                          <em>{{profile.profession1}}</em>
+                                          <p>{{profile.describe}}</p>
+                                          <div class="form-group">
+                                             <label>Skills</label>
+                                             <input type="text" class="form-control" id="tokenfield" value="red,green,blue" />
+                                             <input type="submit" class="btn btn-primary">
+                                             <label>City</label>
+                                             <input type="text" id="name" name="user_name">
+                                             <label>SNS</label>
+                                             <ul class="list-inline snsActionList">
+                                                <li class="list-inline-item">
+                                                   <a class="btn-social btn-outline" href="#">
+                                                   <i class="fa fa-fw fa-facebook"></i>
+                                                   </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                   <a class="btn-social btn-outline" href="#">
+                                                   <i class="fa fa-fw fa-google-plus"></i>
+                                                   </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                   <a class="btn-social btn-outline" href="#">
+                                                   <i class="fa fa-fw fa-twitter"></i>
+                                                   </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                   <a class="btn-social btn-outline" href="#">
+                                                   <i class="fa fa-fw fa-youtube"></i>
+                                                   </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                   <a class="btn-social btn-outline" href="#">
+                                                   <i class="fa fa-fw fa-instagram"></i>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                        <div class="profileSubHeader clearfix">
+                           <h2 class="pull-left">Portfolio</h2>
+                           <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_newpreviouswork' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
+                        </div>
+                        <div id="carouselPortfolio-outer" class="carousel-outer">
+                           <div id="carouselPortfolio" class="carousel slide">
 
-    	            <div class="well well-ssm">
-    		            <ul id="portfolioComment_{{user.id}}_{{forloop.counter}}" style="list-style-type:none;">
-    		            </ul>
+                              <ol class="carousel-indicators">
+                                 {% if showcases %}
+                                    {% for showcase in showcases %}
+                                       {% if forloop.counter == 1 %}
+                                          <li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter }}" class="active"></li>
+                                       {% else %}
+                                          <li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter }}"></li>
+                                       {% endif %}
+                                    {% endfor %}
+                                 {% endif %}
+                              </ol>
+                              <div class="carousel-inner" role="listbox">
+                                 <!-- Images -->
+                                 {% if showcases %}
+                                    {% for showcase in showcases %}
+                                       {% if forloop.counter == 1 %}
+                                          <div class="carousel-item active">
+                                       {% else %}
+                                          <div class="carousel-item">
+                                       {% endif %}
 
-    		            <form class="form-horizontal" action="">
-    			            <div class="form-group">
-    				            <div class="col-md-15">
-    				              <textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
-    				            </div>
-    				          </div>
-    				          <div class="form-group">
-    				            <div class="col-md-12 text-right">
-    				              <button class="btn btn-primary btn-sm" onclick="return submitShowcaseComment({{forloop.counter}})">Post</button>
-    			              </div>
-    		              </div>
-    		            </form>
+                                       {% if showcase.image or showcase.video or showcase.youtube %}
+                                          {% if showcase.image %}
+                                             <img class="d-block img-fluid" src="{{ showcase.image.url }}" alt="{{forloop.counter}}th slide">
+                                          {% endif %}
 
-    	            </div>
-                </div>
+                                          {% if showcase.image %}
+                                             <video controls id="video">
+                                                 <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
+                                             </video>
+                                          {% endif %}
 
-					    </blockquote>
-				    </div>
-            <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
-            <div id="portfolio_shareModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_shareClose_{{forloop.counter}}" onclick="closePFShareList(0, {{forloop.counter}})">&times;</span><h3>Users who shared</h3><div id="portfolio_share_users_{{forloop.counter}}"></div></div></div>
+                                          {% if showcase.youtube %}
+                                             <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+                                          {% endif %}
 
-	          {% else %}
-				    <div class="item">
-				      <blockquote>
-				    <!--div class="row">
-						<div class="col-sm-8 col-sm-offset-2"-->
-						    <div class="right-edit">
-		              <a href="{% url 'week1:edit_previouswork' forloop.counter %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-		            </div>
+                                       {% else %}
+                                          <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}" alt="{{forloop.counter}}th slide">
+                                       {% endif %}
 
-	              <br>
-	 					  {% if showcase.image or showcase.youtube %}
-								{% if showcase.image %}
-									{% if '.pdf' in showcase.image.url %}
-								    <!--embed src="{{ showcase.image.url }}" width="300px" height="450px" /-->
-								    <object data="{{ showcase.image.url }}" width="350px" height="450px" />
-								    </object>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 pull-left">
+                                       <h3>{{showcase.title}}</h3>
+                                       <p>{{showcase.describe}}</p>
 
-								  {% else %}
-								    <!--img src="{{ showcase.image.url }}" class="maincontent"-->
-								    <object data="{{ showcase.image.url }}" width="350px" />
-								    </object>
-								  {% endif %}
-								{% endif %}
+                                       <label>Roles</label>:
+                                       <em>{{showcase.role1}}</em>
+                                       <label>Key words</label>:
+                                       <em>{{showcase.tag1}}</em>
+                                    </div>
+                                    {% endfor %}
+                                 {% endif %}
 
-								{% if showcase.youtube %}
-									<div class="display-image">
-							   		<iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-							   	</div>
-								{% endif %}
-
-						  {% else %}
-							  <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-						  {% endif %}
-
-						  <table width="750">
-		            <tr>
-					        <td width="50"></td>
-					        <td valign="top" class="tableTitle">
-					          <div class="tableLabel">
-					            Title: 
-					          </div>
-					        </td>
-					                    
-					        <td>
-					          {{showcase.title}}
-					        </td>
-					                      
-					      </tr>     
-
-					      <tr>
-					        <td width="50"></td>
-					        <td valign="top" class="tableTitle">
-					          <div class="tableLabel">
-					            Description: 
-					          </div>
-					        </td>
-					                    
-					        <td>
-					          {{showcase.describe}}
-					        </td>
-					                      
-					      </tr>
-
-					      <tr>
-					        <td width="50"></td>
-					        <td valign="top" class="tableTitle">
-					          <div class="tableLabel">
-					            Your role: 
-					          </div>
-					        </td>
-					                    
-					        <td>
-					          {{showcase.role1}} &nbsp {{showcase.role2}} &nbsp {{showcase.role3}} &nbsp {{showcase.role4}} &nbsp {{showcase.role5}}
-					        </td>
-					                      
-					      </tr>
-
-					      <tr>
-					        <td width="50"></td>
-					        <td valign="top" class="tableTitle">
-					          <div class="tableLabel">
-					            Year of completion: 
-					          </div>
-					        </td>
-					                    
-					        <td>
-					          {{showcase.completion}}
-					        </td>
-					                      
-					      </tr>
-
-					      <tr>
-					        <td width="50"></td>
-					        <td valign="top" class="tableTitle">
-					          <div class="tableLabel">
-					            Keywords: 
-					          </div>
-					        </td>
-					                    
-					        <td>
-					          {{showcase.tag1}} &nbsp {{showcase.tag2}} &nbsp {{showcase.tag3}} &nbsp {{showcase.tag4}} &nbsp {{showcase.tag5}} &nbsp {{showcase.tag6}} &nbsp {{showcase.tag7}} &nbsp {{showcase.tag8}} &nbsp {{showcase.tag9}} &nbsp {{showcase.tag10}}
-					        </td>
-					                      
-					      </tr>
-				      </table>
-
-	            <hr class="divider"/>
-
-              <div class="actionbutton-container">
-                <div id="portfolioLike_{{forloop.counter}}" class="popupLike"></div>
-                <div id="portfolioShare_{{forloop.counter}}" class="popupLike"></div>
-
-                <!--div class="popupShare" id="sharestatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_share_32x32.png' %}" class="icons-img" onclick="shareFunction(3, {{forloop.counter}})"></div-->
-                               <!-- <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"></div> -->
-                <div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><div class="popupHat popupHat-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div></div>
-                                <!--div class="popupHatsoff" id="hatsoffstatus_portfolio_{{forloop.counter}}"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, {{forloop.counter}})"></div-->
-    	 						<!--div class="popupShare" onclick="popShare()">Share &nbsp</br><span class="popuptextShare" id="sharePop">Share this project?</br><button onclick="shareFunction(3, {{forloop.counter}})" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupShared"><span class="popuptextShared" id="sharedPop">Shared!</span></div>
-    						    <div class="popupHatsoff" onclick="popHatsoff()"><img src="{% static 'images/hat.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Give a Hatsoff?</br><button onclick="hatsoffFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGavehatsoff"><span class="popuptextGavehatsoff" id="gavehatsoffPop">Gave a Hatsoff!</span></div>
-    						    <div class="popupFollow" onclick="popFollow()">Follow</br><span class="popuptextFollow" id="followPop">Follow this user?</br><button onclick="followFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">Not Now</button></span></div><div class="popupFollowed"><span class="popuptextFollowed" id="followedPop">Followed the user!</span></div-->
-    						    <!--div class="popupFollow" onclick="followFunction()">Follow &nbsp<br><span class="popuptextFollow" id="followPop">Following<br></span></div-->
-    	         	
-
-                <!-- <div class="popupCollaborate"><button onclick="collaborateFunction(3, {{forloop.counter}})"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="20px"></button></div> -->
-
-                <div class="popupCollaborate" id="collaboratestatus_portfolio_{{forloop.counter}}"><div class="popupCollaborate popupCollaborate-inactive"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img" onclick="collaborateFunction(3, {{forloop.counter}})"></div></div>
-
-              </div>
-
-              <div class="comment-container">
-    	          <div class="well well-ssm">
-    		          <ul id="portfolioComment_{{user.id}}_{{forloop.counter}}" style="list-style-type:none;">
-    		          </ul>
-
-    		          <form class="form-horizontal" action="">
-    			          <div class="form-group">
-    				          <div class="col-md-15">
-    				            <textarea class="form-control" id="c_portfolio_{{forloop.counter}}" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
-    				          </div>
-    				        </div>
-    				        <div class="form-group">
-    				          <div class="col-md-12 text-right">
-    				            <button class="btn btn-primary btn-lg" onclick="return submitShowcaseComment({{forloop.counter}})">Post</button>
-    			            </div>
-    		            </div>
-    		          </form>
-
-    	          </div>
-              </div>
-	                                            
-						<!--/div>
-					</div-->
-					  </blockquote>
-				  </div>
-          <div id="portfolio_likeModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_likeClose_{{forloop.counter}}" onclick="closePFLikeList(0, {{forloop.counter}})">&times;</span><h3>Users who liked</h3><div id="portfolio_like_users_{{forloop.counter}}"></div></div></div>
-          <div id="portfolio_shareModal_{{forloop.counter}}" class="modal_community"><div class="modal-content"><span class="close" id="portfolio_shareClose_{{forloop.counter}}" onclick="closePFShareList(0, {{forloop.counter}})">&times;</span><h3>Users who shared</h3><div id="portfolio_share_users_{{forloop.counter}}"></div></div></div>
-	                {% endif %}
-	                {% endfor %}
-                {% else %}
-	        <div class="right-edit">
-		        <a href="{% url 'week1:edit_newpreviouswork' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-		      </div>
-					<div class="display-image">
-		        <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-		      </div>
-
-		      <table width="750">
-		        <tr>
-					  <td width="50"></td>
-					  <td valign="top" class="tableTitle">
-					    <div class="tableLabel">
-					      Title: 
-					    </div>
-					  </td>
-					       
-					  <td>
-					  </td>
-					                      
-					  </tr>     
-
-					  <tr>
-					    <td width="50"></td>
-					    <td valign="top" class="tableTitle">
-					      <div class="tableLabel">
-					        Description: 
-					      </div>
-					    </td>
-					                    
-					    <td>
-					    </td>
-					                      
-					  </tr>
-
-					  <tr>
-					    <td width="50"></td>
-					    <td valign="top" class="tableTitle">
-					      <div class="tableLabel">
-					        Your role: 
-					      </div>
-					    </td>
-					                    
-					    <td>
-					    </td>
-					  </tr>
-
-					  <tr>
-					    <td width="50"></td>
-					    <td valign="top" class="tableTitle">
-					      <div class="tableLabel">
-					        Year of completion: 
-					      </div>
-					    </td>
-					                    
-					    <td>
-					    </td>
-					  </tr>
-
-					  <tr>
-					    <td width="50"></td>
-					    <td valign="top" class="tableTitle">
-					      <div class="tableLabel">
-					        Keywords: 
-					      </div>
-					    </td>
-					                    
-					    <td>
-					    </td>
-					  </tr>
-				  </table>
-          {% endif %}
-        </div>
-
-        <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a-->
-        <a data-slide="prev" href="#quote-carousel" class="carousel-control left">&lsaquo;</a>
-        <a data-slide="next" href="#quote-carousel" class="carousel-control right">&rsaquo;</a>
-      </div>
-        <!--/div-->
-   <!--/div-->
-</div>
-
-
-<div class="home-step">
-  <script>
-		function show_upcoming(){
-            console.log('show more!');
-		    $('#upcomingComment').show();
-		    $('#upcoming_hide').show();
-		    $('#upcoming_show').hide();
-		};
-
-		function hide_upcoming(){
-            console.log('hide more!');
-		    $('#upcomingComment').hide();
-		    $('#upcoming_hide').hide();
-		    $('#upcoming_show').show();
-		};
-  </script>
-
-  <h3>Upcoming Project</h3>
-        
-  <div class="right-edit">
-	  <a href="{% url 'week1:edit_upcoming' %}"><i class="fa fa-pencil " aria-hidden="true"></i></a>
-	</div>
-
-  <br>
-	  {% if upcoming %}
-	    {% if upcoming.image %}
-
-	      {% if upcoming.image %}
-					<div class="display-image">
-					{% if '.pdf' in upcoming.image.url %}
-					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
-					{% else %}
-					    <embed src="{{ upcoming.image.url }}" class="maincontent" />
-					    <!--img src="{{ upcoming.image.url }}" class="maincontent"-->
-					{% endif %}
-					</div>
-				{% endif %}
-
-	    {% else %}
-	      <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	    {% endif %}
-	  {% else %}
-	    <img src="{% static 'images/empty_showcase.png'%}" class="maincontent">
-	  {% endif %}
-
-	  {% if upcoming %}
-      <div class="comment-container">
-	     	<table width="750">
-	        <tr>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Title: 
-					  </div>
-					</td>
-					                    
-					<td>
-					  {{upcoming.title}}
-					</td>
-				  </tr>     
-
-				  <tr>
-				    <td valign="top" class="tableTitle">
-				      <div class="tableLabel">
-				        Description: 
-				      </div>
-				    </td>
-				                    
-				    <td>
-				      {{upcoming.describe}}
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td valign="top" class="tableTitle">
-				      <div class="tableLabel">
-				        Your role: 
-				      </div>
-				    </td>
-				                    
-				    <td>
-				      {{upcoming.role1}} &nbsp {{upcoming.role2}} &nbsp {{upcoming.role3}} &nbsp {{upcoming.role4}} &nbsp {{upcoming.role5}}
-				    </td>
-				  </tr>
-
-				  <tr>
-				    <td valign="top" class="tableTitle">
-				      <div class="tableLabel">
-				        Status:
-				      </div>
-				    </td>
-				                    
-				    <td>
-				      {{upcoming.status}}
-					  </td>
-				  </tr>
-
-				  <tr>
-				    <td valign="top" class="tableTitle">
-				      <div class="tableLabel">
-				        Keywords:
-				      </div>
-				    </td>
-				                    
-				    <td>
-				      {{upcoming.tag1}} &nbsp {{upcoming.tag2}} &nbsp {{upcoming.tag3}} &nbsp {{upcoming.tag4}} &nbsp {{upcoming.tag5}} &nbsp {{upcoming.tag6}} &nbsp {{upcoming.tag7}} &nbsp {{upcoming.tag8}} &nbsp {{upcoming.tag9}} &nbsp {{upcoming.tag10}}
-					  </td>
-				                      
-				  </tr>
-
-			  </table>
-      </div>
-            
-			<h3>Collaborators I'd love!</h3>
-			<table width="750">
-	      <tr>
-					<td valign="top" class="tableTitle">
-            <div class="collaborator-container">
-					    <div class="tableLabel">
-					      Collaborators: 
-					    </div>
+                              </div>
+                              <!--Carousel Inner-->
+                           </div>
+                           <!--Carousel Example Slides Only-->
+                           <!-- Controls -->
+                           <a class="carousel-control-prev" href="#carouselPortfolio" role="button" data-slide="prev">
+                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Previous</span></a>
+                           <a class="carousel-control-next" href="#carouselPortfolio" role="button" data-slide="next">
+                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Next</span></a>
+                        </div>
+                        <!-- carousel ende -->
+						
+                        <div class="profileSubHeader clearfix">
+                           <h2 class="pull-left">Upcoming project</h2>
+                           <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_upcoming' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit upcoming project</span></button>
+                        </div>
+						
+                        <div id="carouselPortfolioFuture-outer" class="carousel-outer">
+                           <div id="carouselPortfolioFuture" class="carousel slide">
+                              <!-- Indicators -->
+                              <ol class="carousel-indicators">
+                                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                              </ol>
+                              <div class="carousel-inner" role="listbox">
+                                 <!-- Images -->
+                                 <div class="carousel-item active">
+                                    <img class="d-block img-fluid" src="http://www.placehold.it/1024x700" alt="First slide">
+                                    <div class="carousel-caption">
+                                       <h3>Business Cards</h3>
+                                       <p>Here are some business cards I have made.</p>
+                                    </div>
+                                 </div>
+                                 <div class="carousel-item">
+                                    <img class="d-block img-fluid" src="http://www.placehold.it/1024x700" alt="Second slide">
+                                    <div class="carousel-caption d-none d-md-block">
+                                       <h3>First Website in 1997</h3>
+                                       <p>I ran one of the top Mariah Carey fansites for six years (1998-2003) and got to meet Mariah Carey multiple times.</p>
+                                    </div>
+                                 </div>
+                                 <div class="carousel-item">
+                                    <img class="d-block img-fluid" src="http://www.placehold.it/1024x700" alt="Third slide">
+                                    <div class="carousel-caption">
+                                       <h3>Billboard Designs</h3>
+                                       <p>I worked with Marketing Solutions and designed various marketing materials for her clients. I got the change to design and illustrate two of their billboards.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <!--Carousel Inner-->
+                           </div>
+                           <!--Carousel Example Slides Only-->
+                           <!-- Controls -->
+                           <a class="carousel-control-prev" href="#carouselPortfolioFuture" role="button" data-slide="prev">
+                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Previous</span></a>
+                           <a class="carousel-control-next" href="#carouselPortfolioFuture" role="button" data-slide="next">
+                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Next</span></a>
+                        </div>
+                        <!-- upcoming project carousel ende -->                                        
+                        <form class="clearfix" id="upcomingProjectForm">
+                           <div class="col-sm-6 col-xs-12 pull-left">
+                              <label for="upcomingTitle">Title</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingTitle">
+                              <label for="upcomingRole">Your Role</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingRole">
+                              <label for="upcomingStatus">Status</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingStatus">
+                              <label for="upcomingKeywords">Keywords</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords">
+                              <label for="upcomingRaisingFunds">Raising funds</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds">
+                              <label for="upcomingIfSoForWhat">If so for what</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingIfSoForWhat">
+                           </div>
+                        </form>
+                        <!-- upcoming project form ende -->				
+                        <div class="profileSubHeader clearfix">
+                           <h2 class="pull-left">Upcoming project</h2>
+                           <button class="btn btn-lg btn-outline pull-right" type="button"><i class="fa fa-pencil"></i><span class="sr-only">Collaborator I'd love for my upcoming project</span></button>
+                        </div>
+                        <form class="clearfix" id="collaboratorIdLoveForm">
+                           <div class="col-sm-6 col-xs-12 pull-left">
+                              <label for="upcomingTitle">Collaborator (profession)</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingTitle">
+                              <label for="upcomingRole">Skills</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingRole">
+                              <label for="upcomingStatus">Start date</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingStatus">
+                              <label for="upcomingStatus">End date</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingStatus">
+                              <label for="upcomingKeywords">Frequency of work (e.g. 3 hours per week)</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords">
+                              <label for="upcomingRaisingFunds">Preferred city location of collaborator</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds">
+                              <label for="collaboratorAdditionalInfo">Collaborator aditional Info</label>
+                              <input type="text" class="form-control form-control-sm" id="collaboratorAdditionalInfo">
+                           </div>
+                           <div class="col-sm-6 col-xs-12 pull-right">
+                              <label for="formGroupTitle">Allow others to use or remix</label>
+                              <div class="dropdown">
+                                 <button class="btn btn-primary dropdown-toggle" type="button" id="about-us" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 SELECT as...
+                                 </button>
+                                 <div class="dropdown-menu" aria-labelledby="about-us">
+                                    <a class="dropdown-item" href="#">Yes, sure.</a>
+                                    <a class="dropdown-item" href="#">Yes, as long as I'm credited.</a>
+                                    <a class="dropdown-item" href="#">Yes as long as the work isn't altered.</a>
+                                    <a class="dropdown-item" href="#">No, I do not own the full copyright.</a>
+                                    <a class="dropdown-item" href="#">Sorry, not this work.</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                     <!-- paddingCommunityThread ende -->
+                  </div>
+				  <!-- col right ende -->
+               </div>
+           <!-- row end -->
+         </div>
+		 <!-- container ende -->
+      </section>
+      <!-- content ende -->
+      <!-- Footer -->
+      <footer class="text-center">
+         <div class="footer-above">
+            <div class="container">
+               <div class="row">
+                  <div class="footer-col col-md-3">
+                     <h3>Location</h3>
+                     <ul class="list-unstyled">
+                        <li>
+                           <a href="@">About</a>
+                        </li>
+                        <li>
+                           <a href="@">Terms</a>
+                        </li>
+                        <li>
+                           <a href="@">Privacy</a>
+                        </li>
+                        <li>
+                           <a href="@">Careers</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="footer-col col-md-3">
+                     <h3>Follow Us</h3>
+                     <ul class="list-inline">
+                        <li class="list-inline-item">
+                           <a class="btn-social btn-outline" href="#">
+                           <i class="fa fa-fw fa-facebook"></i>
+                           </a>
+                        </li>
+                        <li class="list-inline-item">
+                           <a class="btn-social btn-outline" href="#">
+                           <i class="fa fa-fw fa-google-plus"></i>
+                           </a>
+                        </li>
+                        <li class="list-inline-item">
+                           <a class="btn-social btn-outline" href="#">
+                           <i class="fa fa-fw fa-twitter"></i>
+                           </a>
+                        </li>
+                        <li class="list-inline-item">
+                           <a class="btn-social btn-outline" href="#">
+                           <i class="fa fa-fw fa-linkedin"></i>
+                           </a>
+                        </li>
+                        <li class="list-inline-item">
+                           <a class="btn-social btn-outline" href="#">
+                           <i class="fa fa-fw fa-dribbble"></i>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="footer-col col-md-3">
+                     <h3>Feedback</h3>
+                     <a href="@">Feedback</a>
+                  </div>
+                  <div class="footer-col col-md-3">
+                     <h3>Contact</h3>
+                     <a href="@">Feedback</a>
+                  </div>
+               </div>
             </div>
-					</td>
-					                    
-					<td>
-					  {{upcoming.collaborator1}} &nbsp {{upcoming.collaborator2}} &nbsp {{upcoming.collaborator3}} &nbsp {{upcoming.collaborator4}} &nbsp {{upcoming.collaborator5}}
-					</td>
-				</tr>     
-
-				<tr>
-				  <td valign="top" class="tableTitle">
-				    <div class="collaborator-container">
-              <div class="tableLabel">
-				        Skills:
-              </div>
+         </div>
+         <div class="footer-below">
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-12">
+                     Copyright &copy; Match Hat 2017
+                  </div>
+               </div>
             </div>
-				  </td>
-				                    
-				  <td>
-				    {% if upcoming.collaborator_skill1 and upcoming.collaborator_skill1 != ""%}	
-				       {{ upcoming.collaborator_skill1 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill2 and upcoming.collaborator_skill2 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill2 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill3 and upcoming.collaborator_skill3 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill3 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill4 and upcoming.collaborator_skill4 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill4 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill5 and upcoming.collaborator_skill5 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill5 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill6 and upcoming.collaborator_skill6 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill6 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill7 and upcoming.collaborator_skill7 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill7 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill8 and upcoming.collaborator_skill8 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill8 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill9 and upcoming.collaborator_skill9 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill9 }}
-				    {% endif %}
-
-				    {% if upcoming.collaborator_skill10 and upcoming.collaborator_skill10 != ""%}	
-				      &nbsp{{ upcoming.collaborator_skill10 }}
-	          {% endif %}
-					</td>
-				</tr>
-			</table>
-
-      <div id="toggleUpcoming" onclick="toggleUpcoming()" class="show-link"> Show More </div>
-
-      <div id="upcoming-more">
-        <div class="collaborator-container">
-    			<table width="750">
-    				<tr>
-    					<td valign="top">
-    					  <div class="tableLabel">
-    					    Start date: 
-    					  </div>
-    					</td>
-    					                    
-    					<td>
-    					  {{upcoming.targetstartdate | date:'Y-m-d'}}
-    					</td>
-
-    					<td valign="top">
-    					  <div class="tableLabel">
-    					    End date: 
-    					  </div>
-    					</td>
-    					                    
-    					<td>
-    					  {{upcoming.targetfinishdate | date:'Y-m-d'}}
-    					</td>
-    				</tr>     
-    			</table>
-
-    			<table width="750">
-    				<tr>
-    					<td valign="top" class="tableTitle">
-    					  <div class="tableLabel">
-    					    Frequency of work: 
-    					  </div>
-    					</td>
-    					                    
-    					<td>
-    						{{upcoming.often}}
-    					</td>
-    				</tr>  
-
-    				<tr>
-    					<td valign="top" class="tableTitle">
-    					  <div class="tableLabel">
-    					    What I will offer: 
-    					  </div>
-    					</td>
-    					                    
-    					<td>
-    						{% if upcoming.give_back == 1 %}
-    				      Paid compensation
-    				    {% endif %}
-
-    				    {% if upcoming.give_back == 2 %}
-    				      Exchange  of skills/services
-    				    {% endif %}
-
-    				    {% if upcoming.give_back == 3 %}
-    				      Negotiable
-    				    {% endif %}
-    					</td>
-    				</tr>     
-
-    				<tr>
-    					<td valign="top" class="tableTitle">
-    					  <div class="tableLabel">
-    					    Comment: 
-    					  </div>
-    					</td>
-    					                    
-    					<td>
-    						{{upcoming.comment}}
-    					</td>
-    				</tr>  
-    			</table>
-        </div>
-
-        <div class="collaborator-container">
-    			<h4 align="center">Funding Status</h4>
-            <table width="750">
-    	        <tr>
-    					  <td valign="top" class="tableTitle">
-    					    <div class="tableLabel">
-    					       Funding I'm seeking: 
-    					    </div>
-    					  </td>
-    					                    
-    					  <td>
-    						 {{upcoming.fund}}
-    					  </td>
-    				                      
-    				  </tr>    
-    				<tr>
-    					<td valign="top" class="tableTitle">
-    					  <div class="tableLabel">
-    					    Comment: 
-    					  </div>
-    					</td>
-    					                    
-    					<td>
-    						{{upcoming.comment_help}}
-    					</td>
-    				</tr>  
-    			</table>
-        </div>
-
-        <div id="toggleOffUpcoming" onclick="toggleUpcoming()" class="show-link"> Show Less </div>
+         </div>
+      </footer>
+      <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+      <div class="scroll-top d-lg-none">
+         <a class="btn btn-primary js-scroll-trigger" href="#page-top">
+         <i class="fa fa-chevron-up"></i>
+         </a>
       </div>
-
-      <hr class="divider"/>
-
-      <div class="actionbutton-container">
-        <div id="upcomingLike" class="popupLike"></div> 
-        <div id="upcomingShare" class="popupLike"></div> 
-        <div class="popupHatsoff" id="hatsoffstatus_upcoming"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)"></div>
-    	    <!--div class="popupThanks" onclick="popThanks()">Thanks</br><span class="popuptextThanks" id="thanksPop">Give a thanks?</br><button onclick="thanksFunction()" class="shareskillButton">Yes</button>&nbsp<button class="shareskillButton">No</button></span></div><div class="popupGave"><span class="popuptextGave" id="gavePop">Gave a Thanks!</span></div-->
-    		<!--div class="popupFollow" onclick="followFunction()">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Following</br></span></div-->
-        <div class="popupCollaborate"><button class="borderlessbutton" onclick="collaborateFunction(2, 1)"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button><br></div>
-
-      </div>
-             
-      <div class="comment-container">
-        <div class="well well-ssm">
-	        <ul id="upcomingComment_{{user.id}}" style="list-style-type:none;">
-	        </ul>
-
-	        <form class="form-horizontal" action="">
-	          <div class="form-group">
-	            <div class="col-md-15">
-	              <textarea class="form-control" id="c_upcoming" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea>
-	            </div>
-	           </div>
-
-	          <div class="form-group">
-	            <div class="col-md-12 text-right">
-	              <button class="btn btn-primary btn-lg" onclick="return submitUpcomingComment()">Post</button>
-	            </div>
-	          </div>
-	        </form>
-        </div>
-      </div>
-
-	    {% else %}
-			<table width="750">
-	      <tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Title: 
-					  </div>
-					</td>
-					<td>
-				  </td>
-				</tr>     
-
-				<tr>
-				  <td width="50"></td>
-				  <td valign="top" class="tableTitle">
-				    <div class="tableLabel">
-				      Description: 
-				    </div>
-				  </td>
-				                    
-				  <td>
-				  </td>
-				</tr>
-
-				<tr>
-				  <td width="50"></td>
-				  <td valign="top" class="tableTitle">
-				    <div class="tableLabel">
-				      Your role: 
-				    </div>
-				  </td>
-				                    
-				  <td>
-				  </td>
-				</tr>
-
-				<tr>
-				  <td width="50"></td>
-				  <td valign="top" class="tableTitle">
-				    <div class="tableLabel">
-				      Status:
-				    </div>
-				  </td>
-				                    
-				  <td>
-					</td>
-				</tr>
-
-				<tr>
-					<td width="50"></td>
-				  <td valign="top" class="tableTitle">
-				    <div class="tableLabel">
-				      Keywords:
-				    </div>
-				  </td>
-				                    
-				  <td>
-					</td>
-			  </tr>
-			</table>
-
-      <h4 class="tableLabel center">Collaborators I'd love!</h4>
-			<table width="750">
-	      <tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Collaborators: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>     
-
-				<tr>
-				  <td width="50"></td>
-				  <td valign="top" class="tableTitle">
-				    <div class="tableLabel">
-				      Skills:
-				    </div>
-				  </td>
-				                    
-				  <td>
-					</td>
-				</tr>
-			</table>
-
-			<table width="750">
-				<tr>
-					<td width="50"></td>
-					<td valign="top">
-					  <div class="tableLabel">
-					   Start date: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-
-					<td valign="top">
-					  <div class="tableLabel">
-					    End date: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>     
-			</table>
-
-			<table width="750">
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Frequency of work: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>  
-
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    What I will offer: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>     
-
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Comment: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>  
-			</table>
-
-			<h4 class="tableLabel center">Funding Status</h4>
-			<table width="750">
-	      <tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Funding I'm seeking: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>    
-
-				<tr>
-					<td width="50"></td>
-					<td valign="top" class="tableTitle">
-					  <div class="tableLabel">
-					    Comment: 
-					  </div>
-					</td>
-					                    
-					<td>
-					</td>
-				</tr>  
-			</table>
-
-	    {% endif %}
-      <div id="upcoming_likeModal" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closePFLikeList(1, 0)">&times;</span><h3>Users who liked</h3><div id="upcoming_like_users"></div></div></div>
-      <div id="upcoming_shareModal" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closePFShareList(1, 0)">&times;</span><h3>Users who shared</h3><div id="upcoming_share_users"></div></div></div>
-	</div>
-
-	<div class="timeline-container">
-	  <h3>Activity</h3>
-	  <ul class="timeline">
-	  </ul>
-	</div>
-
-</div>
-</div>
-
-
-<div id="JustSignedUp1" class="modal">
-
-  <!-- Modal content: New User Orientation Modal Dialogs Added by Hidekazu  -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h1>Add your skills and interests so that the community can find you.</h1>
-    <img src="{% static 'images/LookingFor.png' %}">  
-  </div>
-</div>
-
-<div id="JustSignedUp2" class="modal">
-  <!-- Modal content: New User Orientation Modal Dialogs Added by Hidekazu  -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h1>Showcase up to 10 of your past works in your portfolio.</h1>
-    <img src="{% static 'images/Portfolio.png' %}">  
-  </div>
-</div>
-
-<div id="JustSignedUp3" class="modal">
-  <!-- Modal content: New User Orientation Modal Dialogs Added by Hidekazu  -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h1>Post what you're working on next and the collaborator you are looking for.</h1>
-    <img src="{% static 'images/WhatsNext.png' %}">  
-  </div>
-
-</div>
-	<script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
-  <script type="text/javascript">
-	  //var socket = io.connect("{{nodejs_url}}");
-	  socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-	  socket.emit('at home', {uid:{{user.id}}, uname:"{{user.first_name}}"});
-
-    var users = [{% for u in users %} {{ u }} ,{% endfor %}];
-    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];
-	  socket.on('number hatsoff', function(count){
-      document.getElementById("hatsoffNum").innerHTML = count;
-    });
-
-	  socket.on('number follow', function(count){
-      document.getElementById("followNum").innerHTML = count;
-    });
-
-    function toggleUpcoming()
-    {
-      console.log("toggle");
-
-      var status = document.getElementById("upcoming-more").style.display; 
-
-      if (status == "none" || status == "") {
-        document.getElementById("upcoming-more").style.display = "block";
-        document.getElementById("toggleUpcoming").innerText = "";
-      } else if (status == "block") {
-        document.getElementById("upcoming-more").style.display = "none";
-        document.getElementById("toggleUpcoming").innerText = "Show More";
-      }
-    }
-
-	  function likeFunction(c_type, c_id){
-	    if (c_type == 2){
-			  socket.emit('like upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-				console.log('like upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"/></br></div>';
-	    }else if (c_type == 3){
-				socket.emit('like portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-				console.log('like portfolio');
-        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+c_id+')" /></br></div>';
-	    }
-	  }
-
-    function unlikeFunction(c_type, c_id){
-      console.log('uid on like:'+c_type+':'+c_id);
-      if (c_type == 2){
-        socket.emit('unlike upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        console.log('unlike upcoming');
-        document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)" /></br></div>';
-      }else if (c_type == 3){
-        socket.emit('unlike portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        console.log('unlike portfolio');
-        document.getElementById("portfolioLike_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+c_id+')"></br></div>';
-      }
-    }
-
-    function shareFunction(c_type, c_id){
-      console.log("share function!", c_type, c_id);
-      if (c_type == 2){
-        socket.emit('share upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"> <img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(2, 1)"/></br></div>';
-      }else if (c_type == 3){
-        socket.emit('share portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+c_id+')" /></br></div>';
-      }
-    }
-
-    function unshareFunction(c_type, c_id){
-      if (c_type == 2){
-        socket.emit('unshare upcoming', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        document.getElementById("upcomingShare").innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(2, 1)" /></br></div>';
-      }else if (c_type == 3){
-        socket.emit('unshare portfolio', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id});
-        document.getElementById("portfolioShare_"+c_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+c_id+')"></br></div>';
-      }
-    }
-
-	  function popShared(){
-	    var popHatsoff = document.getElementById("hatsoffPop");
-			if(popHatsoff != null){
-			 	popHatsoff.style.visibility = "hidden";
-			}
-
-			var popFollow = document.getElementById("followPop");
-			if(popFollow != null){
-			 	popFollow.style.visibility = "hidden";
-			}
-
-			var popLike = document.getElementById("likePop");
-			if(popLike != null){
-			 	popLike.style.visibility = "hidden";
-			}
-
-			var popup = document.getElementById('sharedPop');
-			popup.style.visibility = "visible";
-			 //popup.classList.toggle('show');
-	  }
-
-	  function popThanks(){
-			var popup = document.getElementById('thanksPop');
-			popup.classList.toggle('show');
-	  }
-
-	  function thanksFunction(){
-			console.log('thanks!');
-			popGave();
-			socket.emit('give thanks', {to_uid:{{user.id}}, uid:{{user.id}}});
-	  }
-
-	  function popGave(){
-			var popup = document.getElementById('gavePop');
-			popup.classList.toggle('show');
-	  }
-
-    function hatsoffFunction(c_type, c_id){
-      socket.emit('give hatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
-
-      if(c_type == 2){//upcoming
-        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-        if (elemprofile){
-         elemprofile.innerHTML = '<div class="popupLike popupLike-active"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(2, 1)" /></br></div>';    
-        }
-      }else if(c_type == 3){//portflio
-        var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
-        if(elemprofile){
-          elemprofile.innerHTML = '<div class="popupLike popupLike-active"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img" onclick="unhatsoffFunction(3, '+c_id+')" /></br></div>';   
-        }
-      }else if(c_type == 5){
-      }
-    }
-
-    function unhatsoffFunction(c_type, c_id){
-      console.log('unhatsoff!', c_type);
-      socket.emit('give unhatsoff', {to_uid:{{user.id}}, uid:{{user.id}}, content_type:c_type, content_id:c_id});
-
-      if(c_type == 2){
-        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-        if (elemprofile){
-          elemprofile.innerHTML = '<div class="popupLike popupLike-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(2, 1)" /></br></div>';
-        }
-      }else if(c_type == 3){
-        var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c_id);
-        if(elemprofile){
-          elemprofile.innerHTML = '<div class="popupLike popupLike-inactive"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img" onclick="hatsoffFunction(3, '+c_id+')" /></br></div>';
-        }
-      }else if(c_type == 5){
-      }
-    }
-
-	  function popGavehatsoff(){
-	    var popFollow = document.getElementById("followPop");
-			if(popFollow != null){
-			 	popFollow.style.visibility = "hidden";
-			}
-
-			var popShared = document.getElementById("sharedPop");
-			if(popShared != null){
-			 	popShared.style.visibility = "hidden";
-			}
-
-			var popLike = document.getElementById("likePop");
-			if(popLike != null){
-			 	popLike.style.visibility = "hidden";
-			}
-
-			var popup = document.getElementById('hatsoffPop');
-			popup.style.visibility = "visible";
-			 //popup.classList.toggle('show');
-	  }
-
-	  function followFunction(){
-			console.log('follow!');
-			popFollowed();
-		     //socket.emit('follow user', {to_uid:{{user.id}}, uid:{{t_user.id}}});
-	  }
-
-	  function collaborateFunction(c_type, c_id){
-      console.log('uid on like:'+c_type+':'+c_id);
-      popCollaborate();
-      socket.emit('give collaborate', {to_uid:{{user.id}}, uid:{{user.id}}, c_id:c_id, c_type:c_type});
-    }
-
-    function popCollaborate(){
-      var popup = document.getElementById('collaboratePop');
-      popup.classList.toggle('show');
-    }
-
-	  function popFollowed(){
-		  var popHatsoff = document.getElementById("hatsoffPop");
-			if(popHatsoff != null){
-			 	popHatsoff.style.visibility = "hidden";
-			}
-
-			 var popShared = document.getElementById("sharedPop");
-			 if(popShared != null){
-			 	popShared.style.visibility = "hidden";
-			 }
-
-			 var popLike = document.getElementById("likePop");
-			 if(popLike != null){
-			 	popLike.style.visibility = "hidden";
-			 }
-
-			 var popup = document.getElementById('followPop');
-			 popup.style.visibility = "visible";
-	  }
-
-    // For portfolio
-    function submitPForm(number){
-      console.log('form submit portfolio'+number);
-      var post_val = $('#c_portfolio_'+number).val();
-                    
-      if (post_val.length != 0){
-        console.log('if:'+number+':'+post_val);
-		    socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number});
-      }
-		  $('#c_portfolio_'+number).val('');
-		  return false;
-    }
-
-    function submitShowcaseComment(number){
-      console.log('form submit portfolio'+number);
-      var post_val = $('#c_portfolio_'+number).val();
-                    
-      if (post_val.length != 0){
-        console.log('if:'+number+':'+post_val);
-		    socket.emit('portfolio comment', {msg:post_val, to:{{user.id}}, p_id:number, uid:{{user.id}} });
-      }
-		  $('#c_portfolio_'+number).val('');
-		  return false;
-    }
-
- 		function submitUForm(){
-      var com = $('#c_upcoming').val();
-      if (com.length != 0){
-		    socket.emit('upcoming comment', {msg:com, to:{{user.id}}});
-		  } 
-		  $('#c_upcoming').val('');
-		  return false;
-	  }
-
-
-	  function submitUpcomingComment(){
-      console.log('form submit upcoming');
-      var post_val = $('#c_upcoming').val();
-                    
-      if (post_val.length != 0){
-        console.log('if:'+post_val);
-		    socket.emit('upcoming comment', {msg:post_val, to:{{user.id}}, uid:{{user.id}} });
-      }
-		  $('#c_upcoming').val('');
-		  return false;
-    }
-
-    socket.on('hatsoff status at home', function(data){
-      var docs = data.docs;
-      var count = data.count;
-      var len = docs.length;
-      var flag1 = false;
-      var flag2 = false;
-      var flag3 = false;
-      var flag4 = false;
-      var flag5 = false;
-      var p_list = [];
-          
-      for (var i = 0; i < 10; i++){
-        p_list.push(false);
-      }
-             
-      for (var i = 0; i < len; i++){
-        if(docs[i]['content_id'] && docs[i]['content_type']){
-          var c_id = docs[i]['content_id'];
-          var c_type = docs[i]['content_type'];
-          if(c_type == 1){//community post
-
-          }else if(c_type == 2){//upcoming work
-            var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-            if (elemprofile){
-              elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(2, 1)"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img"></div>';
-            }
-            flag2 = true;
-          }else if(c_type == 3){//portfolio
-            var c = parseInt(c_id);
-            if(!isNaN(c)){
-              var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
-              if(elemprofile){
-                elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(3, '+c+')"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img"></div>';
-                p_list[c-1] = true;
-              }
-            }
-            flag3 = true;
-          }else if(c_type == 4){//shared post
-          }else if(c_type == 5){//profile
-            var elemprofile = document.getElementById("hatsoff-profile");
-
-            if (elemprofile){
-              elemprofile.innerHTML = '<div class="popupHatsoff" onclick="unhatsoffFunction(5, 1)"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
-              flag5 = true;
-            }
-          }
-        }   
-      }
-
-      if(flag2 == false){
-        var elemprofile = document.getElementById("hatsoffstatus_upcoming");
-        if(elemprofile){
-          elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(2, 1)"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"></div>';
-        }
-      }
-            //flag3
-      for (var i = 0; i < 10; i++){
-        if (p_list[i] == false){
-          var c = i+1;
-          var elemprofile = document.getElementById("hatsoffstatus_portfolio_"+c);
-          if (elemprofile){
-            elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(\''+3+'\',\''+c+'\')"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"></br></div>';
-          }
-        }
-      }
-
-      if(flag5 == false){
-        var elemprofile = document.getElementById("hatsoff-profile");
-        if(elemprofile){
-          elemprofile.innerHTML = '<div class="popupHatsoff" onclick="hatsoffFunction(5, 1)"><img src="{% static 'images/inactive_grey_hat_32x32.png'%}" class="icons-img"><span id="hatsoffNum">'+count+'</span></div>';
-        }
-      }
-    });
-
-    function submitComment(uid, c_id){
-      var post_val = $('#c_'+c_id).val();
-                    
-      if (post_val.length != 0){
-        socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
-	      var m  = users.indexOf({{user.id}});
-	      var url_link = "{% url 'week1:get_profile' user.id %}";
-	      if (m != -1){
-	        $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
-	      }else{
-	        $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+'{{user.firstname}}'+'&nbsp'+'{{user.last_name}}'+'</a>&nbsp</br><p>'+post_val+'</p>'));
-	      }
-      }
-      $('#c_'+c_id).val('');
-      return false;
-    } 
-
-    socket.on('likes at home', function(data){
-      var upcoming = false;
-      var upcoming_likes = 0;
-      var portfolios = [];
-      var portfolios_likes = {};
-      if (data){
-        for (var i = 0; i < data.length; i++){
-          var doc = data[i];
-          var content_type = doc['content_type'];
-          if (content_type == 2){
-            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
-              document.getElementById("upcomingLike").innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)"></div>';
-              upcoming = true; 
-            }
-            upcoming_likes += 1; 
-          }
-          if (content_type == 3){
-            var p_id = parseInt(doc['content_id']);
-            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
-              document.getElementById("portfolioLike_"+p_id).innerHTML = '<div class="popupLike"><img src="{% static 'images/active_blue_thumb_32x32.png'%}" class="icons-img" onclick="unlikeFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
-              if (portfolios.indexOf(p_id) == -1){
-                portfolios.push(p_id);
-              }
-            }
-            if (p_id in portfolios_likes){
-              portfolios_likes[p_id] += 1;
-            }else{
-              portfolios_likes[p_id] = 1;
-            }
-          }
-        }
-      }
-
-      if(upcoming == false){
-        console.log("upcoming", upcoming);
-        var upcomingElement = document.getElementById("upcomingLike");
-        if (upcomingElement != null){
-          upcomingElement.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(2, 1)"></div><div class="popupLike" id="upcoming_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
-        }
-      }else{
-        document.getElementById("upcoming_likes").innerHTML = upcoming_likes;
-      }
-
-      var p_count = $('[id^=portfolioLike_]').length;
-      console.log("portfolios", portfolios);
-      for (var i = 0; i < p_count; i++){
-        var counter = i+1;
-        if (portfolios.indexOf(counter) == -1){
-          document.getElementById("portfolioLike_"+counter).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_thumb_32x32.png'%}" class="icons-img" onclick="likeFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_likes" onclick="getPFLikeusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
-        }else{
-          document.getElementById("portfolio_"+counter+"_likes").innerHTML = portfolios_likes[counter];
-        }  
-      }
-    });
-
-    socket.on('shares at home', function(data){
-      var upcoming = false;
-      var upcoming_shares = 0;
-      var portfolios = [];
-      var portfolios_shares = {};
-      console.log("share data", data)
-      if (data){
-        for (var i = 0; i < data.length; i++){
-          var doc = data[i];
-          var content_type = doc['content_type'];
-          if (content_type == 2){
-            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
-              document.getElementById("upcomingShare").innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png' %}" class="icons-img" onclick="unshareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)"></div>';
-              upcoming = true; 
-            }
-            upcoming_shares += 1; 
-          }
-          if (content_type == 3){
-            var p_id = parseInt(doc['content_id']);
-            console.log("p_id", p_id);
-            console.log("portfolios", portfolios);
-            if (doc['user'] && doc['user']['uid'] == {{user.id}}){
-              var elem = document.getElementById("portfolioShare_"+p_id);
-              if ( elem != undefined ){
-                elem.innerHTML = '<div class="popupLike" ><img src="{% static 'images/active_blue_share_32x32.png'%}" class="icons-img" onclick="unshareFunction(3, '+p_id+')"></div><div class="popupLike" id="portfolio_'+p_id+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+p_id+'\')"></div>';
-              }
-              if (portfolios.indexOf(p_id) == -1){
-                portfolios.push(p_id);
-              }
-            }
-            if (p_id in portfolios_shares){
-              portfolios_shares[p_id] += 1;
-            }else{
-              portfolios_shares[p_id] = 1;
-            }
-          }
-        }
-      }
-
-      if(upcoming == false){
-        console.log("upcoming", upcoming);
-        var upcomingElement = document.getElementById("upcomingShare");
-        if (upcomingElement != null){
-          upcomingElement.innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(2, 1)"></div><div class="popupLike" id="upcoming_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 1, 0)">0</div>';
-        }
-      }else{
-        document.getElementById("upcoming_shares").innerHTML = upcoming_shares;
-      }
-
-      var p_count = $('[id^=portfolioShare_]').length;
-      console.log("portfolios", portfolios);
-      for (var i = 0; i < p_count; i++){
-        var counter = i+1;
-        console.log("counter", counter);
-        if (portfolios.indexOf(counter) == -1){
-          document.getElementById("portfolioShare_"+counter).innerHTML = '<div class="popupLike"><img src="{% static 'images/inactive_grey_share_32x32.png'%}" class="icons-img" onclick="shareFunction(3, '+counter+')"></div><div class="popupLike" id="portfolio_'+counter+'_shares" onclick="getPFShareusers(\''+{{user.id}}+'\', 0, \''+counter+'\')">0</div>';
-        }else{
-          var elem = document.getElementById("portfolio_"+counter+"_shares");
-          if (elem != undefined){
-            elem.innerHTML = portfolios_shares[counter];
-          }
-        }  
-      }
-    });
-
-  socket.on('list upcoming likeusers', function(data){
-    if (data.uid == {{user.id}}){
-      var modal = document.getElementById('upcoming_likeModal');  
-      console.log("modal", modal);
-      modal.style.display = "block";
-      var content = document.getElementById('upcoming_like_users');  
-      for (var i = 0; i < data.result.length; i++){
-        console.log(data.result[i]);
-        if(data.result[i]['user']){
-          var first = data.result[i]['user']['first_name'];
-          var last = data.result[i]['user']['last_name'];
-          $('#upcoming_like_users').append($('<li>'+first+'&nbsp'+last+'</li>'));
-        }
-      } 
-    }
-  });
-
-  socket.on('list portfolio likeusers', function(data){
-    if (data.uid == {{user.id}}){
-      var p_id = data.p_id
-      var modal = document.getElementById('portfolio_likeModal_'+p_id);  
-      console.log("modal", modal);
-      modal.style.display = "block";
-      var content = document.getElementById('portfolio_like_users_'+p_id);  
-      for (var i = 0; i < data.result.length; i++){
-        console.log(data.result[i]);
-        if(data.result[i]['user']){
-          var first = data.result[i]['user']['first_name'];
-          var last = data.result[i]['user']['last_name'];
-          $('#portfolio_like_users_'+p_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
-        }
-      } 
-    }
-  });
-
-  socket.on('list upcoming shareusers', function(data){
-    if (data.uid == {{user.id}}){
-      var modal = document.getElementById('upcoming_shareModal');  
-      modal.style.display = "block";
-      var content = document.getElementById('upcoming_share_users');  
-      for (var i = 0; i < data.result.length; i++){
-        console.log(data.result[i]);
-        if(data.result[i]['user']){
-          var first = data.result[i]['user']['first_name'];
-          var last = data.result[i]['user']['last_name'];
-          $('#upcoming_share_users').append($('<li>'+first+'&nbsp'+last+'</li>'));
-        }
-      } 
-    }
-  });
-
-  socket.on('list portfolio shareusers', function(data){
-    if (data.uid == {{user.id}}){
-      var p_id = data.p_id
-      var modal = document.getElementById('portfolio_shareModal_'+p_id);  
-      modal.style.display = "block";
-      var content = document.getElementById('portfolio_share_users_'+p_id);  
-      for (var i = 0; i < data.result.length; i++){
-        console.log(data.result[i]);
-        if(data.result[i]['user']){
-          var first = data.result[i]['user']['first_name'];
-          var last = data.result[i]['user']['last_name'];
-          $('#portfolio_share_users_'+p_id).append($('<li>'+first+'&nbsp'+last+'</li>'));
-        }
-      } 
-    }
-  });
-
-  function closePFLikeList(type, p_id){
-    console.log("close like list");
-    if (type == 0){
-      var span = document.getElementById('portfolio_likeClose_'+p_id);
-      var modal = document.getElementById('portfolio_likeModal_'+p_id);  
-    }else if (type == 1){
-      var span = document.getElementById('upcoming_likeClose');
-      var modal = document.getElementById('upcoming_likeModal');  
-    }
-    modal.style.display = "none";
-  }
-
-  function closePFShareList(type, p_id){
-    console.log("close share list");
-    if (type == 0){
-      var span = document.getElementById('portfolio_shareClose_'+p_id);
-      var modal = document.getElementById('portfolio_shareModal_'+p_id);  
-    }else if (type == 1){
-      var span = document.getElementById('upcoming_shareClose');
-      var modal = document.getElementById('upcoming_shareModal');  
-    }
-    modal.style.display = "none";
-  }
-
-	  socket.on('new portfolio comment', function(data){
-      console.log('new portfolio comment on home');
-		  var uid = data.from_uid;
-      var p_id = data.p_id;
-		  var n  = users.indexOf(uid);
-		  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-
-		  if ( n != -1) {
-		    if (uid == {{user.id}}){
-		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    } else{
-		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    }
-		  }else{
-		    if (uid == {{user.id}}){
-		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    } else {
-		      $('#portfolioComment_'+{{user.id}}+'_'+p_id).append($('<li><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    }
-		  }
-	  });
-
-	  socket.on('update portfolio comment', function(docs){
-	    for(var i = 0; i < docs.length; i++){
-        if (docs[i]['p_id']) {
-          var p_id = docs[i]['p_id'];
-          var c_id = docs[i]['_id'];
-          if (docs[i]['user'] && docs[i]['user']['uid']){
-					  var uid = docs[i]['user']['uid'];
-						var n  = users.indexOf(uid);
-						var data = docs[i];
-            var r_id = i;
-						var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-            var did = "myDelEditDropdown_pf_pf_"+p_id+'_'+r_id;
-
-            var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+p_id+'\', 0, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(0, \''+c_id+'\')">Edit</a></div></div>' : '';
-            var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_pf_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_pf_'+c_id+'" onclick="closePFEdit(\'pf_pf_'+c_id+'\')">&times;</span><div id="edit_pf_pf_'+c_id+'"><textarea id="post_text_pf_pf_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+p_id+'\', 0)" align="right">Edit</button></div></div>' : '';
-
-						if ( n != -1) {
-              $('#portfolioComment_'+{{user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
-						}else{
-						  $('#portfolioComment_'+{{user.id}}+'_'+p_id).prepend($('<li class="pf_portfolio_'+c_id+'"><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']*deleteOrEdit_cmt+'</br><p id="media-content_pf_pf_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<hr class="divider"/>'));
-						}
-					}
-        } else{
-          console.log('Else!');
-        }
-	    }
-	  });
-
-	  socket.on('new upcoming comment', function(data){
-		  var uid = data.from_uid;
-		  var n  = users.indexOf(uid);
-		  var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-		  if ( n != -1) {
-		    if (uid == {{user.id}}){
-		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    } else{
-		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{{media_url}}'+photos[n]+'" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    }
-		  }else{
-		    if (uid == {{user.id}}){
-		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'</br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    } else {
-		      $('#upcomingComment_'+{{user.id}}).append($('<li><br><img src="{% static 'images/profileimage.png' %}" class="profile_img">'+data.from_firstname+'&nbsp'+data.from_lastname+'&nbsp <a href="'+url_mask+'">folder</a></br><p>'+data.msg+'</p><br/><hr class="divider"/>'));
-		    }
-		  }
-	  });
-
-	  socket.on('update upcoming comment', function(docs){
-		  for(var i=0; i < docs.length; i++){
-        var r_id = i;
-        var data = docs[i];
-        var c_id = docs[i]['_id'];
-		    if (data['user'] && data['user']['uid']){
-			    var uid = docs[i]['user']['uid'];
-			    var n  = users.indexOf(uid);
-			    //var url_mask = "{% url 'week1:add_folder' user.id %}".replace({{user.id}}, uid);
-			    var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-          var did = "myDelEditDropdown_pf_"+{{user.id}}+'_'+r_id;
-          var deleteOrEdit_cmt = (uid == {{user.id}}) ? '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditPFFunction(\''+did+'\')" class="dropDelEditIcon"><div id="'+did+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePFComment(\''+{{user.id}}+'\', \''+r_id+'\', 1, \''+c_id+'\')">Delete</a><a href="#" onclick="return editPFComment(1, \''+c_id+'\')">Edit</a></div></div>' : '';
-          var edit_cmt = (uid == {{user.id}}) ? '<div id="editModal_pf_up_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_pf_up_'+c_id+'" onclick="closePFEdit(\'pf_up_'+c_id+'\')">&times;</span><div id="edit_pf_up_'+c_id+'"><textarea id="post_text_pf_up_'+c_id+'" rows="20" cols="40" name="message">'+data['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitcommentPFEdit(\''+c_id+'\', \''+r_id+'\', 1)" align="right">Edit</button></div></div>' : '';
-
-
-			    if ( n != -1) {
-			      $('#upcomingComment_'+{{user.id}}).prepend($('<li class="pf_upcoming_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p id="media-content_pf_up_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<br/><hr class="divider"/>'));
-			    } else{
-			      $('#upcomingComment_'+{{user.id}}).prepend($('<li class="pf_upcoming_'+r_id+'"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png' %}" class="profile_img"></a>'+data['user']['first_name']+'&nbsp'+data['user']['last_name']+deleteOrEdit_cmt+'</br><p d="media-content_pf_up_'+c_id+'">'+data['content']+'</p>'+edit_cmt+'<br/><hr class="divider"/>'));
-			    }
-		    }
-      }
-	  });
-
-    function submitCForm(){
-      if ($('#comment').val().length != 0){
-        socket.emit('post comment', {msg:$('#comment').val(), to:{{user.id}}, from:{{user.id}}});
-      }
-      $('#comment').val('');            
-      return false;
-    }
-
-	  socket.on('update comment', function(docs){
-	    for(var i = 0; i < docs.length; i++){
-			  if (docs[i]['from_user']['uid']){
-				  var uid = docs[i]['from_user']['uid'];
-				  var n  = users.indexOf(uid);
-				  var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-				  if ( n != -1) {
-				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-				  }else{
-				    $('#commentHistory').append($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+docs[i]['from_user']['first_name']+'&nbsp'+docs[i]['from_user']['last_name']+':'+docs[i]['content']+'</span><br/>'));
-				  }
-		    }
-	    }
-	  });
-
-	  socket.on('new comment', function(data){
-	    var uid = data.from_uid;
-	    var n  = users.indexOf(uid);
-			var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-	    if ( n != -1) {
-	      $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[n]+'" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
-	    }else{
-	      $('#commentHistory').prepend($('<li><span class="error"><br><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img"></a>'+data.from_firstname+'&nbsp'+data.from_lastname+':'+data.msg+'</span><br/>'));
-	    }
-	  });
-
-	  socket.on('update timeline history', function(data){
-      var sharedocs = data.share;
-      var communitydocs = data.community;
-      var len_share = sharedocs.length;
-      var len_community = communitydocs.length;
-      var i_share = 0;
-      var i_community = 0;
-			var hatsoff = '<div class="popupHatsoff" onclick="hatsoffFunction()"><img src="{% static 'images/active_yellow_hat_32x32.png'%}" class="icons-img"></br><span class="popuptextHatsoff" id="hatsoffPop">Tip off your hat</br></span></div>';
-		  var thanks = '';
-			var follow = '<div class="popupFollow" onclick="followFunction()">Follow &nbsp</div>';
-
-      while (i_share < len_share || i_community < len_community){
-        if (i_share < len_share && i_community < len_community){
-          var t_share = sharedocs[i_share]["created"];
-          var t_community = communitydocs[i_community]["created"];
-
-          if (t_share > t_community){
- 						var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
-						var uid = sharedocs[i_share]['to_uid'];
-			      var content = sharedocs[i_share]['content'];
-			      var c_id = sharedocs[i_share]['_id'];
-			      var created = sharedocs[i_share]['created'];
-			      var colonIndex = created.indexOf(":");
-            var date = created.substring(0, colonIndex-3);
-            var datels = date.split('-');
-            var mm = months[parseInt(datels[1])-1];
-            var dd = datels[2];
-            var yy = datels[0];
-						var n  = users.indexOf(uid);
-            var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-            var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-
-            var tag = (content['tag']) ? content['tag'] : 0;
-						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-            var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-            var skillls = "";
-						if (content['skillls']){
-	            if(content['skillls'].length != 0){
-	              var ls = content['skillls'];
-	              skillls += "<div> Tags: ";
-	              for (var j = 0; j < ls.length; j++){
-	                var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	                skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	              } 
-	              skillls += "</div><br>";
-	            }
-            }
-			                          
-						$('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-						//<div class="timeline-body"><br>'+content['user']['first_name']+content['user']['last_name']+'</br><hr class="divider"/>'+content['content']+'</div></div>'+share+like+hatsoff+thanks+follow+'</div></li>'));
-						if (content['replys']) {
-	            var rdocs = content['replys'];
-	            for(var j=0; j < rdocs.length; j++){
-	              if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
-	                var ruid = rdocs[j]['user']['uid']
-	                var m  = users.indexOf(ruid);
-	                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	                if ( m != -1) {
-	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                }else{
-	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                }
-	              }
-	            }
-            }
-            i_share += 1;
-          }else{
-            var uid = {{user.id}};
-			      var content = communitydocs[i_community];
- 						var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-						var like = '<div class="popupLike"><button class="like-btn" onclick="likeFunction(1, 1)"/></div>';
-						var c_id = content['_id'];
-						var n  = users.indexOf(uid);
-            var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-            var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-
-            var created = communitydocs[i_community]['created'];
-			      var colonIndex = created.indexOf(":");
-            var date = created.substring(0, colonIndex-3);
-            var datels = date.split('-');
-            var mm = months[parseInt(datels[1])-1];
-            var dd = datels[2];
-            var yy = datels[0];
-            var tag = (content['tag']) ? content['tag'] : 0;
-						var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-            var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-            var skillls = "";
-						if (content['skillls']){
-	            if(content['skillls'].length != 0){
-	              var ls = content['skillls'];
-	              skillls += "<div> Tags: ";
-	              for (var j = 0; j < ls.length; j++){
-	                var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	                skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	              } 
-	              skillls += "</div><br>";
-	            }
-            }
-
-						$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-
-						if (content['replys']) {
-	            var rdocs = content['replys'];
-	            for(var j=0; j < rdocs.length; j++){
-	              if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
-	                var ruid = rdocs[j]['user']['uid']
-	                var m  = users.indexOf(ruid);
-	                var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	                if ( m != -1) {
-	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                }else{
-	                  $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	                }
-	              }
-	            }
-            }
-            i_community += 1;
-          }
-
-        }else if(i_share < len_share){
- 					var share = '<div class="popupShare" onclick="shareFunction(4, 1)"> Share &nbsp </div>';
-					var like = '<div class="popupLike"><button class="like-btn" onclick="likeFunction(4, 1)"/></div>';
-					var uid = sharedocs[i_share]['to_uid'];
-			    var content = sharedocs[i_share]['content'];
-			    var c_id = sharedocs[i_share]['_id'];
-					var n  = users.indexOf(uid);
-          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-          var created = sharedocs[i_share]['created'];
-			    var colonIndex = created.indexOf(":");
-          var date = created.substring(0, colonIndex-3);
-          var datels = date.split('-');
-          var mm = months[parseInt(datels[1])-1];
-          var dd = datels[2];
-          var yy = datels[0];
-          var tag = (content['tag']) ? content['tag'] : 0;
-					var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-          var skillls = "";
-					if (content['skillls']){
-	          if(content['skillls'].length != 0){
-	            var ls = content['skillls'];
-	            skillls += "<div> Tags: ";
-	            for (var j = 0; j < ls.length; j++){
-	              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	            } 
-	            skillls += "</div><br>";
-	          }
-          }
-			                          
-					$('.timeline').append($('<li><div class="timeline-badge info"><i class="glyphicon glyphicon-credit-card"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You shared</h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-
-					if (content['replys']) {
-	          var rdocs = content['replys'];
-	          for(var j=0; j < rdocs.length; j++){
-	            if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
-	              var ruid = rdocs[j]['user']['uid']
-	              var m  = users.indexOf(ruid);
-	              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	              if ( m != -1) {
-	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	              }else{
-	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	              }
-	            }
-	          }
-          }
-          i_share += 1;
-        }else if(i_community < len_community){
-					var uid = {{user.id}};
-			    var content = communitydocs[i_community];
- 					var share = '<div class="popupShare" onclick="shareFunction(1, 1)"> Share &nbsp </div>';
-					var like = '<div class="popupLike"><a class="like-btn activelike-btn" onclick="likeFunction(1, 1)"/></div>';
-					var c_id = content['_id'];
-					var n  = users.indexOf(uid);
-          var collaborate = '<div class="popupCollaborate" onclick="collaborateFunction(\''+uid+'\',\''+c_id+'\')"><button class="borderlessbutton"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" class="icons-img"></button></div><hr class="divider"/>';
-          var comment = '<div class="well well-ssm"><ul id="commentHistory_'+c_id+'" style="list-style-type:none;"></ul><form class="form-horizontal" action=""><div class="form-group"><div class="col-md-15"><textarea class="form-control" id="c_'+c_id+'" autocomplete="off" name="message" placeholder="Enter comment..." rows="3" style="width:520px;"></textarea></div></div><div class="form-group"><div class="col-md-12 text-right"><button class="btn btn-primary btn-lg" onclick="submitComment(\''+uid+'\',\''+c_id+'\')">Post</button></div></div></form></div>';
-          var created = communitydocs[i_community]['created'];
-			    var colonIndex = created.indexOf(":");
-          var date = created.substring(0, colonIndex-3);
-          var datels = date.split('-');
-          var mm = months[parseInt(datels[1])-1];
-          var dd = datels[2];
-          var yy = datels[0];
-          var tag = (content['tag']) ? content['tag'] : 0;
-					var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
-          var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-          var skillls = "";
-					if (content['skillls']){
-	          if(content['skillls'].length != 0){
-	            var ls = content['skillls'];
-	            skillls += "<div> Tags: ";
-	            for (var j = 0; j < ls.length; j++){
-	              var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, ls[j]);
-	              skillls += "<a href='"+skill_link+"'>"+ls[j]+"</a>" + "&nbsp";
-	            } 
-	            skillls += "</div><br>";
-	          }
-          }
-
-					$('.timeline').append($('<li><div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-title">You posted to community </h4><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i></small></p><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+content['user']['first_name']+'&nbsp'+content['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">'+dd+'</li><li class="mm">'+mm+'</li><li class="aaaa">'+yy+'</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+content['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li></div></li>'));
-
-					if (content['replys']) {
-	          var rdocs = content['replys'];
-	          for(var j=0; j < rdocs.length; j++){
-	            if (rdocs[j]['user'] && rdocs[j]['user']['uid']){
-	              var ruid = rdocs[j]['user']['uid']
-	              var m  = users.indexOf(ruid);
-	              var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, ruid);
-	              if ( m != -1) {
-	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{{media_url}}'+photos[m]+'" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	              }else{
-	                $('#commentHistory_'+c_id).append($('<hr class="solid-divider"/><li><a href="'+url_link+'" class="link-userpage"><img src="{% static 'images/profileimage.png'%}" class="profile_img">'+rdocs[j]['user']['first_name']+'&nbsp'+rdocs[j]['user']['last_name']+'</a>&nbsp</br><p>'+rdocs[j]['content']+'</p>'));
-	             	}
-	            }
-	          }
-          }
-          i_community += 1;
-        }
-      }
-	  });
-
-	  $('.timeline-panel').click(function() {
-	    $('.timeline-body', this).toggle(); // p00f
-	  });
-	</script>
-</div>
-{% endblock %}
-
+      <!-- Bootstrap core JavaScript -->
+      <script src="https://code.jquery.com/jquery.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+      <!-- Tokenfield field autocomplete -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>               
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+      <!-- Contact Form JavaScript -->
+      <!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
+      <!-- Custom scripts for this template -->
+      <script>
+         (function($) {
+             "use strict"; // Start of use strict
+         
+             // Smooth scrolling using jQuery easing
+             $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+                 if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                     var target = $(this.hash);
+                     target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                     if (target.length) {
+                         $('html, body').animate({
+                             scrollTop: (target.offset().top - 48)
+                         }, 1000, "easeInOutExpo");
+                         return false;
+                     }
+                 }
+             });
+         
+             // Closes responsive menu when a scroll trigger link is clicked
+             $('.js-scroll-trigger').click(function() {
+                 $('.navbar-collapse').collapse('hide');
+             });
+         
+             // Activate scrollspy to add active class to navbar items on scroll
+             $('body').scrollspy({
+                 target: '#mainNav',
+                 offset: 54
+             });
+         
+             // Collapse the navbar when page is scrolled
+             $(window).scroll(function() {
+                 if ($("#mainNav").offset().top > 100) {
+                     $("#mainNav").addClass("navbar-shrink");
+                 } else {
+                     $("#mainNav").removeClass("navbar-shrink");
+                 }
+             });
+         
+             // Floating label headings for the contact form
+             $(function() {
+                 $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+                     $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+                 }).on("focus", ".floating-label-form-group", function() {
+                     $(this).addClass("floating-label-form-group-with-focus");
+                 }).on("blur", ".floating-label-form-group", function() {
+                     $(this).removeClass("floating-label-form-group-with-focus");
+                 });
+             });
+         
+           /* progress bar */
+           
+           var delay = 500;
+         $(".progress-striped-outer").each(function(i){
+         $(this).find(".progress-bar").delay( delay*i ).animate( { width: $(this).find(".progress-bar").attr('aria-valuenow') + '%' }, delay );
+         $(this).find(".progress-bar").prop('Counter',0).animate({
+         Counter: $(this).find(".progress-bar").text()
+         },{
+         duration: delay,
+         easing: 'swing',
+         step: function (now) {
+         $(this).parent().parent().find(".progPercentageNumb").text(Math.ceil(now)+'%');
+         }
+         });
+         });
+           
+         /* profile page carousels*/
+         
+			$("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();			
+		 
+           /* tokenfield */
+           
+           
+            $('#tokenfield').tokenfield({
+         autocomplete: {
+         source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+         delay: 100
+         },
+         showAutocompleteOnFocus: true
+         });
+         
+         $("form").submit(function(e) {
+         e.preventDefault();
+         $('.form-dataTokenfield').text( $('#tokenfield').val());
+         });
+           
+           
+         })(jQuery); // End of use strict
+                                     
+                                     
+      </script>
+   </body>
+</html>

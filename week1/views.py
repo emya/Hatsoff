@@ -1084,7 +1084,6 @@ def follow_list(request):
     variables = RequestContext(request, {'profile':profile, 'user':currentuser, 'users':users, 'userphoto':userphoto, 'media_url':media_url, 'nodejs_url':nodejs_url})
     return render_to_response('week1/follow_list.html', variables, )
 
-
 """
 @login_required
 def hatsoff_list(request):

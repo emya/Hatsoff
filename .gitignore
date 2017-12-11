@@ -8,3 +8,6 @@ week1/migrations/*
 *.pyc
 week1/*.pyc
 hatsoff/*.pyc
+hatsoff/week1/*.pyc
+week1/static
+

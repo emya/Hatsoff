@@ -7,7 +7,6 @@ import os
 def content_file_name(instance, filename):
     # ext = filename.split('.')[-1]
     filename = "%s.png" % (instance.user.uid)
-    print("filename", filename)
     return os.path.join('userphoto', filename)
 
 class User(AbstractUser):

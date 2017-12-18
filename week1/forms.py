@@ -240,12 +240,13 @@ class ForgotPasswordForm(PasswordResetForm):
 class PersonalInfo(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('worksAt', 'city', 'education', 'language')
+        fields = ('worksAt', 'city', 'education', 'language', 'photo')
         labels = {
             'worksAt': _('Independent/Company name'),
             'city': _('City'),
             'education': _('Education (School and degree)'),
             'language': _('Language'),
+            'photo': _('Add profile photo'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

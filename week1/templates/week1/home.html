@@ -44,7 +44,7 @@
                   </form>
               <ul class="navbar-nav mx-auto nav-flex-icons">
                   <li class="nav-item">
-                      <a class="nav-link" href="{% url 'week1:community_members' %}">
+                      <a class="nav-link" href="{% url 'week1:community' %}">
                           <i class="fa fa-users"></i>
                       </a>
                   </li>
@@ -188,7 +188,7 @@
 									
                                        <div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
                                           <div class="thumbnail">
-                                             <img class="media-object" src="http://gdurl.com/l4r0">
+                                             <img class="media-object" src="{{media_url}}userphoto/{{user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                           </div>
                                           <button class="btn btn-sm btn-outline" type="button" onclick="location.href='{% url 'week1:edit_personalinfo' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit profile</span></button>
                                        </div>

@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 import uuid
+import os
+
+def content_file_name(instance, filename):
+    # ext = filename.split('.')[-1]
+    filename = "%s.png" % (instance.user.uid)
+    print("filename", filename)
+    return os.path.join('userphoto', filename)
 
 class User(AbstractUser):
     uid = models.CharField(max_length=100, blank=True, unique=True) 
@@ -10,7 +17,7 @@ class User(AbstractUser):
 # Create your models here.
 class Profile(models.Model):
     user = models.ForeignKey(User)
-    photo = models.ImageField(upload_to='photoimg/', default='photoimg/profileimage.png', blank=True)
+    photo = models.ImageField(upload_to=content_file_name, blank=True)
     displayname = models.CharField(max_length=100, default='', blank=True)
     #profession = models.CharField(max_length=200, default='', blank=False)
     profession1 = models.CharField(max_length=200, default='', blank=True)

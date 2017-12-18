@@ -147,21 +147,12 @@ def home(request):
 
     allusers = list(User.objects.all())
     users = []
-    userphoto = []
     for u in allusers:
-        try:
-            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-        except Profile.DoesNotExist:
-            prof = None
-
-        if prof != None:
-            users.append(u.id)
-            userphoto.append(unicode(prof))
+        users.append(u.id)
 
 
     folderusers = Profile.objects.filter(user__in=userlist)
     profile = Profile.objects.get(user=currentuser)
-    print "profile", profile
     request.COOKIES['profile_photo'] = profile.photo
     
     try:
@@ -175,7 +166,7 @@ def home(request):
         upcomingwork = None
 
 
-    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'users':users, 'userphoto':userphoto, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
+    return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'users':users, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
 
 @login_required
 def project_management(request):
@@ -392,7 +383,7 @@ def home_edit_personalinfo(request):
     currentuser = User.objects.get(uid=request.user)
     instance = get_object_or_404(Profile, user=currentuser)
     if request.method == "POST":
-        form = PersonalInfo(request.POST, instance=instance, label_suffix="")
+        form = PersonalInfo(request.POST, request.FILES, instance=instance, label_suffix="")
 
         if form.is_valid():
             form.save()
@@ -1237,16 +1228,9 @@ def community(request):
 
     users = []
     usernames = []
-    userphoto = []
     for u in allusers:
-        try:
-            prof = Profile.objects.values_list('photo', flat=True).get(user=u)
-        except Profile.DoesNotExist:
-            prof = "None"
-
         usernames.append([u.first_name, u.last_name])
         users.append(u.uid)
-        userphoto.append(unicode(prof))
 
     """
     uid = request.user.id
@@ -1260,9 +1244,8 @@ def community(request):
     """
 
     currentuser = User.objects.get(uid=request.user)
-    profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile, 'username':usernames, 'userphoto':userphoto, 'users':users})
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'username':usernames, 'users':users})
     return render_to_response('week1/community.html', variables, )
 
 @login_required

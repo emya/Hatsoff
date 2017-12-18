@@ -1,6 +1,7 @@
 {% extends 'week1/basehome.html'%}
 
 {% block content %}
+{% load staticfiles %}
 
 <div id="step">
      <div id="step-left">
@@ -14,6 +15,11 @@
       <br>{{form.worksAt.label_tag}}</br> {{form.worksAt}}<br/>
       <br>{{form.education.label_tag}}</br> {{form.education}}<br/>
       <br>{{form.language.label_tag}}</br> {{form.language}}<br/>
+      <br>{{form.photo.label_tag}}</br>
+        <input id="id_photo" type="file" name="photo"><br/>
+        <div class="image-container">
+            <img id="blah" src="#" alt="your image" class="maincontent" />
+        </div>
  
       <div class="submit-wrapper">
     		<input type="submit" value="Update" class="step-submit" />
@@ -24,4 +30,32 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+window.onload = function (){
+  {% if form.instance.photo %}
+      console.log("photo exist");
+      $('#blah').attr('src', "{{form.instance.photo.url}}");
+  {% else %}
+      $('#blah').attr('src', "{% static 'images/profileimage.png' %}");
+  {% endif %}
+};
+
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#id_photo").change(function(){
+    readURL(this);
+});
+</script>
 {% endblock %}

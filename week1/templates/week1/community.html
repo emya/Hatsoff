@@ -845,7 +845,7 @@ input[type="file"] {
             </form>
             <ul class="navbar-nav mx-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'week1:community_members' %}">
+                    <a class="nav-link" href="{% url 'week1:community' %}">
                         <i class="fa fa-users"></i>
                     </a>
                 </li>
@@ -937,7 +937,7 @@ input[type="file"] {
                                     <div class="well well-sm personEntity">
                                         <div class="media">
                                             <a class="thumbnail pull-left" href="#">
-                                                <img class="media-object" src="http://www.fillmurray.com/67/67">
+                                                <img class="media-object" src="{{media_url}}userphoto/{{user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                             </a>
                                             <div class="media-body">
                                                 <div class="form-group">
@@ -1232,7 +1232,6 @@ input[type="file"] {
 
     var users = [{% for u in users %} "{{ u }}" ,{% endfor %}];
     var names = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
-    var photos = [{% for p in userphoto %}"{{ p }}", {% endfor %}];1
 
     function myDropDownPostFunction() {
         document.getElementById("myPostDropdown").classList.toggle("show");
@@ -1471,7 +1470,7 @@ input[type="file"] {
                     var body = replys[i]['content'];
                     var replyBodies = `<div class="communityReply" class="community_comment_${r_id}">
                                            <a class="thumbnail pull-left" href="#">
-                                                <img class="media-object" src=" http://placebeard.it/57x57">
+                                                <img class="media-object" src="http://placebeard.it/57x57">
                                            </a>
                                            <p class="replyUsername"><a href="${url_link}"><strong>${first_name} ${last_name}</strong></a>${deleteOrEdit_cmt}</p>
                                            <p>  <strong> ${body}
@@ -1497,7 +1496,7 @@ input[type="file"] {
                   <div class="well well-sm personEntity" id="media_${cid}"">
                       <div class="media">
                           <a class="thumbnail pull-left" href="#">
-                              <img class="media-object" src=" http://placebeard.it/67x67">
+                              <img class="media-object" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                           </a>
                           <div class="media-body">
                               ${body}
@@ -1572,7 +1571,6 @@ input[type="file"] {
     });
 
     socket.on('new community post', function(data){
-    	console.log("data", data);
         var uid = data.uid;
         var c_id = data.community_id;
         var today = new Date();

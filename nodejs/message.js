@@ -278,9 +278,7 @@ io.on('connection', function(socket){
 
   socket.on('at community members', function(data){
     CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-      if(!result){
-        console.log("no results");
-      }else{
+      if(result){
         var friends = result.friends;
         var tuplestr = "(";
         for (var i = 0; i < friends.length; i++){
@@ -455,9 +453,7 @@ io.on('connection', function(socket){
     });
 
     CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-      if(!result){
-        console.log("no results");
-      }else{
+      if(result){
         var friends = result.friends;
         var len = friends.length;
         socket.emit('community members number', len);

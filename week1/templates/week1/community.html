@@ -818,6 +818,46 @@ input[type="file"] {
     cursor: pointer;
 }
 
+/*
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+*/
+
+.modal_community {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    /* width: 80%; */
+    min-height: 100px;
+}
+
+
 </style>
 </head>
 <body id="page-top">
@@ -943,7 +983,19 @@ input[type="file"] {
                                                 <div class="form-group">
                                                     <textarea class="form-control" id="p" placeholder="Enter your message"></textarea>
                                                     <!-- button class="btn btn-lg btn-outline pull-right" type="button">Post</button-->
-                                                    <button onclick="return publicPost()" class="btn btn-lg btn-outline pull-right">Post</button>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-lg btn-outline pull-right" type="button" id="about-us" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Post</button>
+
+	                                                    <div class="dropdown-menu" aria-labelledby="about-us">
+	                                                        <a href="#" class="dropdown-item" onclick="return publicPost()">Share with the public </a>
+                            
+                                                            <a href="#" class="dropdown-item" onclick="return privatePost()">Share with your community </a>
+	                                                        <!--a class="dropdown-item" href="#">Share with public</a>
+	                                                        <a class="dropdown-item" href="#">Share with community</a-->
+	                                                    </div>
+	                                                </div>
+
+                                                    <!--button onclick="return publicPost()" class="btn btn-lg btn-outline pull-right">Post</button-->
                                                     
                                                     <label>Skill tag (up to 5)</label><ul id="myTags">
                                                     </ul>
@@ -1307,6 +1359,35 @@ input[type="file"] {
         return false;
     }
 
+    function editPost(c_id){
+        var modal = document.getElementById('editModal_'+c_id);  
+        modal.style.display = "block";
+    }
+
+    function deletePost(c_id){
+        socket.emit('delete community post', c_id);
+        document.getElementById("media_"+c_id).innerHTML = '';
+    }
+
+    function submitEdit(c_id){
+        var post_val = $('#post_text_'+c_id).val();
+                    
+        if (post_val.length != 0){
+            console.log('if:'+post_val);
+            socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:"{{user.uid}}" });
+            document.getElementById("media-content_"+c_id).innerHTML = '<strong>' + post_val + '</strong>';
+            closeEdit(c_id);
+        }
+        $('#status_message').val('');
+        return false;
+    }
+
+    function closeEdit(c_id){
+        var span = document.getElementById('editClose_'+c_id);
+        var modal = document.getElementById('editModal_'+c_id);  
+        modal.style.display = "none";
+    }
+
     function createNormalBody(uid, cid, data, yy, mm, dd, content_id = null){
         if ( content_id == null ){
             content_id = cid;
@@ -1325,7 +1406,7 @@ input[type="file"] {
         var body = `<h3 class="media-heading">${first_name} ${last_name} 
                     </h3>
                     <h6> ${dd} ${mm} ${yy} </h6>
-                    <p>
+                    <p id="media-content_${cid}">
                         <strong>
                             ${content}
                         </strong>
@@ -1448,6 +1529,33 @@ input[type="file"] {
         return actionList;
     }
 
+    function createEditDelete(uid, cid, msg){
+    	var user_id = "{{user.uid}}";
+    	if ( uid != user_id ){
+    	    return '';	
+    	}
+        var editDelete  = `
+                              <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle icon2 pull-right" type="button" id="editPosht003" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fa fa-pencil"></i>
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="about-us">
+                                      <a class="dropdown-item" onclick="return editPost(\'${cid}\')">Edit post</a>
+                                      <a class="dropdown-item" onclick="return deletePost(\'${cid}\')">Delete post</a>
+                                  </div>
+                              </div>
+                              <div id="editModal_${cid}" class="modal_community">
+                                  <div class="modal-content">
+                                      <span class="close" id="editClose_${cid}" onclick="closeEdit(\'${cid}\')">&times;</span>
+                                      <div id="edit_post_${cid}">
+                                          <textarea id="post_text_${cid}" rows="20" cols="40" name="message"> ${msg} </textarea>
+                                      </div>
+                                      <button class="btn btn-primary" onclick="return submitEdit(\'${cid}\')" align="right">Edit</button>
+                                  </div>
+                              </div>
+                           `;
+        return editDelete;
+    }
 
     function createReplyList(uid, cid, replys){
         if (replys){
@@ -1488,7 +1596,7 @@ input[type="file"] {
         }
     }
 
-    function create_thread(uid, cid, body, actionList, replyList, privateText = ''){
+    function create_thread(uid, cid, body, actionList, replyList, editDelete, privateText = ''){
         var thread = `
            <div class="panel panel-white clearfix">
               ${privateText}
@@ -1499,6 +1607,7 @@ input[type="file"] {
                               <img class="media-object" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                           </a>
                           <div class="media-body">
+                              ${editDelete} 
                               ${body}
                           </div>
                       </div>
@@ -1548,14 +1657,8 @@ input[type="file"] {
         return thread;
     }
 
-    function delete_edit_dropdown(ruid, uid){
-
-    }
-
-    function delete_edit(){
-    }
-
     socket.on('new private post', function(data){
+    	console.log("new post", data);
         var uid = data.uid;
         var c_id = data.community_id;
         var today = new Date();
@@ -1564,8 +1667,9 @@ input[type="file"] {
         var dd = today.getDate();
         var actionList = createActionList(uid, c_id, 0, 0, false, false, false);
         var replyList = createReplyList(uid, c_id, null)
-        var body = createNormalBody(uid, c_id, data, yy, mm, dd)
-        var thread = create_thread(uid, c_id, body, actionList, replyList, 'Private post')
+        var body = createNewPostBody(uid, c_id, data, yy, mm, dd)
+        var editDelete = createEditDelete(uid, c_id, data.msg)
+        var thread = create_thread(uid, c_id, body, actionList, replyList, editDelete, 'Private post')
 
         $('#communityThread').prepend($(thread));
     });
@@ -1574,14 +1678,14 @@ input[type="file"] {
         var uid = data.uid;
         var c_id = data.community_id;
         var today = new Date();
-        console.log("today", today);
         var yy = today.getFullYear();
         var mm = months[today.getMonth()];
         var dd = today.getDate();
         var actionList = createActionList(uid, c_id, 0, 0, false, false, false);
         var replyList = createReplyList(uid, c_id, null)
         var body = createNewPostBody(uid, c_id, data, yy, mm, dd)
-        var thread = create_thread(uid, c_id, body, actionList, replyList)
+        var editDelete = createEditDelete(uid, c_id, data.msg)
+        var thread = create_thread(uid, c_id, body, actionList, replyList, editDelete)
 
         $('#communityThread').prepend($(thread));
     });
@@ -1589,7 +1693,6 @@ input[type="file"] {
     socket.on('new community comment', function(data){
         var uid = data.uid;
         var c_id = data.community_id;
-        console.log('new community comment c_id:'+c_id);
         var n  = users.indexOf(uid);
         var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
         var first_name = data.first_name;
@@ -1607,7 +1710,6 @@ input[type="file"] {
     });
 
     socket.on('update community post', function(data){
-    	console.log("users", users);
         var docs = (typeof data["docs"] == "string") ? JSON.parse(data["docs"]) : data["docs"];
         var sharedocs = (typeof data["sharedocs"] == "string") ? JSON.parse(data["sharedocs"]) : data["sharedocs"];
         var likedocs = (typeof data["likedocs"] == "string") ? JSON.parse(data["likedocs"]) : data["likedocs"];
@@ -1816,18 +1918,12 @@ input[type="file"] {
                         var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
                         var replyList = createReplyList(uid, c_id, docs[i]['replys'])
                         var body = createNormalBody(uid, c_id, docs[j], yy, mm, dd, content_id)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
+                        var thread = create_thread(uid, c_id, body, actionList, replyList, '', privateText)
 
                         $('#communityThread').append($(thread));
                         continue;
                     }
                       
-                    if (uid == {{user.id}}){
-                        deleteOrEdit = '<div class="dropdown"><img src="{% static 'images/threedots_32x32.png' %}" onclick="myDropDownDelEditFunction(\''+c_id+'\')" class="dropDelEditIcon"><div id="myDelEditDropdown_'+c_id+'" class="dropdown-DelEditContent"><a href="#" onclick="return deletePost(\''+c_id+'\')">Delete</a><a href="#" onclick="return editPost(\''+c_id+'\')">Edit</a></div></div>';
-
-                        edit = '<div id="editModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="editClose_'+c_id+'" onclick="closeEdit(\''+c_id+'\')">&times;</span><div id="edit_post_'+c_id+'"><textarea id="post_text_'+c_id+'" rows="20" cols="40" name="message">'+docs[i]['content']+'</textarea></div><button class="btn btn-primary" onclick="return submitEdit(\''+c_id+'\')" align="right">Edit</button></div></div>';
-                    }
-
                     if (docs[i]['skillls']){
                         if(docs[i]['skillls'].length != 0){
                             var ls = docs[i]['skillls'];
@@ -1843,7 +1939,8 @@ input[type="file"] {
                     var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
                     var replyList = createReplyList(uid, c_id, docs[i]['replys'])
                     var body = createNormalBody(uid, c_id, docs[i], yy, mm, dd)
-                    var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
+                    var editDelete = createEditDelete(uid, c_id, docs[i]['content'])
+                    var thread = create_thread(uid, c_id, body, actionList, replyList, editDelete, privateText)
 
                     $('#communityThread').append($(thread));
 
@@ -1854,7 +1951,6 @@ input[type="file"] {
 
     socket.on('three collaborators you need', function(docs){
     	for(var i=0; i < docs.length; i++){
-            console.log("top collaborators:"+docs[i].user_id);
             var uid = docs[i].user_id;
             var first_name = docs[i].first_name;
             var last_name = docs[i].last_name;

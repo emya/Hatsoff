@@ -520,7 +520,7 @@ io.on('connection', function(socket){
 
   })
 
-  socket.on('get suggested projects', function(){
+  socket.on('get suggested posts', function(){
     db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
         if(err){
           console.log(err);

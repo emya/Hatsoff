@@ -1,7 +1,6 @@
 //var socket = io.connect("{{nodejs_url}}");
 var socket = io.connect('http://localhost:8889');
 //var socket = io.connect('http://ec2-35-164-130-35.us-west-2.compute.amazonaws.com:8889');
-console.log("socket :", socket);
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -13,19 +12,21 @@ if (cmembers == null){
 }
 
 socket.on('community members number', function(len){
-    console.log("length :", len);
     //document.getElementById('num-cmembers').innerHTML = len;
     localStorage.setItem("num-cmembers", len); 
     var cmembers = localStorage.getItem("num-cmembers");
     console.log(cmembers);
 });
 
-/*
-sprojects = document.getElementById('suggested_project').innerHTML;
-if (sprojects && sprojects == ""){
-    socket.emit('get suggested projects');
+// Set suggested projects
+sprojects = document.getElementById('suggested_posts');
+
+if (sprojects){
+    var str = sprojects.innerHTML.trim();
+    if ( str.length == 0 ) {
+        socket.emit('get suggested posts');
+    }
 }
-*/
 
 socket.on('three community posts need you', function(docs){
     for(var i=0; i < docs.length; i++){
@@ -33,9 +34,37 @@ socket.on('three community posts need you', function(docs){
         var tag = docs[i].tag;
         var uid = docs[i].user.uid;
         var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-        $('#suggested_project').append($('<li class="media"><a href="'+post_link+'"><p>'+docs[i].content+'</p></a></li>'));
+        var suggested_post = createSuggestedPost(post_link, docs[i].content)
+        $('#suggested_projects').append($(suggested_post));
     }
 });
+
+function createSuggestedPost(link, content){
+  var suggested_post = `
+                        <a style="display:block" href="${link}">
+                            <div class="projectProgressEntity clearfix">
+                                <p class="big pull-left">
+                                    ${content}
+                                </p>
+                            </div>
+                        </a>
+                          `;
+  return suggested_post;
+}
+
+function createSuggestedProject(){
+  var suggested_project = `
+                            <h4>Sculpture project</h4>
+                            <div class="progress-outer progress-striped-outer">
+                                <div class="progPercentageNumb"></div>
+                                <div class="progress progress-striped">
+                                    <div class="progress-bar progress-bar-custom" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >
+                                        <span class="sr-only">25</span>
+                                    </div>
+                                </div>
+                            </div> 
+                          `;
+}
 
 socket.on('new community member', function(){
 	var members = localStorage.getItem("num-cmembers");

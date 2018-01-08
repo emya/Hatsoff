@@ -43,6 +43,10 @@
                </form>
                <ul class="navbar-nav mx-auto nav-flex-icons">
                   <li class="nav-item">
+                      <a class="nav-link" href="{% url 'week1:feedback' %}"> <small> Feedback </small> </a>
+                  </li>
+
+                  <li class="nav-item">
                      <a class="nav-link" href="{% url 'week1:community' %}">
                         <i class="fa fa-users"></i>
                      </a>
@@ -138,7 +142,7 @@
                               </div>
                            </div>
                         </div>
-                        <div class="panel-body clearfix">
+                        <!--div class="panel-body clearfix">
                            <div class="well well-sm projectsEntity">
                               <div class="media">
                                  <div class="thumbnail pull-left">
@@ -153,11 +157,23 @@
                                     </p>
                                     <h4 class="media-heading">mutual community members</h4>
                                     </div>
-                                    <!-- project entity -->
                                  </div>
 								 
                               </div>
                            </div>
+                        </div-->
+
+                        <div class="panel-body clearfix">
+                           <div class="well well-sm projectsEntity">
+                              <div class="media-body">
+                                 <h3>Suggested Community Posts</h3>
+                                 <!-- div class="thumbnail pull-left">
+                                    <img class="media-object" src="http://gdurl.com/QZUi">
+                                 </div-->
+                                 <div class="media-body suggestedProjects" id="suggested_posts">
+                                 </div>
+                              </div>
+                            </div>
                         </div>
                         <div class="panel-body clearfix">
                            <div class="well well-sm projectsEntity">

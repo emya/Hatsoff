@@ -5,10 +5,10 @@
 
 <div id="step">
      <div id="step-left">
-     <h3>Step 1 out of 3</h3> 
-     <div id="step-notification">
-      <p>There are 3 steps in your profile creation. You can edit or add information later.</p>
-     </div>
+         <h3>Step 1 out of 3</h3> 
+         <div id="step-notification">
+             <p>There are 3 steps in your profile creation. You can edit or add information later.</p>
+         </div>
      </div>
 
      <div id="step-right">
@@ -37,14 +37,17 @@
 	    <!--table border="0" align="center" class="step-table">
             <div id="step-right-left">
                 <br>Display Name</br> <input type='text' name='displayname' value='{{ user.first_name }} {{user.last_name}}'><br/-->
+
                 <br>{{form.profession1.label_tag}} <!-- span style="color:red">*</span -->
-                <ul id="myTagProfessions">
+                <input type="text" class="form-control" id="token-professionfield" name="professiontags" />
+
+                <!--ul id="myTagProfessions">
                     <li>{{ form.profession1.value }}</li>
                     <li>{{ form.profession2.value }}</li>
                     <li>{{ form.profession3.value }}</li>
                     <li>{{ form.profession4.value }}</li>
                     <li>{{ form.profession5.value }}</li>
-                </ul>
+                </ul-->
                 <br>{{form.city.label_tag}}</br> {{form.city}}<br/>
                 <br>{{form.worksAt.label_tag}}</br> {{form.worksAt}}<br/>
                 <br>{{form.education.label_tag}}</br> {{form.education}}<br/>
@@ -71,7 +74,19 @@
 
 </div>
 
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<!-- Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Tokenfield field autocomplete -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+<script src="{% static 'js/tag_professions.js' %}"></script>
 <script type="text/javascript">
+
 $(document).ready(function() {
   $("#myTagProfessions").tagprofession();
 });

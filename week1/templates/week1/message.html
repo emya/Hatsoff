@@ -60,8 +60,8 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
     <script>
-          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-          socket.emit('at chat message', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:"{{user.uid}}", firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('at chat message', {uid:"{{user.uid}}", uname:"{{user.first_name}}"});
 
           var users = [{% for u in users %} "{{ u }}" ,{% endfor %}];
           var usernames = [{% for u in username %} ["{{ u.0 }}", "{{u.1}}"],{% endfor %}];
@@ -72,14 +72,14 @@
 
           function acceptMessageFunction(uid, msg, room_id){
             console.log("accept");
-            socket.emit('accept first message', { to_uid:uid, uid:{{user.id}}, msg:msg, room_id:room_id });
+            socket.emit('accept first message', { to_uid:uid, uid:"{{user.uid}}", msg:msg, room_id:room_id });
             var elem = document.getElementById('first-message-'+uid);
             elem.parentNode.removeChild(elem);
           }
 
           function blockMessageFunction(uid){
             console.log("block");
-            socket.emit('block first message', { to_uid:uid, uid:{{user.id}} });
+            socket.emit('block first message', { to_uid:uid, uid:"{{user.uid}}" });
             var elem = document.getElementById('first-message-'+uid);
             elem.parentNode.removeChild(elem);
           }
@@ -107,11 +107,10 @@
             }
             */
 
-            socket.emit('send message', { uid:{{user.id}}, room_id:room_id, msg:message, data:data});
+            socket.emit('send message', { uid:"{{user.uid}}", room_id:room_id, msg:message, data:data});
           }
 
           function mainMessage(room_id){
-            console.log("main!:"+room_id);
             var elems = $("div[id^='row_']");
             console.log("elems!"+elems.length);
             console.log("elems!"+elems[0]);
@@ -153,7 +152,7 @@
              div.appendChild(elem);
              //$('#message-room-'+data.room_id).append($('<li><span class="error"><br>'+data.uid+' : '+data.msg+'</span><br/>')); 
 
-             if (data.uid == {{user.id}}){
+             if (data.uid == "{{user.uid}}"){
                 $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.msg+'</p></div></li>'));
 
              }else{
@@ -179,7 +178,7 @@
 
           socket.on('update first message', function(docs){
             for(var i=0; i < docs.length; i++){
-              var uid = (docs[i]['uid1'] == {{user.id}}) ? docs[i]['uid2'] : docs[i]['uid1'];
+              var uid = (docs[i]['uid1'] == "{{user.uid}}") ? docs[i]['uid2'] : docs[i]['uid1'];
               var n  = users.indexOf(uid);
 
               if (docs[i]['messages']){
@@ -201,7 +200,7 @@
 
             for(var i=0; i < docs.length; i++){
               console.log(docs[i]);
-              var uid = (docs[i]['uid1'] == {{user.id}}) ? docs[i]['uid2'] : docs[i]['uid1'];
+              var uid = (docs[i]['uid1'] == "{{user.uid}}") ? docs[i]['uid2'] : docs[i]['uid1'];
               var n  = users.indexOf(uid.toString());
 
               if (docs[i]['messages']){
@@ -271,7 +270,7 @@
                            //$('#message-room-'+room_id).append($('<li><span class="error"><br>'+uid+' : '+mdocs[j]['content']+'</span><br/>')); 
                         }
                      }else{
-                        var m  = users.indexOf("{{user.id}}".toString());
+                        var m  = users.indexOf("{{user.uid}}".toString());
                         if (m != -1 && photos[m] != "None" && photos[m] != ""){
                           $('#message-room-'+room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[m]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+mdocs[j]['content']+'</p>'+imageText+'</div></li>'));
                         }else{
@@ -287,7 +286,6 @@
 
           socket.on('new message', function (data) {
              var n  = users.indexOf(data.uid.toString());
-             console.log("room message: n is ", n, data);
 
             if ($('#short-room-'+data.room_id).length == 0){
                   var div = document.getElementById('chatusers');
@@ -313,7 +311,7 @@
               imageText = '<embed id="Image_in__'+data.room_id+'_'+countImg+'" src="data:'+ctype+';base64,'+enc+'" class="messageImage" ></embed>';
             }
 
-            if (data.uid == {{user.id}}){
+            if (data.uid == "{{user.uid}}"){
               if (n != -1 && photos[n] != "None" && photos[n] != ""){
                 
                   $('#message-room-'+data.room_id).append($('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{media_url}}'+photos[n]+'" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="pull-right primary-font">'+"{{user.first_name}}"+'&nbsp'+"{{user.last_name}}"+'</strong></div><small class="text-muted"><span class="glyphicon glyphicon-time"></span>14 mins ago</small></div><p>'+data.content+'</p>'+imageText+'</div></li>'));

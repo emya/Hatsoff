@@ -1406,9 +1406,9 @@ input[type="file"] {
         var content = data['content'];
         var first_name = data['user']['first_name'];
         var last_name = data['user']['last_name'];
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
         //<ul class="media-date text-uppercase reviews list-inline"><li class="dd">${dd}</li><li class="mm">${mm}</li><li class="aaaa">${yy}</li></ul>
-        var body = `<h3 class="media-heading">${first_name} ${last_name} 
-                    </h3>
+        var body = `<h3 class="media-heading"><a href=${url_link} display:block>${first_name} ${last_name} </a></h3>
                     <h6> ${dd} ${mm} ${yy} </h6>
                     <p id="media-content_${cid}">
                         <strong>
@@ -1435,8 +1435,10 @@ input[type="file"] {
         var content = data.msg;
         var first_name = data.first_name;
         var last_name = data.last_name;
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
         //<ul class="media-date text-uppercase reviews list-inline"><li class="dd">${dd}</li><li class="mm">${mm}</li><li class="aaaa">${yy}</li></ul>
-        var body = `<h3 class="media-heading">${first_name} ${last_name} 
+        var body = ` 
+                    <h3 class="media-heading"><a href=${url_link} display:block>${first_name} ${last_name} </a></h3>
                     </h3>
                     <h6> ${dd} ${mm} ${yy} </h6>
                     <p>
@@ -1793,8 +1795,8 @@ input[type="file"] {
                     }
 
                     var tag = (docs[i]['tag']) ? docs[i]['tag'] : 0;
-                    var url_mask = "{% url 'week1:add_folder' user.id %}".replace("{{user.uid}}", uid);
-                    var url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
+                    //var url_mask = "{% url 'week1:add_folder' user.uid %}".replace("{{user.uid}}", uid);
+                    var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
                     var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
                     var profile_link = "{% static 'images/profileimage.png' %}";
                     var thanks = '';
@@ -1858,8 +1860,8 @@ input[type="file"] {
                         }
                         uid = docs[j]['user']['uid'];
                         tag = (docs[j]['tag']) ? docs[j]['tag'] : 0;
-                        url_mask = "{% url 'week1:add_folder' user.id %}".replace("{{user.uid}}", uid);
-                        url_link = "{% url 'week1:get_profile' user.id %}".replace("{{user.uid}}", uid);
+                        //url_mask = "{% url 'week1:add_folder' user.uid %}".replace("{{user.uid}}", uid);
+                        url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
                         post_link = "{% url 'week1:community_post'%}?c_id="+content_id+"&tag="+tag+"&u="+uid;
                         created = docs[j]['created'];
                         colonIndex = created.indexOf(":");

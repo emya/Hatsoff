@@ -917,39 +917,39 @@ io.on('connection', function(socket){
 
   socket.on('at home', function(data){
 
-    var query = CommentPost.find({'to_uid':socket.uid});
+    var query = CommentPost.find({'to_uid':data.uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       socket.emit('update comment', docs);
     }); 
 
-    var query2 = UpcomingPost.find({'to_uid':socket.uid});
+    var query2 = UpcomingPost.find({'to_uid':data.uid});
     query2.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       socket.emit('update upcoming comment', docs);
     }); 
 
-    var query3 = PortfolioPost.find({'to_uid':socket.uid});
+    var query3 = PortfolioPost.find({'to_uid':data.uid});
     query3.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
       socket.emit('update portfolio comment', docs);
     }); 
 
-    ThanksPost.find({'to_uid':socket.uid}).count(function(err, count){
+    ThanksPost.find({'to_uid':data.uid}).count(function(err, count){
       if (err) throw err;
       socket.emit('number thanks', count);
     }); 
 
-    HatsoffPost.find({'to_uid':socket.uid}).count(function(err, count){
+    HatsoffPost.find({'to_uid':data.uid}).count(function(err, count){
       if (err) throw err;
       socket.emit('number hatsoff', count);
-      HatsoffPost.find({'user.uid':socket.uid, 'to_uid':socket.uid}).exec(function(error, docs){
+      HatsoffPost.find({'user.uid':data.uid, 'to_uid':data.uid}).exec(function(error, docs){
         if(error) throw error;
         socket.emit('hatsoff status at home', {docs:docs, count:count});
       }); 
     }); 
 
-    FollowPost.find().or([{uid1:socket.uid, action_user:2, status:1}, {uid1:socket.uid, status:2}, {uid2:socket.uid, action_user:1, status:1}, {uid2:socket.uid, status:2}]).count(function(err, count){
+    FollowPost.find().or([{uid1:socket.uid, action_user:2, status:1}, {uid1:data.uid, status:2}, {uid2:data.uid, action_user:1, status:1}, {uid2:data.uid, status:2}]).count(function(err, count){
       if (err) throw err;
       socket.emit('number follow', count);
     }); 
@@ -964,7 +964,7 @@ io.on('connection', function(socket){
     }); 
 */
 
-    LikePost.find({'to_uid':socket.uid}).exec(function(error, result){
+    LikePost.find({'to_uid':data.uid}).exec(function(error, result){
       if(error) throw error;
 
       if(result){
@@ -972,7 +972,7 @@ io.on('connection', function(socket){
       }
     });
 
-    SharePost.find({'to_uid':socket.uid}).exec(function(error, result){
+    SharePost.find({'to_uid':data.uid}).exec(function(error, result){
       if(error) throw error;
 
       if(result){
@@ -981,16 +981,16 @@ io.on('connection', function(socket){
     });
 
     // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
-    var query_cp = CommunityPost.find({'user.uid':socket.uid});
+    var query_cp = CommunityPost.find({'user.uid':data.uid});
     async.waterfall([
         function(callback){
-           var query_cp = CommunityPost.find({'user.uid':socket.uid});
+           var query_cp = CommunityPost.find({'user.uid':data.uid});
            query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
               callback(null, communitydocs);
            });
         },
         function(communitydocs, callback){
-       	   var query_sh = SharePost.find({'user.uid':socket.uid});
+       	   var query_sh = SharePost.find({'user.uid':data.uid});
       	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
                     callback(null, communitydocs, sharedocs);
                  });
@@ -1093,12 +1093,12 @@ io.on('connection', function(socket){
 
 
     var uid1, uid2, action_user;
-    if (socket.uid < data.to_uid){
-      uid1 = socket.uid;
+    if (data.uid < data.to_uid){
+      uid1 = data.uid;
       uid2 = data.to_uid; 
       action_user = 1;
     }else{
-      uid2 = socket.uid;
+      uid2 = data.uid;
       uid1 = data.to_uid; 
       action_user = 2;
     }
@@ -1119,15 +1119,15 @@ io.on('connection', function(socket){
               console.log(error);
             }else{
               /** emmit new message to data.to_uid message.html **/
-                socket.join(newdata._id);
-                socket.emit('set message', newdata) 
+              socket.join(newdata._id);
+              socket.emit('set message', newdata) 
             }
           });
         }
       }
     });
 
-    LikePost.find({'to_uid':data.to_uid, 'user.uid':socket.uid}).exec(function(error, result){
+    LikePost.find({'to_uid':data.to_uid, 'user.uid':data.uid}).exec(function(error, result){
       if(error) throw error;
 
       if(result){
@@ -1147,7 +1147,7 @@ io.on('connection', function(socket){
           if(result){
             if( result.status == 2){
               socket.emit('follow status', {status:2, count:count});
-            }else if ((result.uid1==socket.uid && result.action_user==1) || (result.uid2==socket.uid && result.action_user==2)){
+            }else if ((result.uid1==socket.uid && result.action_user==1) || (result.uid2==data.uid && result.action_user==2)){
               socket.emit('follow status', {status:1, count:count});
             }else{
               //Got request
@@ -1162,7 +1162,7 @@ io.on('connection', function(socket){
 
     HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
       if (err) throw err;
-      HatsoffPost.find({'user.uid':socket.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
+      HatsoffPost.find({'user.uid':data.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
         if(error) throw error;
         socket.emit('hatsoff status', {docs:docs, count:count});
       }); 
@@ -1243,7 +1243,7 @@ io.on('connection', function(socket){
                   socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
                  }
                 }
-                    });
+              });
            }
         },
         ], function(err, result){
@@ -2381,7 +2381,7 @@ io.on('connection', function(socket){
 
     if(data.to_uid){
       var uid1, uid2, action_user;
-      if (socket.uid < data.to_uid){
+      if (data.uid < data.to_uid){
         uid1 = data.uid;
         uid2 = data.to_uid; 
         action_user = 1;
@@ -2390,12 +2390,12 @@ io.on('connection', function(socket){
         uid1 = data.to_uid; 
         action_user = 2;
       }
+
       MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
         if (err) {
           console.log(err);
         }else {
           if (result){
-
             if(data.data && data.data != {}){
               result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
             }else{
@@ -2411,7 +2411,20 @@ io.on('connection', function(socket){
             });
 
           }else{
+            console.log("no message relationship");
+            var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1, messages:{uid:socket.uid, content:data.msg}});
 
+            newMessageRelation.save(function(error, newdata){
+
+              if (error) {
+                console.log(error);
+              }else{
+                /** emmit new message to data.to_uid message.html **/
+                if (users[data.to_uid]){
+                  users[data.to_uid].emit('new message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 
+                }
+              }
+            });
           }
 
         }
@@ -2440,12 +2453,9 @@ io.on('connection', function(socket){
           }else{
 
           }
-
         }
       });
-
     }
-
   });
 
 
@@ -2489,7 +2499,6 @@ io.on('connection', function(socket){
           socket.join(result._id);
           socket.emit('set message', result);
         }else{
-
           var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
           newMessageRelation.save(function(error, newdata){
 

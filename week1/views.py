@@ -211,6 +211,8 @@ def step1(request):
         if form.is_valid():
             step = form.save(commit=False)
             #step = form.save(commit=False)
+            print (request.POST)
+
             tags = request.POST.getlist('professiontags')
 
             tagls = []
@@ -286,7 +288,7 @@ def step3(request):
     instance = get_object_or_404(Profile, user=currentuser)
 
     if request.method == 'POST':
-        tags = request.POST.getlist('tags')
+        tags = request.POST.getlist('skilltags')
 
         form = Step3(request.POST, label_suffix="", instance=instance)
 
@@ -1147,13 +1149,12 @@ def messages(request):
             prof = "None"
 
         usernames.append([u.first_name, u.last_name])
-        users.append(u.id)
-        userphoto.append(unicode(prof))
+        users.append(u.uid)
 
     currentuser = User.objects.get(uid=request.user)
     profile = Profile.objects.get(user=currentuser)
     media_url = settings.MEDIA_URL
-    variables = RequestContext(request, {'users':users, 'userphoto':userphoto, 'username':usernames, 'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'users':users, 'username':usernames, 'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/message.html', variables, )
 
 @login_required

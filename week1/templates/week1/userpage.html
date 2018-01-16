@@ -602,6 +602,10 @@
          <i class="fa fa-chevron-up"></i>
          </a>
       </div>
+
+      <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+      <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+      <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
       <!-- Bootstrap core JavaScript -->
       <script src="https://code.jquery.com/jquery.min.js"></script>
       <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -616,6 +620,8 @@
       <!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
       <!-- Custom scripts for this template -->
       <script>
+         socket.emit('at userpage', {uid:"{{user.uid}}", to_uid:"{{t_user.uid}}", uname:"{{user.first_name}}"});
+
          (function($) {
             "use strict"; // Start of use strict
          
@@ -720,6 +726,131 @@
                document.getElementById('status_message').value = 'Hello, I have a project I would like to pitch to you.';
             }
          }
+
+         function sendMessage(){
+            var post_val = $('#status_message').val();
+
+            if (post_val.length != 0){
+               var files = document.getElementById('image_in_message').files;
+               var file = files[0];
+
+               var data = {};
+
+               if (file){
+                 data = {'file':file, 'fileName':file.name, 'type':file.type};
+                 document.getElementById('image_in_message').value = "";
+               }
+              socket.emit('send message', {msg:post_val, to_uid:"{{t_user.uid}}", uid:"{{user.uid}}", data:data});
+            }
+            $('#status_message').val('');
+            return false;
+         }
+
+         function getMessage(){
+            console.log('get message');
+            //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
+         }
+
+         function createChatMessage(data){
+            var imageText = '';
+            var uid = data.uid;
+            var content = data.content;
+
+            if (uid == "{{user.uid}}") {
+                var name = "You";
+            }else{
+                var name = "{{t_user.first_name}} {{t_user.last_name}}";
+            }
+
+            if (data.image && data.image['file'] && data.image['type']){
+                var bytes = new Uint8Array(data.image['file']);
+                var ctype = data.image['type'];
+                var enc = encode(bytes);
+                var countImg = $('[id^=Image_in_]').length;
+                imageText = '<embed id="Image_in_'+countImg+'" src="data:'+ctype+';base64,'+enc+'" class="popupmessageImage" ></embed>';
+            }
+
+            var message = `
+                <!--div class="chat-box-single-line">
+                    <abbr class="timestamp">October 9th, 2015</abbr>
+                </div-->
+                <div class="direct-chat-msg doted-border">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-right">${name}</span>
+                    </div>
+                    <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                    <div class="direct-chat-text">
+                        ${content}
+                    </div>
+                    ${imageText}
+                    <!--div class="direct-chat-info clearfix">
+                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+                    </div-->
+                </div>'
+            `;
+            return message;
+         }
+
+         socket.on('new message', function(data){
+            var message = createChatMessage(data);
+            $('#chat_room').append($(message));
+         });
+
+
+         function createSetChatMessage(doc){
+            var content = doc['content'];
+            var imageText = '';
+
+            if (doc['image'] && doc['image']['data']){
+                var bytes = new Uint8Array(doc['image']['data']['data']);
+                var ctype = doc['image']['contentType'];
+                var enc = encode(bytes);
+                imageText = '<embed id="Image_in_'+doc['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="popupmessageImage" ></embed>';
+            }
+
+            var uid = doc['uid']
+
+            if (uid == "{{user.uid}}") {
+                var name = "You";
+            }else{
+                var name = "{{t_user.first_name}} {{t_user.last_name}}";
+            }
+
+            var message = `
+                <!--div class="chat-box-single-line">
+                    <abbr class="timestamp">October 9th, 2015</abbr>
+                </div-->
+                <div class="direct-chat-msg doted-border">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-right">${name}</span>
+                    </div>
+                    <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                    <div class="direct-chat-text">
+                        ${content}
+                    </div>
+                    ${imageText}
+                    <!--div class="direct-chat-info clearfix">
+                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+                    </div-->
+                </div>'
+            `;
+            return message;
+         }
+
+         socket.on('set message', function(data){
+            if(data){
+               if(data['messages']){
+                  for (var i=0; i < data['messages'].length; i++){
+                     if (data['messages'][i]['content']){
+                        var doc = data['messages'][i];
+                        var message = createSetChatMessage(doc);
+                        $('#chat_room').append($(message));
+                     }
+                  }
+               }
+            }
+        });
+
                                      
       </script>
    </body>

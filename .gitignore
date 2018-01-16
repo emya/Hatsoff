@@ -9,5 +9,5 @@ week1/migrations/*
 week1/*.pyc
 hatsoff/*.pyc
 hatsoff/week1/*.pyc
-week1/static
+week1/static/images
 

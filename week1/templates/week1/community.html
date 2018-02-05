@@ -12,6 +12,11 @@
                             <!-- Custom fonts for this template -->
                             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+                            <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+                            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
+                            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
+                            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
+
                             <style id="jsbin-css">
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700');
 body {
@@ -1001,8 +1006,10 @@ input[type="file"] {
 
                                                     <!--button onclick="return publicPost()" class="btn btn-lg btn-outline pull-right">Post</button-->
                                                     
-                                                    <label>Skill tag (up to 5)</label><ul id="myTags">
-                                                    </ul>
+                                                    <label>Skill tag (up to 5)</label>
+                                                    <!-- ul id="myTags"></ul-->
+                                                    <input type="text" class="form-control" id="token-skillfield" name="skilltags" />
+
     
                                                     <ul class="list-inline communityActionListBig pull-left">
                                                         <!-- li class="list-inline-item">
@@ -1215,22 +1222,26 @@ input[type="file"] {
         <i class="fa fa-chevron-up"></i>
    </a>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
+<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script-->
 
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <!-- Plugin JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
 <!-- Contact Form JavaScript -->
 <!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
 <!-- Custom scripts for this template -->
 <!-- Socket -->
 <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="{% static 'js/tag_skills.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
 <script>
     (function($) {
@@ -1306,7 +1317,10 @@ input[type="file"] {
 
     function publicPost(){
         var skillls = [];
-        var lis = document.getElementById("myTags").getElementsByTagName("li");
+        var sk = $('#token-skillfield').val();
+        if (sk){
+        	skillls = sk.split(",");
+        }
 
         /* Use this again once jquery issue is fixed
         for (var i = 0; i < lis.length; i++){
@@ -1331,11 +1345,18 @@ input[type="file"] {
               });
               $('#p').val('');
             $('#imageupload').val('');
-          }
+        }
+        $('#token-skillfield').val('');
         return false;
     }
 
     function privatePost(){
+    	var skillls = [];
+        var sk = $('#token-skillfield').val();
+        if (sk){
+        	skillls = sk.split(",");
+        }
+        /*
         var skillls = [];
         var lis = document.getElementById("myTags").getElementsByTagName("li");
 
@@ -1345,6 +1366,7 @@ input[type="file"] {
                 skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
             }
         }
+        */
 
         var files = document.getElementById('imageupload').files;
         var file = files[0];
@@ -1360,6 +1382,7 @@ input[type="file"] {
             $('#p').val('');
             $('#imageupload').val('');
         }
+        $('#token-skillfield').val('');
         return false;
     }
 

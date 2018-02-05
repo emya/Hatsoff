@@ -12,14 +12,20 @@
     {{ form.errors }}
     <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
       <br>{{form.city.label_tag}}</br> {{form.city}} <br/>
-      <br>{{form.worksAt.label_tag}}</br> {{form.worksAt}}<br/>
+      <!--br>{{form.worksAt.label_tag}}</br> {{form.worksAt}}<br/>
       <br>{{form.education.label_tag}}</br> {{form.education}}<br/>
-      <br>{{form.language.label_tag}}</br> {{form.language}}<br/>
+      <br>{{form.language.label_tag}}</br> {{form.language}}<br/-->
       <br>{{form.photo.label_tag}}</br>
-        <input id="id_photo" type="file" name="photo"><br/>
-        <div class="image-container">
-            <img id="blah" src="#" alt="your image" class="maincontent" />
-        </div>
+      <input id="id_photo" type="file" name="photo"><br/>
+      <div class="image-container">
+          <img id="blah" src="#" alt="your image" class="maincontent" />
+      </div>
+
+      <br>{{form.profession1.label_tag}} <!-- span style="color:red">*</span -->
+      <input type="text" class="form-control" id="token-professionfield" value="{{form.profession1.value}}, {{form.profession2.value}}" name="professiontags" />
+
+      <br>{{form.skill1.label_tag}} <!-- span style="color:red">*</span -->
+      <input type="text" class="form-control" id="token-skillfield" value="{{form.skill1.value}}, {{form.skill2.value}}, {{form.skill3.value}}, {{form.skill4.value}} {{form.skill5.value}} {{form.skill6.value}} {{form.skill7.value}} {{form.skill8.value}} {{form.skill9.value}} {{form.skill10.value}}" name="skilltags" />
  
       <div class="submit-wrapper">
     		<input type="submit" value="Update" class="step-submit" />
@@ -31,6 +37,17 @@
 
 </div>
 
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+<script src="{% static 'js/tag_professions.js' %}"></script>
+<script src="{% static 'js/tag_skills.js' %}"></script>
 <script type="text/javascript">
 window.onload = function (){
   {% if form.instance.photo %}

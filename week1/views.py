@@ -165,7 +165,6 @@ def home(request):
     except UpcomingWork.DoesNotExist:
         upcomingwork = None
 
-
     return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'users':users, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
 
 @login_required
@@ -211,8 +210,6 @@ def step1(request):
         if form.is_valid():
             step = form.save(commit=False)
             #step = form.save(commit=False)
-            print (request.POST)
-
             tags = request.POST.getlist('professiontags')
 
             tagls = []
@@ -384,13 +381,52 @@ def home_edit_personalinfo(request):
 
     currentuser = User.objects.get(uid=request.user)
     instance = get_object_or_404(Profile, user=currentuser)
+
+    profile = Profile.objects.get(user=currentuser)
     if request.method == "POST":
         form = PersonalInfo(request.POST, request.FILES, instance=instance, label_suffix="")
 
         if form.is_valid():
-            form.save()
+            personal = form.save(commit=False)
 
-            profile = Profile.objects.get(user=currentuser)
+            p_tags = request.POST.getlist('professiontags')
+            p_tagls = []
+            for tag in p_tags:
+                lowtag = tag.capitalize()
+                p_tagls.append(lowtag)
+
+            if len(p_tagls) != 5:
+                for i in range(5-len(p_tagls)):
+                    p_tagls.append("")
+
+            s_tags = request.POST.getlist('skilltags')
+            s_tagls = []
+            for tag in s_tags:
+                lowtag = tag.capitalize()
+                s_tagls.append(lowtag)
+
+            if len(s_tagls) != 10:
+                for i in range(10-len(s_tagls)):
+                    s_tagls.append("")
+
+            personal.profession1 = p_tagls[0]
+            personal.profession2 = p_tagls[1] 
+            personal.profession3 = p_tagls[2]
+            personal.profession4 = p_tagls[3]
+            personal.profession5 = p_tagls[4] 
+            personal.skill1 = s_tagls[0]
+            personal.skill2 = s_tagls[1]
+            personal.skill3 = s_tagls[2]
+            personal.skill4 = s_tagls[3]
+            personal.skill5 = s_tagls[4]
+            personal.skill6 = s_tagls[5] 
+            personal.skill7 = s_tagls[6]
+            personal.skill8 = s_tagls[7]
+            personal.skill9 = s_tagls[8]
+            personal.skill10 = s_tagls[9]
+
+            personal.save()
+
             return HttpResponseRedirect('/week1/home/')
 
     else:
@@ -1212,7 +1248,7 @@ def get_profile(request, uid):
             users.append(u.id)
             userphoto.append(unicode(prof))
 
-    variables = RequestContext(request, {'target_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 't_user':user, 'showcases':showcases, 'upcoming':upcomingwork, 'userphoto':userphoto, 'users':users, 'nodejs_url':nodejs_url, 'media_url':media_url})
+    variables = RequestContext(request, {'t_profile':target_profile, 'profile':profile, 'uid':uid, 'hatsusers':hatsusers, 't_user':user, 'showcases':showcases, 'upcoming':upcomingwork, 'userphoto':userphoto, 'users':users, 'nodejs_url':nodejs_url, 'media_url':media_url})
     return render_to_response('week1/userpage.html', variables, )
 
 @login_required

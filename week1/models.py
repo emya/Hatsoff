@@ -15,7 +15,7 @@ class User(AbstractUser):
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, unique=True)
     photo = models.ImageField(upload_to=content_file_name, blank=True)
     displayname = models.CharField(max_length=100, default='', blank=True)
     #profession = models.CharField(max_length=200, default='', blank=False)
@@ -55,7 +55,7 @@ class Profile(models.Model):
     cities = models.CharField(max_length=200, default='', blank=True)
 
 class Showcase(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, unique=True)
     title = models.CharField(max_length=200, default='', blank=True)
     number = models.IntegerField(null=True)#1 to 10
     image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
@@ -80,7 +80,7 @@ class Showcase(models.Model):
     tag10 = models.CharField(max_length=300, default='', blank=True)
     
 class UpcomingWork(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, unique=True)
     title = models.CharField(max_length=200, default='', blank=True)
     number = models.IntegerField()#1 to 10
     image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)

@@ -589,21 +589,6 @@
             /* profile page carousels*/
          
 			   $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();			
-		 
-            /* tokenfield */
-           
-            $('#tokenfield').tokenfield({
-               autocomplete: {
-                  source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
-                  delay: 100
-               },
-               showAutocompleteOnFocus: true
-            });
-         
-            $("form").submit(function(e) {
-               e.preventDefault();
-               $('.form-dataTokenfield').text( $('#tokenfield').val());
-            });
            
          })(jQuery); // End of use strict
                                      

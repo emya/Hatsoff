@@ -12,6 +12,8 @@
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
       <!-- Custom fonts for this template -->
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+      <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
       <!-- tokenfield field autocomplete -->
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
@@ -32,7 +34,7 @@
               </button>
             
               <div class="collapse navbar-collapse" id="navbarResponsive">
-                  <form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto ">
+                  <form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto " action="" method="get">
                       <div class="input-group">
                           <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
                           <div class="input-group-btn">
@@ -42,40 +44,40 @@
                           </div>
                       </div>
                   </form>
-              <ul class="navbar-nav mx-auto nav-flex-icons">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'week1:feedback' %}"> <small> Feedback </small> </a>
-                  </li>
+                  <ul class="navbar-nav mx-auto nav-flex-icons">
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'week1:feedback' %}"> <small> Feedback </small> </a>
+                      </li>
 
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'week1:community' %}">
-                          <i class="fa fa-users"></i>
-                      </a>
-                  </li>
-                  <!--li class="nav-item">
-                      <a class="nav-link" href="#">
-                          <i class="fa fa-user-plus"></i>
-                      </a>
-                  </li-->
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'week1:messages' %}">
-                          <i class="fa fa-comment-o"></i>
-                      </a>
-                  </li>
-              </ul>
-              <ul class="navbar-nav navbar-right">
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-user"></i>&nbsp;{{user.first_name}}
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="dropdown04">
-                          <a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
-                          <a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
-                      </div>
-                  </li>
-              </ul>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'week1:community' %}">
+                              <i class="fa fa-users"></i>
+                          </a>
+                      </li>
+                      <!--li class="nav-item">
+                          <a class="nav-link" href="#">
+                              <i class="fa fa-user-plus"></i>
+                          </a>
+                      </li-->
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'week1:messages' %}">
+                              <i class="fa fa-comment-o"></i>
+                          </a>
+                      </li>
+                  </ul>
+                  <ul class="navbar-nav navbar-right">
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fa fa-user"></i>&nbsp;{{user.first_name}}
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="dropdown04">
+                              <a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
+                              <a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
           </div>
-      </div>
       </nav>
       <!-- content -->
       <section class="profileBody">
@@ -682,6 +684,7 @@
            /* tokenfield */
            
            
+        /**
             $('#tokenfield').tokenfield({
          autocomplete: {
          source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
@@ -694,6 +697,7 @@
          e.preventDefault();
          $('.form-dataTokenfield').text( $('#tokenfield').val());
          });
+         **/
            
            
          })(jQuery); // End of use strict

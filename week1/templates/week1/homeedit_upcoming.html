@@ -10,7 +10,7 @@
      <div id="step-right">
         <h3>Upcoming Project</h3>
 	       <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <script type="text/javascript">
+            <!--script type="text/javascript">
                 $(document).ready(function() {
                     $("#myTags").tagit();
                     $("#myTagProfessions").tagprofession();
@@ -18,33 +18,26 @@
                     $("#myTagProjects").tagproject();
 
                 });
-            </script> 
+            </script--> 
 
             <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
             <br>{{form.image.label_tag}}</br>
-                <input id="id_image" type="file" name="image"><br/>
-                <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
+            <input id="id_image" type="file" name="image"><br/>
+            <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
+
             <br>{{form.describe.label_tag}}</br>{{form.describe}}<br/>
+
             <br>{{form.role1.label_tag}}<!--/br>{{form.role}}<br/-->
-            <ul id="myTagProfessions">
-            </ul>
+            <input type="text" class="form-control" id="token-professionfield" name="professiontags" value="{{form.role1.value}}, {{form.role2.value}}, {{form.role3.value}}, {{form.role4.value}}, {{form.role5.value}}"/>
+            <!--ul id="myTagProfessions">
+            </ul-->
+
             <br>{{form.status.label_tag}}</br>{{form.status}}<br/>
 
             <br>{{form.tag1.label_tag}}<!--/br>{{form.role}}<br/-->
-            <ul id="myTagProjects">
-                <li>{{ form.tag1.value }}</li>
-                <li>{{ form.tag2.value }}</li>
-                <li>{{ form.tag3.value }}</li>
-                <li>{{ form.tag4.value }}</li>
-                <li>{{ form.tag5.value }}</li>
-                <li>{{ form.tag6.value }}</li>
-                <li>{{ form.tag7.value }}</li>
-                <li>{{ form.tag8.value }}</li>
-                <li>{{ form.tag9.value }}</li>
-                <li>{{ form.tag10.value }}</li>
-            </ul>
+            <input type="text" class="form-control" id="token-skillfield" value="{{form.tag1.value}}, {{form.tag2.value}}, {{form.tag3.value}}, {{form.tag4.value}}, {{form.tag5.value}}, {{form.tag6.value}}, {{form.tag7.value}}, {{form.tag8.value}}, {{form.tag9.value}}, {{form.tag10.value}}" name="skilltags" />
             
-            <br>Looking to get help from the community?</br>
+            <!--br>Looking to get help from the community?</br>
                 <select name="get_help">
                     
                 {% if form.get_help.value == 0 %}
@@ -68,34 +61,13 @@
                 <option value="3">I'm ok thanks!</option>
                 {% endif %}
                 </select>
-            <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br>
+            <br>For those who answered “yes” or “open to collaboration” what kind of help/collaboration are you looking for?</br-->
             <br>{{form.collaborator1.label_tag}}<!--/br>{{form.collaborators}}<br/-->
-            <ul id="myTagCollaborators">
-                <li>{{ form.collaborator1.value }}</li>
-                <li>{{ form.collaborator2.value }}</li>
-                <li>{{ form.collaborator3.value }}</li>
-                <li>{{ form.collaborator4.value }}</li>
-                <li>{{ form.collaborator5.value }}</li>
-            </ul>
-
-            
-            <!--ul id="myTagProfessions">
-            </ul-->
+            <input type="text" class="form-control" id="token-collaboratorfield" name="collaboratortags" value="{{form.collaborator1.value}}, {{form.collaborator2.value}}, {{form.collaborator3.value}}, {{form.collaborator4.value}}, {{form.collaborator5.value}}"/>
 
             <br>
             <label>What kind of skills would your collaborator(s) need?</label>
-            <ul id="myTags">
-                <li>{{ form.collaborator_skill1.value }}</li>
-                <li>{{ form.collaborator_skill2.value }}</li>
-                <li>{{ form.collaborator_skill3.value }}</li>
-                <li>{{ form.collaborator_skill4.value }}</li>
-                <li>{{ form.collaborator_skill5.value }}</li>
-                <li>{{ form.collaborator_skill6.value }}</li>
-                <li>{{ form.collaborator_skill7.value }}</li>
-                <li>{{ form.collaborator_skill8.value }}</li>
-                <li>{{ form.collaborator_skill9.value }}</li>
-                <li>{{ form.collaborator_skill10.value }}</li>
-            </ul>
+            <input type="text" class="form-control" id="token-collaboratorskillfield" value="{{form.collaborator_skill1.value}}, {{form.collaborator_skill2.value}}, {{form.collaborator_skill3.value}}, {{form.collaborator_skill4.value}}, {{form.collaborator_skill5.value}}, {{form.collaborator_skill6.value}}, {{form.collaborator_skill7.value}}, {{form.collaborator_skill8.value}}, {{form.collaborator_skill9.value}}, {{form.collaborator_skill10.value}}" name="collaboratorskilltags" />
 
             <br>{{form.preferred_city.label_tag}}</br>{{form.preferred_city}}<br/>
             <br>{{form.targetstartdate.label_tag}}</br><input type='date' name='targetstartdate' min="2016-10-01" value="{{form.targetstartdate.value | date:'Y-m-d'}}"><br/>
@@ -103,7 +75,7 @@
 
             <br>{{form.often.label_tag}}</br>{{form.often}}<br/>
 
-            <br>{{form.give_back.label_tag}}</br>
+            <!--br>{{form.give_back.label_tag}}</br>
             <select name="give_back">
                 {% if form.give_back.value == 1 %}
                 <option value="1" selected="selected">Paid compensation</option>
@@ -122,11 +94,10 @@
                 {% else %}
                 <option value="3">Negotiable</option>
                 {% endif %}
-            </select>
-            <br>{{form.comment.label_tag}}</br>{{form.comment}}<br/>
-            <br>{{form.fund.label_tag}}</br>{{form.fund}}<br/>
+            </select-->
+            <!--br>{{form.comment.label_tag}}</br>{{form.comment}}<br/-->
+            <!--br>{{form.fund.label_tag}}</br>{{form.fund}}<br/-->
             <br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/>
-            <!--br>{{form.comment_help.label_tag}}</br>{{form.comment_help}}<br/-->
 
 	    <div class="submit-wrapper">
 	        <input type="submit" value="Update" class="step-submit"/>
@@ -163,6 +134,17 @@
 
 </div>
 
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+<script src="{% static 'js/tag_professions.js' %}"></script>
+<script src="{% static 'js/tag_skills.js' %}"></script>
 <script type="text/javascript">
 window.onload = function (){
     {% if form.instance.image %}

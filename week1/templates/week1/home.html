@@ -335,20 +335,18 @@
                         
                         <div class="profileSubHeader clearfix">
                            <h2 class="pull-left">Portfolio</h2>
-                           {% if not showcases %}
-                               <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_newpreviouswork' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
-                           {% endif %}
+                              <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_newpreviouswork' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
                         </div>
                         <div id="carouselPortfolio-outer" class="carousel-outer">
-                           <div id="carouselPortfolio" class="carousel slide">
+                           <div id="carouselPortfolio" class="carousel slide" data-interval="false">
 
                               <ol class="carousel-indicators">
                                  {% if showcases %}
                                     {% for showcase in showcases %}
                                        {% if forloop.counter == 1 %}
-                                          <li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter }}" class="active"></li>
+                                          <li data-target="#carouselPortfolio" data-slide-to="{{ forloop.counter }}" class="active"></li>
                                        {% else %}
-                                          <li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter }}"></li>
+                                          <li data-target="#carouselPortfolio" data-slide-to="{{ forloop.counter }}"></li>
                                        {% endif %}
                                     {% endfor %}
                                  {% endif %}
@@ -357,80 +355,69 @@
                                  <!-- Images -->
                                  {% if showcases %}
                                    {% for showcase in showcases %}
-                                   <form id="personalInfoForm" class="profileForm clearfix ">
-                                      <div class="col-sm-10 col-xs-12 pull-left">
-                                           {% if forloop.counter == 1 %}
-                                              <div class="carousel-item active">
-                                           {% else %}
-                                              <div class="carousel-item">
-                                           {% endif %}
-
-                                           <div class="profileSubHeader clearfix">
-                                               <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_previouswork' forloop.counter %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
-                                           </div>
-
-                                           {% if showcase.image or showcase.video or showcase.youtube %}
-                                              {% if showcase.image %}
-                                                 <img class="d-block img-fluid" src="{{ showcase.image.url }}" alt="{{forloop.counter}}th slide">
-                                              {% endif %}
-
-                                              {% if showcase.video %}
-                                                 <video controls id="video">
-                                                     <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
-                                                 </video>
-                                              {% endif %}
-
-                                              {% if showcase.youtube %}
-                                                 <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-                                              {% endif %}
-
-                                           {% else %}
-                                              <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}" alt="{{forloop.counter}}th slide">
-                                           {% endif %}
-
-                                        </div>
-                                        <!--div class="col-sm-6 col-xs-12 pull-left">
-                                           <h3>{{showcase.title}}</h3>
-                                           <p>{{showcase.describe}}</p>
-
-                                           <label>Roles</label>:
-                                           <em>{{showcase.role1}}</em>
-                                           <label>Key words</label>:
-                                           <em>{{showcase.tag1}}</em>
-                                        </div-->
+                                     {% if forloop.counter == 1 %}
+                                         <div class="carousel-item active">
+                                     {% else %}
+                                         <div class="carousel-item">
+                                     {% endif %}
+                                     <form id="personalInfoForm" class="profileForm clearfix ">
                                         <div class="col-sm-10 col-xs-12 pull-left">
-                                            <div class="form-group">
-                                                <label for="profileTitle" class="tiny">Title</label>
-                                                <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled>
+
+                                            <div class="profileSubHeader clearfix">
+                                                <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_previouswork' forloop.counter %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="profileTitle" class="tiny">Discription</label>
-                                                <input type="textarea" class="form-control form-control-sm" id="proefileDiscription" value="{{showcase.describe}}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="profileRole" class="tiny">Your Role</label>
-                                                <input type="text" class="form-control form-control-sm" id="profileRole" value="{{showcase.role1}}" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="profileKeywords" class="tiny">Key words</label>
-                                                <input type="text" class="form-control form-control-sm"  id="profileKeywords" value="{{showcase.tag1}} {{showcase.tag2}}" disabled>
+
+                                            {% if showcase.image or showcase.video or showcase.youtube %}
+                                                {% if showcase.image %}
+                                                   <img class="d-block img-fluid" src="{{ showcase.image.url }}" alt="{{forloop.counter}}th slide">
+                                                {% endif %}
+
+                                                {% if showcase.video %}
+                                                   <video controls id="video">
+                                                       <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
+                                                   </video>
+                                                {% endif %}
+
+                                                {% if showcase.youtube %}
+                                                   <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+                                                {% endif %}
+
+                                            {% else %}
+                                                <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}" alt="{{forloop.counter}}th slide">
+                                            {% endif %}
+
+                                            <div class="col-sm-10 col-xs-12 pull-left">
+                                                <div class="form-group">
+                                                    <label for="profileTitle" class="tiny">Title</label>
+                                                    <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="profileTitle" class="tiny">Discription</label>
+                                                    <input type="textarea" class="form-control form-control-sm" id="proefileDiscription" value="{{showcase.describe}}" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="profileRole" class="tiny">Your Role</label>
+                                                    <input type="text" class="form-control form-control-sm" id="profileRole" value="{{showcase.role1}}" disabled>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="profileKeywords" class="tiny">Key words</label>
+                                                    <input type="text" class="form-control form-control-sm"  id="profileKeywords" value="{{showcase.tag1}} {{showcase.tag2}}" disabled>
+                                                </div>
                                             </div>
                                         </div>
-                                     </div>
-                                  </form>
+                                    </form>
+                                  </div>
                                 {% endfor %}
                               {% endif %}
                               </div>
                               <!--Carousel Inner-->
+                              <a class="carousel-control-prev" href="#carouselPortfolio" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span></a>
+                              <a class="carousel-control-next" href="#carouselPortfolio" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span></a>
                            </div>
-                           <!--Carousel Example Slides Only-->
-                           <!-- Controls -->
-                           <a class="carousel-control-prev" href="#carouselPortfolio" role="button" data-slide="prev">
-                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                           <span class="sr-only">Previous</span></a>
-                           <a class="carousel-control-next" href="#carouselPortfolio" role="button" data-slide="next">
-                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                           <span class="sr-only">Next</span></a>
                         </div>
 
                         <div class="profileSubHeader clearfix">
@@ -465,8 +452,8 @@
                               <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.status}}" disabled>
                               <label for="upcomingKeywords" class="tiny">Keywords</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}} {{upcoming.tag2}} {{upcoming.tag3}} {{upcoming.tag4}} {{upcoming.tag5}}" disabled>
-                              <label for="upcomingRaisingFunds" class="tiny">Raising funds</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds"  value="{{upcoming.fund}}" disabled>
+                              <!--label for="upcomingRaisingFunds" class="tiny">Raising funds</label>
+                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds"  value="{{upcoming.fund}}" disabled-->
                            </div>
                         </form>
                         <!-- upcoming project form ende -->       
@@ -488,8 +475,8 @@
                               <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.often}}" disabled>
                               <label for="upcomingRaisingFunds" class="tiny">Preferred city location of collaborator</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds" value="{{upcoming.preferred_city}}" disabled>
-                              <label for="collaboratorAdditionalInfo" class="tiny">Collaborator aditional Info</label>
-                              <input type="text" class="form-control form-control-sm" id="collaboratorAdditionalInfo" value="{{upcoming.comment_help}}" disabled>
+                              <label for="collaboratorAdditionalInfo" class="tiny">Comment</label>
+                              <input type="text" class="form-control form-control-sm" id="collaboratorAdditionalInfo" value="{{upcoming.comment}}" disabled>
                            </div>
                            <!--div class="col-sm-6 col-xs-12 pull-right">
                               <label for="formGroupTitle" class="tiny">Allow others to use or remix</label>

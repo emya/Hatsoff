@@ -1,4 +1,4 @@
-$('#token-skillfield').tokenfield({
+$('#token-skillfield, #token-collaboratorskillfield').tokenfield({
   autocomplete: {
     source: [ "Advertising" , "Advertisement management", "Archery", "Acoustic"
 , "Animation", "Ad Targeting", "Adobe Premiere", "Adobe Photoshop"

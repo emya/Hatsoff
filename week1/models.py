@@ -55,7 +55,7 @@ class Profile(models.Model):
     cities = models.CharField(max_length=200, default='', blank=True)
 
 class Showcase(models.Model):
-    user = models.ForeignKey(User, unique=True)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200, default='', blank=True)
     number = models.IntegerField(null=True)#1 to 10
     image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)
@@ -80,7 +80,7 @@ class Showcase(models.Model):
     tag10 = models.CharField(max_length=300, default='', blank=True)
     
 class UpcomingWork(models.Model):
-    user = models.ForeignKey(User, unique=True)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200, default='', blank=True)
     number = models.IntegerField()#1 to 10
     image = models.FileField(upload_to='showcaseimg/', null=True, blank=True)

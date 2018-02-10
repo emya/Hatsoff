@@ -389,7 +389,9 @@ def home_edit_personalinfo(request):
         if form.is_valid():
             personal = form.save(commit=False)
 
-            p_tags = request.POST.getlist('professiontags')
+            p_tags_ls = request.POST.getlist('professiontags')
+            p_tags = p_tags_ls[0].split(",")
+
             p_tagls = []
             for tag in p_tags:
                 lowtag = tag.capitalize()
@@ -399,7 +401,8 @@ def home_edit_personalinfo(request):
                 for i in range(5-len(p_tagls)):
                     p_tagls.append("")
 
-            s_tags = request.POST.getlist('skilltags')
+            s_tags_ls = request.POST.getlist('skilltags')
+            s_tags = s_tags_ls[0].split(",")
             s_tagls = []
             for tag in s_tags:
                 lowtag = tag.capitalize()
@@ -639,7 +642,8 @@ def home_edit_previouswork(request, num):
         form = Step5(request.POST, request.FILES, instance=instance, label_suffix="")
         if form.is_valid():
             work = form.save(commit=False)
-            tags = request.POST.getlist('professiontags')
+            tags_ls = request.POST.getlist('professiontags')
+            tags = tags_ls[0].split(",")            
 
             tagls = []
             for tag in tags:
@@ -663,7 +667,8 @@ def home_edit_previouswork(request, num):
             work.role4 = tagls[3]
             work.role5 = tagls[4]
 
-            projecttags = request.POST.getlist('projecttags')
+            ptags_ls = request.POST.getlist('projecttags')
+            projecttags = ptags_ls[0].split(",")            
 
             tagls = []
             for tag in projecttags:
@@ -731,7 +736,8 @@ def home_edit_newpreviouswork(request):
         if form.is_valid():
             work = form.save(commit=False)
 
-            tags = request.POST.getlist('professiontags')
+            tags_ls = request.POST.getlist('professiontags')
+            tags = tags_ls[0].split(",")            
 
             tagls = []
             for tag in tags:
@@ -755,7 +761,8 @@ def home_edit_newpreviouswork(request):
             work.role4 = tagls[3]
             work.role5 = tagls[4]
 
-            projecttags = request.POST.getlist('projecttags')
+            ptags_ls = request.POST.getlist('projecttags')
+            projecttags = ptags_ls[0].split(",")            
 
             tagls = []
             for tag in projecttags:
@@ -827,7 +834,8 @@ def home_edit_upcoming(request):
         if form.is_valid():
             work = form.save(commit=False)
 
-            ptags = request.POST.getlist('professiontags')
+            ptags_ls = request.POST.getlist('professiontags')
+            ptags = ptags_ls[0].split(",")            
 
             ptagls = []
             for tag in ptags:
@@ -851,7 +859,8 @@ def home_edit_upcoming(request):
             work.role4 = ptagls[3]
             work.role5 = ptagls[4]
 
-            ptags = request.POST.getlist('projecttags')
+            ptags_ls = request.POST.getlist('skilltags')
+            ptags = ptags_ls[0].split(",")            
 
             ptagls = []
             for tag in ptags:
@@ -874,66 +883,66 @@ def home_edit_upcoming(request):
             work.tag10 = ptagls[9]
 
             work.number = 1
-            get_help = form.cleaned_data["get_help"]
-            if get_help == 1 or get_help == 2:
-                work.fund = form.cleaned_data["fund"]
-                work.comment_help = form.cleaned_data["comment_help"]
-                tags = request.POST.getlist('tags')
-                tagls = []
-                for tag in tags:
-                    lowtag = tag.capitalize()
-                    tagls.append(lowtag)
-                    try:
-                        obj = Profession.objects.get(skill=lowtag)
-                        obj.count += 1
-                        obj.save()
-                    except Profession.DoesNotExist:
-                        obj = Profession(skill=lowtag, count=1)
-                        obj.save()
+            #get_help = form.cleaned_data["get_help"]
+            #if get_help == 1 or get_help == 2:
+            #work.fund = form.cleaned_data["fund"]
+            work.comment_help = form.cleaned_data["comment_help"]
 
-                if len(tagls) != 10:
-                    for i in range(10-len(tagls)):
-                        tagls.append("")
-                work.collaborator_skill1 = tagls[0] 
-                work.collaborator_skill2 = tagls[1] 
-                work.collaborator_skill3 = tagls[2] 
-                work.collaborator_skill4 = tagls[3] 
-                work.collaborator_skill5 = tagls[4] 
-                work.collaborator_skill6 = tagls[5] 
-                work.collaborator_skill7 = tagls[6] 
-                work.collaborator_skill8 = tagls[7] 
-                work.collaborator_skill9 = tagls[8] 
-                work.collaborator_skill10 = tagls[9] 
+            tags_ls = request.POST.getlist('collaboratorskilltags')
+            tags = tags_ls[0].split(",") 
 
-                ctags = request.POST.getlist('collaboratortags')
+            tagls = []
+            for tag in tags:
+                lowtag = tag.capitalize()
+                tagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession(skill=lowtag, count=1)
+                    obj.save()
 
-                ctagls = []
-                for tag in ctags:
-                    lowtag = tag.capitalize()
-                    ctagls.append(lowtag)
-                    try:
-                        obj = Profession.objects.get(skill=lowtag)
-                        obj.count += 1
-                        obj.save()
-                    except Profession.DoesNotExist:
-                        obj = Profession.objects.create(skill=lowtag, count=1)
-                        obj.save()
+            if len(tagls) != 10:
+                for i in range(10-len(tagls)):
+                    tagls.append("")
 
-                if len(ctagls) != 5:
-                    for i in range(5-len(ctagls)):
-                        ctagls.append("")
+            work.collaborator_skill1 = tagls[0] 
+            work.collaborator_skill2 = tagls[1] 
+            work.collaborator_skill3 = tagls[2] 
+            work.collaborator_skill4 = tagls[3] 
+            work.collaborator_skill5 = tagls[4] 
+            work.collaborator_skill6 = tagls[5] 
+            work.collaborator_skill7 = tagls[6] 
+            work.collaborator_skill8 = tagls[7] 
+            work.collaborator_skill9 = tagls[8] 
+            work.collaborator_skill10 = tagls[9] 
 
-                work.collaborator1 = ctagls[0]
-                work.collaborator2 = ctagls[1]
-                work.collaborator3 = ctagls[2]
-                work.collaborator4 = ctagls[3]
-                work.collaborator5 = ctagls[4]
+            ctags_ls = request.POST.getlist('collaboratortags')
+            ctags = ctags_ls[0].split(",") 
 
-                
+            ctagls = []
+            for tag in ctags:
+                lowtag = tag.capitalize()
+                ctagls.append(lowtag)
+                try:
+                    obj = Profession.objects.get(skill=lowtag)
+                    obj.count += 1
+                    obj.save()
+                except Profession.DoesNotExist:
+                    obj = Profession.objects.create(skill=lowtag, count=1)
+                    obj.save()
 
-            else:
-                work.fund = ""
-                work.comment_help = ""
+            if len(ctagls) != 5:
+                for i in range(5-len(ctagls)):
+                    ctagls.append("")
+
+            work.collaborator1 = ctagls[0]
+            work.collaborator2 = ctagls[1]
+            work.collaborator3 = ctagls[2]
+            work.collaborator4 = ctagls[3]
+            work.collaborator5 = ctagls[4]
+
             work.save()
 
             return HttpResponseRedirect('/week1/home/')

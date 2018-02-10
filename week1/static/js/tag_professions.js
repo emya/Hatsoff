@@ -1,4 +1,4 @@
-$('#token-professionfield').tokenfield({
+$('#token-professionfield, #token-collaboratorfield').tokenfield({
   autocomplete: {
     source: [ "Accountant" , "Account Manager", "Animator", "Android Developer"
 , "Application Engineer", "Administrator", "Art Director", "Art Gallery Creator"

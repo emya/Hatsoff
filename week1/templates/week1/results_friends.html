@@ -50,7 +50,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
 <script type="text/javascript">
-  socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+  socket.emit('join message', {uid:"{{user.uid}}", firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
   socket.emit('search query', "{{query}}");
 
   //$('#hatsoff').onclick(function(){

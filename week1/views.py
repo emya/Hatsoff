@@ -1007,7 +1007,7 @@ def results_search(request, query):
     t = loader.get_template('week1/results_friends.html')
     #temporary results
     try:
-        foundusers = User.objects.filter( Q(first_name=query) | Q(last_name=query) ).exclude(id=request.user.id)
+        foundusers = User.objects.filter( Q(first_name=query) | Q(last_name=query) ).exclude(id=request.user)
     except ObjectDoesNotExist:
         foundusers = None
 

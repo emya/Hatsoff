@@ -74,8 +74,8 @@
           var socket = io.connect("{{nodejs_url}}");
 
           /***new lines***/
-          socket.emit('join message', {uid:{{user.id}}, firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-          socket.emit('at community needs you', {uid:{{user.id}}, uname:"{{user.first_name}}"});
+          socket.emit('join message', {uid:"{{user.uid}}", firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+          socket.emit('at community needs you', {uid:"{{user.uid}}", uname:"{{user.first_name}}"});
           /***to here***/
 
           var users = [{% for u in users %} {{ u }} ,{% endfor %}];
@@ -89,7 +89,7 @@
           function shareFunction(uid, c_id){
             console.log('uid on share:'+uid+':'+c_id);
             popShared();
-	          socket.emit('share post', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	          socket.emit('share post', {to_uid:uid, uid:"{{user.uid}}", c_id:c_id});
           }
 
           function popShared(){
@@ -105,7 +105,7 @@
           function shareskillFunction(uid, c_id){
             console.log('uid on shareskill:'+uid+':'+c_id);
             popThankyou();
-	          socket.emit('share skill', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	          socket.emit('share skill', {to_uid:uid, uid:"{{user.uid}}", c_id:c_id});
           }
 
           function popThankyou(){
@@ -116,7 +116,7 @@
           function hatsoffFunction(uid){
             console.log('uid on hatsoff:'+uid);
             popHatsoff();
-	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.id}}});
+	          socket.emit('give hatsoff', {to_uid:uid, uid:{{user.uid}}});
           }
 
           function popHatsoff(){
@@ -127,7 +127,7 @@
           function thanksFunction(uid){
             console.log('uid on thanks:'+uid);
             popThanks();
-	          socket.emit('give thanks', {to_uid:uid, uid:{{user.id}}});
+	          socket.emit('give thanks', {to_uid:uid, uid:"{{user.uid}}"});
           }
 
           function popThanks(){
@@ -138,7 +138,7 @@
           function followFunction(uid){
             console.log('uid on follow:'+uid);
             popFollow();
-	          socket.emit('give follow', {to_uid:uid, uid:{{user.id}}});
+	          socket.emit('give follow', {to_uid:uid, uid:"{{user.uid}}"});
           }
 
           function popFollow(){
@@ -149,7 +149,7 @@
           function likeFunction(uid, c_id){
             console.log('uid on like:'+uid+':'+c_id);
             popLike();
-	          socket.emit('like community', {to_uid:uid, uid:{{user.id}}, c_id:c_id});
+	          socket.emit('like community', {to_uid:uid, uid:"{{user.uid}}", c_id:c_id});
           }
 
           function popLike(){
@@ -163,7 +163,7 @@
                     
             if (post_val.length != 0){
               console.log('comment:'+post_val);
-              socket.emit('community comment', {msg:post_val, user:{{user.id}}, c_id:c_id});
+              socket.emit('community comment', {msg:post_val, user:"{{user.uid}}", c_id:c_id});
             }
             $('#c_'+c_id).val('');
             return false;
@@ -221,14 +221,14 @@
                         }
 
                         if ( n != -1) {
-                           if (uid == {{user.id}}){
+                           if (uid == "{{user.uid}}"){
 
                               $('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews" >'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span></a><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment" style="display: block;">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                         } else{
                               $('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a href="'+url_link+'"><img class="profile_img" src="{{media_url}}'+photos[n]+'" alt="profile"></a><span class="media-heading text-uppercase reviews">'+'&nbsp'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                            }
                         } else{
-                           if (uid == {{user.id}}){
+                           if (uid == "{{user.uid}}"){
                               $('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));
                              } else{
                               $('#communityPost').append($('<li class="media"><div class="media-body"><div class="well well-lg"><a class="pull-left" href="'+url_link+'"><img class="profile_img" src="{% static 'images/profileimage.png' %}" alt="profile"></a><span class="media-heading text-uppercase reviews">'+docs[i]['user']['first_name']+'&nbsp'+docs[i]['user']['last_name']+'</span><ul class="media-date text-uppercase reviews list-inline"><li class="dd">22</li><li class="mm">09</li><li class="aaaa">2014</li></ul><a href="'+post_link+'"><p class="media-comment">'+docs[i]['content']+'</p></a>'+skillls+like+share+hatsoff+thanks+collaborate+comment+'</div></div></li>'));

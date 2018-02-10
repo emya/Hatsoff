@@ -165,9 +165,6 @@ def home(request):
     except UpcomingWork.DoesNotExist:
         upcomingwork = None
 
-    if profile:
-        print(profile.skill1, profile.skill2)
-
     return render_to_response('week1/home.html', {'user':currentuser, 'profile':profile, 'hatsusers':hatsusers, 'users':users, 'showcases':showcases, 'upcoming':upcomingwork, 'nodejs_url':nodejs_url, 'media_url':media_url})
 
 @login_required

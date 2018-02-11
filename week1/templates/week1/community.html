@@ -986,7 +986,7 @@ input[type="file"] {
                                     <div class="well well-sm personEntity">
                                         <div class="media">
                                             <a class="thumbnail pull-left" href="#">
-                                                <img class="media-object" src="{{media_url}}userphoto/{{user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                                                <img class="media-object" width="300" src="{{media_url}}userphoto/{{user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                             </a>
                                             <div class="media-body">
                                                 <div class="form-group">
@@ -1633,7 +1633,7 @@ input[type="file"] {
                   <div class="well well-sm personEntity" id="media_${cid}"">
                       <div class="media">
                           <a class="thumbnail pull-left" href="#">
-                              <img class="media-object" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                              <img class="media-object" width="300" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                           </a>
                           <div class="media-body">
                               ${editDelete} 

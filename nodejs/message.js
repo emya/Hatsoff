@@ -2353,7 +2353,7 @@ io.on('connection', function(socket){
     console.log('search query'+query);
 
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
-    db.all("SELECT week1_profile.user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
       socket.emit('get search result by profession', rows);
     });
 
@@ -2362,15 +2362,15 @@ io.on('connection', function(socket){
     });
 
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (auth_user.first_name=? OR auth_user.last_name=? ) GROUP BY week1_profile.user_id", [socket.uid, query, query], function(err, rows){
-    db.all("SELECT week1_profile.user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_user.first_name=? OR week1_user.last_name=? ) GROUP BY week1_profile.user_id ", [socket.uid, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_user.first_name=? OR week1_user.last_name=? ) GROUP BY week1_profile.user_id ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by user name', rows);
     });
 
-    db.all("SELECT week1_showcase.user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image, week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe FROM week1_showcase, week1_user WHERE week1_showcase.user_id!=? AND week1_showcase.user_id=auth_user.id AND (week1_showcase.tag1=? OR week1_showcase.tag2=? ) ", [socket.uid, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image, week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe FROM week1_showcase, week1_user WHERE week1_showcase.user_id!=? AND week1_showcase.user_id=auth_user.id AND (week1_showcase.tag1=? OR week1_showcase.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by portfolio', rows);
     });
 
-    db.all("SELECT week1_upcomingwork.user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, week1_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=week1_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, week1_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=week1_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by upcoming', rows);
     });
 

@@ -67,7 +67,7 @@
     if (docs){
        for (var i = 0; i < docs.length; i++){
           var uid = docs[i].user_id;
-          var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+          var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
           var firstname = docs[i].first_name;
           var lastname = docs[i].last_name;
           var profession1 = docs[i].profession1;
@@ -84,7 +84,7 @@
     if (docs){
        for (var i = 0; i < docs.length; i++){
           var uid = docs[i].user_id;
-          var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+          var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
           var firstname = docs[i].first_name;
           var lastname = docs[i].last_name;
           var profession1 = docs[i].profession1;
@@ -100,7 +100,7 @@
     if (docs) {
       for (var i = 0; i < docs.length; i++){
         var uid = docs[i].user_id;
-        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
         var firstname = docs[i].first_name;
         var lastname = docs[i].last_name;
         var profession1 = docs[i].profession1;
@@ -115,7 +115,7 @@
     if (docs) {
       for (var i = 0; i < docs.length; i++){
         var uid = docs[i].user_id;
-        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
         var firstname = docs[i].first_name;
         var lastname = docs[i].last_name;
         var title = (docs[i].title != undefined)?docs[i].title:"";
@@ -131,7 +131,7 @@
     if (docs) {
       for (var i = 0; i < docs.length; i++){
         var uid = docs[i].user_id;
-        var url_link = "{% url 'week1:get_profile' user.id %}".replace({{user.id}}, uid);
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
         var firstname = docs[i].first_name;
         var lastname = docs[i].last_name;
         var title = (docs[i].title != undefined)?docs[i].title:"";

@@ -371,7 +371,7 @@ io.on('connection', function(socket){
     });
 
     db.serialize(function() {
-      db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
+      db.each("SELECT week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10 FROM week1_profile, week1_user where week1_user.uid =? AND week1_user.id = week1_profile.user_id ", socket.uid, function(err, row) {
         if(err){
           console.log(err);
         }
@@ -415,15 +415,14 @@ io.on('connection', function(socket){
             //var uids = [];
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
             var liststr = "("+skillls.join(",")+")";
-            db.all("SELECT DISTINCT u.user_id, a.first_name, a.last_name, p.profession1 FROM week1_upcomingwork u, auth_user a, week1_profile p WHERE u.user_id=a.id AND u.user_id=p.user_id AND u.user_id!=? AND (u.collaborator_skill1 in "+tuplestr+" or u.collaborator_skill2 in "+tuplestr+" or u.collaborator_skill3 in "+tuplestr+" or u.collaborator_skill4 in "+tuplestr+" or u.collaborator_skill5 in "+tuplestr+" or u.collaborator_skill6 in "+tuplestr+" or u.collaborator_skill7 in "+tuplestr+" or u.collaborator_skill8 in "+tuplestr+" or u.collaborator_skill9 in "+tuplestr+" or u.collaborator_skill10 in "+tuplestr+") GROUP BY u.user_id limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
-            //db.all("SELECT DISTINCT user_id FROM week1_upcomingwork WHERE user_id!=? AND (collaborator_skill1 in "+tuplestr+" or collaborator_skill2 in "+tuplestr+" or collaborator_skill3 in "+tuplestr+" or collaborator_skill4 in "+tuplestr+" or collaborator_skill5 in "+tuplestr+" or collaborator_skill6 in "+tuplestr+" or collaborator_skill7 in "+tuplestr+" or collaborator_skill8 in "+tuplestr+" or collaborator_skill9 in "+tuplestr+" or collaborator_skill10 in "+tuplestr+") GROUP BY user_id limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
+            db.all("SELECT DISTINCT a.uid, a.first_name, a.last_name, p.profession1 FROM week1_upcomingwork u, week1_user a, week1_profile p WHERE u.user_id=a.id AND u.user_id=p.user_id AND a.uid!=? AND (u.collaborator_skill1 in "+tuplestr+" or u.collaborator_skill2 in "+tuplestr+" or u.collaborator_skill3 in "+tuplestr+" or u.collaborator_skill4 in "+tuplestr+" or u.collaborator_skill5 in "+tuplestr+" or u.collaborator_skill6 in "+tuplestr+" or u.collaborator_skill7 in "+tuplestr+" or u.collaborator_skill8 in "+tuplestr+" or u.collaborator_skill9 in "+tuplestr+" or u.collaborator_skill10 in "+tuplestr+") GROUP BY a.uid limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
               socket.emit('three collaborators need you', rows);
             });
           } 
         }
       });
 
-      db.each("SELECT collaborator_skill1, collaborator_skill2, collaborator_skill3, collaborator_skill4, collaborator_skill5, collaborator_skill6, collaborator_skill7, collaborator_skill8, collaborator_skill9, collaborator_skill10 FROM week1_upcomingwork where user_id=? limit 1", socket.uid, function(err, row) {
+      db.each("SELECT uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10 FROM week1_upcomingwork uw, week1_user u where u.id=uw.user_id AND u.uid=? limit 1", socket.uid, function(err, row) {
         if(err){
           console.log(err);
         }
@@ -441,11 +440,9 @@ io.on('connection', function(socket){
             }
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
             var liststr = "("+skillls.join(",")+")";
-            db.all("SELECT p.user_id, a.first_name, a.last_name, p.profession1 FROM week1_profile p, auth_user a WHERE p.user_id!=? AND p.user_id=a.id AND (p.skill1 in "+tuplestr+" or p.skill2 in "+tuplestr+" or p.skill3 in "+tuplestr+" or p.skill4 in "+tuplestr+" or p.skill5 in "+tuplestr+" or p.skill6 in "+tuplestr+" or p.skill7 in "+tuplestr+" or p.skill8 in "+tuplestr+" or p.skill9 in "+tuplestr+" or p.skill10 in "+tuplestr+") GROUP BY p.user_id limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
-            //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND (week1_profile.skill1 in "+tuplestr+" or week1_profile.skill2 in "+tuplestr+" or week1_profile.skill3 in "+tuplestr+" or week1_profile.skill4 in "+tuplestr+" or week1_profile.skill5 in "+tuplestr+" or week1_profile.skill6 in "+tuplestr+" or week1_profile.skill7 in "+tuplestr+" or week1_profile.skill8 in "+tuplestr+" or week1_profile.skill9 in "+tuplestr+" or week1_profile.skill10 in "+tuplestr+") GROUP BY week1_profile.user_id", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
+            db.all("SELECT a.uid, a.first_name, a.last_name, p.profession1 FROM week1_profile p, week1_user a WHERE a.uid!=? AND p.user_id=a.id AND (p.skill1 in "+tuplestr+" or p.skill2 in "+tuplestr+" or p.skill3 in "+tuplestr+" or p.skill4 in "+tuplestr+" or p.skill5 in "+tuplestr+" or p.skill6 in "+tuplestr+" or p.skill7 in "+tuplestr+" or p.skill8 in "+tuplestr+" or p.skill9 in "+tuplestr+" or p.skill10 in "+tuplestr+") GROUP BY a.uid limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
               socket.emit('three collaborators you need', rows);
             });
-            
           }
         }
       });
@@ -2350,27 +2347,26 @@ io.on('connection', function(socket){
   });
 
   socket.on('search query', function(query){
-    console.log('search query'+query);
 
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
-    db.all("SELECT week1_profile.user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
       socket.emit('get search result by profession', rows);
     });
 
-    db.all("SELECT week1_profile.user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
       socket.emit('get search result by skill', rows);
     });
 
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (auth_user.first_name=? OR auth_user.last_name=? ) GROUP BY week1_profile.user_id", [socket.uid, query, query], function(err, rows){
-    db.all("SELECT week1_profile.user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_user.first_name=? OR week1_user.last_name=? ) GROUP BY week1_profile.user_id ", [socket.uid, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_user.first_name=? OR week1_user.last_name=? ) GROUP BY week1_profile.user_id ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by user name', rows);
     });
 
-    db.all("SELECT week1_showcase.user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image, week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe FROM week1_showcase, week1_user WHERE week1_showcase.user_id!=? AND week1_showcase.user_id=auth_user.id AND (week1_showcase.tag1=? OR week1_showcase.tag2=? ) ", [socket.uid, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image, week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe FROM week1_showcase, week1_user WHERE week1_showcase.user_id!=? AND week1_showcase.user_id=auth_user.id AND (week1_showcase.tag1=? OR week1_showcase.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by portfolio', rows);
     });
 
-    db.all("SELECT week1_upcomingwork.user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, week1_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=week1_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
+    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, week1_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=week1_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by upcoming', rows);
     });
 

@@ -210,10 +210,12 @@ def step1(request):
         if form.is_valid():
             step = form.save(commit=False)
             #step = form.save(commit=False)
-            tags = request.POST.getlist('professiontags')
+            tags_ls = request.POST.getlist('professiontags')
+            tags = tags_ls[0].split(",")
 
             tagls = []
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -285,13 +287,15 @@ def step3(request):
     instance = get_object_or_404(Profile, user=currentuser)
 
     if request.method == 'POST':
-        tags = request.POST.getlist('skilltags')
+        tags_ls = request.POST.getlist('skilltags')
+        tags = tags_ls[0].split(",")
 
         form = Step3(request.POST, label_suffix="", instance=instance)
 
         if form.is_valid():
             tagls = []
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -394,6 +398,7 @@ def home_edit_personalinfo(request):
 
             p_tagls = []
             for tag in p_tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 p_tagls.append(lowtag)
 
@@ -405,6 +410,7 @@ def home_edit_personalinfo(request):
             s_tags = s_tags_ls[0].split(",")
             s_tagls = []
             for tag in s_tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 s_tagls.append(lowtag)
 
@@ -481,6 +487,7 @@ def home_edit_profession(request):
 
             tagls = []
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -534,6 +541,7 @@ def home_edit_professionskills(request):
 
         if form.is_valid():
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -647,6 +655,7 @@ def home_edit_previouswork(request, num):
 
             tagls = []
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -672,6 +681,7 @@ def home_edit_previouswork(request, num):
 
             tagls = []
             for tag in projecttags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -741,6 +751,7 @@ def home_edit_newpreviouswork(request):
 
             tagls = []
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -766,6 +777,7 @@ def home_edit_newpreviouswork(request):
 
             tagls = []
             for tag in projecttags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -839,6 +851,7 @@ def home_edit_upcoming(request):
 
             ptagls = []
             for tag in ptags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 ptagls.append(lowtag)
                 try:
@@ -864,6 +877,7 @@ def home_edit_upcoming(request):
 
             ptagls = []
             for tag in ptags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 ptagls.append(lowtag)
 
@@ -893,6 +907,7 @@ def home_edit_upcoming(request):
 
             tagls = []
             for tag in tags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 tagls.append(lowtag)
                 try:
@@ -923,6 +938,7 @@ def home_edit_upcoming(request):
 
             ctagls = []
             for tag in ctags:
+                tag = tag.lstrip(' ')
                 lowtag = tag.capitalize()
                 ctagls.append(lowtag)
                 try:

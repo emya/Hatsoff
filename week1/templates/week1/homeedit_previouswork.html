@@ -20,28 +20,14 @@
                     <!--embed id="blah" src="#" alt="your image" class="maincontent" /><br/-->
                 <!--br>{{form.video.label_tag}}</br> {{form.video}}<br/-->
                 <br>{{form.youtube.label_tag}}</br> {{form.youtube}}<br/>
-                <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
-                <br>{{form.role1.label_tag}}<!--/br>{{form.role}}<br/-->
-                <ul id="myTagProfessions">
-                    <li>{{ form.role1.value }}</li>
-                    <li>{{ form.role2.value }}</li>
-                    <li>{{ form.role3.value }}</li>
-                    <li>{{ form.role4.value }}</li>
-                    <li>{{ form.role5.value }}</li>
-                </ul>
 
-                <br>{{form.tag1.label_tag}}<!--/br>{{form.role}}<br/-->
-                <ul id="myTagProjects">
-                    <li>{{ form.tag1.value }}</li>
-                    <li>{{ form.tag2.value }}</li>
-                    <li>{{ form.tag3.value }}</li>
-                    <li>{{ form.tag4.value }}</li>
-                    <li>{{ form.tag5.value }}</li>
-                    <li>{{ form.tag6.value }}</li>
-                    <li>{{ form.tag7.value }}</li>
-                    <li>{{ form.tag8.value }}</li>
-                    <li>{{ form.tag9.value }}</li>
-                    <li>{{ form.tag10.value }}</li>
+                <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
+                <br>{{form.role1.label_tag}}</br> 
+<input type="text" class="form-control" id="token-professionfield" name="professiontags" value="{{form.role1.value}}, {{form.role2.value}}, {{form.role3.value}}, {{form.role4.value}}, {{form.role5.value}}"/>
+
+
+                <br>{{form.tag1.label_tag}}
+<input type="text" class="form-control" id="token-skillfield" value="{{form.tag1.value}}, {{form.tag2.value}}, {{form.tag3.value}}, {{form.tag4.value}}, {{form.tag5.value}}, {{form.tag6.value}}, {{form.tag7.value}}, {{form.tag8.value}}, {{form.tag9.value}}, {{form.tag10.value}}" name="projecttags" />
                 </ul>
 
                 <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
@@ -60,12 +46,18 @@
 
 </div>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $("#myTagProfessions").tagprofession();
-    $("#myTagProjects").tagproject();
-});
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+<script src="{% static 'js/tag_professions.js' %}"></script>
+<script src="{% static 'js/tag_skills.js' %}"></script>
+<script type="text/javascript">
 
 window.onload = function (){
     {% if form.instance.image %}

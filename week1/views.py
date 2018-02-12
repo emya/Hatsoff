@@ -1014,7 +1014,6 @@ def reset_sent(request):
 
 @login_required
 def results_search(request, query):
-    print(query)
     newquery = request.GET.get('srch-term', None)
     
     if newquery:
@@ -1028,7 +1027,6 @@ def results_search(request, query):
     except ObjectDoesNotExist:
         foundusers = None
 
-    print(foundusers)
     q = query.capitalize()
     try:
         foundskills = Profile.objects.filter( Q(skill1=q) | Q(skill2=q) | Q(skill3=q) | Q(skill4=q) | Q(skill5=q) | Q(skill6=q) | Q(skill7=q) | Q(skill8=q) | Q(skill9=q) | Q(skill10=q)).exclude(id=request.user.id)

@@ -260,7 +260,6 @@ io.on('connection', function(socket){
      CommunityMember.find({}).remove().exec();
      FollowPost.find({}).remove().exec();
      */
-     console.log("join message");
 
      socket.uid = data.uid;
      socket.firstname = data.firstname;
@@ -2348,7 +2347,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('search query', function(query){
-    console.log('search query'+query);
 
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
     db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){

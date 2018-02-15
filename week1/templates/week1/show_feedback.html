@@ -10,11 +10,30 @@
         <h3>Feedback</h3>
         <ul>
         {% for f in feedback %}
-            <p>{{f.like_about_mh}}</p>
-            <p>{{f.interaction}}</p>
-            <p>{{f.improve}}</p>
-            <p>{{f.favorite_feature}}</p>
-            <p>{{f.body}}</p>
+            {% if f.like_about_mh %}
+                <h4>Anything you like about MatchHat?</h4>
+                <p>{{f.like_about_mh}}</p>
+            {% endif %}
+ 
+            {% if f.interaction %}
+                <h4>If there were great collaborators on the site how would you like to interact with them?</h4>
+                <p>{{f.interaction}}</p>
+            {% endif %}
+
+            {% if f.improve %}
+                <h4>Anything you would like us to improve?</h4>
+                <p>{{f.improve}}</p>
+            {% endif %}
+
+            {% if f.favorite_feature %}
+                <h4>What's one feature you would love to see?</h4>
+                <p>{{f.favorite_feature}}</p>
+            {% endif %}
+
+            {% if f.body %}
+                <h4>Anything else?</h4>
+                <p>{{f.body}}</p>
+            {% endif %}
         {% endfor %}
         </ul>
      </div>

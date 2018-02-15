@@ -11,6 +11,10 @@
         {{ form.errors }}
         <form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                 <!--br>{{form.collaborators.label_tag}}</br> {{form.collaborators}}<br/-->
+                <br>{{form.like_about_mh.label_tag}}</br> {{form.like_about_mh}}<br/>
+                <br>{{form.interaction.label_tag}}</br> {{form.interaction}}<br/>
+                <br>{{form.improve.label_tag}}</br> {{form.improve}}<br/>
+                <br>{{form.favorite_feature.label_tag}}</br> {{form.favorite_feature}}<br/>
                 <br>{{form.body.label_tag}}</br> {{form.body}}<br/>
                 <!--br>{{form.availableHours.label_tag}}</br> {{form.availableHours}}<br/>
                 <br>{{form.rate.label_tag}}</br> {{form.rate}}<br/-->

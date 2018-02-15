@@ -377,7 +377,7 @@ io.on('connection', function(socket){
               week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10
           FROM
               week1_profile, week1_user
-          WHERE week1_user.uid=${socket.uid} AND week1_user.id = week1_profile.user_id 
+          WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
       `;
       //db.each("SELECT week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10 FROM week1_profile, week1_user where week1_user.uid =? AND week1_user.id = week1_profile.user_id ", socket.uid, function(err, row) {
       db.each(base_query, function(err, row) {
@@ -423,14 +423,14 @@ io.on('connection', function(socket){
 
             //var uids = [];
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-            var liststr = "("+skillls.join(",")+")";
+            var liststr = "('"+skillls.join("','")+"')";
             var collaborator_skill_query = `
                 SELECT DISTINCT 
                     a.uid, a.first_name, a.last_name, p.profession1
                 FROM 
                     week1_upcomingwork u, week1_user a, week1_profile p 
                 WHERE 
-                    u.user_id=a.id AND u.user_id=p.user_id AND a.uid!=${socket.uid} AND
+                    u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
                    (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or u.collaborator_skill10 in ${liststr})
                 GROUP BY a.uid limit 3
                 `;
@@ -448,7 +448,7 @@ io.on('connection', function(socket){
               uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10
           FROM
               week1_upcomingwork uw, week1_user u 
-          WHERE u.id=uw.user_id AND u.uid=${socket.uid} limit 1
+          WHERE u.id=uw.user_id AND u.uid='${socket.uid}' limit 1
       `;
 
       //db.each("SELECT uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10 FROM week1_upcomingwork uw, week1_user u where u.id=uw.user_id AND u.uid=? limit 1", socket.uid, function(err, row) {
@@ -469,12 +469,12 @@ io.on('connection', function(socket){
               }
             }
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-            var liststr = "("+skillls.join(",")+")";
+            var liststr = "('"+skillls.join("','")+"')";
             var profession_query = `
                 SELECT
                     a.uid, a.first_name, a.last_name, p.profession1 
                 FROM week1_profile p, week1_user a 
-                WHERE a.uid!=${socket.uid} AND p.user_id=a.id AND 
+                WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
                   (p.skill1 in ${liststr} or p.skill2 in ${liststr} or p.skill3 in ${liststr} or p.skill4 in ${liststr} or p.skill5 in ${liststr} or p.skill6 in ${liststr} or p.skill7 in ${liststr} or p.skill8 in ${liststr} or p.skill9 in ${liststr} or p.skill10 in ${liststr} )
                 GROUP BY a.uid limit 3
             `;
@@ -492,7 +492,7 @@ io.on('connection', function(socket){
               uw.collaborator1, uw.collaborator2, uw.collaborator3, uw.collaborator4, uw.collaborator5 
           FROM
               week1_upcomingwork uw, week1_user u 
-          WHERE u.id=uw.user_id AND u.uid=${socket.uid} limit 1
+          WHERE u.id=uw.user_id AND u.uid='${socket.uid}' limit 1
       `;
 
       //db.each("SELECT uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10 FROM week1_upcomingwork uw, week1_user u where u.id=uw.user_id AND u.uid=? limit 1", socket.uid, function(err, row) {
@@ -513,12 +513,12 @@ io.on('connection', function(socket){
               }
             }
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-            var liststr = "("+professions.join(",")+")";
+            var liststr = "('"+professions.join("','")+"')";
             var profession_query = `
                 SELECT
                     a.uid, a.first_name, a.last_name, p.profession1 
                 FROM week1_profile p, week1_user a 
-                WHERE a.uid!=${socket.uid} AND p.user_id=a.id AND 
+                WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
                   (p.profession1 in ${liststr} or p.profession2 in ${liststr} or p.profession3 in ${liststr} or p.profession4 in ${liststr} or p.profession5 in ${liststr} )
                 GROUP BY a.uid limit 3
             `;

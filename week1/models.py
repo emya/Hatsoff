@@ -128,6 +128,10 @@ class UpcomingWork(models.Model):
     tag10 = models.CharField(max_length=300, default='', blank=True)
 
 class Feedback(models.Model):
+    like_about_mh = models.CharField(max_length=500, default='', blank=True)
+    interaction = models.CharField(max_length=500, default='', blank=True)
+    improve = models.CharField(max_length=500, default='', blank=True)
+    favorite_feature = models.CharField(max_length=500, default='', blank=True)
     body = models.CharField(max_length=500, default='', blank=True)
 
 class Hatsoff(models.Model):

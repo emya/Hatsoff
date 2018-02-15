@@ -10,6 +10,10 @@
         <h3>Feedback</h3>
         <ul>
         {% for f in feedback %}
+            <p>{{f.like_about_mh}}</p>
+            <p>{{f.interaction}}</p>
+            <p>{{f.improve}}</p>
+            <p>{{f.favorite_feature}}</p>
             <p>{{f.body}}</p>
         {% endfor %}
         </ul>

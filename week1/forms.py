@@ -269,11 +269,19 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         widgets = {
+            'like_about_mh': forms.Textarea(attrs={'cols': 70, 'rows': 5}),
+            'interaction': forms.Textarea(attrs={'cols': 70, 'rows': 5}),
+            'improve': forms.Textarea(attrs={'cols': 70, 'rows': 5}),
+            'favorite_feature': forms.Textarea(attrs={'cols': 70, 'rows': 5}),
             'body': forms.Textarea(attrs={'cols': 70, 'rows': 5}),
         }
-        fields = ('body',)
+        fields = ('body', 'like_about_mh', 'interaction', 'improve', 'favorite_feature')
         labels = {
-            'body': _('Please share your opinion with us'),
+            'like_about_mh': _('Anything you like about MatchHat?'),
+            'interaction': _('If there were great collaborators on the site how would you like to interact with them?'),
+            'improve': _('Anything you would like us to improve? (We know we have a long way to go...)'),
+            'favorite_feature': _('What\'s one feature you would love to see?'),
+            'body': _('Anything else?'),
         }
     def clean(self):
         cleaned_data = self.cleaned_data

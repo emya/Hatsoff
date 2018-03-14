@@ -1022,21 +1022,11 @@ def results_search(request, query):
     nodejs_url = settings.NODEJS_SOCKET_URL
     t = loader.get_template('week1/results_friends.html')
     #temporary results
-    try:
-        foundusers = User.objects.filter( Q(first_name=query) | Q(last_name=query) ).exclude(id=request.user)
-    except ObjectDoesNotExist:
-        foundusers = None
-
-    q = query.capitalize()
-    try:
-        foundskills = Profile.objects.filter( Q(skill1=q) | Q(skill2=q) | Q(skill3=q) | Q(skill4=q) | Q(skill5=q) | Q(skill6=q) | Q(skill7=q) | Q(skill8=q) | Q(skill9=q) | Q(skill10=q)).exclude(id=request.user.id)
-    except ObjectDoesNotExist:
-        foundskills = None
 
     currentuser = User.objects.get(uid=request.user)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'query':q, 'users':foundusers, 'skills':foundskills, 'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 
@@ -1285,6 +1275,7 @@ def community(request):
 
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
+    community_post_url = settings.COMMUNITY_POST_URL
 
     allusers = list(User.objects.all())
 
@@ -1307,7 +1298,7 @@ def community(request):
 
     currentuser = User.objects.get(uid=request.user)
 
-    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'username':usernames, 'users':users})
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'community_post_url':community_post_url, 'username':usernames, 'users':users})
     return render_to_response('week1/community.html', variables, )
 
 @login_required

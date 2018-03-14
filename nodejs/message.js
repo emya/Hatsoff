@@ -1,5 +1,6 @@
 var app = require('express')();
 var async = require('async');
+var aws = require('aws-sdk');
 var http = require('http').Server(app);
 var io = require('socket.io').listen(app.listen(8889));
 var mongoose = require('mongoose')
@@ -16,6 +17,12 @@ var client = redis.createClient();
 client.on('connect', function() {
     console.log('redis connected');
 });
+
+var config = require('./config');
+
+aws.config.update({ accessKeyId: config.aws.accessKeyId, secretAccessKey: config.aws.secretAccessKey });
+
+var s3 = new aws.S3();
 
 /** redis
 var redis = require('redis');
@@ -57,7 +64,7 @@ var communitySchema = mongoose.Schema({
   content: String,
   portfolio : { image: String, title: String, description: String},
   upcoming : { image: String, title: String, description: String},
-  image: { data: Buffer, contentType: String },
+  image: { data: Boolean, contentType: String },
   replys: [replySchema],
   skillls: [String],
   tag: Number,//1: Yes, -1: No
@@ -1643,7 +1650,7 @@ io.on('connection', function(socket){
 
     var newPost;    
     if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data: true, contentType: data.data['type']}, shares:0, likes:0});
     }else{
       newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, shares:0, likes:0});
     }
@@ -1651,15 +1658,30 @@ io.on('connection', function(socket){
       if (err) {
         console.log(err);
       } else{
+
+        var image = { data: false }
+
+        if (data.data){
+          s3.putObject({
+            Bucket: 'matchhat-community-posts',
+            Key: post.id + '.png',
+            Body: data.data['file'],
+            ACL: 'public-read'
+          }, function (resp) {
+            console.log('Successfully uploaded package.');
+          });
+          image = { data: true, contentType: data.data['type'] }
+        }
+
         CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
           if(!result){
-            socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+            socket.emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
           }else{
             var friends = result.friends;
-            socket.emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+            socket.emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
             for (var i = 0; i < friends.length; i++){
               if (friends[i] in users){
-                users[friends[i]].emit('new private post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+                users[friends[i]].emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
               }
             }
           }

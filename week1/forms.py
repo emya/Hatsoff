@@ -123,7 +123,7 @@ class Step4(forms.ModelForm):
                     validate = URLValidator()
                     try:
                         validate(url)
-                    except ValidationError, e:
+                    except ValidationError as e:
                         raise forms.ValidationError("Please check that your username or password is correct.")
         return cleaned_data
 

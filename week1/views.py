@@ -625,8 +625,7 @@ def home_edit_photo(request):
 
             profile = Profile.objects.get(user=currentuser)
             return HttpResponseRedirect('/week1/home/')
-        else:
-            print "error", form.errors
+       
 
     else:
         form = PersonalPhoto(instance=instance, label_suffix="")

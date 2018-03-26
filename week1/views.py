@@ -1026,7 +1026,7 @@ def results_search(request, query):
     currentuser = User.objects.get(uid=request.user)
     profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile})
+    variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'query': query})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 
@@ -1312,9 +1312,8 @@ def community_members(request):
     media_url = settings.MEDIA_URL
 
     currentuser = User.objects.get(uid=request.user)
-    profile = Profile.objects.get(user=currentuser)
 
-    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url, 'profile':profile })
+    variables = RequestContext(request, {'media_url':media_url, 'nodejs_url':nodejs_url })
     return render_to_response('week1/community_members.html', variables, )
 
 @login_required

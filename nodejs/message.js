@@ -2536,7 +2536,7 @@ io.on('connection', function(socket){
         if (err) {
             return console.error('Error executing query', err.stack)
         }
-        socket.emit('get search result by skill', result.row);
+        socket.emit('get search result by skill', result.rows);
       });
 
     });
@@ -2555,7 +2555,7 @@ io.on('connection', function(socket){
         if (err) {
             return console.error('Error executing query', err.stack)
         }
-        socket.emit('get search result by user name', result.row);
+        socket.emit('get search result by user name', result.rows);
       });
 
     });
@@ -2574,7 +2574,7 @@ io.on('connection', function(socket){
         if (err) {
             return console.error('Error executing query', err.stack)
         }
-        socket.emit('get search result by portfolio', result.row);
+        socket.emit('get search result by portfolio', result.rows);
       });
 
     });
@@ -2593,7 +2593,7 @@ io.on('connection', function(socket){
         if (err) {
             return console.error('Error executing query', err.stack)
         }
-        socket.emit('get search result by upcoming', result.row);
+        socket.emit('get search result by upcoming', result.rows);
       });
 
     });

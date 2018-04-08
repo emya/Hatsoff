@@ -59,7 +59,8 @@ sub.on('connect', function(){
 redis **/
 
 var mongoHost = config.mongo.host;
-mongoose.connect('mongodb://${mongoHost}/communitypost', function(err){
+
+mongoose.connect(`mongodb://${mongoHost}/communitypost`, function(err){
   if (err){
  	console.log(err);
   } else{
@@ -260,10 +261,6 @@ app.get('/', function(req, res){
 
 app.get('/', function(req, res){
   res.sendFile('../week1/templates/week1/results_friends.html');
-});
-
-io.on('connection', function(socket){
-  //console.log('a user connected');
 });
 
 io.on('connection', function(socket){
@@ -574,8 +571,6 @@ io.on('connection', function(socket){
           }
         }
       });
-
-
     });
 
     CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
@@ -833,7 +828,6 @@ io.on('connection', function(socket){
           }
         }
       });
-
   });
 
   socket.on('at collaborators need you', function(data){
@@ -865,7 +859,6 @@ io.on('connection', function(socket){
           } 
         }
       });
-
   });
 
   socket.on('at talent list', function(data){
@@ -1184,10 +1177,11 @@ io.on('connection', function(socket){
         ], function(err, result){
           console.log("err:"+err);
         }); 
-
   });
  
   socket.on('at userpage', function(data){
+    console.log("at userpage");
+
     var query = CommentPost.find({'to_uid':data.to_uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -1271,7 +1265,7 @@ io.on('connection', function(socket){
 
     // Follow status 0:not following, 1:following
     //1: sent request, 2:accepted, 3:blocked
-     FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
+    FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
       if(error) throw error;
          
       FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
@@ -1894,13 +1888,15 @@ io.on('connection', function(socket){
       uid1 = data.to_uid; 
       action_user = 2;
     }
-    
+
     FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
       if(err){
       }else{
 
         if(!result){
+
           var newPost = new FollowPost({uid1:uid1, uid2:uid2, action_user:action_user, status:1});
+
           newPost.save(function(err){
             if (err) {
               console.log(err);

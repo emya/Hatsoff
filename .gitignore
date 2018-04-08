@@ -5,7 +5,7 @@ week1/*2.py
 week1/*.pyc
 week1/migrations/*
 
-#db.sqlite3
+db.sqlite3
 *.swp
 *.pyc
 week1/*.pyc
@@ -13,4 +13,5 @@ hatsoff/*.pyc
 hatsoff/week1/*.pyc
 week1/static/images
 nodejs/config.js
+ho_env
 

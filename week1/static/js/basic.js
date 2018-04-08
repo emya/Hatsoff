@@ -143,10 +143,19 @@ function unhatsoffCommunityFunction(uid, c_id){
     hatsoff.innerHTML = '<img src="/static/images/inactive_grey_hat_32x32.png" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')">';
 }
 
+/*
+function change(){
+    var elem = document.getElementById("myButton1");
+    if (elem.value=="Close Curtain") elem.value = "Open Curtain";
+    else elem.value = "Close Curtain";
+}
+*/
+
 // Status
 // 0: new request
 // 1: accept request
 function addCommunityFunction(uid, status = 0){
+    console.log("add community");
     socket.emit('give follow', {to_uid:uid, uid:socket.uid});
 
     var elem = document.getElementsByClassName('follow_status_'+uid);

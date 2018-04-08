@@ -24,6 +24,19 @@ aws.config.update({ accessKeyId: config.aws.accessKeyId, secretAccessKey: config
 
 var s3 = new aws.S3();
 
+var pg = require('pg');
+var pgUser = config.pg.username;
+var pgPassword = config.pg.password;
+var pgHost = config.pg.host;
+
+var pgConfig = {
+    user: pgUser,
+    database: 'postgres',
+    host: pgHost,
+    password: pgPassword,
+    port: 5432
+};
+
 /** redis
 var redis = require('redis');
 var sub = redis.createClient();
@@ -45,7 +58,9 @@ sub.on('connect', function(){
   });
 redis **/
 
-mongoose.connect('mongodb://localhost/communitypost', function(err){
+var mongoHost = config.mongo.host;
+
+mongoose.connect(`mongodb://${mongoHost}/communitypost`, function(err){
   if (err){
  	console.log(err);
   } else{
@@ -249,10 +264,6 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  //console.log('a user connected');
-});
-
-io.on('connection', function(socket){
 
   socket.on('join message', function(data){
     /*
@@ -294,11 +305,34 @@ io.on('connection', function(socket){
         tuplestr = tuplestr.substring(0, tuplestr.length - 1);
         tuplestr += ")";
 
+        var liststr = "('"+friends.join("','")+"')";
+        var query = `
+                SELECT
+                   DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1,
+                            week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+                FROM week1_user, week1_profile
+                WHERE week1_profile.user_id==week1_user.id AND week1_profile.user_id in ${liststr}
+                `
+        var pool = new pg.Pool(pgConfig);
+
+        pool.connect(function(err, client, release) {
+          client.query(query, function(err, result){
+            release();
+            if (err) {
+                return console.error('Error executing query', err.stack)
+            }
+            socket.emit('get community members', result.rows);
+          });
+        });
+        
+        pool.end()
+
+        /*
         var liststr = "("+friends.join(",")+")";
         db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM auth_user, week1_profile WHERE week1_profile.user_id==auth_user.id AND week1_profile.user_id in "+tuplestr, friends, function(err, rows){
-          //db.all("SELECT user_id FROM week1_profile WHERE user_id!=? AND ( skill1 in "+tuplestr+" or skill2 in "+tuplestr+" or skill3 in "+tuplestr+" or skill4 in "+tuplestr+" or skill5  )", (socket.uid, skillls, skillls), function(err, rows){
           socket.emit('get community members', rows);
         });
+        */
       }
     });
   });
@@ -537,8 +571,6 @@ io.on('connection', function(socket){
           }
         }
       });
-
-
     });
 
     CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
@@ -796,7 +828,6 @@ io.on('connection', function(socket){
           }
         }
       });
-
   });
 
   socket.on('at collaborators need you', function(data){
@@ -828,7 +859,6 @@ io.on('connection', function(socket){
           } 
         }
       });
-
   });
 
   socket.on('at talent list', function(data){
@@ -1147,10 +1177,11 @@ io.on('connection', function(socket){
         ], function(err, result){
           console.log("err:"+err);
         }); 
-
   });
  
   socket.on('at userpage', function(data){
+    console.log("at userpage");
+
     var query = CommentPost.find({'to_uid':data.to_uid});
     query.sort('-created').limit(30).exec(function(err, docs){
       if (err) throw err;
@@ -1234,7 +1265,7 @@ io.on('connection', function(socket){
 
     // Follow status 0:not following, 1:following
     //1: sent request, 2:accepted, 3:blocked
-     FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
+    FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
       if(error) throw error;
          
       FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
@@ -1857,13 +1888,15 @@ io.on('connection', function(socket){
       uid1 = data.to_uid; 
       action_user = 2;
     }
-    
+
     FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
       if(err){
       }else{
 
         if(!result){
+
           var newPost = new FollowPost({uid1:uid1, uid2:uid2, action_user:action_user, status:1});
+
           newPost.save(function(err){
             if (err) {
               console.log(err);
@@ -2462,7 +2495,108 @@ io.on('connection', function(socket){
   });
 
   socket.on('search query', function(query){
+    var pool = new pg.Pool(pgConfig);
 
+    pool.connect(function(err, client, release) {
+      var profession_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+        FROM week1_profile, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+        AND ( week1_profile.profession1='${query}' OR week1_profile.profession2='${query}' OR week1_profile.profession3='${query}'
+              OR week1_profile.profession4='${query}' OR week1_profile.profession5='${query}')
+      `;
+
+      client.query(profession_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get search result by profession', result.rows);
+      });
+    });
+
+    pool.connect(function(err, client, release) {
+      var skill_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+        FROM week1_profile, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+        AND ( week1_profile.skill1='${query}' OR week1_profile.skill2='${query}' OR week1_profile.skill3='${query}'
+              OR week1_profile.skill4='${query}' OR week1_profile.skill5='${query}' OR week1_profile.skill6='${query}'
+              OR week1_profile.skill7='${query}' OR week1_profile.skill8='${query}' OR week1_profile.skill9='${query}' OR week1_profile.skill10='${query}')
+      `;
+
+      client.query(skill_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get search result by skill', result.rows);
+      });
+
+    });
+
+    pool.connect(function(err, client, release) {
+      var username_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+        FROM week1_profile, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+        AND ( week1_user.first_name='${query}' OR week1_user.last_name='${query}' )
+      `;
+
+      client.query(username_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get search result by user name', result.rows);
+      });
+
+    });
+
+    pool.connect(function(err, client, release) {
+      var portfolio_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image,
+               week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe
+        FROM week1_showcase, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_showcase.user_id=week1_user.id
+        AND ( week1_showcase.tag1='${query}' OR week1_showcase.tag2='${query}' )
+      `;
+
+      client.query(portfolio_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get search result by portfolio', result.rows);
+      });
+
+    });
+
+    pool.connect(function(err, client, release) {
+      var upcoming_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image,
+               week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe
+        FROM week1_upcomingwork, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_upcomingwork.user_id=week1_user.id
+        AND ( week1_upcomingwork.tag1='${query}' OR week1_upcomingwork.tag2='${query}' )
+      `;
+
+      client.query(upcoming_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get search result by upcoming', result.rows);
+      });
+
+    });
+
+    pool.end()
+
+    /*
     //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
     db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
       socket.emit('get search result by profession', rows);
@@ -2484,7 +2618,7 @@ io.on('connection', function(socket){
     db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, week1_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=week1_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
       socket.emit('get search result by upcoming', rows);
     });
-
+    */
   });
 
 

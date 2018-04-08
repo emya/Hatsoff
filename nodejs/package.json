@@ -3,7 +3,27 @@
   "version": "0.0.1",
   "description": "my first socket.io app",
   "dependencies": {
-    "async": "^2.0.1",
-    "sqlite3": "^3.1.8"
+    "array-flatten": "^2.1.1",
+    "async": "^2.6.0",
+    "aws-sdk": "^2.221.1",
+    "content-disposition": "^0.5.2",
+    "content-type": "^1.0.4",
+    "depd": "^1.1.2",
+    "destroy": "^1.0.4",
+    "etag": "^1.8.1",
+    "express": "^4.16.3",
+    "finalhandler": "^1.1.1",
+    "fresh": "^0.5.2",
+    "http-errors": "^1.6.3",
+    "merge-descriptors": "^1.0.1",
+    "methods": "^1.1.2",
+    "mongoose": "^5.0.13",
+    "path-to-regexp": "^2.2.0",
+    "pg": "^7.4.1",
+    "qs": "^6.5.1",
+    "redis": "^2.8.0",
+    "socket.io": "^2.1.0",
+    "sqlite3": "^3.1.13",
+    "utils-merge": "^1.0.1"
   }
 }

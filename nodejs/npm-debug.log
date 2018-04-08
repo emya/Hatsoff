@@ -1,0 +1,48 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/9.11.1/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'npm',
+1 verbose cli   '-g' ]
+2 info using npm@2.15.8
+3 info using node@v9.11.1
+4 verbose install initial load of /usr/local/Cellar/node/9.11.1/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/Cellar/node/9.11.1/lib/package.json
+6 silly cache add args [ 'npm', null ]
+7 verbose cache add spec npm
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: 'npm',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'npm',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: 'latest',
+8 silly cache add   type: 'tag' }
+9 silly addNamed npm@latest
+10 verbose addNamed "latest" is being treated as a dist-tag for npm
+11 info addNameTag [ 'npm', 'latest' ]
+12 silly mapToRegistry name npm
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry data Result {
+15 silly mapToRegistry   raw: 'npm',
+15 silly mapToRegistry   scope: null,
+15 silly mapToRegistry   name: 'npm',
+15 silly mapToRegistry   rawSpec: '',
+15 silly mapToRegistry   spec: 'latest',
+15 silly mapToRegistry   type: 'tag' }
+16 silly mapToRegistry uri https://registry.npmjs.org/npm
+17 verbose addNameTag registry:https://registry.npmjs.org/npm not in flight; fetching
+18 verbose stack TypeError: Cannot read property 'call' of undefined
+18 verbose stack     at CachingRegistryClient._invalidatingRequest (/usr/local/lib/node_modules/npm/lib/cache/caching-client.js:33:17)
+18 verbose stack     at CachingRegistryClient.get_ (/usr/local/lib/node_modules/npm/lib/cache/caching-client.js:146:8)
+18 verbose stack     at /usr/local/lib/node_modules/npm/lib/cache/caching-client.js:95:12
+18 verbose stack     at FSReqWrap.oncomplete (fs.js:170:21)
+19 verbose cwd /Users/ayadaemi/djcode/hatsoff/nodejs
+20 error Darwin 14.5.0
+21 error argv "/usr/local/Cellar/node/9.11.1/bin/node" "/usr/local/bin/npm" "install" "npm" "-g"
+22 error node v9.11.1
+23 error npm  v2.15.8
+24 error Cannot read property 'call' of undefined
+25 error If you need help, you may report this error at:
+25 error     <https://github.com/npm/npm/issues>
+26 verbose exit [ 1, true ]

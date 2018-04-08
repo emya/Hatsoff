@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
 import uuid
 import os
@@ -9,9 +9,16 @@ def content_file_name(instance, filename):
     filename = "%s.png" % (instance.user.uid)
     return os.path.join('userphoto', filename)
 
-class User(AbstractUser):
-    uid = models.CharField(max_length=100, blank=True, unique=True) 
+class User(AbstractBaseUser, PermissionsMixin):
+    uid = models.CharField(max_length=100, blank=True, unique=True)
+    username = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(_('email'), max_length=254, unique=True)
+    is_staff = models.BooleanField(_('staff status'), default=False, help_text=_('Determines if user can access the admin site'))
+    is_active = models.BooleanField(_('active'), default=True)
     USERNAME_FIELD = 'uid'
+    objects = UserManager()
 
 # Create your models here.
 class Profile(models.Model):

@@ -213,7 +213,7 @@
                                        </div>
 
                                        <div class="actionsProfile-outer col-xs- col-sm-3 col-md-3">
-                                          <button class="btn btn-bg btn-outline w-100" type="button"><i class="fa fa-comment-o"></i><span>chat</span></button>
+                                          <input class="btn btn-bg btn-outline w-100" type="button" onclick="defaultMessage(1)" value="Chat"></input>
                                           <!--button class="btn btn-bg btn-outline w-100" type="button" onclick="addCommunityFunction('{{t_user.uid}}')"><i class="fa fa-user-plus"></i><span class="small">add</span></button-->
                                           <input class="btn btn-bg btn-outline w-100" onclick="addCommunityFunction()" type="button" value="Add" id="addCommunityButton"></input>
                                        </div>
@@ -388,6 +388,28 @@
            <!-- row end -->
          </div>
       </section>
+
+      <div class="popup-box chat-popup" id="qnimate">
+         <div class="popup-head">
+            <div class="popup-head-left pull-left">{{t_user.first_name}} &nbsp {{t_user.last_name}}</div>
+            <div class="popup-head-right pull-right">
+               <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">x</button>
+            </div>
+         </div>
+
+         <div class="popup-messages">
+            <div class="direct-chat-messages" id="chat_room">
+            </div>
+         </div>
+
+         <div class="popup-messages-footer">
+            <textarea id="status_message" placeholder="Type a message..." rows="20" cols="40" name="message"></textarea>
+            <input id="image_in_message" type="file" class="form-photo"/>
+            <div class="btn-footer">
+               <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
+            </div>
+         </div>
+      </div>
 
 
       <!-- content -->

@@ -3,15 +3,16 @@
 {% block content %}
 {% load staticfiles %}
 
-<div id="step">
-     <div id="step-left">
-     <h3>Step 2 out of 3</h3> 
+<div id="step" class="container">
+        <div class="row">
+                <div id="step-left-new" class="col-md-2">
+     <h4>Step 2 out of 3</h4> 
      <div id="step-notification">
-      <p>There are 3 steps in your profile creation. You can edit or add information later.</p>
+      <p class="small">There are 3 steps in your profile creation. You can edit or add information later.</p>
      </div>
      </div>
 
-     <div id="step-right">
+     <div id="step-right-new" class="col-md-10">
         <h3>Profile</h3>
 	<form action="" method="POST" class="step-form">{% csrf_token %}
      {{ form.errors }}
@@ -19,13 +20,13 @@
             {{form.describe}} </br>
             <!--br>Describe yourself</br> <textarea rows="5" cols="70" align="center" name='describe'></textarea><br/-->
 	    <div class="submit-wrapper">
-        <a href="{% url 'week1:step1' %}">Back</a>
-		<input type="submit" value="Next Step" class="step-submit"/>
-		<a href="{% url 'week1:step3' %}">Skip</a>
+        <a href="{% url 'week1:step1' %}" class="btn btn-outline">Back</a>
+		<input type="submit" value="Next Step" class="step-submit btn btn-outline"/>
+		<a href="{% url 'week1:step3' %}" class="btn btn-outline">Skip</a>
 	    </div>
 	</form>
      </div>
-
+    </div>
 </div>
 
 {% endblock %}

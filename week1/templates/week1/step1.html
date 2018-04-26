@@ -3,15 +3,16 @@
 {% block content %}
 {% load staticfiles %}
 
-<div id="step">
-     <div id="step-left">
-         <h3>Step 1 out of 3</h3> 
+<div id="step" class="container">
+    <div class="row">
+     <div id="step-left-new" class="col-md-2">
+         <h4>Step 1 out of 3</h4> 
          <div id="step-notification">
-             <p>There are 3 steps in your profile creation. You can edit or add information later.</p>
+             <p class="small">There are 3 steps in your profile creation. You can edit or add information later.</p>
          </div>
      </div>
 
-     <div id="step-right">
+     <div id="step-right-new" class="col-md-6">
         <h3>Profile</h3>
 	<!--form action="" method="POST" class="step-form" enctype="multipart/form-data">{% csrf_token %}
             {{ form.errors }}
@@ -48,23 +49,24 @@
                 <!--br>Birthdate</br>
                 <input type='date' name='birthdate' min="1900-01-01" max="2017-01-01"><br/>
                 <br>{{form.language.label_tag}}</br> {{form.language}}<br/-->
+                <div class="submit-wrapper">
+	        <input type="submit" value="Next Step" class="btn btn-outline step-submit"/>
             </div>
-            <div id="step-right-right">
+            </div>
+            <div id="step-right-right-new" class="col-md-4">
                 <div class="boxed">
                   {{form.photo.label_tag}} 
                 </div>
                 <div class="boxed">
-                  <input id="id_photo" type="file" name="photo"><br/>
+                  <input id="id_photo" type="file" name="photo"><br/><br />
                   <img id="blah" src="#" alt="your image" width="170px" />
                 </div>
             </div>
 	    <!--/table-->
-            <div class="submit-wrapper">
-	        <input type="submit" value="Next Step" class="step-submit"/>
-            </div>
+            
 	</form>
      </div>
-
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery.min.js"></script>

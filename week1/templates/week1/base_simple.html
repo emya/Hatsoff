@@ -1,8 +1,31 @@
 {% load staticfiles %}
 
-<link rel='stylesheet' type='text/css' href="{% static 'week1/style.css' %}">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Match Hat">
+    <meta name="author" content="Find your collaborator, complete your project.">
+
+    <title>Match Hat - Find your collaborator, complete your project.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom fonts for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    
+    
+    
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
@@ -14,32 +37,37 @@
 <script src="{% static 'js/tag-project.js' %}" type="text/javascript" charset="utf-8"></script>
 <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" type="text/css">
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<link rel='stylesheet' type='text/css' href="/static/week1/style.css">
 
-  ga('create', 'UA-85772251-1', 'auto');
-  ga('send', 'pageview');
+</head>
 
-</script>
+  <body id="page-top">
 
-<div id="header-wrapper">
-    <div id='header'>
-           <div id="logo">
-              <img src="{% static 'images/MatchHat Logo-01.png'%}" >
-           </div>
+    <!-- Navigation -->
+    
+     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+        <!--img src="https://ul5f2q-ch3301.files.1drv.com/y4mUqiIX4D6a8tU3QFxV2WMYRI3p0swyMt2cZKLYXJcLlyH8um7ymBSDBeaZXMDoUbe3qQin-TF5uiXZCot_YtvUQljMAg_XjV3zD6kcmdoBMGe1s6STSQYuM6OvGbpO7vK6zbysuSX73vTOl9KRNcPl01JVdSDyFvJ2t_Ra5jlXADw9JYB4AsOBVZHlfr4twHX7siuhkoazcRMJ8cPthU7WQ?width=286&height=48&cropmode=none" alt="Match Hat"-->
+        <img src="{% static 'images/MatchHat Logo-01.png'%}" width=286 height=48 alt="Match Hat">
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="{% url 'week1:index' %}">HOME</a>
+            </li>
 
-	    <div id='header-menus'>
-		    <a href="{% url 'week1:index' %}">HOME</a>
-            </div>
+          </ul>
+        </div>
+      </div>
+    </nav> 
 
-     </div>
-</div>
-
-
-<div id="body">
+<div class="mastBase">
 	{% block content %}
 	{% endblock %}
 </div>
@@ -48,3 +76,15 @@
     <div id='footer'>
     </div>
 </div>
+
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-85772251-1', 'auto');
+    ga('send', 'pageview');
+  
+  </script>

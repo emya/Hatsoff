@@ -323,7 +323,7 @@ def step3(request):
                 skill10=tagls[9]
             )
 
-            return HttpResponseRedirect('/week1/home/')
+            return HttpResponseRedirect('/week1/signup/users/list/')
             #nextform = Step4(label_suffix="", instance=instance)
             #return HttpResponseRedirect('/week1/step4/', {'form': nextform})
 
@@ -339,6 +339,11 @@ def step3(request):
 
     return render_to_response('week1/step3.html', variables, )
 
+@csrf_protect
+@login_required
+def signup_users_list(request):
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    return render(request, 'week1/signup_users_list.html', {'nodejs_url': nodejs_url})
 
 @csrf_protect
 @login_required
@@ -1029,6 +1034,9 @@ def results_search(request, query):
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))
 
+@login_required
+def profession_collaborators(request, p):
+    return render(request, 'week1/profession_collaborators.html', {'profession': p})
 
 @login_required
 def talent_list(request, query):

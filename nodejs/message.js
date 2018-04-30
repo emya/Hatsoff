@@ -286,6 +286,28 @@ io.on('connection', function(socket){
      updateUids();
   });
 
+  socket.on('list users at signup', function(query){
+    var pool = new pg.Pool(pgConfig);
+
+    pool.connect(function(err, client, release) {
+      var profession_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+        FROM week1_profile, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+      `;
+
+      client.query(profession_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get users list', result.rows);
+      });
+    });
+  });
+
+
   socket.on('join chat', function(data){
      socket.uid = data.uid;
      socket.firstname = data.firstname;
@@ -2491,6 +2513,29 @@ io.on('connection', function(socket){
           }
          }
       }
+    });
+  });
+
+  socket.on('list profession collaborators', function(profession){
+    var pool = new pg.Pool(pgConfig);
+
+    pool.connect(function(err, client, release) {
+      var profession_query = `
+        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+        FROM week1_profile, week1_user
+        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+        AND ( week1_profile.profession1='${profession}' OR week1_profile.profession2='${profession}' OR week1_profile.profession3='${profession}'
+              OR week1_profile.profession4='${profession}' OR week1_profile.profession5='${profession}')
+      `;
+
+      client.query(profession_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        socket.emit('get users by profession', result.rows);
+      });
     });
   });
 

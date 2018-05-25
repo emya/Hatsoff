@@ -348,6 +348,13 @@ def signup_users_list(request):
 
 @csrf_protect
 @login_required
+def more_collaborators_list(request):
+    nodejs_url = settings.NODEJS_SOCKET_URL
+    media_url = settings.MEDIA_URL
+    return render(request, 'week1/more_collaborators_list.html', {'nodejs_url': nodejs_url, 'media_url': media_url})
+
+@csrf_protect
+@login_required
 def show_feedback(request):
     query = request.GET.get('srch-term', None)
     if query:

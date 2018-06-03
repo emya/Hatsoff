@@ -433,6 +433,102 @@ io.on('connection', function(socket){
       }
     });
 
+    var pool = new pg.Pool(pgConfig);
+
+    pool.connect(function(err, client, release) {
+      var skills_query = `
+                SELECT 
+                    week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, 
+                    week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10
+                FROM
+                    week1_profile, week1_user
+                WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
+      `;
+      client.query(skills_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        var row = result.rows[0];
+        var skills_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+        var skills = [];
+        for (var i = 0; i < 10; i++){
+          if (skills_empty[i] == ""){
+            skills.push(skills_empty[0])
+          }else{
+            skills.push(skills_empty[i])
+          }
+        }
+
+        var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
+        var liststr = "('"+skills.join("','")+"')";
+        var collaborator_skill_query = `
+                SELECT DISTINCT 
+                    a.uid, a.first_name, a.last_name, p.profession1
+                FROM 
+                    week1_upcomingwork u, week1_user a, week1_profile p 
+                WHERE 
+                    u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
+                   (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or 
+                    u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or 
+                    u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or 
+                    u.collaborator_skill10 in ${liststr})
+                LIMIT 3
+                `;
+
+        client.query(collaborator_skill_query, function(err, results){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('three collaborators need you', results.rows);
+        });
+      });
+
+      var collaborator_skill_query = `
+          SELECT 
+              uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, 
+              uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10
+          FROM
+              week1_upcomingwork uw, week1_user u 
+          WHERE u.id=uw.user_id AND u.uid='${socket.uid}'
+      `;
+      client.query(collaborator_skill_query, function(err, result){
+        var row = result.rows[0];
+        if (row){
+          var skills_empty = [row.collaborator_skill1, row.collaborator_skill2, row.collaborator_skill3, row.collaborator_skill4, row.collaborator_skill5, 
+                               row.collaborator_skill6, row.collaborator_skill7, row.collaborator_skill8, row.collaborator_skill9, row.collaborator_skill10];
+          var skills = [];
+          for (var i = 0; i < 10; i++){
+            if (skills_empty[i] == ""){
+              skills.push(skills_empty[0])
+            }else{
+              skills.push(skills_empty[i])
+            }
+          }
+          var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
+          var liststr = "('"+skills.join("','")+"')";
+          var profession_query = `
+                  SELECT DISTINCT
+                      a.uid, a.first_name, a.last_name, p.profession1 
+                  FROM week1_profile p, week1_user a 
+                  WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
+                    (p.skill1 in ${liststr} or p.skill2 in ${liststr} or p.skill3 in ${liststr} or p.skill4 in ${liststr} or p.skill5 in ${liststr} or p.skill6 in ${liststr} or p.skill7 in ${liststr} or p.skill8 in ${liststr} or p.skill9 in ${liststr} or p.skill10 in ${liststr} )
+                  LIMIT 3
+              `;
+
+          client.query(profession_query, function(err, results){
+            release();
+            if (err) {
+                return console.error('Error executing query', err.stack)
+            }
+            socket.emit('three collaborators you need', results.rows);
+          });
+        }
+      });
+    });
+
+/*
     db.serialize(function() {
       var base_query = `
           SELECT 
@@ -594,6 +690,7 @@ io.on('connection', function(socket){
         }
       });
     });
+    */
 
     CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
       if(result){

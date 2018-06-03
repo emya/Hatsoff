@@ -214,6 +214,14 @@
                                            {% if t_profile.profession3 %}
                                                <a href="{% url 'week1:profession_collaborators' t_profile.profession3 %}"> {{t_profile.profession3}} </a>
                                            {% endif %}
+
+                                           {% if t_profile.profession4 %}
+                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession4 %}"> {{t_profile.profession4}} </a>
+                                           {% endif %}
+
+                                           {% if t_profile.profession5 %}
+                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession5 %}"> {{t_profile.profession5}} </a>
+                                           {% endif %}
                                           </em>
                                           <p>{{t_profile.describe}}</p>
                                           <div class="form-group">

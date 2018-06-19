@@ -26,7 +26,7 @@
       <!-- Navigation -->
       <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
           <div class="container">
-              <a class="navbar-brand" href="#">
+              <a class="navbar-brand" href="{% url 'week1:community' %}">
                   <img src="https://vf4snw-ch3301.files.1drv.com/y4mo70eGO7aWASskNPfFFWo5UQEcEa_dOkSUSbCdssOduW0Na0olPNZ5XUsEd5Zt_Ck_JOkH4EmcHblWsRVynWIMrUM5oaza4PD5f1u7AoFbsyqusonxY6gaEGWTcvpH7-uqUOQPv7Q0bjNnE5o-G7w6oerjJEUNDdz3kKYZS0uYm8XYJ99z_x3d_RZOLMbPcp3Mx0IUWEn6YWiirGCz3aJsA?width=265&height=48&cropmode=none" alt="Match Hat">
               </a>
               <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -345,7 +345,12 @@
                                             <label class="w-100 tiny">City</label>
                                              <input class="w-100 mb-3" type="text" id="city" value="{{profile.city}}" name="user_city" disabled>
                                              <label class="w-100 tiny">Skills</label>
-                                             <input type="text" class="form-control" id="tokenfield" value="{{profile.skill1}}, {{profile.skill2}}, {{profile.skill3}}, {{profile.skill4}}, {{profile.skill5}}" disabled/>
+                                             <!--input type="text" class="form-control" id="tokenfield" value="{{profile.skill1}}, {{profile.skill2}}, {{profile.skill3}}, {{profile.skill4}}, {{profile.skill5}}" disabled/-->
+                                             <input type="text" class="form-control" id="tokenfield" value="" disabled/>
+                                             <script type="text/javascript">
+                                                var text = document.getElementById('text');
+                                                text.value += ' after clicking';
+                                             </script>
                                           </div>
                                        </div>
                                     </div>
@@ -687,7 +692,7 @@
            
          /* profile page carousels*/
          
-			$("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();			
+			  $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();			
 		 
            /* tokenfield */
            
@@ -706,8 +711,29 @@
          $('.form-dataTokenfield').text( $('#tokenfield').val());
          });
          **/
-           
-           
+
+        var text = document.getElementById('tokenfield');
+        var skill1 = "{{profile.skill1}}"
+        if (skill1) {
+            text.value += skill1;
+        }
+        var skill2 = "{{profile.skill2}}"
+        if (skill2) {
+            text.value += `, ${skill2}`;
+        }
+        var skill3 = "{{profile.skill3}}"
+        if (skill3) {
+            text.value += `, ${skill3}`;
+        }
+        var skill4 = "{{profile.skill4}}"
+        if (skill4) {
+            text.value += `, ${skill4}`;
+        }
+        var skill5 = "{{profile.skill5}}"
+        if (skill5) {
+            text.value += `, ${skill5}`;
+        }
+
          })(jQuery); // End of use strict
                                      
                                      

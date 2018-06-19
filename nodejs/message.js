@@ -7,9 +7,11 @@ var mongoose = require('mongoose')
 var users = {};
 var chatusers = {};
 
+/*
 var dbfile = '../db.sqlite3';
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbfile);
+*/
 
 var redis = require('redis');
 var client = redis.createClient();
@@ -450,39 +452,41 @@ io.on('connection', function(socket){
             return console.error('Error executing query', err.stack)
         }
         var row = result.rows[0];
-        var skills_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
-        var skills = [];
-        for (var i = 0; i < 10; i++){
-          if (skills_empty[i] == ""){
-            skills.push(skills_empty[0])
-          }else{
-            skills.push(skills_empty[i])
+        if (row) {
+          var skills_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+          var skills = [];
+          for (var i = 0; i < 10; i++){
+            if (skills_empty[i] == ""){
+              skills.push(skills_empty[0])
+            }else{
+              skills.push(skills_empty[i])
+            }
           }
+
+          var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
+          var liststr = "('"+skills.join("','")+"')";
+          var collaborator_skill_query = `
+                  SELECT DISTINCT 
+                      a.uid, a.first_name, a.last_name, p.profession1
+                  FROM 
+                      week1_upcomingwork u, week1_user a, week1_profile p 
+                  WHERE 
+                      u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
+                     (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or 
+                      u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or 
+                      u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or 
+                      u.collaborator_skill10 in ${liststr})
+                  LIMIT 3
+                  `;
+
+          client.query(collaborator_skill_query, function(err, results){
+            release();
+            if (err) {
+                return console.error('Error executing query', err.stack)
+            }
+            socket.emit('three collaborators need you', results.rows);
+          });
         }
-
-        var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-        var liststr = "('"+skills.join("','")+"')";
-        var collaborator_skill_query = `
-                SELECT DISTINCT 
-                    a.uid, a.first_name, a.last_name, p.profession1
-                FROM 
-                    week1_upcomingwork u, week1_user a, week1_profile p 
-                WHERE 
-                    u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
-                   (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or 
-                    u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or 
-                    u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or 
-                    u.collaborator_skill10 in ${liststr})
-                LIMIT 3
-                `;
-
-        client.query(collaborator_skill_query, function(err, results){
-          release();
-          if (err) {
-              return console.error('Error executing query', err.stack)
-          }
-          socket.emit('three collaborators need you', results.rows);
-        });
       });
 
       var collaborator_skill_query = `
@@ -1753,6 +1757,7 @@ io.on('connection', function(socket){
       }
     }
 
+    /*
     db.serialize(function() {
      db.each("SELECT * FROM week1_profile where skill1 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill2 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill3 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill4 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill5 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill6 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill7 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill8 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill9 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill10 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"')",  function(err, row) {
         if(err){
@@ -1760,6 +1765,7 @@ io.on('connection', function(socket){
         }
      });
     });
+    */
 
     var newPost;    
     if (data.data){
@@ -1790,6 +1796,7 @@ io.on('connection', function(socket){
       }
     }
 
+    /*
     db.serialize(function() {
      db.each("SELECT * FROM week1_profile where skill1 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill2 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill3 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill4 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill5 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill6 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill7 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill8 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill9 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill10 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"')",  function(err, row) {
         if(err){
@@ -1797,6 +1804,7 @@ io.on('connection', function(socket){
         }
      });
     });
+    */
 
     var newPost;    
     if (data.data){
@@ -2323,6 +2331,7 @@ io.on('connection', function(socket){
       }
     });
 
+    /*
     db.serialize(function() {
       //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
       db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_upcomingwork s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
@@ -2348,6 +2357,7 @@ io.on('connection', function(socket){
         }
       });
     });
+    */
 
     var newNotification = new NotificationPost({action_id:5, content_type:2, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
@@ -2367,6 +2377,7 @@ io.on('connection', function(socket){
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
     newPost.save();
 
+    /*
     db.serialize(function() {
       //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
       db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_showcase s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.number='"+data.content_id+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
@@ -2392,6 +2403,7 @@ io.on('connection', function(socket){
         }
       });
     });
+    */
 
     var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 

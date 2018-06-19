@@ -869,7 +869,7 @@ input[type="file"] {
     <!-- Navigation -->        
     <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'week1:community' %}">
             <img src="https://vf4snw-ch3301.files.1drv.com/y4mo70eGO7aWASskNPfFFWo5UQEcEa_dOkSUSbCdssOduW0Na0olPNZ5XUsEd5Zt_Ck_JOkH4EmcHblWsRVynWIMrUM5oaza4PD5f1u7AoFbsyqusonxY6gaEGWTcvpH7-uqUOQPv7Q0bjNnE5o-G7w6oerjJEUNDdz3kKYZS0uYm8XYJ99z_x3d_RZOLMbPcp3Mx0IUWEn6YWiirGCz3aJsA?width=265&height=48&cropmode=none" alt="Match Hat">
         </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -986,7 +986,7 @@ input[type="file"] {
                                     <div class="well well-sm personEntity">
                                         <div class="media">
                                             <a class="thumbnail pull-left" href="#">
-                                                <img class="media-object" width="300" src="{{media_url}}userphoto/{{user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                                                <img class="media-object" width="80" src="{{media_url}}userphoto/{{user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                             </a>
                                             <div class="media-body">
                                                 <div class="form-group">
@@ -1424,7 +1424,7 @@ input[type="file"] {
             var bytes = new Uint8Array(data['image']['data']);
             var enc = encode(bytes);
             var ctype = data['image']['contentType'];
-            imageText = '<embed id="ItemPreview_'+content_id+'" src="{{community_post_url}}'+content_id+'.png" class="postImage" /></embed>';
+            imageText = '<embed id="ItemPreview_'+content_id+'" src="{{community_post_url}}'+content_id+'.png" class="postImage" width=250/></embed>';
             //imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
         }
         var content = data['content'];
@@ -1455,7 +1455,7 @@ input[type="file"] {
             //var enc = encode(bytes);
             //var ctype = data['image']['contentType'];
             //imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
-            imageText = '<embed id="ItemPreview_'+content_id+'" src="{{community_post_url}}'+content_id+'.png" class="postImage" /></embed>';
+            imageText = '<embed id="ItemPreview_'+content_id+'" src="{{community_post_url}}'+content_id+'.png" class="postImage" width=250/></embed>';
             console.log("new image");
         }
         var content = data.msg;
@@ -1636,7 +1636,7 @@ input[type="file"] {
                   <div class="well well-sm personEntity" id="media_${cid}"">
                       <div class="media">
                           <a class="thumbnail pull-left" href="#">
-                              <img class="media-object" width="300" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                              <img class="media-object" width="80" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                           </a>
                           <div class="media-body">
                               ${editDelete} 
@@ -1902,7 +1902,7 @@ input[type="file"] {
                             var bytes = new Uint8Array(docs[j]['image']['data']);
                             var enc = encode(bytes);
                             var ctype = docs[j]['image']['contentType'];
-                            imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
+                            imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" width=250/></embed>';
                         }
 
                         var skillls = '';

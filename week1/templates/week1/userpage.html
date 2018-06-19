@@ -22,7 +22,7 @@
       <!-- Navigation -->
       <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
          <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'week1:community' %}">
             <img src="https://vf4snw-ch3301.files.1drv.com/y4mo70eGO7aWASskNPfFFWo5UQEcEa_dOkSUSbCdssOduW0Na0olPNZ5XUsEd5Zt_Ck_JOkH4EmcHblWsRVynWIMrUM5oaza4PD5f1u7AoFbsyqusonxY6gaEGWTcvpH7-uqUOQPv7Q0bjNnE5o-G7w6oerjJEUNDdz3kKYZS0uYm8XYJ99z_x3d_RZOLMbPcp3Mx0IUWEn6YWiirGCz3aJsA?width=265&height=48&cropmode=none" alt="Match Hat">
             </a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -602,6 +602,27 @@
             /* profile page carousels*/
          
 			   $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();			
+          var text = document.getElementById('tokenfield');
+          var skill1 = "{{t_profile.skill1}}"
+          if (skill1) {
+              text.value += skill1;
+          }
+          var skill2 = "{{t_profile.skill2}}"
+          if (skill2) {
+              text.value += `, ${skill2}`;
+          }
+          var skill3 = "{{t_profile.skill3}}"
+          if (skill3) {
+              text.value += `, ${skill3}`;
+          }
+          var skill4 = "{{t_profile.skill4}}"
+          if (skill4) {
+              text.value += `, ${skill4}`;
+          }
+          var skill5 = "{{t_profile.skill5}}"
+          if (skill5) {
+              text.value += `, ${skill5}`;
+          }
            
          })(jQuery); // End of use strict
                                      

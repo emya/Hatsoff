@@ -2,7 +2,13 @@ var app = require('express')();
 var async = require('async');
 var aws = require('aws-sdk');
 var http = require('http').Server(app);
-var io = require('socket.io').listen(app.listen(8889));
+var io = require('socket.io').listen(
+    app.listen(8889),
+    {
+       'pingInterval': 2000,
+       'pingTimeout': 5000
+    }
+);
 var mongoose = require('mongoose')
 var users = {};
 var chatusers = {};
@@ -765,6 +771,7 @@ io.on('connection', function(socket){
   })
 
   socket.on('get suggested posts', function(){
+    /*
     db.each("SELECT skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10 FROM week1_profile where user_id=? ", socket.uid, function(err, row) {
         if(err){
           console.log(err);
@@ -809,6 +816,7 @@ io.on('connection', function(socket){
           } 
         }
       });
+      */
   });
 
   socket.on('join community post', function(data){

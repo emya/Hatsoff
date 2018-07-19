@@ -554,7 +554,7 @@ io.on('connection', function(socket){
         if (row) {
           var professions_empty = [row.profession1, row.profession2, row.profession3, row.profession4, row.profession5];
           var professions = [];
-          for (var i = 0; i < 10; i++){
+          for (var i = 0; i < 5; i++){
             if (professions_empty[i] == ""){
               professions.push(professions_empty[0])
             }else{
@@ -598,7 +598,7 @@ io.on('connection', function(socket){
         if (row){
           var professions_empty = [row.collaborator1, row.collaborator2, row.collaborator3, row.collaborator4, row.collaborator5] 
           var professions = [];
-          for (var i = 0; i < 10; i++){
+          for (var i = 0; i < 5; i++){
             if (professions_empty[i] == ""){
               professions.push(professions_empty[0])
             }else{

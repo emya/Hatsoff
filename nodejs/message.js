@@ -20,9 +20,9 @@ var db = new sqlite3.Database(dbfile);
 */
 
 var redis = require('redis');
-var client = redis.createClient();
+var redis_client = redis.createClient();
 
-client.on('connect', function() {
+redis_client.on('connect', function() {
     console.log('redis connected');
 });
 
@@ -392,9 +392,9 @@ io.on('connection', function(socket){
     var currentDate = new Date();
     var is_sent = false;
 
-    client.exists(key, function(err, reply) {
+    redis_client.exists(key, function(err, reply) {
       if (reply === 1) {
-        client.hgetall(key, function(err, data) {
+        redis_client.hgetall(key, function(err, data) {
           var diffMs = currentDate - data.last_update;
           var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
           if (diffMins > 2){
@@ -425,7 +425,7 @@ io.on('connection', function(socket){
                     friends = result.friends;
                   }
                   socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
-                  client.hmset(key, {
+                  redis_client.hmset(key, {
                       'sharedocs': JSON.stringify(sharedocs),
                       'likedocs': JSON.stringify(likedocs),
                       'hatsoffdocs': JSON.stringify(hatsoffdocs),
@@ -536,6 +536,97 @@ io.on('connection', function(socket){
           });
         }
       });
+
+      var professions_query = `
+                SELECT 
+                    week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.profession4, week1_profile.profession5 
+                FROM
+                    week1_profile, week1_user
+                WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
+      `;
+
+      client.query(professions_query, function(err, result){
+        release();
+        if (err) {
+            return console.error('Error executing query', err.stack)
+        }
+        var row = result.rows[0];
+        if (row) {
+          var professions_empty = [row.profession1, row.profession2, row.profession3, row.profession4, row.profession5];
+          var professions = [];
+          for (var i = 0; i < 5; i++){
+            if (professions_empty[i] == ""){
+              professions.push(professions_empty[0])
+            }else{
+              professions.push(professions_empty[i])
+            }
+          }
+
+          var tuplestr = "(?,?,?,?,?)";
+          var liststr = "('"+professions.join("','")+"')";
+          var collaborator_profession_query = `
+                  SELECT DISTINCT 
+                      a.uid, a.first_name, a.last_name, p.profession1
+                  FROM 
+                      week1_upcomingwork u, week1_user a, week1_profile p 
+                  WHERE 
+                      u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
+                     (u.collaborator1 in ${liststr} or u.collaborator2 in ${liststr} or u.collaborator3 in ${liststr} or 
+                      u.collaborator4 in ${liststr} or u.collaborator5 in ${liststr})
+                  LIMIT 3
+                  `;
+
+          client.query(collaborator_profession_query, function(err, results){
+            release();
+            if (err) {
+                return console.error('Error executing query', err.stack)
+            }
+            socket.emit('three collaborators with profession need you', results.rows);
+          });
+        }
+      });
+
+      var collaborator_profession_query = `
+          SELECT 
+              uw.collaborator1, uw.collaborator2, uw.collaborator3, uw.collaborator4, uw.collaborator5 
+          FROM
+              week1_upcomingwork uw, week1_user u 
+          WHERE u.id=uw.user_id AND u.uid='${socket.uid}'
+      `;
+      client.query(collaborator_profession_query, function(err, result){
+        var row = result.rows[0];
+        if (row){
+          var professions_empty = [row.collaborator1, row.collaborator2, row.collaborator3, row.collaborator4, row.collaborator5] 
+          var professions = [];
+          for (var i = 0; i < 5; i++){
+            if (professions_empty[i] == ""){
+              professions.push(professions_empty[0])
+            }else{
+              professions.push(professions_empty[i])
+            }
+          }
+          var tuplestr = "(?,?,?,?,?)";
+          var liststr = "('"+professions.join("','")+"')";
+          var profession_query = `
+                  SELECT DISTINCT
+                      a.uid, a.first_name, a.last_name, p.profession1 
+                  FROM week1_profile p, week1_user a 
+                  WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
+                    (p.profession1 in ${liststr} or p.profession2 in ${liststr} or p.profession3 in ${liststr} or p.profession4 in ${liststr} or p.profession5 in ${liststr} )
+                  LIMIT 3
+              `;
+
+          client.query(profession_query, function(err, results){
+            release();
+            if (err) {
+                return console.error('Error executing query', err.stack)
+            }
+            socket.emit('three collaborators with profession you need', results.rows);
+          });
+        }
+      });
+
+      client.release();
     });
 
 /*
@@ -1765,27 +1856,35 @@ io.on('connection', function(socket){
       }
     }
 
-    /*
-    db.serialize(function() {
-     db.each("SELECT * FROM week1_profile where skill1 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill2 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill3 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill4 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill5 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill6 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill7 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill8 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill9 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill10 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"')",  function(err, row) {
-        if(err){
-          console.log(err);
-        }
-     });
-    });
-    */
-
-    var newPost;    
+    var newPost;
     if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, image:{data:data.data['file'], contentType: data.data['type']}, shares:0, likes:0});
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, image:
+{data: true, contentType: data.data['type']}, shares:0, likes:0});
     }else{
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, shares:0, likes:0});
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, shares
+:0, likes:0});
     }
     newPost.save(function(err, post){
       if (err) {
         console.log(err);
+        return;
       } else{
-        io.emit('new community post', {msg:data.msg, image:data.data, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+        var image = { data: false }
+
+        if (data.data){
+          s3.putObject({
+            Bucket: 'matchhat-community-posts',
+            Key: post.id + '.png',
+            Body: data.data['file'],
+            ACL: 'public-read'
+          }, function (resp) {
+            console.log('Successfully uploaded package.');
+          });
+          image = { data: true, contentType: data.data['type'] }
+        }
+
+        io.emit('new community post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skil
+lls});
       }
     });
   });
@@ -1804,19 +1903,9 @@ io.on('connection', function(socket){
       }
     }
 
-    /*
-    db.serialize(function() {
-     db.each("SELECT * FROM week1_profile where skill1 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill2 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill3 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill4 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill5 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill6 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill7 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill8 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill9 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"') OR skill10 in ('"+ls[0]+" \',\' "+ls[1]+" \',\' "+ls[2]+" \',\'"+ls[3]+" \',\'"+ls[4]+"')",  function(err, row) {
-        if(err){
-          console.log(err);
-        }
-     });
-    });
-    */
-
     var newPost;    
     if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data: true, contentType: data.data['type']}, shares:0, likes:0});
+      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:mage:{data: true, contentType: data.data['type']}, shares:0, likes:0});
     }else{
       newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, shares:0, likes:0});
     }

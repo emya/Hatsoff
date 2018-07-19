@@ -1038,6 +1038,8 @@ def results_search(request, query):
     currentuser = User.objects.get(uid=request.user)
     profile = Profile.objects.get(user=currentuser)
 
+    query = query.capitalize()
+
     variables = RequestContext(request, {'nodejs_url':nodejs_url, 'profile':profile, 'query': query})
     return render_to_response('week1/results_friends.html', variables, )
     #return HttpResponse(t.render(c))

@@ -1,6 +1,17 @@
 //var socket = io.connect("{{nodejs_url}}");
-var socket = io.connect('http://localhost:8889');
-//var socket = io.connect('http://ec2-35-164-130-35.us-west-2.compute.amazonaws.com:8889');
+//var socket = io.connect('http://localhost:8889');
+var socket = io.connect('http://ec2-54-191-73-239.us-west-2.compute.amazonaws.com:8889');
+var startTime;
+
+setInterval(function() {
+  startTime = Date.now();
+  socket.emit('ping');
+}, 2000);
+
+socket.on('pong', function() {
+  latency = Date.now() - startTime;
+  console.log(latency);
+});
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

@@ -4,16 +4,15 @@
 {% load staticfiles %}
 
 <div id="home-main">
-    
+  <a href="{% url 'week1:community' %}" class="btn btn-outline" style="font-size: 30px">Go to MatchHat</a>
 
   <h3>Connect with Collaborators</h3>
 
-    <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
-      <div id="collaborator-lists">
-      </div>
+  <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+    <div id="collaborator-lists">
     </div>
+  </div>
 
-  <a href="{% url 'week1:community' %}" class="btn btn-outline">Go to MatchHat</a>
 </div>
 
 <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>

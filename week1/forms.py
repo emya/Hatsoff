@@ -65,7 +65,7 @@ class Step1(forms.ModelForm):
         labels = {
             'profession1': _('Profession (up to 5)'),
             'worksAt': _('Independent/Company name'),
-            'city': _('Cities'),
+            'city': _('City (Cities)'),
             'education': _('Education (School and degree)'),
             'language': _('Language(s)'),
             'birthdate': _('Birthdate'),

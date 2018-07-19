@@ -2043,7 +2043,6 @@ input[type="file"] {
     socket.on('three collaborators need you', function(docs){
       if (docs) {
         for(var i=0; i < docs.length; i++){
-            console.log("top collaborators:"+docs[i].user_id);
             var uid = docs[i].uid;
             var first_name = docs[i].first_name;
             var last_name = docs[i].last_name;
@@ -2056,6 +2055,36 @@ input[type="file"] {
                             <div class="media">
                                 <a class="thumbnail pull-left" href="#">
 				    <img class="media-object" width="100" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href=${url_link} display:block>${first_name} ${last_name} </a></h4>
+                                    <p class="small">
+                                        ${profession} <br>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                       `;
+            $('#collaborators_needyou').append($(body));
+        }
+      }
+    });
+
+    socket.on('three collaborators with profession need you', function(docs){
+      if (docs) {
+        for(var i=0; i < docs.length; i++){
+            var uid = docs[i].uid;
+            var first_name = docs[i].first_name;
+            var last_name = docs[i].last_name;
+            var profession = docs[i].profession1;
+            var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
+            var n  = users.indexOf(uid);
+
+            var body = `
+                        <div class="well well-sm personEntity">
+                            <div class="media">
+                                <a class="thumbnail pull-left" href="#">
+                    <img class="media-object" width="100" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading"><a href=${url_link} display:block>${first_name} ${last_name} </a></h4>

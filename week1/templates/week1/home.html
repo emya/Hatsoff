@@ -18,11 +18,13 @@
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
-      <link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">
+      <!--<link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">-->
+      <link rel='stylesheet' type='text/css' href="/static/week1/style.css">
 
    </head>
    <!-- change -->
    <body id="page-top">
+       home
       <!-- Navigation -->
       <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
           <div class="container">
@@ -346,7 +348,7 @@
                                              <input class="w-100 mb-3" type="text" id="city" value="{{profile.city}}" name="user_city" disabled>
                                              <label class="w-100 tiny">Skills</label>
                                              <!--input type="text" class="form-control" id="tokenfield" value="{{profile.skill1}}, {{profile.skill2}}, {{profile.skill3}}, {{profile.skill4}}, {{profile.skill5}}" disabled/-->
-                                             <input type="text" class="form-control" id="tokenfield" value="" disabled/>
+                                             <input type="text" class="form-control" id="tokenfield" value="{{profile.skill1}}, {{profile.skill2}}, {{profile.skill3}}, {{profile.skill4}}, {{profile.skill5}}" disabled/>
                                              <script type="text/javascript">
                                                 var text = document.getElementById('text');
                                                 text.value += ' after clicking';
@@ -697,21 +699,16 @@
            /* tokenfield */
            
            
-        /**
+        
             $('#tokenfield').tokenfield({
          autocomplete: {
-         source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
          delay: 100
          },
          showAutocompleteOnFocus: true
          });
          
-         $("form").submit(function(e) {
-         e.preventDefault();
-         $('.form-dataTokenfield').text( $('#tokenfield').val());
-         });
-         **/
 
+/*
         var text = document.getElementById('tokenfield');
         var skill1 = "{{profile.skill1}}"
         if (skill1) {
@@ -733,7 +730,7 @@
         if (skill5) {
             text.value += `, ${skill5}`;
         }
-
+*/
          })(jQuery); // End of use strict
                                      
                                      

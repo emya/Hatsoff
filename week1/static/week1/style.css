@@ -39,6 +39,8 @@ h1 {
     font-size: 1.75rem;
     line-height: 2.5rem;
 }
+
+.navbar-brand > img{width:265px; height:48px;}
 hr.star-light,
 hr.star-primary {
     max-width: 230px;
@@ -193,9 +195,18 @@ section h2 {
         /* background: #18bc9c*/
     }
     #mainNav.navbar-shrink {
-        padding-top: 10px;
-        padding-bottom: 10px
+        padding-top: 0px;
+        padding-bottom: 0px
     }
+
+    #mainNav.communityNav.navbar-shrink .navbar-nav li.nav-item a.nav-link {
+
+      
+        font-size: 1rem;
+
+             transition: font-size .7;
+    }
+    
     #mainNav.navbar-shrink .navbar-brand {
         font-size: 1.5em
     }
@@ -481,8 +492,6 @@ header.masthead img {
     -moz-transition: top .3s ease, opacity .3s ease;
     -ms-transition: top .3s ease, opacity .3s ease;
     transition: top .3s ease, opacity .3s ease;
-    vertical-align: middle;
-    vertical-align: baseline;
     opacity: 0
 }
 .floating-label-form-group:not(:first-child) {
@@ -701,7 +710,7 @@ section.communityBody h4 {
     font-size: 1rem;
 }
 section.communityBody {
-    padding-top: 110px;
+    padding-top: 130px;
     padding-bottom: 50px;
     color: #444444;
     background-color: #e2e2e2;
@@ -709,6 +718,25 @@ section.communityBody {
 section.communityBody .media-body {
     padding-left: 10px;
 }
+
+section.baseHomeBody h4 {
+    font-size: 1rem;
+}
+section.baseHomeBody {
+    padding-top: 130px;
+    padding-bottom: 50px;
+    color: #444444;
+    background-color: #e2e2e2;
+}
+section.baseHomeBody .media-body {
+    padding-left: 10px;
+}
+
+section.baseHomeBody .media-body {
+    padding-left: 10px;
+}
+
+#home-friends > nav{background-color:#fff;}
 
 /* smae for profile */
 
@@ -764,6 +792,32 @@ section.communityBody .panel hr {
 .panel-communityLeft > .panel-body > .personEntity:nth-last-child(2) {
     margin-bottom: 0;
 }
+
+
+/* Left col Homebase */
+
+section.baseHomeBody .baseHomeBodyLeft {
+    background-color: #ffffff;
+}
+section.baseHomeBody .baseHomeBodyLeft h2 {
+    background-color: #28A8E2;
+    color: #ffffff;
+    font-size: 1.4rem;
+    margin: 0 -15px;
+    padding: 15px 20px;
+    text-transform: uppercase;
+}
+section.baseHomeBody .baseHomeBodyLeft h3 {
+    font-size: 1rem;
+    padding: 10px 0 15px 0;
+}
+section.communityBody .panel hr {
+    margin-left: -16px;
+    margin-right: -16px;
+    border-width:2px;
+}
+
+
 /* Right Col community */
 
 
@@ -816,6 +870,41 @@ section.communityBody .communityBodyRight .btn-outline {
 .matchHatActionList li a {
     color: #757575;
     font-weight: bold;
+}
+
+/* Right Col homeBase */
+
+section.baseHomeBody .baseHomeBodyRight h3,
+section.baseHomeBody .baseHomeBodyRight p{
+    font-size: 1.05rem;
+}
+section.baseHomeBody .baseHomeBodyRight .panel-white {
+    background-color: #ffffff;
+    padding: 17px;
+    margin: 0 0 30px 0;
+}
+section.baseHomeBody .baseHomeBodyRight .panel-white .form-group textarea {
+    margin: 0 0 15px 0;
+}
+section.baseHomeBody .baseHomeBodyRight .panel-white h4.media-heading {
+    font-size: 1rem;
+    font-weight: normal;
+}
+section.baseHomeBody .baseHomeBodyRight .panel-white .btn-lg.btn-outline {
+    font-size: 1rem;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+section.baseHomeBody .baseHomeBodyRight .paddingCommunityThread {
+    padding: 20px 10px;
+}
+section.baseHomeBody .baseHomeBodyRight .btn-outline {
+    margin-top: 0;
+}
+
+section.baseHomeBody .baseHomeBodyRight .padding-baseHomeBody {
+    padding: 20px 10px;
 }
 
 /* community buttons refactored v1.1 */
@@ -1190,3 +1279,46 @@ height: 100%;
 #step form .tokenfield input{
     border-bottom: none;
 }
+
+/* might be duplicated to be checked */
+
+.like-btn .active-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/active_blue_thumb_32x32.png");
+  }
+
+
+  .like-btn .inactive-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/inactive_grey_thumb_32x32.png");
+  }
+
+/* - */
+
+  .share-btn .active-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/active_blue_share_32x32.png");
+  }
+
+
+  .share-btn .inactive-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/inactive_grey_share_32x32.png");
+  }
+
+  .hats-btn .active-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/active_yellow_hat_32x32.png");
+  }
+
+
+  .hats-btn .inactive-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("../images/inactive_grey_hat_32x32.png");
+  }

@@ -36,7 +36,7 @@
           var photo = docs[i].photo;
           var add = '<div class="popupFollow" id="follow_status_'+uid+'"><a href="#" onclick="addCommunityFunction(\''+uid+'\')">Add</a></div>';
           
-          $('#collaborator-lists').append($('<div class="col-xs-9 col-xs-offset-1 slide-row"><div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel"><div class="carousel-inner"><img class="collaborator-img" src="{{media_url}}userphoto/'+uid+'.png" onerror="this.onerror=null;this.src=\'{% static 'images/profileimage.png' %}\';"></div></div><div class="slide-content"><a href="'+url_link+'"><h4>'+firstname+'&nbsp'+lastname+'</h4></a><p>'+profession1+'</p><p>'+describe+'</p></div></div>'));
+          $('#collaborator-lists').append($('<div class="col-xs-9 col-xs-offset-1 slide-row"><div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel"><div class="carousel-inner"><img class="collaborator-img" src="{{media_url}}userphoto/'+uid+'.png" onerror="this.onerror=null;this.src=\'{% static 'images/profileimage.png' %}\';" width=100></div></div><div class="slide-content"><a href="'+url_link+'"><h4>'+firstname+'&nbsp'+lastname+'</h4></a><p>'+profession1+'</p><p>'+describe+'</p></div></div>'));
         }
     }
   });

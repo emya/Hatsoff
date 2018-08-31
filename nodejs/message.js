@@ -297,22 +297,26 @@ io.on('connection', function(socket){
   socket.on('list users at signup', function(query){
     var pool = new pg.Pool(pgConfig);
 
-    pool.connect(function(err, client, release) {
-      var profession_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
-               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
-        FROM week1_profile, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
-      `;
+    try { 
+      pool.connect(function(err, client, release) {
+        var profession_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+                 week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+          FROM week1_profile, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+        `;
 
-      client.query(profession_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get users list', result.rows);
+        client.query(profession_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get users list', result.rows);
+        });
       });
-    });
+    } catch(error) {
+      console.log("Error at list users at signup:", error); 
+    }
   });
 
 
@@ -325,445 +329,214 @@ io.on('connection', function(socket){
   });
 
   socket.on('at community members', function(data){
-    CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-      if(result){
-        var friends = result.friends;
-        var tuplestr = "(";
-        for (var i = 0; i < friends.length; i++){
-          tuplestr += "?,";
-        }
-        tuplestr = tuplestr.substring(0, tuplestr.length - 1);
-        tuplestr += ")";
+    try{
+      CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+        if(result){
+          var friends = result.friends;
+          var tuplestr = "(";
+          for (var i = 0; i < friends.length; i++){
+            tuplestr += "?,";
+          }
+          tuplestr = tuplestr.substring(0, tuplestr.length - 1);
+          tuplestr += ")";
 
-        var liststr = "('"+friends.join("','")+"')";
-        var query = `
-                SELECT
-                   DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1,
-                            week1_profile.profession2, week1_profile.profession3, week1_profile.describe
-                FROM week1_user, week1_profile
-                WHERE week1_profile.user_id==week1_user.id AND week1_profile.user_id in ${liststr}
-                `
-        var pool = new pg.Pool(pgConfig);
+          var liststr = "('"+friends.join("','")+"')";
+          var query = `
+                  SELECT
+                     DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1,
+                              week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+                  FROM week1_user, week1_profile
+                  WHERE week1_profile.user_id==week1_user.id AND week1_profile.user_id in ${liststr}
+                  `
+          var pool = new pg.Pool(pgConfig);
 
-        pool.connect(function(err, client, release) {
-          client.query(query, function(err, result){
-            release();
-            if (err) {
-                return console.error('Error executing query', err.stack)
-            }
-            socket.emit('get community members', result.rows);
+          pool.connect(function(err, client, release) {
+            client.query(query, function(err, result){
+              release();
+              if (err) {
+                  return console.error('Error executing query', err.stack)
+              }
+              socket.emit('get community members', result.rows);
+            });
           });
-        });
-        
-        pool.end()
-
-        /*
-        var liststr = "("+friends.join(",")+")";
-        db.all("SELECT DISTINCT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM auth_user, week1_profile WHERE week1_profile.user_id==auth_user.id AND week1_profile.user_id in "+tuplestr, friends, function(err, rows){
-          socket.emit('get community members', rows);
-        });
-        */
-      }
-    });
+          pool.end()
+        }
+      });
+    } catch(error){
+      console.log("Error at community members:", error); 
+    }
   });
 
   socket.on('join community', function(data){
-    var query = CommunityPost.find({});
+    try {
+      var query = CommunityPost.find({});
 
-    /*
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      console.log('join community');
-      socket.emit('update community post', docs);
-    }); 
-    */
+      key = "community_"+socket.uid;
 
-    key = "community_"+socket.uid;
+      var currentDate = new Date();
+      var is_sent = false;
 
-/*
-    client.del(key, function(err, response) {
-      if (response == 1) {
-        console.log("Deleted Successfully!")
-      } else{
-        console.log("Cannot delete")
-      }
-    });
-*/
-    var currentDate = new Date();
-    var is_sent = false;
+      redis_client.exists(key, function(err, reply) {
+        if (reply === 1) {
+          redis_client.hgetall(key, function(err, data) {
+            var diffMs = currentDate - data.last_update;
+            var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+            if (diffMins > 2){
+              socket.emit('update community post', data);
+              is_sent = true;
+            }
+          });
+        }
 
-    redis_client.exists(key, function(err, reply) {
-      if (reply === 1) {
-        redis_client.hgetall(key, function(err, data) {
-          var diffMs = currentDate - data.last_update;
-          var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-          if (diffMins > 2){
-            socket.emit('update community post', data);
-            is_sent = true;
-          }
-        });
-      }
+        if (!is_sent) {
+          query.sort('-created').limit(30).exec(function(err, docs){
+            if (err) throw err;
+            var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+            query1.sort('-created').limit(30).exec(function(err1, likedocs){
+              if (err1) throw err1;
 
-      if (!is_sent) {
-        query.sort('-created').limit(30).exec(function(err, docs){
-          if (err) throw err;
-          var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
-          query1.sort('-created').limit(30).exec(function(err1, likedocs){
-            if (err1) throw err1;
+              var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+              query2.sort('-created').limit(30).exec(function(err2, sharedocs){
+                if (err2) throw err2;
 
-            var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
-            query2.sort('-created').limit(30).exec(function(err2, sharedocs){
-              if (err2) throw err2;
+                var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+                query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
+                  if (err3) throw err3;
 
-              var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
-              query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
-                if (err3) throw err3;
-
-                CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-                  var friends = [];
-                  if(result){
-                    friends = result.friends;
-                  }
-                  socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
-                  redis_client.hmset(key, {
-                      'sharedocs': JSON.stringify(sharedocs),
-                      'likedocs': JSON.stringify(likedocs),
-                      'hatsoffdocs': JSON.stringify(hatsoffdocs),
-                      'docs': JSON.stringify(docs),
-                      'friends': JSON.stringify(friends),
-                      'last_update': new Date() 
+                  CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+                    var friends = [];
+                    if(result){
+                      friends = result.friends;
+                    }
+                    socket.emit('update community post', {"sharedocs":sharedocs, "likedocs":likedocs, "hatsoffdocs":hatsoffdocs, "docs":docs, "friends":friends});
+                    redis_client.hmset(key, {
+                        'sharedocs': JSON.stringify(sharedocs),
+                        'likedocs': JSON.stringify(likedocs),
+                        'hatsoffdocs': JSON.stringify(hatsoffdocs),
+                        'docs': JSON.stringify(docs),
+                        'friends': JSON.stringify(friends),
+                        'last_update': new Date() 
+                    });
                   });
                 });
               });
             });
-          });
-        }); 
-      }
-    });
-
-    var pool = new pg.Pool(pgConfig);
-
-    pool.connect(function(err, client, release) {
-      var skills_query = `
-                SELECT 
-                    week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, 
-                    week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10
-                FROM
-                    week1_profile, week1_user
-                WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
-      `;
-      client.query(skills_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        var row = result.rows[0];
-        if (row) {
-          var skills_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
-          var skills = [];
-          for (var i = 0; i < 10; i++){
-            if (skills_empty[i] == ""){
-              skills.push(skills_empty[0])
-            }else{
-              skills.push(skills_empty[i])
-            }
-          }
-
-          var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-          var liststr = "('"+skills.join("','")+"')";
-          var collaborator_skill_query = `
-                  SELECT DISTINCT 
-                      a.uid, a.first_name, a.last_name, p.profession1
-                  FROM 
-                      week1_upcomingwork u, week1_user a, week1_profile p 
-                  WHERE 
-                      u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
-                     (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or 
-                      u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or 
-                      u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or 
-                      u.collaborator_skill10 in ${liststr})
-                  LIMIT 3
-                  `;
-
-          client.query(collaborator_skill_query, function(err, results){
-            release();
-            if (err) {
-                return console.error('Error executing query', err.stack)
-            }
-            socket.emit('three collaborators need you', results.rows);
-          });
+          }); 
         }
       });
 
-      var collaborator_skill_query = `
-          SELECT 
-              uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, 
-              uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10
-          FROM
-              week1_upcomingwork uw, week1_user u 
-          WHERE u.id=uw.user_id AND u.uid='${socket.uid}'
-      `;
-      client.query(collaborator_skill_query, function(err, result){
-        var row = result.rows[0];
-        if (row){
-          var skills_empty = [row.collaborator_skill1, row.collaborator_skill2, row.collaborator_skill3, row.collaborator_skill4, row.collaborator_skill5, 
-                               row.collaborator_skill6, row.collaborator_skill7, row.collaborator_skill8, row.collaborator_skill9, row.collaborator_skill10];
-          var skills = [];
-          for (var i = 0; i < 10; i++){
-            if (skills_empty[i] == ""){
-              skills.push(skills_empty[0])
-            }else{
-              skills.push(skills_empty[i])
-            }
+      var pool = new pg.Pool(pgConfig);
+
+      pool.connect(function(err, client, release) {
+        var skills_query = `
+                  SELECT 
+                      week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, 
+                      week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10
+                  FROM
+                      week1_profile, week1_user
+                  WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
+        `;
+        client.query(skills_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
           }
-          var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-          var liststr = "('"+skills.join("','")+"')";
-          var profession_query = `
-                  SELECT DISTINCT
-                      a.uid, a.first_name, a.last_name, p.profession1 
-                  FROM week1_profile p, week1_user a 
-                  WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
-                    (p.skill1 in ${liststr} or p.skill2 in ${liststr} or p.skill3 in ${liststr} or p.skill4 in ${liststr} or p.skill5 in ${liststr} or p.skill6 in ${liststr} or p.skill7 in ${liststr} or p.skill8 in ${liststr} or p.skill9 in ${liststr} or p.skill10 in ${liststr} )
-                  LIMIT 3
-              `;
-
-          client.query(profession_query, function(err, results){
-            release();
-            if (err) {
-                return console.error('Error executing query', err.stack)
-            }
-            socket.emit('three collaborators you need', results.rows);
-          });
-        }
-      });
-
-      var professions_query = `
-                SELECT 
-                    week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.profession4, week1_profile.profession5 
-                FROM
-                    week1_profile, week1_user
-                WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
-      `;
-
-      client.query(professions_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        var row = result.rows[0];
-        if (row) {
-          var professions_empty = [row.profession1, row.profession2, row.profession3, row.profession4, row.profession5];
-          var professions = [];
-          for (var i = 0; i < 5; i++){
-            if (professions_empty[i] == ""){
-              professions.push(professions_empty[0])
-            }else{
-              professions.push(professions_empty[i])
-            }
-          }
-
-          var tuplestr = "(?,?,?,?,?)";
-          var liststr = "('"+professions.join("','")+"')";
-          var collaborator_profession_query = `
-                  SELECT DISTINCT 
-                      a.uid, a.first_name, a.last_name, p.profession1
-                  FROM 
-                      week1_upcomingwork u, week1_user a, week1_profile p 
-                  WHERE 
-                      u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
-                     (u.collaborator1 in ${liststr} or u.collaborator2 in ${liststr} or u.collaborator3 in ${liststr} or 
-                      u.collaborator4 in ${liststr} or u.collaborator5 in ${liststr})
-                  LIMIT 3
-                  `;
-
-          client.query(collaborator_profession_query, function(err, results){
-            release();
-            if (err) {
-                return console.error('Error executing query', err.stack)
-            }
-            socket.emit('three collaborators with profession need you', results.rows);
-          });
-        }
-      });
-
-      var collaborator_profession_query = `
-          SELECT 
-              uw.collaborator1, uw.collaborator2, uw.collaborator3, uw.collaborator4, uw.collaborator5 
-          FROM
-              week1_upcomingwork uw, week1_user u 
-          WHERE u.id=uw.user_id AND u.uid='${socket.uid}'
-      `;
-      client.query(collaborator_profession_query, function(err, result){
-        var row = result.rows[0];
-        if (row){
-          var professions_empty = [row.collaborator1, row.collaborator2, row.collaborator3, row.collaborator4, row.collaborator5] 
-          var professions = [];
-          for (var i = 0; i < 5; i++){
-            if (professions_empty[i] == ""){
-              professions.push(professions_empty[0])
-            }else{
-              professions.push(professions_empty[i])
-            }
-          }
-          var tuplestr = "(?,?,?,?,?)";
-          var liststr = "('"+professions.join("','")+"')";
-          var profession_query = `
-                  SELECT DISTINCT
-                      a.uid, a.first_name, a.last_name, p.profession1 
-                  FROM week1_profile p, week1_user a 
-                  WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
-                    (p.profession1 in ${liststr} or p.profession2 in ${liststr} or p.profession3 in ${liststr} or p.profession4 in ${liststr} or p.profession5 in ${liststr} )
-                  LIMIT 3
-              `;
-
-          client.query(profession_query, function(err, results){
-            release();
-            if (err) {
-                return console.error('Error executing query', err.stack)
-            }
-            socket.emit('three collaborators with profession you need', results.rows);
-          });
-        }
-      });
-
-      client.release();
-    });
-
-/*
-    db.serialize(function() {
-      var base_query = `
-          SELECT 
-              week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, 
-              week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10
-          FROM
-              week1_profile, week1_user
-          WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
-      `;
-      //db.each("SELECT week1_profile.skill1, week1_profile.skill2, week1_profile.skill3, week1_profile.skill4, week1_profile.skill5, week1_profile.skill6, week1_profile.skill7, week1_profile.skill8, week1_profile.skill9, week1_profile.skill10 FROM week1_profile, week1_user where week1_user.uid =? AND week1_user.id = week1_profile.user_id ", socket.uid, function(err, row) {
-      db.each(base_query, function(err, row) {
-        if(err){
-          console.log(err);
-        }
-        else {
-          if (row.skill1 != "" || row.skill2 != "" || row.skill3 !="" || row.skill4 != "" || row.skill5 != "" || row.skill6 != "" || row.skill7 !="" || row.skill8 != "" || row.skill9 != "" || row.skill10 != "" ){
-            var skillls_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
-            var skillls = [];
+          var row = result.rows[0];
+          if (row) {
+            var skills_empty = [row.skill1, row.skill2, row.skill3, row.skill4, row.skill5, row.skill6, row.skill7, row.skill8, row.skill9, row.skill10];
+            var skills = [];
             for (var i = 0; i < 10; i++){
-              if (skillls_empty[i] == ""){
-                skillls.push(skillls_empty[0])
+              if (skills_empty[i] == ""){
+                skills.push(skills_empty[0])
               }else{
-                skillls.push(skillls_empty[i])
+                skills.push(skills_empty[i])
               }
             }
-            var newdocs = [];
-            var query = CommunityPost.find({});
-            query.sort('-created').limit(50).exec(function(err, docs){
-              if (err) throw err;
 
-              var fixed_len = 3;
-              var len = (fixed_len < docs.length) ? fixed_len: docs.length;
-              var curIdx = 0;
-              async.each(docs, function(doc){
-
-                if(doc.skillls && doc.skillls.length != 0){
-                  for (var j = 0; j < doc.skillls.length; j++) {
-                    var item = doc.skillls[j];  // Calling myNodeList.item(i) isn't necessary in JavaScript
-                    //console.log("item:"+item);
-                    if (item != "" && skillls.indexOf(item) != -1 ){
-                      newdocs.push(doc);
-                    }
-                  }
-                }
-                curIdx += 1;
-                if (len == curIdx){
-                  socket.emit('three community posts need you', newdocs);
-                }
-              });
-            });
-
-            //var uids = [];
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-            var liststr = "('"+skillls.join("','")+"')";
+            var liststr = "('"+skills.join("','")+"')";
             var collaborator_skill_query = `
-                SELECT DISTINCT 
-                    a.uid, a.first_name, a.last_name, p.profession1
-                FROM 
-                    week1_upcomingwork u, week1_user a, week1_profile p 
-                WHERE 
-                    u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
-                   (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or u.collaborator_skill10 in ${liststr})
-                GROUP BY a.uid limit 3
-                `;
-            //db.all("SELECT DISTINCT a.uid, a.first_name, a.last_name, p.profession1 FROM week1_upcomingwork u, week1_user a, week1_profile p WHERE u.user_id=a.id AND u.user_id=p.user_id AND a.uid!=? AND (u.collaborator_skill1 in "+tuplestr+" or u.collaborator_skill2 in "+tuplestr+" or u.collaborator_skill3 in "+tuplestr+" or u.collaborator_skill4 in "+tuplestr+" or u.collaborator_skill5 in "+tuplestr+" or u.collaborator_skill6 in "+tuplestr+" or u.collaborator_skill7 in "+tuplestr+" or u.collaborator_skill8 in "+tuplestr+" or u.collaborator_skill9 in "+tuplestr+" or u.collaborator_skill10 in "+tuplestr+") GROUP BY a.uid limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
-            db.all(collaborator_skill_query, function(err, rows){
-              socket.emit('three collaborators need you', rows);
+                    SELECT DISTINCT 
+                        a.uid, a.first_name, a.last_name, p.profession1
+                    FROM 
+                        week1_upcomingwork u, week1_user a, week1_profile p 
+                    WHERE 
+                        u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
+                       (u.collaborator_skill1 in ${liststr} or u.collaborator_skill2 in ${liststr} or u.collaborator_skill3 in ${liststr} or 
+                        u.collaborator_skill4 in ${liststr} or u.collaborator_skill5 in ${liststr} or u.collaborator_skill6 in ${liststr} or 
+                        u.collaborator_skill7 in ${liststr} or u.collaborator_skill8 in ${liststr} or u.collaborator_skill9 in ${liststr} or 
+                        u.collaborator_skill10 in ${liststr})
+                    LIMIT 3
+                    `;
+
+            client.query(collaborator_skill_query, function(err, results){
+              release();
+              if (err) {
+                  return console.error('Error executing query', err.stack)
+              }
+              socket.emit('three collaborators need you', results.rows);
             });
-          } 
-        }
-      });
+          }
+        });
 
-      var upcoming_collaborator_skill_query = `
-          SELECT 
-              uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, 
-              uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10
-          FROM
-              week1_upcomingwork uw, week1_user u 
-          WHERE u.id=uw.user_id AND u.uid='${socket.uid}' limit 1
-      `;
-
-      //db.each("SELECT uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10 FROM week1_upcomingwork uw, week1_user u where u.id=uw.user_id AND u.uid=? limit 1", socket.uid, function(err, row) {
-      db.each(upcoming_collaborator_skill_query, function(err, row) {
-        if(err){
-          console.log(err);
-        }
-        else{
-          if (row.collaborator_skill1 != "" || row.collaborator_skill2 != "" || row.collaborator_skill3 !="" || row.collaborator_skill4 != "" || row.collaborator_skill5 != "" || row.collaborator_skill6 != "" || row.collaborator_skill7 !="" || row.collaborator_skill8 != "" || row.collaborator_skill9 != "" || row.collaborator_skill10 != "" ){
-
-            var skillls_empty = [row.collaborator_skill1, row.collaborator_skill2, row.collaborator_skill3, row.collaborator_skill4, row.collaborator_skill5, row.collaborator_skill6, row.collaborator_skill7, row.collaborator_skill8, row.collaborator_skill9, row.collaborator_skill10];
-            var skillls = [];
+        var collaborator_skill_query = `
+            SELECT 
+                uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, 
+                uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10
+            FROM
+                week1_upcomingwork uw, week1_user u 
+            WHERE u.id=uw.user_id AND u.uid='${socket.uid}'
+        `;
+        client.query(collaborator_skill_query, function(err, result){
+          var row = result.rows[0];
+          if (row){
+            var skills_empty = [row.collaborator_skill1, row.collaborator_skill2, row.collaborator_skill3, row.collaborator_skill4, row.collaborator_skill5, 
+                                 row.collaborator_skill6, row.collaborator_skill7, row.collaborator_skill8, row.collaborator_skill9, row.collaborator_skill10];
+            var skills = [];
             for (var i = 0; i < 10; i++){
-              if (skillls_empty[i] == ""){
-                skillls.push(skillls_empty[0])
+              if (skills_empty[i] == ""){
+                skills.push(skills_empty[0])
               }else{
-                skillls.push(skillls_empty[i])
+                skills.push(skills_empty[i])
               }
             }
             var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-            var liststr = "('"+skillls.join("','")+"')";
+            var liststr = "('"+skills.join("','")+"')";
             var profession_query = `
-                SELECT
-                    a.uid, a.first_name, a.last_name, p.profession1 
-                FROM week1_profile p, week1_user a 
-                WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
-                  (p.skill1 in ${liststr} or p.skill2 in ${liststr} or p.skill3 in ${liststr} or p.skill4 in ${liststr} or p.skill5 in ${liststr} or p.skill6 in ${liststr} or p.skill7 in ${liststr} or p.skill8 in ${liststr} or p.skill9 in ${liststr} or p.skill10 in ${liststr} )
-                GROUP BY a.uid limit 3
-            `;
+                    SELECT DISTINCT
+                        a.uid, a.first_name, a.last_name, p.profession1 
+                    FROM week1_profile p, week1_user a 
+                    WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
+                      (p.skill1 in ${liststr} or p.skill2 in ${liststr} or p.skill3 in ${liststr} or p.skill4 in ${liststr} or p.skill5 in ${liststr} or p.skill6 in ${liststr} or p.skill7 in ${liststr} or p.skill8 in ${liststr} or p.skill9 in ${liststr} or p.skill10 in ${liststr} )
+                    LIMIT 3
+                `;
 
-            //db.all("SELECT a.uid, a.first_name, a.last_name, p.profession1 FROM week1_profile p, week1_user a WHERE a.uid!=? AND p.user_id=a.id AND (p.skill1 in "+tuplestr+" or p.skill2 in "+tuplestr+" or p.skill3 in "+tuplestr+" or p.skill4 in "+tuplestr+" or p.skill5 in "+tuplestr+" or p.skill6 in "+tuplestr+" or p.skill7 in "+tuplestr+" or p.skill8 in "+tuplestr+" or p.skill9 in "+tuplestr+" or p.skill10 in "+tuplestr+") GROUP BY a.uid limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
-            db.all(profession_query, function(err, rows){
-              socket.emit('three collaborators you need', rows);
+            client.query(profession_query, function(err, results){
+              release();
+              if (err) {
+                  return console.error('Error executing query', err.stack)
+              }
+              socket.emit('three collaborators you need', results.rows);
             });
           }
-        }
-      });
+        });
 
-      var upcoming_collaborator_query = `
-          SELECT 
-              uw.collaborator1, uw.collaborator2, uw.collaborator3, uw.collaborator4, uw.collaborator5 
-          FROM
-              week1_upcomingwork uw, week1_user u 
-          WHERE u.id=uw.user_id AND u.uid='${socket.uid}' limit 1
-      `;
+        var professions_query = `
+                  SELECT 
+                      week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.profession4, week1_profile.profession5 
+                  FROM
+                      week1_profile, week1_user
+                  WHERE week1_user.uid='${socket.uid}' AND week1_user.id = week1_profile.user_id 
+        `;
 
-      //db.each("SELECT uw.collaborator_skill1, uw.collaborator_skill2, uw.collaborator_skill3, uw.collaborator_skill4, uw.collaborator_skill5, uw.collaborator_skill6, uw.collaborator_skill7, uw.collaborator_skill8, uw.collaborator_skill9, uw.collaborator_skill10 FROM week1_upcomingwork uw, week1_user u where u.id=uw.user_id AND u.uid=? limit 1", socket.uid, function(err, row) {
-      db.each(upcoming_collaborator_query, function(err, row) {
-        if(err){
-          console.log(err);
-        }
-        else{
-          if (row.collaborator1 != "" || row.collaborator2 != "" || row.collaborator3 !="" || row.collaborator4 != "" || row.collaborator5 != "" ){
-
-            var professions_empty = [row.collaborator1, row.collaborator2, row.collaborator3, row.collaborator4, row.collaborator5];
+        client.query(professions_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          var row = result.rows[0];
+          if (row) {
+            var professions_empty = [row.profession1, row.profession2, row.profession3, row.profession4, row.profession5];
             var professions = [];
             for (var i = 0; i < 5; i++){
               if (professions_empty[i] == ""){
@@ -772,79 +545,132 @@ io.on('connection', function(socket){
                 professions.push(professions_empty[i])
               }
             }
-            var tuplestr = "(?,?,?,?,?,?,?,?,?,?)";
-            var liststr = "('"+professions.join("','")+"')";
-            var profession_query = `
-                SELECT
-                    a.uid, a.first_name, a.last_name, p.profession1 
-                FROM week1_profile p, week1_user a 
-                WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
-                  (p.profession1 in ${liststr} or p.profession2 in ${liststr} or p.profession3 in ${liststr} or p.profession4 in ${liststr} or p.profession5 in ${liststr} )
-                GROUP BY a.uid limit 3
-            `;
 
-            //db.all("SELECT a.uid, a.first_name, a.last_name, p.profession1 FROM week1_profile p, week1_user a WHERE a.uid!=? AND p.user_id=a.id AND (p.skill1 in "+tuplestr+" or p.skill2 in "+tuplestr+" or p.skill3 in "+tuplestr+" or p.skill4 in "+tuplestr+" or p.skill5 in "+tuplestr+" or p.skill6 in "+tuplestr+" or p.skill7 in "+tuplestr+" or p.skill8 in "+tuplestr+" or p.skill9 in "+tuplestr+" or p.skill10 in "+tuplestr+") GROUP BY a.uid limit 3", (socket.uid, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls, skillls), function(err, rows){
-            db.all(profession_query, function(err, rows){
-              socket.emit('three collaborators with profession you need', rows);
+            var tuplestr = "(?,?,?,?,?)";
+            var liststr = "('"+professions.join("','")+"')";
+            var collaborator_profession_query = `
+                    SELECT DISTINCT 
+                        a.uid, a.first_name, a.last_name, p.profession1
+                    FROM 
+                        week1_upcomingwork u, week1_user a, week1_profile p 
+                    WHERE 
+                        u.user_id=a.id AND u.user_id=p.user_id AND a.uid!='${socket.uid}' AND
+                       (u.collaborator1 in ${liststr} or u.collaborator2 in ${liststr} or u.collaborator3 in ${liststr} or 
+                        u.collaborator4 in ${liststr} or u.collaborator5 in ${liststr})
+                    LIMIT 3
+                    `;
+
+            client.query(collaborator_profession_query, function(err, results){
+              release();
+              if (err) {
+                  return console.error('Error executing query', err.stack)
+              }
+              socket.emit('three collaborators with profession need you', results.rows);
             });
           }
+        });
+
+        var collaborator_profession_query = `
+            SELECT 
+                uw.collaborator1, uw.collaborator2, uw.collaborator3, uw.collaborator4, uw.collaborator5 
+            FROM
+                week1_upcomingwork uw, week1_user u 
+            WHERE u.id=uw.user_id AND u.uid='${socket.uid}'
+        `;
+        client.query(collaborator_profession_query, function(err, result){
+          var row = result.rows[0];
+          if (row){
+            var professions_empty = [row.collaborator1, row.collaborator2, row.collaborator3, row.collaborator4, row.collaborator5] 
+            var professions = [];
+            for (var i = 0; i < 5; i++){
+              if (professions_empty[i] == ""){
+                professions.push(professions_empty[0])
+              }else{
+                professions.push(professions_empty[i])
+              }
+            }
+            var tuplestr = "(?,?,?,?,?)";
+            var liststr = "('"+professions.join("','")+"')";
+            var profession_query = `
+                    SELECT DISTINCT
+                        a.uid, a.first_name, a.last_name, p.profession1 
+                    FROM week1_profile p, week1_user a 
+                    WHERE a.uid!='${socket.uid}' AND p.user_id=a.id AND 
+                      (p.profession1 in ${liststr} or p.profession2 in ${liststr} or p.profession3 in ${liststr} or p.profession4 in ${liststr} or p.profession5 in ${liststr} )
+                    LIMIT 3
+                `;
+
+            client.query(profession_query, function(err, results){
+              release();
+              if (err) {
+                  return console.error('Error executing query', err.stack)
+              }
+              socket.emit('three collaborators with profession you need', results.rows);
+            });
+          }
+        });
+
+        client.release();
+      });
+
+      CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+        if(result){
+          var friends = result.friends;
+          var len = friends.length;
+          socket.emit('community members number', len);
         }
       });
-    });
-    */
-
-    CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-      if(result){
-        var friends = result.friends;
-        var len = friends.length;
-        socket.emit('community members number', len);
-      }
-    });
-
+  } catch(error){
+    console.log("error at join community:", error);
+  }
   });
 
   socket.on('leave community', function(uid){
-    key = "community_"+uid;
-    var query = CommunityPost.find({});
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
-      query1.sort('-created').limit(30).exec(function(err1, likedocs){
-        if (err1) throw err1;
+    try{
+      key = "community_"+uid;
+      var query = communitypost.find({});
+      query.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        var query1 = likepost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+        query1.sort('-created').limit(30).exec(function(err1, likedocs){
+          if (err1) throw err1;
 
-        var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
-        query2.sort('-created').limit(30).exec(function(err2, sharedocs){
-          if (err2) throw err2;
+          var query2 = sharepost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+          query2.sort('-created').limit(30).exec(function(err2, sharedocs){
+            if (err2) throw err2;
 
-          var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
-          query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
-            if (err3) throw err3;
+            var query3 = hatsoffpost.find({'user.uid':socket.uid, 'content_type':1}).select('content_id -_id');
+            query3.sort('-created').limit(30).exec(function(err3, hatsoffdocs){
+              if (err3) throw err3;
 
-            CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-              if(!result){
-                var friends = [];
-                client.hmset(key, {
-                  'sharedocs': JSON.stringify(sharedocs),
-                  'likedocs': JSON.stringify(likedocs),
-                  'hatsoffdocs': JSON.stringify(hatsoffdocs),
-                  'docs': JSON.stringify(docs),
-                  'friends': JSON.stringify(friends)
-                });
-              }else{
-                var friends = result.friends;
-                client.hmset(key, {
-                  'sharedocs': JSON.stringify(sharedocs),
-                  'likedocs': JSON.stringify(likedocs),
-                  'hatsoffdocs': JSON.stringify(hatsoffdocs),
-                  'docs': JSON.stringify(docs),
-                  'friends': JSON.stringify(friends)
-                });
-              }
+              communitymember.findone({uid:socket.uid}).exec(function(err, result){
+                if(!result){
+                  var friends = [];
+                  client.hmset(key, {
+                    'sharedocs': json.stringify(sharedocs),
+                    'likedocs': json.stringify(likedocs),
+                    'hatsoffdocs': json.stringify(hatsoffdocs),
+                    'docs': json.stringify(docs),
+                    'friends': json.stringify(friends)
+                  });
+                }else{
+                  var friends = result.friends;
+                  client.hmset(key, {
+                    'sharedocs': json.stringify(sharedocs),
+                    'likedocs': json.stringify(likedocs),
+                    'hatsoffdocs': json.stringify(hatsoffdocs),
+                    'docs': json.stringify(docs),
+                    'friends': json.stringify(friends)
+                  });
+                }
+              });
             });
           });
         });
-      });
-    }); 
+      }); 
+    } catch(error){
+      console.log("error at leave community:", error);
+    }
   });
 
   socket.on('get community members number', function(){
@@ -911,33 +737,30 @@ io.on('connection', function(socket){
   });
 
   socket.on('join community post', function(data){
-    /*
-    CommunityPost.findById(data.c_id, function(err, post){
-      if (err) throw err;
-      socket.emit('get community post', post);
-    });
-    */
 
-    CommunityPost.findById(data.c_id, function(err, post){
-      if (err) throw err;
-      var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
-      query1.exec(function(err1, likedocs){
-        if (err1) throw err1;
+    try {
+      CommunityPost.findById(data.c_id, function(err, post){
+        if (err) throw err;
+        var query1 = LikePost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
+        query1.exec(function(err1, likedocs){
+          if (err1) throw err1;
 
-        var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
-        query2.exec(function(err2, sharedocs){
-          if (err2) throw err2;
+          var query2 = SharePost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
+          query2.exec(function(err2, sharedocs){
+            if (err2) throw err2;
 
-          var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
-          query3.exec(function(err3, hatsoffdocs){
-            if (err3) throw err3;
+            var query3 = HatsoffPost.find({'user.uid':socket.uid, 'content_type':1, 'content_id':data.c_id}).select('user');
+            query3.exec(function(err3, hatsoffdocs){
+              if (err3) throw err3;
 
-            socket.emit('get community post', {sharedocs:sharedocs, likedocs:likedocs, hatsoffdocs:hatsoffdocs, post:post});
+              socket.emit('get community post', {sharedocs:sharedocs, likedocs:likedocs, hatsoffdocs:hatsoffdocs, post:post});
+            });
           });
         });
-      });
-    }); 
-
+      }); 
+    } catch(error){
+      console.log("error at join community post:", error)
+    }
   });
 
   socket.on('at community needs you', function(data){
@@ -1090,97 +913,9 @@ io.on('connection', function(socket){
     });
   });
 
-  socket.on('at folder', function(data){
-    var query = CollaboratePost.find({'to_uid':socket.uid});
-      query.sort('-created').limit(30).exec(function(err, collaboratedocs){
-           var newdocs = [];
-           var curIdx = 0;
-           var len = collaboratedocs.length;
-     });
-      /***
-    var query = ShareSkillPost.find({'to_uid':socket.uid});
-      query.sort('-created').limit(30).exec(function(err, sharedocs){
-           console.log('share skill:'+sharedocs);
-           var newdocs = [];
-           var curIdx = 0;
-           var len = sharedocs.length;
-           async.each(sharedocs, function(docs){
-              async.waterfall([
-                 function(callback){
-                    CommunityPost.findOne({'_id':docs.community_id}).exec(function(err, post){
-                      callback(null, post);
-                    });
-                 },
-                 function(post){
-                   console.log("second");
-                   if (post){
-                      docs.set('community', post.toJSON(), {strict: false});
-                      newdocs.push(docs);
-                   }else{
-                      newdocs.push(docs);
-                   }
-                   //console.log("****newdocs****:"+newdocs);
-                   curIdx += 1;
-                   if (curIdx == len){
-                     console.log("***********************************length of newdocs:"+newdocs.length);
-                     socket.emit('update shareskill', newdocs);
-                   }
-                 }
-              ], function(err, result){
-              });
-            });
-     });
-     ***/
-
-  });
-
-  socket.on('at hatsoff', function(data){
-    var query = HatsoffPost.find({'to_uid':socket.uid});
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update hatsoffreceived', docs);
-    }); 
-
-    var query1 = HatsoffPost.find({'user.uid':socket.uid});
-    query1.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update hatsoffgave', docs);
-    }); 
-  });
-
-
-  socket.on('at thanks', function(data){
-    var query = ThanksPost.find({'to_uid':socket.uid});
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update thanksreceived', docs);
-    }); 
-
-    var query1 = ThanksPost.find({'user.uid':socket.uid});
-    query1.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update thanksgave', docs);
-    }); 
-  });
-
-  socket.on('at follow', function(data){
-
-    var query = FollowPost.find().or([{ uid1:socket.uid, action_user:2, status:1 }, { uid1:socket.uid, status:2 }, { uid2:socket.uid, action_user:1, status:1 }, { uid2:socket.uid, status:2 }]);
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update followreceived', docs);
-    }); 
-
-    var query1 = FollowPost.find().or([{ uid1:socket.uid, action_user:1 }, { uid1:socket.uid, status:2 }, { uid2:socket.uid, action_user:2 }, { uid2:socket.uid, status:2 }]);
-    query1.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update followgave', docs);
-    }); 
-  });
-
 
   socket.on('at chat message', function(data){
-
+    try {
     MessageRelation.find().
       or([{ uid1:socket.uid, action_user:2, status:1 }, {uid2:socket.uid, action_user:1, status:1}]).sort('-created').exec(function(err, result){
       if (err) {
@@ -1207,7 +942,9 @@ io.on('connection', function(socket){
 
       }
     });
-
+    }catch(error){
+      console.log("error at talent list:", error)
+    }
   });
 
   socket.on('at history', function(data){
@@ -1266,271 +1003,238 @@ io.on('connection', function(socket){
 
   socket.on('at home', function(data){
 
-    var query = CommentPost.find({'to_uid':data.uid});
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update comment', docs);
-    }); 
-
-    var query2 = UpcomingPost.find({'to_uid':data.uid});
-    query2.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update upcoming comment', docs);
-    }); 
-
-    var query3 = PortfolioPost.find({'to_uid':data.uid});
-    query3.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update portfolio comment', docs);
-    }); 
-
-    ThanksPost.find({'to_uid':data.uid}).count(function(err, count){
-      if (err) throw err;
-      socket.emit('number thanks', count);
-    }); 
-
-    HatsoffPost.find({'to_uid':data.uid}).count(function(err, count){
-      if (err) throw err;
-      socket.emit('number hatsoff', count);
-      HatsoffPost.find({'user.uid':data.uid, 'to_uid':data.uid}).exec(function(error, docs){
-        if(error) throw error;
-        socket.emit('hatsoff status at home', {docs:docs, count:count});
+    try{
+      var query = CommentPost.find({'to_uid':data.uid});
+      query.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        socket.emit('update comment', docs);
       }); 
-    }); 
 
-    FollowPost.find().or([{uid1:socket.uid, action_user:2, status:1}, {uid1:data.uid, status:2}, {uid2:data.uid, action_user:1, status:1}, {uid2:data.uid, status:2}]).count(function(err, count){
-      if (err) throw err;
-      socket.emit('number follow', count);
-    }); 
+      var query2 = UpcomingPost.find({'to_uid':data.uid});
+      query2.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        socket.emit('update upcoming comment', docs);
+      }); 
 
-/*
-    LikePost.find({'to_uid':socket.uid, 'user.uid':socket.uid}).exec(function(error, result){
-      if(error) throw error;
+      var query3 = PortfolioPost.find({'to_uid':data.uid});
+      query3.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        socket.emit('update portfolio comment', docs);
+      }); 
 
-      if(result){
-        socket.emit('like status at home', result);
-      }
-    }); 
-*/
+      ThanksPost.find({'to_uid':data.uid}).count(function(err, count){
+        if (err) throw err;
+        socket.emit('number thanks', count);
+      }); 
 
-    LikePost.find({'to_uid':data.uid}).exec(function(error, result){
-      if(error) throw error;
+      HatsoffPost.find({'to_uid':data.uid}).count(function(err, count){
+        if (err) throw err;
+        socket.emit('number hatsoff', count);
+        HatsoffPost.find({'user.uid':data.uid, 'to_uid':data.uid}).exec(function(error, docs){
+          if(error) throw error;
+          socket.emit('hatsoff status at home', {docs:docs, count:count});
+        }); 
+      }); 
 
-      if(result){
-        socket.emit('likes at home', result);
-      }
-    });
+      FollowPost.find().or([{uid1:socket.uid, action_user:2, status:1}, {uid1:data.uid, status:2}, {uid2:data.uid, action_user:1, status:1}, {uid2:data.uid, status:2}]).count(function(err, count){
+        if (err) throw err;
+        socket.emit('number follow', count);
+      }); 
 
-    SharePost.find({'to_uid':data.uid}).exec(function(error, result){
-      if(error) throw error;
 
-      if(result){
-        socket.emit('shares at home', result);
-      }
-    });
+      LikePost.find({'to_uid':data.uid}).exec(function(error, result){
+        if(error) throw error;
 
-    // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
-    var query_cp = CommunityPost.find({'user.uid':data.uid});
-    async.waterfall([
-        function(callback){
-           var query_cp = CommunityPost.find({'user.uid':data.uid});
-           query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
-              callback(null, communitydocs);
-           });
-        },
-        function(communitydocs, callback){
-       	   var query_sh = SharePost.find({'user.uid':data.uid});
-      	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
-                    callback(null, communitydocs, sharedocs);
-                 });
-        },
-        function(communitydocs, sharedocs){ 
-           var newdocs = [];
-           var curIdx = 0;
-           var len = sharedocs.length;
-           if (len == 0){
-               socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-           }else{
+        if(result){
+          socket.emit('likes at home', result);
+        }
+      });
 
-    		   async.each(sharedocs, function(docs){
-    			  if (docs.content_type == 1){
-    			  async.waterfall([
-    			     function(callback){
-    				      CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
-    				        callback(null, post);
-    				      });
-    			     },
-    			     function(post){
-        				 docs.set('content', post.toJSON(), {strict: false});
-        				 newdocs.push(docs);
-        				 //console.log("****newdocs****:"+newdocs);
-        				 curIdx += 1;
-        				 if (curIdx == len){
-        				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-        				 }
+      SharePost.find({'to_uid':data.uid}).exec(function(error, result){
+        if(error) throw error;
+
+        if(result){
+          socket.emit('shares at home', result);
+        }
+      });
+
+      // content_type 1:community post 2:upcoming work 3:portfolio 4:shared post
+      var query_cp = CommunityPost.find({'user.uid':data.uid});
+      async.waterfall([
+          function(callback){
+             var query_cp = CommunityPost.find({'user.uid':data.uid});
+             query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
+                callback(null, communitydocs);
+             });
+          },
+          function(communitydocs, callback){
+         	   var query_sh = SharePost.find({'user.uid':data.uid});
+        	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
+                      callback(null, communitydocs, sharedocs);
+                   });
+          },
+          function(communitydocs, sharedocs){ 
+             var newdocs = [];
+             var curIdx = 0;
+             var len = sharedocs.length;
+             if (len == 0){
+                 socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+             }else{
+
+      		   async.each(sharedocs, function(docs){
+      			  if (docs.content_type == 1){
+      			  async.waterfall([
+      			     function(callback){
+      				      CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
+      				        callback(null, post);
+      				      });
+      			     },
+      			     function(post){
+          				 docs.set('content', post.toJSON(), {strict: false});
+          				 newdocs.push(docs);
+          				 //console.log("****newdocs****:"+newdocs);
+          				 curIdx += 1;
+          				 if (curIdx == len){
+          				  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+          				 }
+          			 }
+          		], function(err, result){});
+
+        			} else if(docs.content_type == 2){
+        			 curIdx += 1;
+        			 if (curIdx == len){
+        			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
         			 }
-        		], function(err, result){
-    	});
-
-			} else if(docs.content_type == 2){
-			 curIdx += 1;
-			 if (curIdx == len){
-			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-			 }
-			} else if(docs.content_type == 3){
-			 curIdx += 1;
-			 if (curIdx == len){
-			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-			 }
-			} else if(docs.content_type == 4){
-			 curIdx += 1;
-			 if (curIdx == len){
-			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-			 }
-			} else{
-			 curIdx += 1;
-			 if (curIdx == len){
-			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
-			 }
-			}
-                    });
-           }
+        			} else if(docs.content_type == 3){
+        			 curIdx += 1;
+        			 if (curIdx == len){
+        			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+        			 }
+        			} else if(docs.content_type == 4){
+        			 curIdx += 1;
+        			 if (curIdx == len){
+        			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+        			 }
+        			} else{
+        			 curIdx += 1;
+        			 if (curIdx == len){
+        			  socket.emit('update timeline history', {share:newdocs, community:communitydocs});
+        			 }
+        			}
+            });
+          }
         },
         ], function(err, result){
           console.log("err:"+err);
-        }); 
+      }); 
+    } catch(error){
+      console.log("error at home:", error);
+    }
   });
  
   socket.on('at userpage', function(data){
-    console.log("at userpage");
+    try{
 
-    var query = CommentPost.find({'to_uid':data.to_uid});
-    query.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update comment', docs);
-    }); 
+      var query = CommentPost.find({'to_uid':data.to_uid});
+      query.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        socket.emit('update comment', docs);
+      }); 
 
-    var query2 = UpcomingPost.find({'to_uid':data.to_uid});
-    query2.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update upcoming comment', docs);
-    }); 
+      var query2 = UpcomingPost.find({'to_uid':data.to_uid});
+      query2.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        socket.emit('update upcoming comment', docs);
+      }); 
 
-    var query3 = PortfolioPost.find({'to_uid':data.to_uid});
-    query3.sort('-created').limit(30).exec(function(err, docs){
-      if (err) throw err;
-      socket.emit('update portfolio comment', docs);
-    }); 
+      var query3 = PortfolioPost.find({'to_uid':data.to_uid});
+      query3.sort('-created').limit(30).exec(function(err, docs){
+        if (err) throw err;
+        socket.emit('update portfolio comment', docs);
+      }); 
 
-    /*
-    ThanksPost.find({'to_uid':data.to_uid}).count(function(err, count){
-      if (err) throw err;
-      socket.emit('number user thanks', count);
-    }); 
-    */
+      FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(err, count){
+        if (err) throw err;
+        socket.emit('number user follow', count);
+      }); 
 
-    /*
-    HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
-      if (err) throw err;
-      socket.emit('number user hatsoff', count);
-    }); 
-    */
-
-    FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(err, count){
-      if (err) throw err;
-      socket.emit('number user follow', count);
-    }); 
-
-
-    var uid1, uid2, action_user;
-    if (data.uid < data.to_uid){
-      uid1 = data.uid;
-      uid2 = data.to_uid; 
-      action_user = 1;
-    }else{
-      uid2 = data.uid;
-      uid1 = data.to_uid; 
-      action_user = 2;
-    }
-
-    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
-      if (err) {
-        console.log(err);
-      }else {
-        if (result){
-          socket.join(result._id);
-          socket.emit('set message', result);
-        }else{
-          //Default status is 2
-          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:2 });
-          newMessageRelation.save(function(error, newdata){
-
-            if (error) {
-              console.log(error);
-            }else{
-              /** emmit new message to data.to_uid message.html **/
-              socket.join(newdata._id);
-              socket.emit('set message', newdata) 
-            }
-          });
-        }
+      var uid1, uid2, action_user;
+      if (data.uid < data.to_uid){
+        uid1 = data.uid;
+        uid2 = data.to_uid; 
+        action_user = 1;
+      }else{
+        uid2 = data.uid;
+        uid1 = data.to_uid; 
+        action_user = 2;
       }
-    });
 
-    LikePost.find({'to_uid':data.to_uid, 'user.uid':data.uid}).exec(function(error, result){
-      if(error) throw error;
-
-      if(result){
-        socket.emit('like status', result);
-      }
-    }); 
-
-    // Follow status 0:not following, 1:following
-    //1: sent request, 2:accepted, 3:blocked
-    FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
-      if(error) throw error;
-         
-      FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
-        if(err){
-
-        }else{
-          if(result){
-            if( result.status == 2){
-              socket.emit('follow status', {status:2, count:count});
-            }else if ((result.uid1==socket.uid && result.action_user==1) || (result.uid2==data.uid && result.action_user==2)){
-              socket.emit('follow status', {status:1, count:count});
-            }else{
-              //Got request
-              socket.emit('follow status', {status:11, count:count});
-            }
+      MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+        if (err) {
+          console.log(err);
+        }else {
+          if (result){
+            socket.join(result._id);
+            socket.emit('set message', result);
           }else{
-            socket.emit('follow status', {status:0, count:count});
+            //Default status is 2
+            var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:2 });
+            newMessageRelation.save(function(error, newdata){
+
+              if (error) {
+                console.log(error);
+              }else{
+                /** emmit new message to data.to_uid message.html **/
+                socket.join(newdata._id);
+                socket.emit('set message', newdata) 
+              }
+            });
           }
         }
       });
-    });
 
-    HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
-      if (err) throw err;
-      HatsoffPost.find({'user.uid':data.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
+      LikePost.find({'to_uid':data.to_uid, 'user.uid':data.uid}).exec(function(error, result){
         if(error) throw error;
-        socket.emit('hatsoff status', {docs:docs, count:count});
-      }); 
-    });
 
-    /***
-    var query_cp = CommunityPost.find({'user.uid':data.to_uid});
-    query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
-      if (err) throw err;
-      var query_sh = SharePost.find({'user.uid':data.to_uid});
-      query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
-         if (err) throw err;
-         socket.emit('update user timeline history', {share:sharedocs, community:communitydocs});
+        if(result){
+          socket.emit('like status', result);
+        }
       }); 
-    }); 
-    ***/
 
-    var query_cp = CommunityPost.find({'user.uid':data.to_uid});
+      // Follow status 0:not following, 1:following
+      //1: sent request, 2:accepted, 3:blocked
+      FollowPost.find().or([{uid1:data.to_uid, action_user:2, status:1}, {uid1:data.to_uid, status:2}, {uid2:data.to_uid, action_user:1, status:1}, {uid2:data.to_uid, status:2}]).count(function(error, count){
+        if(error) throw error;
+           
+        FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
+          if(err){
+
+          }else{
+            if(result){
+              if( result.status == 2){
+                socket.emit('follow status', {status:2, count:count});
+              }else if ((result.uid1==socket.uid && result.action_user==1) || (result.uid2==data.uid && result.action_user==2)){
+                socket.emit('follow status', {status:1, count:count});
+              }else{
+                //Got request
+                socket.emit('follow status', {status:11, count:count});
+              }
+            }else{
+              socket.emit('follow status', {status:0, count:count});
+            }
+          }
+        });
+      });
+
+      HatsoffPost.find({'to_uid':data.to_uid}).count(function(err, count){
+        if (err) throw err;
+        HatsoffPost.find({'user.uid':data.uid, 'to_uid':data.to_uid}).exec(function(error, docs){
+          if(error) throw error;
+          socket.emit('hatsoff status', {docs:docs, count:count});
+        }); 
+      });
+
+      var query_cp = CommunityPost.find({'user.uid':data.to_uid});
       async.waterfall([
         function(callback){
            var query_cp = CommunityPost.find({'user.uid':data.to_uid});
@@ -1600,95 +1304,24 @@ io.on('connection', function(socket){
           console.log("err:"+err);
         }); 
 
-    /**
-    var query_cp = CommunityPost.find({'user.uid':data.to_uid});
-    async.waterfall([
-        function(callback){
-           console.log("communitydocs");
-           var query_cp = CommunityPost.find({'user.uid':data.to_uid});
-           query_cp.sort('-created').limit(30).exec(function(err, communitydocs){
-              callback(null, communitydocs);
-           });
-        },
-        function(communitydocs, callback){
-           console.log("communitydocs:"+communitydocs.length);
-       	   var query_sh = SharePost.find({'user.uid':data.to_uid});
-	   query_sh.sort('-created').limit(30).exec(function(err, sharedocs){
-              callback(null, communitydocs, sharedocs);
-           });
-        },
-        function(communitydocs, sharedocs){ 
-           var newdocs = [];
-           var curIdx = 0;
-           var len = sharedocs.length;
-	   async.each(sharedocs, function(docs){
-		if (docs.content_type == 1){
-		  async.waterfall([
-		     function(callback){
-		         CommunityPost.findOne({'_id':docs.content_id}).exec(function(err, post){
-                            callback(null, post);
-                         });
-		     },
-		     function(post){
-		         console.log("second");
-		         docs.set('content', post.toJSON(), {strict: false});
-		         newdocs.push(docs);
-		         //console.log("****newdocs****:"+newdocs);
-		         curIdx += 1;
-                         if (curIdx == len){
-			  console.log("***********************************length of newdocs:"+newdocs);
-			  socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
-                         }
-		     }
-		  ], function(err, result){
-	          });
-		} else if(docs.content_type == 2){
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs);
-		  socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
-                 }
-		} else if(docs.content_type == 3){
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs);
-		  socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
-                 }
-		} else if(docs.content_type == 4){
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs);
-		  socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
-                 }
-		} else{
-		 curIdx += 1;
-                 if (curIdx == len){
-		  console.log("***********************************length of newdocs:"+newdocs);
-		  socket.emit('update user timeline history', {share:newdocs, community:communitydocs});
-                 }
-		}
-          });
-        },
-        ], function(err, result){
-          console.log("err:"+err);
-        });
-    **/
-
+    }catch(error){
+      console.log("erorr at userpage:", error)
+    } 
   });
 
   socket.on('change portfolio', function(data){
     if (data.to_uid){
-	var query = PortfolioPost.find({'to_uid':data.to_uid, 'p_id':data.p_id});
-	query.sort('-created').limit(30).exec(function(err, docs){
-	  if (err) throw err;
-	  socket.emit('update portfolio comment', docs);
-	}); 
-    }else{
-	var query = PortfolioPost.find({'to_uid':socket.uid, 'p_id':data.p_id});
-	query.sort('-created').limit(30).exec(function(err, docs){
-	  if (err) throw err;
-	  socket.emit('update portfolio comment', docs);
-	}); 
+    	var query = PortfolioPost.find({'to_uid':data.to_uid, 'p_id':data.p_id});
+    	query.sort('-created').limit(30).exec(function(err, docs){
+    	  if (err) throw err;
+    	  socket.emit('update portfolio comment', docs);
+    	}); 
+        }else{
+    	var query = PortfolioPost.find({'to_uid':socket.uid, 'p_id':data.p_id});
+    	query.sort('-created').limit(30).exec(function(err, docs){
+    	  if (err) throw err;
+    	  socket.emit('update portfolio comment', docs);
+    	}); 
     }
   });
 
@@ -1788,21 +1421,6 @@ io.on('connection', function(socket){
     });
   });
 
-  /**
-  socket.on('new user', function(data, callback){
-     if (data in users){
-         console.log('false');
-         callback(false);
-     }else{
-         callback(true);
-         console.log('true');
-         socket.nickname = data;
-         users[socket.nickname] = socket;
-         updateNicknames();
-     }
-  });
-  **/
- 
   function updateUids(){
     io.emit('usernames', Object.keys(users));
   }
@@ -1842,143 +1460,156 @@ io.on('connection', function(socket){
   });
 
   socket.on('community post', function(data, callback){
-    var d = new Date();
-    var ls = [];
-    if(data.skillls.length != 0){
-      for (var i = 0; i < data.skillls.length; i++) {
-        var item = data.skillls[i];  // Calling myNodeList.item(i) isn't necessary in JavaScript
-        ls.push(item);
-      }
-      if (data.skillls.length < 5){
-        for (var i = data.skillls.length; i <= 5; i++){
-          ls.push(data.skillls[0]);
+    try {
+      var d = new Date();
+      var ls = [];
+      if(data.skillls.length != 0){
+        for (var i = 0; i < data.skillls.length; i++) {
+          var item = data.skillls[i];  // Calling myNodeList.item(i) isn't necessary in JavaScript
+          ls.push(item);
+        }
+        if (data.skillls.length < 5){
+          for (var i = data.skillls.length; i <= 5; i++){
+            ls.push(data.skillls[0]);
+          }
         }
       }
-    }
 
-    var newPost;
-    if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, image:
-{data: true, contentType: data.data['type']}, shares:0, likes:0});
-    }else{
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, shares
-:0, likes:0});
-    }
-    newPost.save(function(err, post){
-      if (err) {
-        console.log(err);
-        return;
-      } else{
-        var image = { data: false }
-
-        if (data.data){
-          s3.putObject({
-            Bucket: 'matchhat-community-posts',
-            Key: post.id + '.png',
-            Body: data.data['file'],
-            ACL: 'public-read'
-          }, function (resp) {
-            console.log('Successfully uploaded package.');
-          });
-          image = { data: true, contentType: data.data['type'] }
-        }
-
-        io.emit('new community post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skil
-lls});
+      var newPost;
+      if (data.data){
+        newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, image:
+  {data: true, contentType: data.data['type']}, shares:0, likes:0});
+      }else{
+        newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:0, shares
+  :0, likes:0});
       }
-    });
+      newPost.save(function(err, post){
+        if (err) {
+          console.log(err);
+          return;
+        } else{
+          var image = { data: false }
+
+          if (data.data){
+            s3.putObject({
+              Bucket: 'matchhat-community-posts',
+              Key: post.id + '.png',
+              Body: data.data['file'],
+              ACL: 'public-read'
+            }, function (resp) {
+              console.log('Successfully uploaded package.');
+            });
+            image = { data: true, contentType: data.data['type'] }
+          }
+
+          io.emit('new community post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+        }
+      });
+    }catch(error){
+      console.log("error at community post:", error);
+    }
   });
 
   socket.on('private post', function(data, callback){
-    var ls = [];
-    if(data.skillls.length != 0){
-      for (var i = 0; i < data.skillls.length; i++) {
-        var item = data.skillls[i];  // Calling myNodeList.item(i) isn't necessary in JavaScript
-        ls.push(item);
-      }
-      if (data.skillls.length < 5){
-        for (var i = data.skillls.length; i <= 5; i++){
-          ls.push(data.skillls[0]);
+    try {
+      var ls = [];
+      if(data.skillls.length != 0){
+        for (var i = 0; i < data.skillls.length; i++) {
+          var item = data.skillls[i];  // Calling myNodeList.item(i) isn't necessary in JavaScript
+          ls.push(item);
+        }
+        if (data.skillls.length < 5){
+          for (var i = data.skillls.length; i <= 5; i++){
+            ls.push(data.skillls[0]);
+          }
         }
       }
-    }
 
-    var newPost;    
-    if (data.data){
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:mage:{data: true, contentType: data.data['type']}, shares:0, likes:0});
-    }else{
-      newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, shares:0, likes:0});
-    }
-    newPost.save(function(err, post){
-      if (err) {
-        console.log(err);
-      } else{
+      var newPost;    
+      if (data.data){
+        newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, image:{data: true, contentType: data.data['type']}, shares:0, likes:0});
+      }else{
+        newPost = new CommunityPost({content:data.msg, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, tag:data.tag, skillls:data.skillls, communityFlag:1, shares:0, likes:0});
+      }
+      newPost.save(function(err, post){
+        if (err) {
+          console.log(err);
+        } else{
 
-        var image = { data: false }
+          var image = { data: false }
 
-        if (data.data){
-          s3.putObject({
-            Bucket: 'matchhat-community-posts',
-            Key: post.id + '.png',
-            Body: data.data['file'],
-            ACL: 'public-read'
-          }, function (resp) {
-            console.log('Successfully uploaded package.');
-          });
-          image = { data: true, contentType: data.data['type'] }
-        }
+          if (data.data){
+            s3.putObject({
+              Bucket: 'matchhat-community-posts',
+              Key: post.id + '.png',
+              Body: data.data['file'],
+              ACL: 'public-read'
+            }, function (resp) {
+              console.log('Successfully uploaded package.');
+            });
+            image = { data: true, contentType: data.data['type'] }
+          }
 
-        CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-          if(!result){
-            socket.emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
-          }else{
-            var friends = result.friends;
-            socket.emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
-            for (var i = 0; i < friends.length; i++){
-              if (friends[i] in users){
-                users[friends[i]].emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+          CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
+            if(!result){
+              socket.emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+            }else{
+              var friends = result.friends;
+              socket.emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+              for (var i = 0; i < friends.length; i++){
+                if (friends[i] in users){
+                  users[friends[i]].emit('new private post', {msg:data.msg, image:image, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname, community_id:post.id, tag:data.tag, skillls:data.skillls});
+                }
               }
             }
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    }catch(error){
+      console.log("error at private post:", error)
+    }
   });
 
   socket.on('reply community', function(data, callback){
     var d = new Date();
     
-    CommunityPost.findById(data.c_id, function(err, post){
-      if (err) {
-        console.log(err);
-      } else{
-        post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
-        post.save(function (err) {
-          if (!err) {
-            io.emit('new reply community', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
-          }
-        });
-      }
-    });
-    
+    try{
+      CommunityPost.findById(data.c_id, function(err, post){
+        if (err) {
+          console.log(err);
+        } else{
+          post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
+          post.save(function (err) {
+            if (!err) {
+              io.emit('new reply community', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
+            }
+          });
+        }
+      });
+    }catch(error){
+      console.log("error at reply community:", error)
+    } 
   });
 
   socket.on('community comment', function(data, callback){
     var d = new Date();
     
-    CommunityPost.findById(data.c_id, function(err, post){
-      if (err) {
-        console.log(err);
-      } else{
-        post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
-        post.save(function (err) {
-          if (!err) {
-            io.emit('new community comment', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
-          }
-        });
-      }
-    });
-    
+    try{
+      CommunityPost.findById(data.c_id, function(err, post){
+        if (err) {
+          console.log(err);
+        } else{
+          post.replys.push({user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content:data.msg});
+          post.save(function (err) {
+            if (!err) {
+              io.emit('new community comment', {msg:data.msg, community_id:data.c_id, uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname});
+            }
+          });
+        }
+      });
+    } catch(error){
+      console.log("error at community comment:", error)
+    } 
   });
 
   socket.on('share skill', function(data, callback){
@@ -2048,21 +1679,6 @@ lls});
 
   socket.on('give hatsoff', function(data, callback){
     var d = new Date();
-
-/*
-    var newhat = new HatsoffPost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id});
-    newhat.save(function(err){
-      if (err) {
-        console.log(err);
-      } else{
-        socket.emit('new history', {to_uid:data.to_uid, content_type:data.content_type, content_id:data.content_id, action_id:2});
-        if (data.to_uid in users){
-          users[data.to_uid].emit('new notification', {action_id:2, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
-        }
-      }
-
-    });
-*/
 
     HatsoffPost.findOne({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:data.content_type, content_id:data.content_id}).exec(function(err, result){
       if(err){
@@ -2428,34 +2044,6 @@ lls});
       }
     });
 
-    /*
-    db.serialize(function() {
-      //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
-      db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_upcomingwork s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
-        if (err) console.log("error", err);
-        if(row){
-          newPost = new CommunityPost({ upcoming:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-          newPost.save(function(err, post){
-            if (err) console.log(err);
-
-            CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-              if(result){
-                var friends = result.friends;
-
-                for (var i = 0; i < friends.length; i++){
-                  if (friends[i] in users){
-                    users[friends[i]].emit('new share', { type: 'upcoming', content :{community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-                    socket.emit('new share', { type: 'upcoming', content :{community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-                  }
-                }
-              }
-            });
-          });
-        }
-      });
-    });
-    */
-
     var newNotification = new NotificationPost({action_id:5, content_type:2, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
@@ -2474,34 +2062,6 @@ lls});
     var newPost = new SharePost({to_uid:data.to_uid, user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}, content_type:3, content_id:data.c_id});
     newPost.save();
 
-    /*
-    db.serialize(function() {
-      //db.each("SELECT user_id, title, image, describe FROM week1_showcase WHERE user_id=? AND number=?", (data.to_uid, data.c_id), function(err, row){
-      db.each("SELECT a.first_name, a.last_name, s.title, s.image, s.describe FROM week1_showcase s, auth_user a WHERE s.user_id='"+data.to_uid+"' AND s.number='"+data.content_id+"' AND s.user_id=a.id GROUP BY s.user_id", function(err, row){
-        if (err) console.log("error", err);
-        if(row){
-          newPost = new CommunityPost({ portfolio:{image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-          newPost.save(function(err, post){
-            if (err) console.log(err);
-
-            CommunityMember.findOne({uid:socket.uid}).exec(function(err, result){
-              if(result){
-                var friends = result.friends;
-
-                for (var i = 0; i < friends.length; i++){
-                  if (friends[i] in users){
-                    users[friends[i]].emit('new share', { type: 'portfolio', content: {community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-                    socket.emit('new share', { type: 'portfolio', content: {community_id:post.id, image:row.image, title:row.title, description:row.describe}, sharedBy:socket.uid, user:{uid:data.to_uid, first_name:row.first_name, last_name:row.last_name} });
-                  }
-                }
-              }
-            });
-          });
-        }
-      });
-    });
-    */
-
     var newNotification = new NotificationPost({action_id:5, content_type:3, content_id:data.c_id, to_uid:data.to_uid, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
     newNotification.save(function(err){
@@ -2516,66 +2076,81 @@ lls});
 
 
   socket.on('post comment', function(data, callback){
-    var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+    try{
+      var newComment = new CommentPost({content:data.msg, to_uid:data.to, from_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
-    newComment.save(function(err){
-      if (err) {
-        console.log(err);
-      } else{
-        socket.emit('new comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+      newComment.save(function(err){
+        if (err) {
+          console.log(err);
+        } else{
+          socket.emit('new comment', {msg:data.msg, from:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
 
-        if (data.to in users && data.to != socket.uid){
-           users[data.to].emit('new comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+          if (data.to in users && data.to != socket.uid){
+             users[data.to].emit('new comment', {msg:data.msg, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+          }
         }
-      }
-    });
+      });
 
-    var newNotification = new NotificationPost({action_id:1, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
+      var newNotification = new NotificationPost({action_id:1, to_uid:data.to, action_user:{uid:socket.uid, first_name:socket.firstname, last_name:socket.lastname}});
 
-    newNotification.save(function(err){
-      if (err) {
-        console.log(err);
-      } else{
-        if (data.to in users){
-           users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
-        } else {
+      newNotification.save(function(err){
+        if (err) {
+          console.log(err);
+        } else{
+          if (data.to in users){
+             users[data.to].emit('new notification', {action_id:1, from_uid:socket.uid, from_firstname:socket.firstname, from_lastname:socket.lastname});
+          } else {
+          }
         }
-      }
-    });
+      });
+    }catch(error){
+      console.log("error at post comment:", error);
+    }
   });
 
   socket.on('delete community comment', function(data){
-
-    CommunityPost.findById(data.c_id, function(err, post){
-      if (err) {
-        console.log(err);
-      } else{
-        post.replys.splice(data.r_id, 1);
-        post.save(function (err) {
-          if (err) {
-            console.log(err);
-          }
-        });
-      }
-    });
+    try{
+      CommunityPost.findById(data.c_id, function(err, post){
+        if (err) {
+          console.log(err);
+        } else{
+          post.replys.splice(data.r_id, 1);
+          post.save(function (err) {
+            if (err) {
+              console.log(err);
+            }
+          });
+        }
+      });
+    }catch(error){
+      console.log("error at delete community comment:", error)
+    }
   });
 
   socket.on('update postComment', function(data){
-    CommunityPost.findById(data.c_id, function(err, doc){
-      if (err) console.log(err);
+    try{
+      CommunityPost.findById(data.c_id, function(err, doc){
+        if (err) console.log(err);
 
-      comment = doc.replys[data.r_id];
-      comment.content = data.msg;
-      doc.replys[data.r_id] = comment;
-      doc.save();
-    });
+        comment = doc.replys[data.r_id];
+        comment.content = data.msg;
+        doc.replys[data.r_id] = comment;
+        doc.save();
+      });
+    }catch(error){
+      console.log("error at update community comment:", error)
+    }
   });
 
   socket.on('delete community post', function(c_id){
-    CommunityPost.find({'_id':c_id}).remove().exec();
-    CommunityPost.find({'content_id':c_id}).remove().exec();
-    SharePost.find({'content_id':c_id}).remove().exec();
-    LikePost.find({'content_id':c_id}).remove().exec();
+    try{
+      CommunityPost.find({'_id':c_id}).remove().exec();
+      CommunityPost.find({'content_id':c_id}).remove().exec();
+      SharePost.find({'content_id':c_id}).remove().exec();
+      LikePost.find({'content_id':c_id}).remove().exec();
+    }catch(error){
+      console.log("error at delete community comment:", error)
+    }
   });
 
   socket.on('delete upcoming comment', function(c_id){
@@ -2657,232 +2232,305 @@ lls});
   });
 
   socket.on('add community members', function(data){
-
-    var uid1, uid2, action_user;
-    if (data.sid < data.rid){
-      uid1 = data.sid;
-      uid2 = data.rid; 
-      action_user = 1;
-    }else{
-      uid2 = data.sid;
-      uid1 = data.rid; 
-      action_user = 2;
-    }
-    
-    FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
-      if(err){
+    try{
+      var uid1, uid2, action_user;
+      if (data.sid < data.rid){
+        uid1 = data.sid;
+        uid2 = data.rid; 
+        action_user = 1;
       }else{
-        if(!result){
-          var newPost = new FollowPost({uid1:uid1, uid2:uid2, action_user:action_user, status:1});
-          newPost.save(function(err){
-            if (err) {
-              console.log(err);
-            } else{
-              socket.emit('new history', {to_uid:data.to_uid, content_type:1, action_id:8});
-              if (data.to_uid in users){
-                  users[data.to_uid].emit('new notification', {action_id:8, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
-              }
-            }
-          }); 
-        }else{
-          if (result.action_user != action_user && result.status != 2){
-            result.status = 2;
-            result.save();
-            CommunityMember.findOne({uid:uid1}).exec(function(err, result){
-              if (result){
-                result.friends.push(uid2);
-                result.save(function (er) {
-                  console.log("friends saved");
-                });
-              }else{
-                var cm = new CommunityMember({uid:uid1, friends:[uid2]})
-                cm.save(function(e){
-                  console.log("new friends saved");
-                })
-              }
-
-            });
-
-            CommunityMember.findOne({uid:uid2}).exec(function(err, result){
-              if(result){
-                result.friends.push(uid1);
-                result.save(function (err) {
-                  console.log("friends saved");
-                });
-              }else{
-                var cm = new CommunityMember({uid:uid2, friends:[uid1]})
-                cm.save(function(e){
-                  console.log("new friends saved");
-                })
-              }
-            });
-          }
-         }
+        uid2 = data.sid;
+        uid1 = data.rid; 
+        action_user = 2;
       }
-    });
+    
+      FollowPost.findOne({uid1:uid1, uid2:uid2}).exec(function(err, result){
+        if(err){
+        }else{
+          if(!result){
+            var newPost = new FollowPost({uid1:uid1, uid2:uid2, action_user:action_user, status:1});
+            newPost.save(function(err){
+              if (err) {
+                console.log(err);
+              } else{
+                socket.emit('new history', {to_uid:data.to_uid, content_type:1, action_id:8});
+                if (data.to_uid in users){
+                    users[data.to_uid].emit('new notification', {action_id:8, from_uid:socket.uid, from_first_name:socket.firstname, from_lastname:socket.lastname});
+                }
+              }
+            }); 
+          }else{
+            if (result.action_user != action_user && result.status != 2){
+              result.status = 2;
+              result.save();
+              CommunityMember.findOne({uid:uid1}).exec(function(err, result){
+                if (result){
+                  result.friends.push(uid2);
+                  result.save(function (er) {
+                    console.log("friends saved");
+                  });
+                }else{
+                  var cm = new CommunityMember({uid:uid1, friends:[uid2]})
+                  cm.save(function(e){
+                    console.log("new friends saved");
+                  })
+                }
+
+              });
+
+              CommunityMember.findOne({uid:uid2}).exec(function(err, result){
+                if(result){
+                  result.friends.push(uid1);
+                  result.save(function (err) {
+                    console.log("friends saved");
+                  });
+                }else{
+                  var cm = new CommunityMember({uid:uid2, friends:[uid1]})
+                  cm.save(function(e){
+                    console.log("new friends saved");
+                  })
+                }
+              });
+            }
+           }
+        }
+      });
+    }catch(error){
+      console.log("error at add community members:", error)
+    }
   });
 
   socket.on('list profession collaborators', function(profession){
-    var pool = new pg.Pool(pgConfig);
+    try{
+      var pool = new pg.Pool(pgConfig);
 
-    pool.connect(function(err, client, release) {
-      var profession_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
-               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
-        FROM week1_profile, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
-        AND ( week1_profile.profession1='${profession}' OR week1_profile.profession2='${profession}' OR week1_profile.profession3='${profession}'
-              OR week1_profile.profession4='${profession}' OR week1_profile.profession5='${profession}')
-      `;
+      pool.connect(function(err, client, release) {
+        var profession_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+                 week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+          FROM week1_profile, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+          AND ( week1_profile.profession1='${profession}' OR week1_profile.profession2='${profession}' OR week1_profile.profession3='${profession}'
+                OR week1_profile.profession4='${profession}' OR week1_profile.profession5='${profession}')
+        `;
 
-      client.query(profession_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get users by profession', result.rows);
+        client.query(profession_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get users by profession', result.rows);
+        });
       });
-    });
+    }catch(error){
+      console.log("error at list profession collaborators:", error)
+    }
   });
 
   socket.on('search query', function(query){
-    var pool = new pg.Pool(pgConfig);
+    try{
+      var pool = new pg.Pool(pgConfig);
 
-    pool.connect(function(err, client, release) {
-      var profession_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
-               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
-        FROM week1_profile, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
-        AND ( week1_profile.profession1='${query}' OR week1_profile.profession2='${query}' OR week1_profile.profession3='${query}'
-              OR week1_profile.profession4='${query}' OR week1_profile.profession5='${query}')
-      `;
+      pool.connect(function(err, client, release) {
+        var profession_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+                 week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+          FROM week1_profile, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+          AND ( week1_profile.profession1='${query}' OR week1_profile.profession2='${query}' OR week1_profile.profession3='${query}'
+                OR week1_profile.profession4='${query}' OR week1_profile.profession5='${query}')
+        `;
 
-      client.query(profession_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get search result by profession', result.rows);
-      });
-    });
-
-    pool.connect(function(err, client, release) {
-      var skill_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
-               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
-        FROM week1_profile, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
-        AND ( week1_profile.skill1='${query}' OR week1_profile.skill2='${query}' OR week1_profile.skill3='${query}'
-              OR week1_profile.skill4='${query}' OR week1_profile.skill5='${query}' OR week1_profile.skill6='${query}'
-              OR week1_profile.skill7='${query}' OR week1_profile.skill8='${query}' OR week1_profile.skill9='${query}' OR week1_profile.skill10='${query}')
-      `;
-
-      client.query(skill_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get search result by skill', result.rows);
+        client.query(profession_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get search result by profession', result.rows);
+        });
       });
 
-    });
+      pool.connect(function(err, client, release) {
+        var skill_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+                 week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+          FROM week1_profile, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+          AND ( week1_profile.skill1='${query}' OR week1_profile.skill2='${query}' OR week1_profile.skill3='${query}'
+                OR week1_profile.skill4='${query}' OR week1_profile.skill5='${query}' OR week1_profile.skill6='${query}'
+                OR week1_profile.skill7='${query}' OR week1_profile.skill8='${query}' OR week1_profile.skill9='${query}' OR week1_profile.skill10='${query}')
+        `;
 
-    pool.connect(function(err, client, release) {
-      var username_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
-               week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
-        FROM week1_profile, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
-        AND ( week1_user.first_name='${query}' OR week1_user.last_name='${query}' )
-      `;
+        client.query(skill_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get search result by skill', result.rows);
+        });
 
-      client.query(username_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get search result by user name', result.rows);
       });
 
-    });
+      pool.connect(function(err, client, release) {
+        var username_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo,
+                 week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe
+          FROM week1_profile, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_profile.user_id=week1_user.id
+          AND ( week1_user.first_name='${query}' OR week1_user.last_name='${query}' )
+        `;
 
-    pool.connect(function(err, client, release) {
-      var portfolio_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image,
-               week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe
-        FROM week1_showcase, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_showcase.user_id=week1_user.id
-        AND ( week1_showcase.tag1='${query}' OR week1_showcase.tag2='${query}' )
-      `;
+        client.query(username_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get search result by user name', result.rows);
+        });
 
-      client.query(portfolio_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get search result by portfolio', result.rows);
       });
 
-    });
+      pool.connect(function(err, client, release) {
+        var portfolio_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image,
+                 week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe
+          FROM week1_showcase, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_showcase.user_id=week1_user.id
+          AND ( week1_showcase.tag1='${query}' OR week1_showcase.tag2='${query}' )
+        `;
 
-    pool.connect(function(err, client, release) {
-      var upcoming_query = `
-        SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image,
-               week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe
-        FROM week1_upcomingwork, week1_user
-        WHERE week1_user.uid!='${socket.uid}' AND week1_upcomingwork.user_id=week1_user.id
-        AND ( week1_upcomingwork.tag1='${query}' OR week1_upcomingwork.tag2='${query}' )
-      `;
+        client.query(portfolio_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get search result by portfolio', result.rows);
+        });
 
-      client.query(upcoming_query, function(err, result){
-        release();
-        if (err) {
-            return console.error('Error executing query', err.stack)
-        }
-        socket.emit('get search result by upcoming', result.rows);
       });
 
-    });
+      pool.connect(function(err, client, release) {
+        var upcoming_query = `
+          SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image,
+                 week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe
+          FROM week1_upcomingwork, week1_user
+          WHERE week1_user.uid!='${socket.uid}' AND week1_upcomingwork.user_id=week1_user.id
+          AND ( week1_upcomingwork.tag1='${query}' OR week1_upcomingwork.tag2='${query}' )
+        `;
 
-    pool.end()
+        client.query(upcoming_query, function(err, result){
+          release();
+          if (err) {
+              return console.error('Error executing query', err.stack)
+          }
+          socket.emit('get search result by upcoming', result.rows);
+        });
 
-    /*
-    //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
-    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.profession1=? OR week1_profile.profession2=? OR week1_profile.profession3=? OR week1_profile.profession4=? OR week1_profile.profession5=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query], function(err, rows){
-      socket.emit('get search result by profession', rows);
-    });
+      });
 
-    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_profile.skill1=? OR week1_profile.skill2=? OR week1_profile.skill3=? OR week1_profile.skill4=? OR week1_profile.skill5=? OR week1_profile.skill6=? OR week1_profile.skill7=? OR week1_profile.skill8=? OR week1_profile.skill9=? OR week1_profile.skill10=?) GROUP BY week1_profile.user_id", [socket.uid, query, query, query, query, query, query, query, query, query, query], function(err, rows){
-      socket.emit('get search result by skill', rows);
-    });
+      pool.end()
 
-    //db.all("SELECT week1_profile.user_id, auth_user.first_name, auth_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, auth_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=auth_user.id AND (auth_user.first_name=? OR auth_user.last_name=? ) GROUP BY week1_profile.user_id", [socket.uid, query, query], function(err, rows){
-    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_profile.photo, week1_profile.profession1, week1_profile.profession2, week1_profile.profession3, week1_profile.describe FROM week1_profile, week1_user WHERE week1_profile.user_id!=? AND week1_profile.user_id=week1_user.id AND (week1_user.first_name=? OR week1_user.last_name=? ) GROUP BY week1_profile.user_id ", [socket.uid, query, query], function(err, rows){
-      socket.emit('get search result by user name', rows);
-    });
-
-    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_showcase.title, week1_showcase.image, week1_showcase.tag1, week1_showcase.tag2, week1_showcase.tag3, week1_showcase.describe FROM week1_showcase, week1_user WHERE week1_showcase.user_id!=? AND week1_showcase.user_id=auth_user.id AND (week1_showcase.tag1=? OR week1_showcase.tag2=? ) ", [socket.uid, query, query], function(err, rows){
-      socket.emit('get search result by portfolio', rows);
-    });
-
-    db.all("SELECT week1_user.uid as user_id, week1_user.first_name, week1_user.last_name, week1_upcomingwork.title, week1_upcomingwork.image, week1_upcomingwork.tag1, week1_upcomingwork.tag2, week1_upcomingwork.tag3, week1_upcomingwork.describe FROM week1_upcomingwork, week1_user WHERE week1_upcomingwork.user_id!=? AND week1_upcomingwork.user_id=week1_user.id AND (week1_upcomingwork.tag1=? OR week1_upcomingwork.tag2=? ) ", [socket.uid, query, query], function(err, rows){
-      socket.emit('get search result by upcoming', rows);
-    });
-    */
+    }catch(error){
+      console.log("error at search query:", error)
+    }
   });
 
 
   socket.on('send message', function(data){
+    try{
 
-    if(data.to_uid){
+      if(data.to_uid){
+        var uid1, uid2, action_user;
+        if (data.uid < data.to_uid){
+          uid1 = data.uid;
+          uid2 = data.to_uid; 
+          action_user = 1;
+        }else{
+          uid2 = data.uid;
+          uid1 = data.to_uid; 
+          action_user = 2;
+        }
+
+        MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+          if (err) {
+            console.log(err);
+          }else {
+            if (result){
+              if(data.data && data.data != {}){
+                result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
+              }else{
+                result.messages.push({uid:data.uid, content:data.msg});
+              }
+              result.save(function (error) {
+                if (!error) {
+                  console.log('Succeed to send message!');
+                }
+                socket.join(result._id);
+                //socket.emit('new message', {uid:data.uid, content:data.msg});
+                io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
+              });
+
+            }else{
+              console.log("no message relationship");
+              var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1, messages:{uid:socket.uid, content:data.msg}});
+
+              newMessageRelation.save(function(error, newdata){
+
+                if (error) {
+                  console.log(error);
+                }else{
+                  /** emmit new message to data.to_uid message.html **/
+                  if (users[data.to_uid]){
+                    users[data.to_uid].emit('new message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 
+                  }
+                }
+              });
+            }
+
+          }
+        });
+      }else if(data.room_id){
+
+        MessageRelation.findById(data.room_id, function(err, result){
+          if (err) {
+            console.log(err);
+          }else {
+            if (result){
+
+              if(data.data && data.data != {}){
+                result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
+              }else{
+                result.messages.push({uid:data.uid, content:data.msg});
+              }
+              result.save(function (error) {
+                if (!error) {
+                  console.log('Succeed to send message!');
+                }
+                socket.join(result._id);
+                io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
+              });
+
+            }else{
+
+            }
+          }
+        });
+      }
+    }catch(error){
+      console.log("error at send message:", error)
+    }
+  });
+
+
+  socket.on('get message', function(data){
+    try{
       var uid1, uid2, action_user;
-      if (data.uid < data.to_uid){
-        uid1 = data.uid;
+      if (socket.uid < data.to_uid){
+        uid1 = socket.uid;
         uid2 = data.to_uid; 
         action_user = 1;
       }else{
-        uid2 = data.uid;
+        uid2 = socket.uid;
         uid1 = data.to_uid; 
         action_user = 2;
       }
@@ -2892,122 +2540,25 @@ lls});
           console.log(err);
         }else {
           if (result){
-            if(data.data && data.data != {}){
-              result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
-            }else{
-              result.messages.push({uid:data.uid, content:data.msg});
-            }
-            result.save(function (error) {
-              if (!error) {
-                console.log('Succeed to send message!');
-              }
-              socket.join(result._id);
-              //socket.emit('new message', {uid:data.uid, content:data.msg});
-              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
-            });
-
+            socket.join(result._id);
+            socket.emit('set message', result);
           }else{
-            console.log("no message relationship");
-            var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1, messages:{uid:socket.uid, content:data.msg}});
-
+            var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
             newMessageRelation.save(function(error, newdata){
 
               if (error) {
                 console.log(error);
               }else{
                 /** emmit new message to data.to_uid message.html **/
-                if (users[data.to_uid]){
-                  users[data.to_uid].emit('new message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 
-                }
+                  socket.emit('set message', newdata) 
               }
             });
           }
-
         }
-      });
-    }else if(data.room_id){
-
-      MessageRelation.findById(data.room_id, function(err, result){
-        if (err) {
-          console.log(err);
-        }else {
-          if (result){
-
-            if(data.data && data.data != {}){
-              result.messages.push({uid:data.uid, content:data.msg, image:{data:data.data['file'], contentType: data.data['type']}});
-            }else{
-              result.messages.push({uid:data.uid, content:data.msg});
-            }
-            result.save(function (error) {
-              if (!error) {
-                console.log('Succeed to send message!');
-              }
-              socket.join(result._id);
-              io.sockets.in(result._id).emit('new message', {uid:data.uid, to_uid:data.to_uid, content:data.msg, room_id:result._id, image:data.data});
-            });
-
-          }else{
-
-          }
-        }
-      });
-    }
-  });
-
-
-/*
-  socket.on('send message', function(data){
-    io.sockets.in(data.room_id).emit('room message', data);
-
-    MessageRelation.findById(data.room_id, function(err, post){
-      if (err) {
-        console.log(err);
-      } else{
-        post.messages.push({uid:socket.uid, content:data.msg});
-        post.save(function (error) {
-          if (!error) {
-            console.log('Succeed to send message!');
-          }
-        });
-      }
     });
-
-  });
-  */
-
-  socket.on('get message', function(data){
-    var uid1, uid2, action_user;
-    if (socket.uid < data.to_uid){
-      uid1 = socket.uid;
-      uid2 = data.to_uid; 
-      action_user = 1;
-    }else{
-      uid2 = socket.uid;
-      uid1 = data.to_uid; 
-      action_user = 2;
+    }catch(error){
+      console.log("error at get message:", error)
     }
-
-    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
-      if (err) {
-        console.log(err);
-      }else {
-        if (result){
-          socket.join(result._id);
-          socket.emit('set message', result);
-        }else{
-          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1 });
-          newMessageRelation.save(function(error, newdata){
-
-            if (error) {
-              console.log(error);
-            }else{
-              /** emmit new message to data.to_uid message.html **/
-                socket.emit('set message', newdata) 
-            }
-          });
-        }
-      }
-    });
   });
 
   /***
@@ -3018,41 +2569,45 @@ lls});
   **/
 
   socket.on('start message', function(data){
-    var uid1, uid2, action_user;
-    if (socket.uid < data.to_uid){
-      uid1 = socket.uid;
-      uid2 = data.to_uid; 
-      action_user = 1;
-    }else{
-      uid2 = socket.uid;
-      uid1 = data.to_uid; 
-      action_user = 2;
-    }
-
-    MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
-      if (err) {
-        console.log(err);
-      }else {
-        if (!result){
-
-          var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1, messages:{uid:socket.uid, content:data.msg}});
-          newMessageRelation.save(function(error, newdata){
-
-            if (error) {
-              console.log(error);
-            }else{
-              /** emmit new message to data.to_uid message.html **/
-              if (users[data.to_uid]){
-                users[data.to_uid].emit('send first message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 
-              }
-            }
-          });
-
-        } else{
-          socket.emit();
-        }
+    try{
+      var uid1, uid2, action_user;
+      if (socket.uid < data.to_uid){
+        uid1 = socket.uid;
+        uid2 = data.to_uid; 
+        action_user = 1;
+      }else{
+        uid2 = socket.uid;
+        uid1 = data.to_uid; 
+        action_user = 2;
       }
-    });
+
+      MessageRelation.findOne({ uid1:uid1, uid2:uid2 }).exec(function(err, result){
+        if (err) {
+          console.log(err);
+        }else {
+          if (!result){
+
+            var newMessageRelation = new MessageRelation({uid1:uid1, uid2:uid2, action_user:action_user, status:1, messages:{uid:socket.uid, content:data.msg}});
+            newMessageRelation.save(function(error, newdata){
+
+              if (error) {
+                console.log(error);
+              }else{
+                /** emmit new message to data.to_uid message.html **/
+                if (users[data.to_uid]){
+                  users[data.to_uid].emit('send first message', {uid:socket.uid, msg:data.msg, room_id:newdata._id}) 
+                }
+              }
+            });
+
+          } else{
+            socket.emit();
+          }
+        }
+      });
+    }catch(error){
+      console.log("error at start message:", error)
+    }
   });
 
   socket.on('accept first message', function(data){

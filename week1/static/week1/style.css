@@ -1280,6 +1280,40 @@ height: 100%;
     border-bottom: none;
 }
 
+/* chat box */
+.popup-box-on {
+    display: block !important;
+}
+.popup-box .popup-head {
+    background-color: #fff;
+    clear: both;
+    color: #7b7b7b;
+    display: inline-table;
+    font-size: 21px;
+    padding: 7px 10px;
+    width: 100%;
+    /* font-family: Oswald;*/
+    font-family: Cabin;
+}
+
+/* Popup chat */
+.popup-box {
+   background-color: #ffffff;
+    border: 1px solid #b0b0b0;
+    bottom: 0;
+    display: none;
+    height: 415px;
+    position: fixed;
+    right: 70px;
+    width: 300px;
+/*    font-family: 'Open Sans', sans-serif; */
+    font-family: Cabin;
+}
+
+.popupmessageImage{
+  width: 100px; 
+}
+
 /* might be duplicated to be checked */
 
 .like-btn .active-icon {

@@ -29,6 +29,10 @@ from .forms import RegistrationForm, LoginForm, ForgotPasswordForm, PersonalPhot
 
 import uuid
 
+import os
+
+ENV = os.getenv('ENVIRONMENT', 'stg')
+
 # Create your views here.
 #@csrf_exempt
 #@ensure_csrf_cookie
@@ -94,8 +98,9 @@ def index(request):
                 newuser = authenticate(username=uid, password=password)
 
                 if newuser:
-                    tomail = EmailMessage('Dear '+first_name, "Thank you for registering!", to=[username])
-                    tomail.send()
+                    if ENV == 'stg': 
+                        tomail = EmailMessage('Dear '+first_name, "Thank you for registering!", to=[username])
+                        tomail.send()
                     
                     if newuser.is_active:
                         login(request, newuser)

@@ -424,7 +424,7 @@
          </div>
 
          <div class="popup-messages-footer">
-            <textarea id="status_message" placeholder="Type a message..." rows="20" cols="40" name="message"></textarea>
+            <textarea id="status_message" placeholder="Type a message..." rows="1" cols="35" name="message"></textarea>
             <input id="image_in_message" type="file" class="form-photo"/>
             <div class="btn-footer">
                <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
@@ -775,7 +775,7 @@
                     <div class="direct-chat-info clearfix">
                         <span class="direct-chat-name pull-right">${name}</span>
                     </div>
-                    <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                    <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';" width=50>
                     <div class="direct-chat-text">
                         ${content}
                     </div>

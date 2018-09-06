@@ -2,43 +2,66 @@
 
 {% block content %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
-<div id="step">
-     <div id="step-left">
-     </div>
-
-     <div id="step-right">
+<div id="step-5">
+    <div id="step-left"></div>
+    <div id="step-right">
         <h3>Add your past work</h3>
-	<form action="" class="step-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <br>{{form.title.label_tag}}</br> {{form.title}}<br/>
-            <br>{{form.image.label_tag}}</br>
-                <input id="id_image" type="file" name="image"><br/>
-                <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
-            <!--br>{{form.video.label_tag}}</br> {{form.video}}<br/-->
-            <br>{{form.youtube.label_tag}}</br> {{form.youtube}}<br/>
-            <br>{{form.describe.label_tag}}</br> {{form.describe}}<br/>
-            
-            <br>{{form.role1.label_tag}}<!--/br>{{form.role}}<br/-->
-                <input type="text" class="form-control" id="token-professionfield" name="professiontags" value="{{form.role1.value}}, {{form.role2.value}}, {{form.role3.value}}, {{form.role4.value}}, {{form.role5.value}}"/>
-
-            <br>{{form.tag1.label_tag}}<!--/br>{{form.role}}<br/-->
-                <input type="text" class="form-control" id="token-skillfield" value="{{form.tag1.value}}, {{form.tag2.value}}, {{form.tag3.value}}, {{form.tag4.value}}, {{form.tag5.value}}, {{form.tag6.value}}, {{form.tag7.value}}, {{form.tag8.value}}, {{form.tag9.value}}, {{form.tag10.value}}" name="projecttags" />
-
-
-
-            <br>{{form.completion.label_tag}}</br><input type='number' name='completion' min="1970" max="2016"><br/>
-	    <div class="submit-wrapper">
-               {% if num_show and num_show == 10 %}
-	           <input type="submit" value="Update" name="next" class="step-submit"/>
-                   <input type="hidden" name="next" value="home.html">
-               {% else %}
-	           <input type="submit" value="Save and Add more" name="more_case" class="step-submit-more"><input type="submit" value="Update" name="next" class="step-submit"/>
-               {% endif %}
-	        <a href="{% url 'week1:home' %}">Back to Home</a>
+        <form action="" class="step-form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                {% render_field form.title class="form-control" %}
             </div>
-	</form>
-     </div>
 
+            <div class="form-group step-5-image">
+                <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+                {% render_field form.image class="form-control-file" %}
+                <div class="image-preview">
+                    <img id="blah" src="#" alt="your image" class="maincontent" /><br/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.youtube.id_for_label }}">{{ form.youtube.label }}</label>
+                {% render_field form.youtube class="form-control" %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.describe.id_for_label }}">{{ form.describe.label }}</label>
+                {% render_field form.describe class="form-control" %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.role1.id_for_label }}">{{ form.role1.label }}</label>
+                <input type="text" class="form-control" id="token-professionfield" name="professiontags" value="{{form.role1.value}}, {{form.role2.value}}, {{form.role3.value}}, {{form.role4.value}}, {{form.role5.value}}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.tag1.id_for_label }}">{{ form.tag1.label }}</label>
+                <input type="text" class="form-control" id="token-skillfield" value="{{form.tag1.value}}, {{form.tag2.value}}, {{form.tag3.value}}, {{form.tag4.value}}, {{form.tag5.value}}, {{form.tag6.value}}, {{form.tag7.value}}, {{form.tag8.value}}, {{form.tag9.value}}, {{form.tag10.value}}" name="projecttags" />
+            </div>
+
+            <div class="form-group form-row">
+                <div class="col-md-4">
+                    <label for="{{ form.completion.id_for_label }}">{{ form.completion.label }}</label>
+                    <input type='number' class="form-control" name='completion' min="1970" max="2016">
+                </div>
+            </div>
+
+            <div class="form-row align-items-center step-form-submit">
+                {% if num_show and num_show == 10 %}
+                    <input class="btn btn-primary" type="submit" value="Update" name="next" class="step-submit"/>
+                    <input type="hidden" name="next" value="home.html">
+                {% else %}
+                    <input class="btn btn-primary" type="submit" value="Save and Add more" name="more_case" class="step-submit-more">
+                    <input class="btn btn-secondary btn-update" type="submit" value="Update" name="next" class="step-submit"/>
+                {% endif %}
+                <a class="btn btn-link" href="{% url 'week1:home' %}">Back to Home</a>
+            </div>
+        </form>
+     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery.min.js"></script>

@@ -1303,6 +1303,10 @@ height: 100%;
     height: auto;
 }
 
+.step-form .step-form-submit .btn-update {
+    margin: 0 10px;
+}
+
 /* chat box */
 .popup-box-on {
     display: block !important;

@@ -715,23 +715,23 @@
           <ul class="list-inline matchHatActionList">
               <li class="list-inline-item">
                   <span onclick="getLikeusers(${cid})" id="like_count_${cid}">${countLikes}</span>
-                  <a href="#" onclick="${like_function}" id="like_click_${cid}">
+                  <a href="#" onclick="${like_function}; return false;" id="like_click_${cid}">
                       <i class="${like_icon}" id="like_icon_${cid}"></i>${like}
                   </a>
               </li>
               <li class="list-inline-item">
                   <span id="share_count_${cid}">${countShares}</span>
-                  <a href="#" onclick="${share_function}" id="share_click_${cid}">
+                  <a href="#" onclick="${share_function}; return false;" id="share_click_${cid}">
                       <i class="${share_icon}" id="share_icon_${cid}"></i>${share}
                   </a>
               </li>
               <li class="list-inline-item">
-                  <a href="#" onclick="${hatsoff_function}" id="hatsoff_click_${cid}">
+                  <a href="#" onclick="${hatsoff_function}; return false;" id="hatsoff_click_${cid}">
                       <i class="${hatsoff_icon}" id="hatsoff_icon_${cid}"></i>${hatsoff}
                   </a>
               </li>
               <li class="list-inline-item">
-                  <a href="#" onclick="collaborateFunction(\'${uid}\', \'${cid}\')">
+                  <a href="#" onclick="collaborateFunction(\'${uid}\', \'${cid}\'); return false;">
                       <i class="faMatchHatbtn fa-collaborate"></i>Collaborate
                   </a>
               </li>

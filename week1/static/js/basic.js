@@ -110,7 +110,7 @@ function shareCommunityFunction(uid, c_id){
     document.getElementById("share_count_"+c_id).innerHTML = count_shares;
     document.getElementById("share_icon_"+c_id).className = "faMatchHatbtn fa-sharez active";
     //document.getElementById("share_click_"+c_id).innerHTML = "UnShare";
-    document.getElementById("share_click_"+c_id).onclick = function () { unshareCommunityFunction(uid, c_id) };
+    document.getElementById("share_click_"+c_id).onclick = function () { unshareCommunityFunction(uid, c_id); return false; };
 }
 
 function unshareCommunityFunction(uid, c_id){
@@ -120,7 +120,7 @@ function unshareCommunityFunction(uid, c_id){
     document.getElementById("share_count_"+c_id).innerHTML = count_shares;
     document.getElementById("share_icon_"+c_id).className = "faMatchHatbtn fa-sharez inactive";
     //document.getElementById("share_click_"+c_id).innerHTML = "Share";
-    document.getElementById("share_click_"+c_id).onclick = function () { shareCommunityFunction(uid, c_id) };
+    document.getElementById("share_click_"+c_id).onclick = function () { shareCommunityFunction(uid, c_id); return false; };
 }
 
 function likeCommunityFunction(uid, c_id){
@@ -130,7 +130,7 @@ function likeCommunityFunction(uid, c_id){
     document.getElementById("like_count_"+c_id).innerHTML = count_likes;
     document.getElementById("like_icon_"+c_id).className = "faMatchHatbtn fa-hat active";
     //document.getElementById("like_click_"+c_id).innerHTML = "UnLike";
-    document.getElementById("like_click_"+c_id).onclick = function () { unlikeCommunityFunction(uid, c_id) };
+    document.getElementById("like_click_"+c_id).onclick = function () { unlikeCommunityFunction(uid, c_id); return false; };
 }
 
 function unlikeCommunityFunction(uid, c_id){
@@ -140,21 +140,21 @@ function unlikeCommunityFunction(uid, c_id){
     document.getElementById("like_count_"+c_id).innerHTML = count_likes;
     document.getElementById("like_icon_"+c_id).className = "faMatchHatbtn fa-hat inactive";
     //document.getElementById("like_icon_"+c_id).innerHTML = "Like";
-    document.getElementById("like_click_"+c_id).onclick = function () { likeCommunityFunction(uid, c_id) }; 
+    document.getElementById("like_click_"+c_id).onclick = function () { likeCommunityFunction(uid, c_id); return false; }; 
 }
 
 function hatsoffCommunityFunction(uid, c_id){
     socket.emit('give hatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
     document.getElementById("hatsoff_icon_"+c_id).className = "faMatchHatbtn fa-hat active";
     //document.getElementById("hatsoff_click_"+c_id).innerHTML = "UnHatsoff";
-    document.getElementById("hatsoff_click_"+c_id).onclick = function () { unhatsoffCommunityFunction(uid, c_id) }; 
+    document.getElementById("hatsoff_click_"+c_id).onclick = function () { unhatsoffCommunityFunction(uid, c_id); return false; }; 
 }
 
 function unhatsoffCommunityFunction(uid, c_id){
     socket.emit('give unhatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
     document.getElementById("hatsoff_icon_"+c_id).className = "faMatchHatbtn fa-hat inactive";
     //document.getElementById("hatsoff_click_"+c_id).innerHTML = "Hatsoff";
-    document.getElementById("hatsoff_click_"+c_id).onclick = function () { hatsoffCommunityFunction(uid, c_id) };
+    document.getElementById("hatsoff_click_"+c_id).onclick = function () { hatsoffCommunityFunction(uid, c_id); return false; };
 }
 
 /*

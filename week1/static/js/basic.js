@@ -124,8 +124,7 @@ function unshareCommunityFunction(uid, c_id){
 }
 
 function likeCommunityFunction(uid, c_id){
-    console.log('uid on like:'+uid+':'+c_id);
-	  socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});
+    socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});
     var count = document.getElementById("like_count_"+c_id).innerHTML;
     var count_likes = parseInt(count)+1; 
     document.getElementById("like_count_"+c_id).innerHTML = count_likes;
@@ -135,7 +134,6 @@ function likeCommunityFunction(uid, c_id){
 }
 
 function unlikeCommunityFunction(uid, c_id){
-    console.log('uid on like:'+uid+':'+c_id);
     socket.emit('unlike community', {to_uid:uid, uid:socket.uid, c_id:c_id});
     var count = document.getElementById("like_count_"+c_id).innerHTML;
     var count_likes = parseInt(count)-1; 
@@ -146,7 +144,6 @@ function unlikeCommunityFunction(uid, c_id){
 }
 
 function hatsoffCommunityFunction(uid, c_id){
-    console.log('uid on hatsoff:', uid, c_id);
     socket.emit('give hatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
     document.getElementById("hatsoff_icon_"+c_id).className = "faMatchHatbtn fa-hat active";
     //document.getElementById("hatsoff_click_"+c_id).innerHTML = "UnHatsoff";
@@ -154,7 +151,6 @@ function hatsoffCommunityFunction(uid, c_id){
 }
 
 function unhatsoffCommunityFunction(uid, c_id){
-    console.log('uid on unhatsoff:', uid, c_id);
     socket.emit('give unhatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
     document.getElementById("hatsoff_icon_"+c_id).className = "faMatchHatbtn fa-hat inactive";
     //document.getElementById("hatsoff_click_"+c_id).innerHTML = "Hatsoff";

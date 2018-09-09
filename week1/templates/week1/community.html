@@ -18,7 +18,7 @@
                             <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
 
                             <link rel='stylesheet' type='text/css' href="/static/week1/style.css">
-</head>
+    </head>
 <body id="page-top">
     <!-- Navigation -->        
     <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -296,6 +296,31 @@
         </div>
     </div>
 </section>
+
+<div class="popup-box chat-popup" id="qnimate">
+    <div class="popup-head">
+        <div class="popup-head-left pull-left">
+
+        </div>
+
+        <div class="popup-head-right pull-right">
+            <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button" onclick="closeChat()">x</button>
+        </div>
+    </div>
+
+    <div class="popup-messages">
+        <div class="direct-chat-messages" id="chat_room">
+
+        </div>
+
+    </div>
+    <div class="popup-messages-footer">
+        <textarea id="status_message" placeholder="Type a message..." rows="20" cols="40" name="message"></textarea>
+        <div class="btn-footer">
+          <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
+        </div>
+    </div>
+</div>
 <!-- content ende -->
 <!-- Footer -->
 <footer class="text-center">
@@ -658,51 +683,51 @@
     function createActionList(uid, cid, countLikes, countShares, isLike, isShare, isHatsoff){
         if (isLike) {
            var like = 'UnLike';
-           var like_icon = 'faMatchHatbtn fa-hat';
-           var like_function = 'unlikeCommunityFunction(\'${uid}\', \'${cid}\')';
+           var like_icon = 'faMatchHatbtn fa-hat active';
+           var like_function = `unlikeCommunityFunction(\'${uid}\', \'${cid}\')`;
         } else{
            var like = 'Like';
-           var like_icon = 'faMatchHatbtn fa-hat';
-           var like_function = 'likeCommunityFunction(\'${uid}\', \'${cid}\')';
+           var like_icon = 'faMatchHatbtn fa-hat inactive';
+           var like_function = `likeCommunityFunction(\'${uid}\', \'${cid}\')`;
         }
 
         if (isShare) {
            var share = 'UnShare';
-           var share_icon = 'faMatchHatbtn fa-sharez';
-           var share_function = 'unshareCommunityFunction(\'${uid}\', \'${cid}\')';
+           var share_icon = 'faMatchHatbtn fa-sharez active';
+           var share_function = `unshareCommunityFunction(\'${uid}\', \'${cid}\')`;
         } else{
            var share = 'Share';
-           var share_icon = 'faMatchHatbtn fa-sharez';
-           var share_function = 'shareCommunityFunction(\'${uid}\', \'${cid}\')';
+           var share_icon = 'faMatchHatbtn fa-sharez inactive';
+           var share_function = `shareCommunityFunction(\'${uid}\', \'${cid}\')`;
         }
 
         if (isHatsoff){
            var hatsoff = 'UnHatsoff';
-           var hatsoff_icon = 'faMatchHatbtn fa-hat';
-           var hatsoff_function = 'unhatsoffCommunityFunction(\'${uid}\', \'${cid}\')';
+           var hatsoff_icon = 'faMatchHatbtn fa-hat active';
+           var hatsoff_function = `unhatsoffCommunityFunction(\'${uid}\', \'${cid}\')`;
         } else{
            var hatsoff = 'Hatsoff';
-           var hatsoff_icon = 'faMatchHatbtn fa-hat';
-           var hatsoff_function = 'hatsoffCommunityFunction(\'${uid}\', \'${cid}\')';
+           var hatsoff_icon = 'faMatchHatbtn fa-hat inactive';
+           var hatsoff_function = `hatsoffCommunityFunction(\'${uid}\', \'${cid}\')`;
         }
 
         var actionList = `
           <ul class="list-inline matchHatActionList">
               <li class="list-inline-item">
-                  <span onclick="getLikeusers(${cid})">${countLikes}</span>
-                  <a href="#" onclick="${like_function}">
-                      <i class="${like_icon}"></i>${like}
+                  <span onclick="getLikeusers(${cid})" id="like_count_${cid}">${countLikes}</span>
+                  <a href="#" onclick="${like_function}" id="like_click_${cid}">
+                      <i class="${like_icon}" id="like_icon_${cid}"></i>${like}
                   </a>
               </li>
               <li class="list-inline-item">
-                  <span>${countShares}</span>
-                  <a href="#" onclick="${share_function}">
-                      <i class="${share_icon}"></i>${share}
+                  <span id="share_count_${cid}">${countShares}</span>
+                  <a href="#" onclick="${share_function}" id="share_click_${cid}">
+                      <i class="${share_icon}" id="share_icon_${cid}"></i>${share}
                   </a>
               </li>
               <li class="list-inline-item">
-                  <a href="#" onclick="${hatsoff_function}">
-                      <i class="${hatsoff_icon}"></i>${hatsoff}
+                  <a href="#" onclick="${hatsoff_function}" id="hatsoff_click_${cid}">
+                      <i class="${hatsoff_icon}" id="hatsoff_icon_${cid}"></i>${hatsoff}
                   </a>
               </li>
               <li class="list-inline-item">
@@ -1253,6 +1278,36 @@
         }
       }
     });
+
+    function collaborateFunction(uid, c_id){
+       console.log('uid on like:'+uid+':'+c_id);
+        //popCollaborate();
+       socket.emit('give collaborate', {to_uid:uid, uid:"{{user.uid}}", c_id:c_id, c_type:1});
+       $('#qnimate').addClass('popup-box-on');
+       var index = users.indexOf(uid);
+       document.getElementById('status_message').value = 'Hello I\'m interested in Collaborating.';
+       var elements = document.getElementsByClassName('popup-head-left pull-left');
+       elements[0].innerHTML = names[index][0]+'&nbsp'+names[index][1];
+       socket.emit('get message', {to_uid:uid})
+
+       var elems = document.getElementsByClassName('btn-footer');
+       elems[0].innerHTML = '<button class="btn btn-primary btn-lg pull-right" onclick="sendMessage(\''+uid+'\')">Send </button>';
+    }
+
+    function sendMessage(uid){
+        console.log('send message');
+        var post_val = $('#status_message').val();
+                    
+        if (post_val.length != 0){
+            socket.emit('send message', {msg:post_val, to_uid:uid, uid:{{user.id}} });
+        }
+        $('#status_message').val('');
+        return false;
+    }
+
+    function closeChat(){
+        $('#qnimate').removeClass('popup-box-on');
+    }
 
 </script>
                                                                                                                             

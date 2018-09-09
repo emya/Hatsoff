@@ -10,7 +10,7 @@ setInterval(function() {
 
 socket.on('pong', function() {
   latency = Date.now() - startTime;
-  console.log(latency);
+  //console.log(latency);
 });
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -107,26 +107,31 @@ function shareCommunityFunction(uid, c_id){
     var count = document.getElementById("share_count_"+c_id).innerHTML;
     var count_shares = parseInt(count)+1; 
     console.log("count_shares is", count_shares);
-    var share = document.getElementById("share_"+c_id);
-    share.innerHTML = '<img src="/static/images/active_blue_share_32x32.png" class="icons-img" onclick="unshareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="share_count_'+c_id+'">'+count_shares+'</div>';
+    document.getElementById("share_count_"+c_id).innerHTML = count_shares;
+    document.getElementById("share_icon_"+c_id).className = "faMatchHatbtn fa-sharez active";
+    //document.getElementById("share_click_"+c_id).innerHTML = "UnShare";
+    document.getElementById("share_click_"+c_id).onclick = function () { unshareCommunityFunction(uid, c_id) };
 }
 
 function unshareCommunityFunction(uid, c_id){
     socket.emit('unshare community', {to_uid:uid, uid:socket.uid, c_id:c_id});
     var count = document.getElementById("share_count_"+c_id).innerHTML;
     var count_shares = parseInt(count)-1; 
-    var share = document.getElementById("share_"+c_id);
-    share.innerHTML = '<img src="/static/images/inactive_grey_share_32x32.png" class="icons-img" onclick="shareCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="share_count_'+c_id+'">'+count_shares+'</div>';
+    document.getElementById("share_count_"+c_id).innerHTML = count_shares;
+    document.getElementById("share_icon_"+c_id).className = "faMatchHatbtn fa-sharez inactive";
+    //document.getElementById("share_click_"+c_id).innerHTML = "Share";
+    document.getElementById("share_click_"+c_id).onclick = function () { shareCommunityFunction(uid, c_id) };
 }
 
 function likeCommunityFunction(uid, c_id){
     console.log('uid on like:'+uid+':'+c_id);
-	socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});
+	  socket.emit('like community', {to_uid:uid, uid:socket.uid, c_id:c_id});
     var count = document.getElementById("like_count_"+c_id).innerHTML;
     var count_likes = parseInt(count)+1; 
-    console.log("count_likes is", count_likes);
-    var like = document.getElementById("like_"+c_id);
-    like.innerHTML = '<img src="/static/images/active_blue_thumb_32x32.png" class="icons-img" onclick="unlikeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div>';
+    document.getElementById("like_count_"+c_id).innerHTML = count_likes;
+    document.getElementById("like_icon_"+c_id).className = "faMatchHatbtn fa-hat active";
+    //document.getElementById("like_click_"+c_id).innerHTML = "UnLike";
+    document.getElementById("like_click_"+c_id).onclick = function () { unlikeCommunityFunction(uid, c_id) };
 }
 
 function unlikeCommunityFunction(uid, c_id){
@@ -134,24 +139,26 @@ function unlikeCommunityFunction(uid, c_id){
     socket.emit('unlike community', {to_uid:uid, uid:socket.uid, c_id:c_id});
     var count = document.getElementById("like_count_"+c_id).innerHTML;
     var count_likes = parseInt(count)-1; 
-    var like = document.getElementById("like_"+c_id);
-    like.innerHTML = '<img src="/static/images/inactive_grey_thumb_32x32.png" class="icons-img" onclick="likeCommunityFunction(\''+uid+'\',\''+c_id+'\')"><div class="popupCount" id="like_count_'+c_id+'">'+count_likes+'</div>';
+    document.getElementById("like_count_"+c_id).innerHTML = count_likes;
+    document.getElementById("like_icon_"+c_id).className = "faMatchHatbtn fa-hat inactive";
+    //document.getElementById("like_icon_"+c_id).innerHTML = "Like";
+    document.getElementById("like_click_"+c_id).onclick = function () { likeCommunityFunction(uid, c_id) }; 
 }
 
 function hatsoffCommunityFunction(uid, c_id){
-    console.log('uid on hatsoff:'+uid);
-    //popHatsoff();
+    console.log('uid on hatsoff:', uid, c_id);
     socket.emit('give hatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
-    var hatsoff = document.getElementById("hatsoff_"+c_id);
-    hatsoff.innerHTML = '<img src="/static/images/active_yellow_hat_32x32.png" class="icons-img" onclick="unhatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')">';
+    document.getElementById("hatsoff_icon_"+c_id).className = "faMatchHatbtn fa-hat active";
+    //document.getElementById("hatsoff_click_"+c_id).innerHTML = "UnHatsoff";
+    document.getElementById("hatsoff_click_"+c_id).onclick = function () { unhatsoffCommunityFunction(uid, c_id) }; 
 }
 
 function unhatsoffCommunityFunction(uid, c_id){
-    console.log('uid on unhatsoff:'+uid);
-    //popHatsoff();
+    console.log('uid on unhatsoff:', uid, c_id);
     socket.emit('give unhatsoff', {to_uid:uid, uid:socket.uid, content_type:1, content_id:c_id});
-    var hatsoff = document.getElementById("hatsoff_"+c_id);
-    hatsoff.innerHTML = '<img src="/static/images/inactive_grey_hat_32x32.png" class="icons-img" onclick="hatsoffCommunityFunction(\''+uid+'\',\''+c_id+'\')">';
+    document.getElementById("hatsoff_icon_"+c_id).className = "faMatchHatbtn fa-hat inactive";
+    //document.getElementById("hatsoff_click_"+c_id).innerHTML = "Hatsoff";
+    document.getElementById("hatsoff_click_"+c_id).onclick = function () { hatsoffCommunityFunction(uid, c_id) };
 }
 
 /*

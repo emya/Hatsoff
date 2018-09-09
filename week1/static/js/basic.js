@@ -131,7 +131,6 @@ function likeCommunityFunction(uid, c_id){
     document.getElementById("like_icon_"+c_id).className = "faMatchHatbtn fa-hat active";
     //document.getElementById("like_click_"+c_id).innerHTML = "UnLike";
     document.getElementById("like_click_"+c_id).onclick = function () { unlikeCommunityFunction(uid, c_id); return false; };
-    return false;
 }
 
 function unlikeCommunityFunction(uid, c_id){
@@ -142,7 +141,6 @@ function unlikeCommunityFunction(uid, c_id){
     document.getElementById("like_icon_"+c_id).className = "faMatchHatbtn fa-hat inactive";
     //document.getElementById("like_icon_"+c_id).innerHTML = "Like";
     document.getElementById("like_click_"+c_id).onclick = function () { likeCommunityFunction(uid, c_id); return false; }; 
-    return false;
 }
 
 function hatsoffCommunityFunction(uid, c_id){

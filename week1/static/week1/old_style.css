@@ -106,9 +106,9 @@ ul{
 
 #header #logo {
    display: inline-block;
-    
+
    float: left;
-   width:230px; 
+   width:230px;
    /*line-height: 100px;*/
 }
 
@@ -173,7 +173,7 @@ ul{
 .dropdown-PostContent a {
     color: black;
     padding: 5px 5px;
-    
+
     text-align: left;
     text-decoration: none;
     display: block;
@@ -196,7 +196,7 @@ ul{
 
 /* Dropdown Button */
 .dropDelEditIcon{
-    width: 20px;  
+    width: 20px;
 }
 
 /* Dropdown button on hover & focus */
@@ -225,7 +225,7 @@ ul{
 .dropdown-DelEditContent a {
     color: black;
     padding: 5px 5px;
-    
+
     text-align: left;
     text-decoration: none;
     display: block;
@@ -239,7 +239,7 @@ ul{
 
 #header #header-menus {
    display: inline-block;
-   width:600px; 
+   width:600px;
    padding-top: 25px;
    line-height: 30px;
    font-family: Asap;
@@ -254,16 +254,16 @@ ul{
    color: darkgrey;
    padding: 0 5px;
    border: 1px;
-    
+
    border-radius: 10px;
    font-family: Asap;
    padding: 1em;
 }
 
 #header #header-menus a:hover {
-    border:1px; 
-    border-style:solid; 
-    border-color: #2EA7E0; 
+    border:1px;
+    border-style:solid;
+    border-color: #2EA7E0;
     background-color: #2EA7E0;
     color: azure;
     padding: 1em;
@@ -284,19 +284,19 @@ ul{
    color: darkgrey;
    font-family: Asap;
    padding: 1em;
-    
+
 }
 
 
 #header #header-right .loginModal:hover {
    color: white;
    font-family: Asap;
-   border:1px; 
-   border-style:solid; 
-   border-color:#FFFFFF; 
+   border:1px;
+   border-style:solid;
+   border-color:#FFFFFF;
    padding: 1em;
    border-radius: 10px;
-   border-color: #2EA7E0; 
+   border-color: #2EA7E0;
    background-color: #2EA7E0;
 }
 
@@ -323,7 +323,7 @@ ul{
    width: 60px;
    padding: 5px;
     color: white;
-   border-color: #2EA7E0; 
+   border-color: #2EA7E0;
    background-color: #2EA7E0;
 }
 
@@ -373,7 +373,7 @@ img.icons-img {
    vertical-align: middle;
    color: white;
    padding: 0 10px;
-    
+
    font-family: Asap;
 }
 */
@@ -515,8 +515,8 @@ img.icons-img {
    background-color: #f3f3f3;
 }
 
-#home-main #home-firstcolumn table.fixed { 
-    table-layout:fixed; 
+#home-main #home-firstcolumn table.fixed {
+    table-layout:fixed;
     word-break:break-all;
 }
 
@@ -938,7 +938,7 @@ img.notification_img {
 }
 
 #home-main .greyPanel {
-    
+
     background-color: #F0F0F0;
 }
 
@@ -1018,7 +1018,7 @@ img.notification_img {
 
 #step #step-left {
    display: inline-block;
-   vertical-align: top; 
+   vertical-align: top;
    /*padding-left:100px;*/
    width: 250px;
 }
@@ -1388,7 +1388,7 @@ img.notification_img {
 }
 
 .popupCollaborate .popuptextCollaborate {
-   
+
 
 
 }
@@ -1924,14 +1924,14 @@ background-image: url(/static/images/requestsentcollab_64x64.png);
 /** community **/
 #login { display: none; }
 .login,
-.logout { 
-    position: absolute; 
+.logout {
+    position: absolute;
     top: -3px;
     right: 0;
 }
 .page-header { position: relative; }
 .reviews {
-    color: #555;    
+    color: #555;
     font-weight: bold;
     margin: 10px auto 20px;
 }
@@ -1941,16 +1941,16 @@ background-image: url(/static/images/requestsentcollab_64x64.png);
 }
 .media .media-object { max-width: 120px; }
 .media-body { position: relative; }
-.media-date { 
-    position: absolute; 
+.media-date {
+    position: absolute;
     right: 25px;
     top: 25px;
 }
 .media-date li { padding: 0; }
 .media-date li:first-child:before { content: ''; }
-.media-date li:before { 
-    content: '.'; 
-    margin-left: -2px; 
+.media-date li:before {
+    content: '.';
+    margin-left: -2px;
     margin-right: 2px;
 }
 .media-comment { margin-bottom: 20px; }
@@ -1978,7 +1978,7 @@ background-image: url(/static/images/requestsentcollab_64x64.png);
     position: relative;
     width: 120px;
     height: 120px;
-    background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');    
+    background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');
     background-size: 120px;
     border-radius: 120px;
 }
@@ -2002,10 +2002,10 @@ background-image: url(/static/images/requestsentcollab_64x64.png);
     display: none;
     width: 50%;
     height: 50%;
-    color: #fff;    
+    color: #fff;
     text-align: center;
     line-height: 60px;
-    text-transform: uppercase;    
+    text-transform: uppercase;
     background-color: rgba(0,0,0,.3);
     border-radius: 50px;
     cursor: pointer;
@@ -2069,10 +2069,10 @@ background-image: url(/static/images/requestsentcollab_64x64.png);
 }
 
 .btn.btn-primary.btn-lg{
-    
+
     background-color: #2EA7E0;
     border-color: #2EA7E0;
-    
+
 }
 
 /*portfolio*/
@@ -2222,17 +2222,17 @@ blockquote:before {
 }
 
 .post-body li {
-  list-style-type:none; 
+  list-style-type:none;
 }
 
 .carousel-control.left {
    background-image: -webkit-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
    /**background-image: -o-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);**/
-} 
+}
 
 .collaborate-btn {
    background-color: none;
-   color: #fff; 
+   color: #fff;
    border-style: solid;
    border-color: #d5a6bd transparent transparent transparent;
 }
@@ -2248,7 +2248,7 @@ hr .solid-divider{
     border: 1px solid #b0b0b0;
     bottom: 0;
     display: none;
-    height: 415px;
+    height: 460px;
     position: fixed;
     right: 70px;
     width: 300px;
@@ -2365,7 +2365,7 @@ hr .solid-divider{
     overflow: auto;
     padding: 10px;
     transform: translate(0px, 0px);
-    
+
 }
 .popup-messages .chat-box-single-line {
     border-bottom: 1px solid #a4c6b5;
@@ -2508,9 +2508,9 @@ hr .solid-divider{
      z-index: -2;
 }
 .direct-chat-text::after, .direct-chat-text::before {
-   
+
     border-color: transparent #4a86e8 transparent transparent;
-    
+
 }
 .direct-chat-text::after, .direct-chat-text::before {
     -moz-border-bottom-colors: none;
@@ -2658,7 +2658,7 @@ hr .solid-divider{
 }
 
 #collaborators {
-  padding: 10px; 
+  padding: 10px;
 }
 
 .collaborator-img{
@@ -2672,7 +2672,7 @@ hr .solid-divider{
     position: relative;
 }
 .upload-button {
-    position: absolute;    
+    position: absolute;
     top: 200px;
 }
 */
@@ -2717,7 +2717,7 @@ hr .solid-divider{
 }
 
 .show-link{
-  color: #2d6ca2; 
+  color: #2d6ca2;
   text-decoration: underline;
   padding: 5px;
 }
@@ -2744,20 +2744,20 @@ hr .solid-divider{
 }
 
 .media-body .postImage{
-  width: 300px; 
+  width: 300px;
 }
 
 .media-body .largepostImage{
-  width: 400px; 
-  min-height: 400px; 
+  width: 400px;
+  min-height: 400px;
 }
 
 .panel-body .messageImage{
-  width: 200px; 
+  width: 200px;
 }
 
 .popupmessageImage{
-  width: 100px; 
+  width: 100px;
 }
 
 /* The Close Button */

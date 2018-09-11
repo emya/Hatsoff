@@ -1153,9 +1153,21 @@ section.profileBody .profileBodyRight .paddingProfileThread{padding:0;}
 
 .profileBodyRight input{border-top:none; border-left:none; border-right:none; border-bottom:solid 1px #999; border-radius:0; color:#000;}
 
-.tokenfield{padding:0;
-  border-top:none; border-left:none; border-right:none; border-bottom:solid 1px #999; border-radius:0;
-    }
+.tokenfield{
+    padding: 10px;
+    /* padding:0;
+    border-top:none; border-left:none; border-right:none; border-bottom:solid 1px #999; border-radius:0; */
+}
+
+.tokenfield .token {
+    padding: 5px;
+    height: auto;
+}
+
+.tokenfield .token .close {
+    line-height: 20px;
+    height: auto;
+}
 
 .tokenfield.disabled {
     cursor: pointer !important;
@@ -1278,6 +1290,21 @@ height: 100%;
 
 #step form .tokenfield input{
     border-bottom: none;
+}
+
+/* step 5 image */
+.step-5-image .image-preview {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.step-5-image .image-preview img {
+    width: 100%;
+    height: auto;
+}
+
+.step-form .step-form-submit .btn-update {
+    margin: 0 10px;
 }
 
 /* chat box */

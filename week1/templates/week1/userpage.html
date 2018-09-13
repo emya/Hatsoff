@@ -30,7 +30,7 @@
             Menu
             <i class="fa fa-bars"></i>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarResponsive">
                <form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto ">
                   <div class="input-group">
@@ -200,7 +200,7 @@
                                              <img class="media-object" src="{{media_url}}userphoto/{{t_user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                           </div>
                                        </div>
-                  
+
                                        <div class="media-body dataProfile-outer col-xs-6 col-sm-6 col-md-6 ">
                                           <h3>{{t_user.first_name}} {{t_user.last_name}}</h3>
                                           <em>
@@ -227,9 +227,9 @@
                                           <p>{{t_profile.describe}}</p>
                                           <div class="form-group">
                                             <label class="w-100 tiny">City</label>
-                                             <input class="w-100 mb-3" type="text" id="city" value="{{t_profile.city}}" name="user_city" disabled>
-                                             <label class="w-100 tiny">Skills</label>
-                                             <input type="text" class="form-control" id="tokenfield" value="{{t_profile.skill1}}, {{t_profile.skill2}}, {{t_profile.skill3}}, {{t_profile.skill4}}, {{t_profile.skill5}}" disabled/>
+                                            <p>{{t_profile.city}}</p>
+                                            <label class="w-100 tiny">Skills</label>
+                                            <input type="text" class="form-control" id="profileSkills" value="{{t_profile.skill1}}, {{t_profile.skill2}}, {{t_profile.skill3}}, {{t_profile.skill4}}, {{t_profile.skill5}}" disabled/>
                                           </div>
                                        </div>
 
@@ -244,7 +244,7 @@
                            </div>
                         </div>
 
-                       
+
                         <div class="profileSubHeader clearfix">
                            <h2 class="pull-left">Portfolio</h2>
                         </div>
@@ -297,19 +297,21 @@
                                             <div class="col-sm-10 col-xs-12 pull-left">
                                                 <div class="form-group">
                                                     <label for="profileTitle" class="tiny">Title</label>
-                                                    <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled>
+                                                    <p>{{ showcase.title }}</p>
+                                                    <!-- <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled> -->
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="profileTitle" class="tiny">Discription</label>
-                                                    <input type="textarea" class="form-control form-control-sm" id="proefileDiscription" value="{{showcase.describe}}" disabled>
+                                                    <label for="profileTitle" class="tiny">Description</label>
+                                                    <p>{{showcase.describe}}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="profileRole" class="tiny">Your Role</label>
-                                                    <input type="text" class="form-control form-control-sm" id="profileRole" value="{{showcase.role1}}" disabled>
+                                                    <p>{{showcase.role1}}</p>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="profileKeywords" class="tiny">Key words</label>
-                                                    <input type="text" class="form-control form-control-sm"  id="profileKeywords" value="{{showcase.tag1}} {{showcase.tag2}}" disabled>
+                                                    <label for="profileKeywords" class="tiny">Keywords</label>
+                                                    <p>{{showcase.tag1}}</p>
+                                                    <p>{{showcase.tag2}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -341,29 +343,29 @@
                             {% endif %}
                             </div>
                         </div>
-            
+
                         <!--div id="carouselPortfolioFuture-outer" class="carousel-outer">
                             <div id="carouselPortfolio-outer" class="video-container">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/9bFsznD3BAs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>  
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/9bFsznD3BAs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                             </div>
                         </div-->
-                      
-                        <!-- upcoming project carousel ende -->                                        
+
+                        <!-- upcoming project carousel ende -->
                         <form class="clearfix" id="upcomingProjectForm">
                            <div class="col-sm-6 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Title</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingTitle" value="{{upcoming.title}}" disabled>
+                              <p>{{upcoming.title}}</p>
                               <label for="upcomingRole" class="tiny">Your Role</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRole" value="{{upcoming.role1}} {{upcoming.role2}} {{upcoming.role3}} {{upcoming.role4}} {{upcoming.role5}}" disabled>
+                              <input type="text" class="form-control form-control-sm" id="projectRole" value="{{upcoming.role1}} {{upcoming.role2}} {{upcoming.role3}} {{upcoming.role4}} {{upcoming.role5}}" disabled>
                               <label for="upcomingStatus" class="tiny">Status</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.status}}" disabled>
+                              <p>{{upcoming.status}}</p>
                               <label for="upcomingKeywords" class="tiny">Keywords</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}} {{upcoming.tag2}} {{upcoming.tag3}} {{upcoming.tag4}} {{upcoming.tag5}}" disabled>
                               <!--label for="upcomingRaisingFunds" class="tiny">Raising funds</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds"  value="{{upcoming.fund}}" disabled-->
                            </div>
                         </form>
-                        <!-- upcoming project form ende -->       
+                        <!-- upcoming project form ende -->
                         <div class="profileSubHeader clearfix">
                            <h2 class="pull-left">Collaborator I'd love for my upcoming project</h2>
                            <!--button class="btn btn-sm btn-outline pull-right" type="button"><i class="fa fa-pencil"></i><span class="sr-only">edit upcoming project</span></button-->
@@ -371,19 +373,19 @@
                         <form class="clearfix" id="collaboratorIdLoveForm">
                            <div class="col-sm-6 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Collaborators (profession)</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingTitle" value="{{upcoming.collaborator1}} {{upcoming.collaborator2}} {{upcoming.collaborator3}} {{upcoming.collaborator4}} {{upcoming.collaborator5}}" disabled>
+                              <input type="text" class="form-control form-control-sm" id="upcomingCollaborator" value="{{upcoming.collaborator1}} {{upcoming.collaborator2}} {{upcoming.collaborator3}} {{upcoming.collaborator4}} {{upcoming.collaborator5}}" disabled>
                               <label for="upcomingRole" class="tiny">Skills</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRole" value="{{upcoming.collaborator_skill1}} {{upcoming.collaborator_skill2}} {{upcoming.collaborator_skill3}} {{upcoming.collaborator_skill4}} {{upcoming.collaborator_skill5}} {{upcoming.collaborator_skill6}} {{upcoming.collaborator_skill7}} {{upcoming.collaborator_skill8}} {{upcoming.collaborator_skill9}} {{upcoming.collaborator_skill10}}" disabled>
+                              <input type="text" class="form-control form-control-sm" id="upcomingCollaboratorSkills" value="{{upcoming.collaborator_skill1}}, {{upcoming.collaborator_skill2}}, {{upcoming.collaborator_skill3}}, {{upcoming.collaborator_skill4}}, {{upcoming.collaborator_skill5}}, {{upcoming.collaborator_skill6}}, {{upcoming.collaborator_skill7}}, {{upcoming.collaborator_skill8}}, {{upcoming.collaborator_skill9}}, {{upcoming.collaborator_skill10}}" disabled>
                               <label for="upcomingStatus" class="tiny">Start date</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.targetstartdate}}" disabled>
+                              <p>{{upcoming.targetstartdate}}</p>
                               <label for="upcomingStatus" class="tiny">End date</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.targetfinishdate}}" disabled>
+                              <p>{{upcoming.targetfinishdate}}</p>
                               <label for="upcomingKeywords" class="tiny">Frequency of work (e.g. 3 hours per week)</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.often}}" disabled>
+                              <p>{{upcoming.often}}</p>
                               <label for="upcomingRaisingFunds" class="tiny">Preferred city location of collaborator</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds" value="{{upcoming.preferred_city}}" disabled>
+                              <p>{{upcoming.preferred_city}}</p>
                               <label for="collaboratorAdditionalInfo" class="tiny">Comment</label>
-                              <input type="text" class="form-control form-control-sm" id="collaboratorAdditionalInfo" value="{{upcoming.comment}}" disabled>
+                              <p>{{upcoming.comment}}</p>
                            </div>
                            <!--div class="col-sm-6 col-xs-12 pull-right">
                               <label for="formGroupTitle" class="tiny">Allow others to use or remix</label>
@@ -527,7 +529,7 @@
       <!-- Plugin JavaScript -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
       <!-- Tokenfield field autocomplete -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>               
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
       <!-- Contact Form JavaScript -->
       <!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
@@ -538,7 +540,7 @@
 
          (function($) {
             "use strict"; // Start of use strict
-         
+
              // Smooth scrolling using jQuery easing
             $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -552,18 +554,18 @@
                   }
                }
             });
-         
+
              // Closes responsive menu when a scroll trigger link is clicked
             $('.js-scroll-trigger').click(function() {
                $('.navbar-collapse').collapse('hide');
             });
-         
+
             // Activate scrollspy to add active class to navbar items on scroll
             $('body').scrollspy({
                target: '#mainNav',
                offset: 54
             });
-         
+
             // Collapse the navbar when page is scrolled
             $(window).scroll(function() {
                if ($("#mainNav").offset().top > 100) {
@@ -572,7 +574,7 @@
                   $("#mainNav").removeClass("navbar-shrink");
                }
             });
-         
+
             // Floating label headings for the contact form
             $(function() {
                $("body").on("input propertychange", ".floating-label-form-group", function(e) {
@@ -583,9 +585,9 @@
                   $(this).removeClass("floating-label-form-group-with-focus");
                });
             });
-         
+
             /* progress bar */
-           
+
             var delay = 500;
             $(".progress-striped-outer").each(function(i){
                $(this).find(".progress-bar").delay( delay*i ).animate( { width: $(this).find(".progress-bar").attr('aria-valuenow') + '%' }, delay );
@@ -599,10 +601,18 @@
                   }
                });
             });
-           
+
+            // skills token field
+            $('#profileSkills, #projectRole, #upcomingKeywords, #upcomingCollaborator, #upcomingCollaboratorSkills').tokenfield({
+                autocomplete: {
+                    delay: 100
+                },
+                showAutocompleteOnFocus: true
+            });
+
             /* profile page carousels*/
-         
-			   $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();			
+
+			   $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();
           var text = document.getElementById('tokenfield');
           var skill1 = "{{t_profile.skill1}}"
           if (skill1) {
@@ -624,14 +634,14 @@
           if (skill5) {
               text.value += `, ${skill5}`;
           }
-           
+
          })(jQuery); // End of use strict
-                                     
+
          $(function(){
             $(".addClass").click(function () {
                $('#qnimate').addClass('popup-box-on');
             });
-                
+
             $("#removeClass").click(function () {
                $('#qnimate').removeClass('popup-box-on');
             });
@@ -650,7 +660,7 @@
                // Got a request
                elem.value = "Confirm Request";
             }else{
-               // Nothing happens 
+               // Nothing happens
                elem.value = "Add";
             }
          });
@@ -802,7 +812,7 @@
             }
         });
 
-                                     
+
       </script>
    </body>
 </html>

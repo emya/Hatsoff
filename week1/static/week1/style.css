@@ -201,12 +201,12 @@ section h2 {
 
     #mainNav.communityNav.navbar-shrink .navbar-nav li.nav-item a.nav-link {
 
-      
+
         font-size: 1rem;
 
              transition: font-size .7;
     }
-    
+
     #mainNav.navbar-shrink .navbar-brand {
         font-size: 1.5em
     }
@@ -239,7 +239,7 @@ header.masthead img {
         padding-top: 100px;
         padding-bottom: 50px
     }
-  
+
 }*/
 
 #howItWorks {
@@ -591,7 +591,7 @@ footer a {
     color: #fff;
     border-color: #000;
     /* background-color: #0d1318*/
-    
+
     border-bottom: solid 1px #48A8E1;
 }
 .btn-primary.active,
@@ -915,7 +915,7 @@ section.baseHomeBody .baseHomeBodyRight .padding-baseHomeBody {
     height: 40px;
     width: 50px;
     display: block;
-  
+
 }
 
 .matchHatActionList .faMatchHatbtn,
@@ -927,7 +927,7 @@ section.baseHomeBody .baseHomeBodyRight .padding-baseHomeBody {
 .faMatchHatbtn.active{
   background-image: url("https://gdurl.com/nCsy/download");
 }
-  
+
 .faMatchHatbtn.fa-hat {
     background-position: 0 -4px;
 }
@@ -968,7 +968,7 @@ section.baseHomeBody .baseHomeBodyRight .padding-baseHomeBody {
 }
 
 .dropdown > .icon.active,
-.dropdown > .icon:active, 
+.dropdown > .icon:active,
 .show > .icon.dropdown-toggle {
     background-color: transparent;
     background-image: none;
@@ -986,7 +986,7 @@ section.baseHomeBody .baseHomeBodyRight .padding-baseHomeBody {
 }
 
 .dropdown > .icon2.active,
-.dropdown > .icon2:active, 
+.dropdown > .icon2:active,
 .show > .icon2.dropdown-toggle {
     background-color: transparent;
     background-image: none;
@@ -1132,13 +1132,13 @@ section.profileBody .profileBodyRight .imageProfile-outer > div > img{
 /* Media Queries Profile */
 
 @media only screen and (max-width: 768px) {
-	
+
 	section.profileBody .profileBodyleft {padding:0;}
-	
+
 	section.profileBody .profileBodyRight .paddingProfileBody {
     padding: 20px 0px;
 }
-	
+
 	/*.profileBodyRight{margin-left:-15px; margin-right:-15px;}*/
 }
 
@@ -1174,7 +1174,7 @@ section.profileBody .profileBodyRight .paddingProfileThread{padding:0;}
     background-color: transparent !important;
 border: none !important;
 padding: 0 !important;
-  
+
 }
 
 .snsActionList{margin-top:-15px;}
@@ -1183,6 +1183,11 @@ padding: 0 !important;
 position: relative;
 padding-bottom: 56.25%;
 padding-top: 30px; height: 0; overflow: hidden;
+}
+
+.video-youtube {
+    width: 100%;
+    margin: 10px 0;
 }
 
 .video-container iframe,
@@ -1338,7 +1343,7 @@ height: 100%;
 }
 
 .popupmessageImage{
-  width: 100px; 
+  width: 100px;
 }
 
 /* might be duplicated to be checked */

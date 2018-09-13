@@ -389,7 +389,7 @@
                                          <div class="carousel-item">
                                      {% endif %}
                                      <form id="personalInfoForm" class="profileForm clearfix ">
-                                        <div class="col-sm-10 col-xs-12 pull-left">
+                                        <div class="col-sm-12">
 
                                             <div class="profileSubHeader clearfix">
                                                 <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_previouswork' forloop.counter %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
@@ -407,7 +407,7 @@
                                                 {% endif %}
 
                                                 {% if showcase.youtube %}
-                                                   <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+                                                   <iframe class="video-youtube" width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
                                                 {% endif %}
 
                                             {% else %}
@@ -417,15 +417,15 @@
                                             <div class="col-sm-10 col-xs-12 pull-left">
                                                 <div class="form-group">
                                                     <label for="profileTitle" class="tiny">Title</label>
-                                                    <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled>
+                                                    <p>{{showcase.title}}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="profileTitle" class="tiny">Discription</label>
-                                                    <input type="textarea" class="form-control form-control-sm" id="proefileDiscription" value="{{showcase.describe}}" disabled>
+                                                    <p>{{showcase.describe}}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="profileRole" class="tiny">Your Role</label>
-                                                    <input type="text" class="form-control form-control-sm" id="profileRole" value="{{showcase.role1}}" disabled>
+                                                    <p>{{showcase.role1}}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="profileKeywords" class="tiny">Key words</label>
@@ -473,13 +473,13 @@
                         <form class="clearfix" id="upcomingProjectForm">
                            <div class="col-sm-6 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Title</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingTitle" value="{{upcoming.title}}" disabled>
+                              <p>{{upcoming.title}}</p>
                               <label for="upcomingRole" class="tiny">Your Role</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRole" value="{{upcoming.role1}} {{upcoming.role2}} {{upcoming.role3}} {{upcoming.role4}} {{upcoming.role5}}" disabled>
+                              <input type="text" class="form-control form-control-sm upcomingRole" id="upcomingRole" value="{{upcoming.role1}} {{upcoming.role2}} {{upcoming.role3}} {{upcoming.role4}} {{upcoming.role5}}" disabled>
                               <label for="upcomingStatus" class="tiny">Status</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.status}}" disabled>
+                              <p>{{upcoming.status}}</p>
                               <label for="upcomingKeywords" class="tiny">Keywords</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}} {{upcoming.tag2}} {{upcoming.tag3}} {{upcoming.tag4}} {{upcoming.tag5}}" disabled>
+                              <input type="text" class="form-control upcomingKeywords form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}} {{upcoming.tag2}} {{upcoming.tag3}} {{upcoming.tag4}} {{upcoming.tag5}}" disabled>
                               <!--label for="upcomingRaisingFunds" class="tiny">Raising funds</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds"  value="{{upcoming.fund}}" disabled-->
                            </div>
@@ -492,19 +492,19 @@
                         <form class="clearfix" id="collaboratorIdLoveForm">
                            <div class="col-sm-6 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Collaborators (profession)</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingTitle" value="{{upcoming.collaborator1}} {{upcoming.collaborator2}} {{upcoming.collaborator3}} {{upcoming.collaborator4}} {{upcoming.collaborator5}}" disabled>
+                              <input type="text" class="form-control form-control-sm upcomingTitle" id="upcomingTitle" value="{{upcoming.collaborator1}} {{upcoming.collaborator2}} {{upcoming.collaborator3}} {{upcoming.collaborator4}} {{upcoming.collaborator5}}" disabled>
                               <label for="upcomingRole" class="tiny">Skills</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRole" value="{{upcoming.collaborator_skill1}} {{upcoming.collaborator_skill2}} {{upcoming.collaborator_skill3}} {{upcoming.collaborator_skill4}} {{upcoming.collaborator_skill5}} {{upcoming.collaborator_skill6}} {{upcoming.collaborator_skill7}} {{upcoming.collaborator_skill8}} {{upcoming.collaborator_skill9}} {{upcoming.collaborator_skill10}}" disabled>
+                              <input type="text" class="form-control form-control-sm upcomingRole" id="upcomingRole" value="{{upcoming.collaborator_skill1}} {{upcoming.collaborator_skill2}} {{upcoming.collaborator_skill3}} {{upcoming.collaborator_skill4}} {{upcoming.collaborator_skill5}} {{upcoming.collaborator_skill6}} {{upcoming.collaborator_skill7}} {{upcoming.collaborator_skill8}} {{upcoming.collaborator_skill9}} {{upcoming.collaborator_skill10}}" disabled>
                               <label for="upcomingStatus" class="tiny">Start date</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.targetstartdate}}" disabled>
+                              <p>{{upcoming.targetstartdate}}</p>
                               <label for="upcomingStatus" class="tiny">End date</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingStatus" value="{{upcoming.targetfinishdate}}" disabled>
+                              <p>{{upcoming.targetfinishdate}}</p>
                               <label for="upcomingKeywords" class="tiny">Frequency of work (e.g. 3 hours per week)</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.often}}" disabled>
+                              <p>{{upcoming.often}}</p>
                               <label for="upcomingRaisingFunds" class="tiny">Preferred city location of collaborator</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds" value="{{upcoming.preferred_city}}" disabled>
+                              <p>{{upcoming.preferred_city}}</p>
                               <label for="collaboratorAdditionalInfo" class="tiny">Comment</label>
-                              <input type="text" class="form-control form-control-sm" id="collaboratorAdditionalInfo" value="{{upcoming.comment}}" disabled>
+                              <p>{{upcoming.comment}}</p>
                            </div>
                            <!--div class="col-sm-6 col-xs-12 pull-right">
                               <label for="formGroupTitle" class="tiny">Allow others to use or remix</label>
@@ -700,7 +700,7 @@
 
 
 
-        $('#tokenfield').tokenfield({
+        $('#tokenfield, #profileKeywords, .upcomingRole, .upcomingKeywords, .upcomingTitle').tokenfield({
             autocomplete: {
                 delay: 100
             },

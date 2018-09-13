@@ -287,14 +287,14 @@
                                                 {% endif %}
 
                                                 {% if showcase.youtube %}
-                                                   <iframe width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
+                                                   <iframe class="video-youtube" width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
                                                 {% endif %}
 
                                             {% else %}
                                                 <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}" alt="{{forloop.counter}}th slide">
                                             {% endif %}
 
-                                            <div class="col-sm-10 col-xs-12 pull-left">
+                                            <div class="col-sm-10">
                                                 <div class="form-group">
                                                     <label for="profileTitle" class="tiny">Title</label>
                                                     <p>{{ showcase.title }}</p>

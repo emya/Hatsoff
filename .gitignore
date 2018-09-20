@@ -1,5 +1,5 @@
 # exclude everything except hatoff/settings.py
-hatsoff/settings.py
+hatsoff/settings*.py
 hatsoff/db.sqlite3
 week1/*2.py
 week1/*.pyc

@@ -319,7 +319,7 @@
                                           <button class="btn btn-sm btn-outline" type="button" onclick="location.href='{% url 'week1:edit_personalinfo' %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit profile</span></button>
                                        </div>
 
-                                       <div class="media-body dataProfile-outer col-xs-6 col-sm-6 col-md-6 ">
+                                       <div class="media-body dataProfile-outer col-xs-9">
                                           <h3>{{user.first_name}} {{user.last_name}}</h3>
                                           <em>
                                            {% if profile.profession1 %}
@@ -488,7 +488,7 @@
                            <!--button class="btn btn-sm btn-outline pull-right" type="button"><i class="fa fa-pencil"></i><span class="sr-only">edit upcoming project</span></button-->
                         </div>
                         <form class="clearfix" id="collaboratorIdLoveForm">
-                           <div class="col-sm-6 col-xs-12 pull-left">
+                           <div class="col-sm-12 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Collaborators (profession)</label>
                               <input type="text" class="form-control form-control-sm upcomingTitle" id="upcomingTitle" value="{{upcoming.collaborator1}}, {{upcoming.collaborator2}}, {{upcoming.collaborator3}}, {{upcoming.collaborator4}}, {{upcoming.collaborator5}}" disabled>
                               <label for="upcomingRole" class="tiny">Skills</label>

@@ -1153,6 +1153,10 @@ section.profileBody .profileBodyRight .paddingProfileThread{padding:0;}
 
 .profileBodyRight input{border-top:none; border-left:none; border-right:none; border-bottom:solid 1px #999; border-radius:0; color:#000;}
 
+#userpage .tokenfield .token .close {
+    display: none;
+}
+
 .tokenfield{
     padding: 10px;
     /* padding:0;
@@ -1180,9 +1184,16 @@ padding: 0 !important;
 .snsActionList{margin-top:-15px;}
 
 .video-container {
-position: relative;
-padding-bottom: 56.25%;
-padding-top: 30px; height: 0; overflow: hidden;
+    position: relative;
+    /*padding-bottom: 56.25%;*/
+    padding-top: 30px;
+    /*height: 0;*/
+    /*overflow: hidden;*/
+}
+
+.video-container img {
+    width: 100%;
+    height: auto;
 }
 
 .video-youtube {

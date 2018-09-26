@@ -78,7 +78,7 @@
          </div>
       </nav>
 
-      <section class="profileBody">
+      <section id="userpage" class="profileBody">
          <div class="container">
            <!-- <div class="column col-sm-12 col-xs-12" id="main"> -->
                <div class="row flex-column-reverse flex-md-row">
@@ -273,7 +273,7 @@
                                          <div class="carousel-item">
                                      {% endif %}
                                      <form id="personalInfoForm" class="profileForm clearfix ">
-                                        <div class="col-sm-10 col-xs-12 pull-left">
+                                        <div class="col-sm-12 col-xs-12 pull-left">
 
                                             {% if showcase.image or showcase.video or showcase.youtube %}
                                                 {% if showcase.image %}
@@ -352,15 +352,15 @@
 
                         <!-- upcoming project carousel ende -->
                         <form class="clearfix" id="upcomingProjectForm">
-                           <div class="col-sm-6 col-xs-12 pull-left">
+                           <div class="col-sm-12 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Title</label>
                               <p>{{upcoming.title}}</p>
                               <label for="upcomingRole" class="tiny">Your Role</label>
-                              <input type="text" class="form-control form-control-sm" id="projectRole" value="{{upcoming.role1}} {{upcoming.role2}} {{upcoming.role3}} {{upcoming.role4}} {{upcoming.role5}}" disabled>
+                              <input type="text" class="form-control form-control-sm" id="projectRole" value="{{upcoming.role1}}, {{upcoming.role2}}, {{upcoming.role3}}, {{upcoming.role4}}, {{upcoming.role5}}" disabled>
                               <label for="upcomingStatus" class="tiny">Status</label>
                               <p>{{upcoming.status}}</p>
                               <label for="upcomingKeywords" class="tiny">Keywords</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}} {{upcoming.tag2}} {{upcoming.tag3}} {{upcoming.tag4}} {{upcoming.tag5}}" disabled>
+                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}}, {{upcoming.tag2}}, {{upcoming.tag3}}, {{upcoming.tag4}}, {{upcoming.tag5}}" disabled>
                               <!--label for="upcomingRaisingFunds" class="tiny">Raising funds</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds"  value="{{upcoming.fund}}" disabled-->
                            </div>
@@ -373,7 +373,7 @@
                         <form class="clearfix" id="collaboratorIdLoveForm">
                            <div class="col-sm-6 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Collaborators (profession)</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingCollaborator" value="{{upcoming.collaborator1}} {{upcoming.collaborator2}} {{upcoming.collaborator3}} {{upcoming.collaborator4}} {{upcoming.collaborator5}}" disabled>
+                              <input type="text" class="form-control form-control-sm" id="upcomingCollaborator" value="{{upcoming.collaborator1}}, {{upcoming.collaborator2}}, {{upcoming.collaborator3}}, {{upcoming.collaborator4}}, {{upcoming.collaborator5}}" disabled>
                               <label for="upcomingRole" class="tiny">Skills</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingCollaboratorSkills" value="{{upcoming.collaborator_skill1}}, {{upcoming.collaborator_skill2}}, {{upcoming.collaborator_skill3}}, {{upcoming.collaborator_skill4}}, {{upcoming.collaborator_skill5}}, {{upcoming.collaborator_skill6}}, {{upcoming.collaborator_skill7}}, {{upcoming.collaborator_skill8}}, {{upcoming.collaborator_skill9}}, {{upcoming.collaborator_skill10}}" disabled>
                               <label for="upcomingStatus" class="tiny">Start date</label>

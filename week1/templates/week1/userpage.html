@@ -195,13 +195,13 @@
                                  <div class="well well-sm personEntity">
                                     <div class="row">
 
-                                      <div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
+                                      <div class="imageProfile-outer col-xs-3">
                                           <div class="thumbnail">
                                              <img class="media-object" src="{{media_url}}userphoto/{{t_user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                           </div>
                                        </div>
 
-                                       <div class="media-body dataProfile-outer col-xs-6 col-sm-6 col-md-6 ">
+                                       <div class="media-body dataProfile-outer col-xs-9">
                                           <h3>{{t_user.first_name}} {{t_user.last_name}}</h3>
                                           <em>
                                            {% if t_profile.profession1 %}
@@ -352,7 +352,7 @@
 
                         <!-- upcoming project carousel ende -->
                         <form class="clearfix" id="upcomingProjectForm">
-                           <div class="col-sm-6 col-xs-12 pull-left">
+                           <div class="col-sm-12 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Title</label>
                               <p>{{upcoming.title}}</p>
                               <label for="upcomingRole" class="tiny">Your Role</label>
@@ -371,7 +371,7 @@
                            <!--button class="btn btn-sm btn-outline pull-right" type="button"><i class="fa fa-pencil"></i><span class="sr-only">edit upcoming project</span></button-->
                         </div>
                         <form class="clearfix" id="collaboratorIdLoveForm">
-                           <div class="col-sm-6 col-xs-12 pull-left">
+                           <div class="col-sm-12 col-xs-12 pull-left">
                               <label for="upcomingTitle" class="tiny">Collaborators (profession)</label>
                               <input type="text" class="form-control form-control-sm" id="upcomingCollaborator" value="{{upcoming.collaborator1}} {{upcoming.collaborator2}} {{upcoming.collaborator3}} {{upcoming.collaborator4}} {{upcoming.collaborator5}}" disabled>
                               <label for="upcomingRole" class="tiny">Skills</label>

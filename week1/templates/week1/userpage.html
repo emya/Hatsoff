@@ -1,797 +1,851 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="description" content="Match Hat">
-      <meta name="author" content="Find your collaborator, complete your project.">
-      <title>Match Hat - Community Page</title>
-      <!-- Bootstrap core CSS -->
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-      <!-- Custom fonts for this template -->
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-      <!-- tokenfield field autocomplete -->
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
-      <!--<link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">-->
-      <link rel='stylesheet' type='text/css' href="/static/week1/style.css">
-   </head>
-   <body id="page-top">
-       userpage
-      <!-- Navigation -->
-      <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
-         <div class="container">
-                <a class="navbar-brand" href="{% url 'week1:community' %}">
-                        <img src="{% static 'images/MatchHat Logo-01.png'%}" >
-                  </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fa fa-bars"></i>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Match Hat">
+    <meta name="author" content="Find your collaborator, complete your project.">
+    <title>Match Hat - Community Page</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- Custom fonts for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+    <!-- tokenfield field autocomplete -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet"
+          type="text/css">
+    <!--<link href="{% static 'css/profile.css' %}" rel="stylesheet" type="text/css">-->
+    <link rel='stylesheet' type='text/css' href="/static/week1/style.css">
+</head>
+<body id="page-top">
+    userpage
+    <!-- Navigation -->
+    <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'week1:community' %}">
+                <img src="{% static 'images/MatchHat Logo-01.png'%}">
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                Menu
+                <i class="fa fa-bars"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
-               <form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto ">
-                  <div class="input-group">
-                     <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                     <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
-                           <i class="fa fa-search"></i>
-                        </button>
-                     </div>
-                  </div>
-               </form>
-               <ul class="navbar-nav mx-auto nav-flex-icons">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{% url 'week1:feedback' %}"> <small> Feedback </small> </a>
-                  </li>
+                <form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto ">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <ul class="navbar-nav mx-auto nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'week1:feedback' %}">
+                            <small> Feedback</small>
+                        </a>
+                    </li>
 
-                  <li class="nav-item">
-                     <a class="nav-link" href="{% url 'week1:community' %}">
-                        <i class="fa fa-users"></i>
-                     </a>
-                   </li>
-                   <!--li class="nav-item">
-                       <a class="nav-link" href="#">
-                           <i class="fa fa-user-plus"></i>
-                       </a>
-                   </li-->
-                  <li class="nav-item">
-                     <a class="nav-link" href="{% url 'week1:messages' %}">
-                        <i class="fa fa-comment-o"></i>
-                     </a>
-                  </li>
-               </ul>
-               <ul class="navbar-nav navbar-right">
-                  <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user"></i>&nbsp;{{user.first_name}}
-                     </a>
-                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
-                        <a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
-                     </div>
-                  </li>
-               </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'week1:community' %}">
+                            <i class="fa fa-users"></i>
+                        </a>
+                    </li>
+                    <!--li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-user-plus"></i>
+                        </a>
+                    </li-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'week1:messages' %}">
+                            <i class="fa fa-comment-o"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i>&nbsp;<small>{{user.first_name}}</small>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
+                            <a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-         </div>
-      </nav>
+        </div>
+    </nav>
 
-      <section id="userpage" class="profileBody">
-         <div class="container">
-           <!-- <div class="column col-sm-12 col-xs-12" id="main"> -->
-               <div class="row flex-column-reverse flex-md-row">
+    <section id="userpage" class="profileBody">
+        <div class="container">
+            <!-- <div class="column col-sm-12 col-xs-12" id="main"> -->
+            <div class="row flex-column-reverse flex-md-row">
 
-                  <div class="profileBodyLeft col-sm-12 col-md-4">
-                     <div class="panel panel-profileLeft">
+                <div class="profileBodyLeft col-sm-12 col-md-4">
+                    <div class="panel panel-profileLeft">
                         <div class="panel-heading">
-                           <h2>community members</h2>
+                            <h2>community members</h2>
                         </div>
                         <div class="panel-body clearfix">
-                           <div class="well well-sm commMembersDataEntity">
-                              <div class="media">
-                                 <div class="thumbnail pull-left">
-                                    <img class="media-object" src="http://gdurl.com/c-iU">
-                                 </div>
-                                 <div class="media-body">
-                                    <p class="big">
-                                       <a href="#">0</a>
-                                    </p>
-                                    <h4 class="media-heading">Community members</h4>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="panel panel-profileLeft projects">
-                        <div class="panel-heading">
-                           <h2>projects</h2>
-                        </div>
-                        <div class="panel-body clearfix">
-                           <div class="well well-sm projectsEntity">
-                              <div class="media">
-                                 <div class="thumbnail pull-left">
-                                    <img class="media-object" src="http://gdurl.com/qfEm">
-                                 </div>
-                                 <div class="media-body">
-                                    <h3>Projects you took on</h3>
-                                    <div class="projectProgressEntity clearfix">
-                                       <h4>3D printing project</h4>
-                                       <div class="progress-outer progress-striped-outer">
-                                          <div class="progPercentageNumb"></div>
-                                          <div class="progress progress-striped">
-                                             <div class="progress-bar progress-bar-custom" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100" >
-                                                <span class="sr-only">58</span>
-                                             </div>
-                                          </div>
-                                       </div>
+                            <div class="well well-sm commMembersDataEntity">
+                                <div class="media">
+                                    <div class="thumbnail pull-left">
+                                        <img class="media-object" src="http://gdurl.com/c-iU">
                                     </div>
-                                    <!-- project entity -->
-                                    <div class="projectProgressEntity clearfix" >
-                                       <h4>Sculpture project</h4>
-                                       <div class="progress-outer progress-striped-outer">
-                                          <div class="progPercentageNumb"></div>
-                                          <div class="progress progress-striped">
-                                             <div class="progress-bar progress-bar-custom" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >
-                                                <span class="sr-only">25</span>
-                                             </div>
-                                          </div>
-                                       </div>
+                                    <div class="media-body">
+                                        <p class="big">
+                                            <a href="#">0</a>
+                                        </p>
+                                        <h4 class="media-heading">Community members</h4>
                                     </div>
-
-                                    <div class="projectProgressEntity clearfix">
-                                       <h4>Sculpture project</h4>
-                                       <div class="progress-outer progress-striped-outer">
-                                          <div class="progPercentageNumb"></div>
-                                          <div class="progress progress-striped">
-                                             <div class="progress-bar progress-bar-custom" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" >
-                                                <span class="sr-only">25</span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="panel-body clearfix">
-                           <div class="well well-sm projectsEntity">
-                              <div class="media-body">
-                                 <h3>Suggested Community Posts</h3>
-                                 <!-- div class="thumbnail pull-left">
-                                    <img class="media-object" src="http://gdurl.com/QZUi">
-                                 </div-->
-                                 <div class="media-body suggestedProjects" id="suggested_posts">
-                                 </div>
-                              </div>
+                                </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="panel panel-profileLeft projects">
+                        <div class="panel-heading">
+                            <h2>projects</h2>
+                        </div>
                         <div class="panel-body clearfix">
-                           <div class="well well-sm projectsEntity">
-                              <div class="media">
-                                 <div class="thumbnail pull-left">
-                                    <img class="media-object" src="http://gdurl.com/rUxk">
-                                 </div>
-                                 <div class="media-body">
-                                    <h3>Shoot outs</h3>
-                                    <div class="projectProgressEntity clearfix">
+                            <div class="well well-sm projectsEntity">
+                                <div class="media">
+                                    <div class="thumbnail pull-left">
+                                        <img class="media-object" src="http://gdurl.com/qfEm">
                                     </div>
-                                    <!-- project entity -->
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-
-                  <!-- main col right -->
-                  <div class="profileBodyRight col-sm-12 col-md-8">
-                     <div class="paddingProfileBody">
-                        <div class="panel panel-white clearfix">
-                           <div class="well">
-                              <form class="form-horizontal" role="form" method="GET">
-                                 <div class="well well-sm personEntity">
-                                    <div class="row">
-
-                                      <div class="imageProfile-outer col-xs-3">
-                                          <div class="thumbnail">
-                                             <img class="media-object" src="{{media_url}}userphoto/{{t_user.uid}}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
-                                          </div>
-                                       </div>
-
-                                       <div class="media-body dataProfile-outer col-xs-9">
-                                          <h3>{{t_user.first_name}} {{t_user.last_name}}</h3>
-                                          <em>
-                                           {% if t_profile.profession1 %}
-                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession1 %}"> {{t_profile.profession1}} </a>
-                                           {% endif %}
-
-                                           {% if t_profile.profession2 %}
-                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession2 %}"> {{t_profile.profession2}} </a>
-                                           {% endif %}
-
-                                           {% if t_profile.profession3 %}
-                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession3 %}"> {{t_profile.profession3}} </a>
-                                           {% endif %}
-
-                                           {% if t_profile.profession4 %}
-                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession4 %}"> {{t_profile.profession4}} </a>
-                                           {% endif %}
-
-                                           {% if t_profile.profession5 %}
-                                               <a href="{% url 'week1:profession_collaborators' t_profile.profession5 %}"> {{t_profile.profession5}} </a>
-                                           {% endif %}
-                                          </em>
-                                          <p>{{t_profile.describe}}</p>
-                                          <div class="form-group">
-                                            <label class="w-100 tiny">City</label>
-                                            <p>{{t_profile.city}}</p>
-                                            <label class="w-100 tiny">Skills</label>
-                                            <input type="text" class="form-control" id="profileSkills" value="{{t_profile.skill1}}, {{t_profile.skill2}}, {{t_profile.skill3}}, {{t_profile.skill4}}, {{t_profile.skill5}}" disabled/>
-                                          </div>
-                                       </div>
-
-                                       <div class="actionsProfile-outer col-xs- col-sm-3 col-md-3">
-                                          <input class="btn btn-bg btn-outline w-100" type="button" onclick="defaultMessage(1)" value="Chat"></input>
-                                          <!--button class="btn btn-bg btn-outline w-100" type="button" onclick="addCommunityFunction('{{t_user.uid}}')"><i class="fa fa-user-plus"></i><span class="small">add</span></button-->
-                                          <input class="btn btn-bg btn-outline w-100" onclick="addCommunityFunction()" type="button" value="Add" id="addCommunityButton"></input>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </form>
-                           </div>
-                        </div>
-
-
-                        <div class="profileSubHeader clearfix">
-                           <h2 class="pull-left">Portfolio</h2>
-                        </div>
-                        <div id="carouselPortfolio-outer" class="carousel-outer">
-                           <div id="carouselPortfolio" class="carousel slide">
-
-                              <ol class="carousel-indicators">
-                                 {% if showcases %}
-                                    {% for showcase in showcases %}
-                                       {% if forloop.counter == 1 %}
-                                          <li data-target="#carouselPortfolio" data-slide-to="{{ forloop.counter }}" class="active"></li>
-                                       {% else %}
-                                          <li data-target="#carouselPortfolio" data-slide-to="{{ forloop.counter }}"></li>
-                                       {% endif %}
-                                    {% endfor %}
-                                 {% endif %}
-                              </ol>
-
-                              <div class="carousel-inner" role="listbox">
-                                 <!-- Images -->
-                                 {% if showcases %}
-                                   {% for showcase in showcases %}
-                                     {% if forloop.counter == 1 %}
-                                         <div class="carousel-item active">
-                                     {% else %}
-                                         <div class="carousel-item">
-                                     {% endif %}
-                                     <form id="personalInfoForm" class="profileForm clearfix ">
-                                        <div class="col-sm-12 col-xs-12 pull-left">
-
-                                            {% if showcase.image or showcase.video or showcase.youtube %}
-                                                {% if showcase.image %}
-                                                   <img class="d-block img-fluid" src="{{ showcase.image.url }}" alt="{{forloop.counter}}th slide">
-                                                {% endif %}
-
-                                                {% if showcase.video %}
-                                                   <video controls id="video">
-                                                       <source src="{{ showcase.video.url }}" class="maincontent" type="video/mp4">
-                                                   </video>
-                                                {% endif %}
-
-                                                {% if showcase.youtube %}
-                                                   <iframe class="video-youtube" width="350" height="280" src="{{showcase.youtube}}" frameborder="0" allowfullscreen></iframe>
-                                                {% endif %}
-
-                                            {% else %}
-                                                <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}" alt="{{forloop.counter}}th slide">
-                                            {% endif %}
-
-                                            <div class="col-sm-10">
-                                                <div class="form-group">
-                                                    <label for="profileTitle" class="tiny">Title</label>
-                                                    <p>{{ showcase.title }}</p>
-                                                    <!-- <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled> -->
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="profileTitle" class="tiny">Description</label>
-                                                    <p>{{showcase.describe}}</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="profileRole" class="tiny">Your Role</label>
-                                                    <p>{{showcase.role1}}</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="profileKeywords" class="tiny">Keywords</label>
-                                                    <p>{{showcase.tag1}}</p>
-                                                    <p>{{showcase.tag2}}</p>
+                                    <div class="media-body">
+                                        <h3>Projects you took on</h3>
+                                        <div class="projectProgressEntity clearfix">
+                                            <h4>3D printing project</h4>
+                                            <div class="progress-outer progress-striped-outer">
+                                                <div class="progPercentageNumb"></div>
+                                                <div class="progress progress-striped">
+                                                    <div class="progress-bar progress-bar-custom" aria-valuenow="58"
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">58</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                  </div>
-                                {% endfor %}
-                              {% endif %}
-                              </div>
-                              <!--Carousel Inner-->
-                              <a class="carousel-control-prev" href="#carouselPortfolio" role="button" data-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="sr-only">Previous</span></a>
-                              <a class="carousel-control-next" href="#carouselPortfolio" role="button" data-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="sr-only">Next</span></a>
-                           </div>
-                        </div>
+                                        <!-- project entity -->
+                                        <div class="projectProgressEntity clearfix">
+                                            <h4>Sculpture project</h4>
+                                            <div class="progress-outer progress-striped-outer">
+                                                <div class="progPercentageNumb"></div>
+                                                <div class="progress progress-striped">
+                                                    <div class="progress-bar progress-bar-custom" aria-valuenow="25"
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">25</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                        <div class="profileSubHeader clearfix">
-                           <h2 class="pull-left">Upcoming project</h2>
+                                        <div class="projectProgressEntity clearfix">
+                                            <h4>Sculpture project</h4>
+                                            <div class="progress-outer progress-striped-outer">
+                                                <div class="progPercentageNumb"></div>
+                                                <div class="progress progress-striped">
+                                                    <div class="progress-bar progress-bar-custom" aria-valuenow="25"
+                                                         aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">25</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div id="carouselPortfolioFuture-outer" class="carousel-outer">
-                            <div id="carouselPortfolio-outer" class="video-container">
-                            {% if upcoming.image %}
-                                <img class="d-block img-fluid" src="{{ upcoming.image.url }}" width="560">
-                            {% else %}
-                                <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}" width="560">
-                            {% endif %}
+                        <div class="panel-body clearfix">
+                            <div class="well well-sm projectsEntity">
+                                <div class="media-body">
+                                    <h3>Suggested Community Posts</h3>
+                                    <!-- div class="thumbnail pull-left">
+                                       <img class="media-object" src="http://gdurl.com/QZUi">
+                                    </div-->
+                                    <div class="media-body suggestedProjects" id="suggested_posts">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!--div id="carouselPortfolioFuture-outer" class="carousel-outer">
-                            <div id="carouselPortfolio-outer" class="video-container">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/9bFsznD3BAs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="panel-body clearfix">
+                            <div class="well well-sm projectsEntity">
+                                <div class="media">
+                                    <div class="thumbnail pull-left">
+                                        <img class="media-object" src="http://gdurl.com/rUxk">
+                                    </div>
+                                    <div class="media-body">
+                                        <h3>Shoot outs</h3>
+                                        <div class="projectProgressEntity clearfix">
+                                        </div>
+                                        <!-- project entity -->
+                                    </div>
+                                </div>
                             </div>
-                        </div-->
-
-                        <!-- upcoming project carousel ende -->
-                        <form class="clearfix" id="upcomingProjectForm">
-                           <div class="col-sm-12 col-xs-12 pull-left">
-                              <label for="upcomingTitle" class="tiny">Title</label>
-                              <p>{{upcoming.title}}</p>
-                              <label for="upcomingRole" class="tiny">Your Role</label>
-                              <input type="text" class="form-control form-control-sm" id="projectRole" value="{{upcoming.role1}}, {{upcoming.role2}}, {{upcoming.role3}}, {{upcoming.role4}}, {{upcoming.role5}}" disabled>
-                              <label for="upcomingStatus" class="tiny">Status</label>
-                              <p>{{upcoming.status}}</p>
-                              <label for="upcomingKeywords" class="tiny">Keywords</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingKeywords" value="{{upcoming.tag1}}, {{upcoming.tag2}}, {{upcoming.tag3}}, {{upcoming.tag4}}, {{upcoming.tag5}}" disabled>
-                              <!--label for="upcomingRaisingFunds" class="tiny">Raising funds</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingRaisingFunds"  value="{{upcoming.fund}}" disabled-->
-                           </div>
-                        </form>
-                        <!-- upcoming project form ende -->
-                        <div class="profileSubHeader clearfix">
-                           <h2 class="pull-left">Collaborator I'd love for my upcoming project</h2>
-                           <!--button class="btn btn-sm btn-outline pull-right" type="button"><i class="fa fa-pencil"></i><span class="sr-only">edit upcoming project</span></button-->
                         </div>
-                        <form class="clearfix" id="collaboratorIdLoveForm">
-                           <div class="col-sm-12 col-xs-12 pull-left">
-                              <label for="upcomingTitle" class="tiny">Collaborators (profession)</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingCollaborator" value="{{upcoming.collaborator1}}, {{upcoming.collaborator2}}, {{upcoming.collaborator3}}, {{upcoming.collaborator4}}, {{upcoming.collaborator5}}" disabled>
-                              <label for="upcomingRole" class="tiny">Skills</label>
-                              <input type="text" class="form-control form-control-sm" id="upcomingCollaboratorSkills" value="{{upcoming.collaborator_skill1}}, {{upcoming.collaborator_skill2}}, {{upcoming.collaborator_skill3}}, {{upcoming.collaborator_skill4}}, {{upcoming.collaborator_skill5}}, {{upcoming.collaborator_skill6}}, {{upcoming.collaborator_skill7}}, {{upcoming.collaborator_skill8}}, {{upcoming.collaborator_skill9}}, {{upcoming.collaborator_skill10}}" disabled>
-                              <label for="upcomingStatus" class="tiny">Start date</label>
-                              <p>{{upcoming.targetstartdate}}</p>
-                              <label for="upcomingStatus" class="tiny">End date</label>
-                              <p>{{upcoming.targetfinishdate}}</p>
-                              <label for="upcomingKeywords" class="tiny">Frequency of work (e.g. 3 hours per week)</label>
-                              <p>{{upcoming.often}}</p>
-                              <label for="upcomingRaisingFunds" class="tiny">Preferred city location of collaborator</label>
-                              <p>{{upcoming.preferred_city}}</p>
-                              <label for="collaboratorAdditionalInfo" class="tiny">Comment</label>
-                              <p>{{upcoming.comment}}</p>
-                           </div>
-                           <!--div class="col-sm-6 col-xs-12 pull-right">
-                              <label for="formGroupTitle" class="tiny">Allow others to use or remix</label>
-                              <div class="dropdown">
-                                 <button class="btn btn-outline dropdown-toggle" type="button" id="about-us" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                 SELECT as...
-                                 </button>
-                                 <div class="dropdown-menu" aria-labelledby="about-us">
-                                    <a class="dropdown-item" href="#">Yes, sure.</a>
-                                    <a class="dropdown-item" href="#">Yes, as long as I'm credited.</a>
-                                    <a class="dropdown-item" href="#">Yes as long as the work isn't altered.</a>
-                                    <a class="dropdown-item" href="#">No, I do not own the full copyright.</a>
-                                    <a class="dropdown-item" href="#">Sorry, not this work.</a>
-                                 </div>
-                              </div>
-                           </div-->
-                        </form>
-                     </div>
-                     <!-- paddingCommunityThread ende -->
-                  </div>
-          <!-- col right ende -->
-               </div>
-           <!-- row end -->
-         </div>
-      </section>
+                    </div>
+                </div>
 
-      <div class="popup-box chat-popup" id="qnimate">
-         <div class="popup-head">
+                <!-- main col right -->
+                <div class="profileBodyRight col-sm-12 col-md-8">
+                    <div class="paddingProfileBody">
+                        <div class="panel panel-white clearfix">
+                            <div class="well">
+                                <form class="form-horizontal" role="form" method="GET">
+                                    <div class="well well-sm personEntity">
+                                        <div class="row">
+
+                                            <div class="imageProfile-outer col-xs-3">
+                                                <div class="thumbnail">
+                                                    <img class="media-object"
+                                                         src="{{media_url}}userphoto/{{t_user.uid}}.png"
+                                                         onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
+                                                </div>
+                                            </div>
+
+                                            <div class="media-body dataProfile-outer col-xs-9">
+                                                <h3>{{t_user.first_name}} {{t_user.last_name}}</h3>
+                                                <em>
+                                                    {% if t_profile.profession1 %}
+                                                    <a href="{% url 'week1:profession_collaborators' t_profile.profession1 %}">
+                                                        {{t_profile.profession1}} </a>
+                                                    {% endif %}
+
+                                                    {% if t_profile.profession2 %}
+                                                    <a href="{% url 'week1:profession_collaborators' t_profile.profession2 %}">
+                                                        {{t_profile.profession2}} </a>
+                                                    {% endif %}
+
+                                                    {% if t_profile.profession3 %}
+                                                    <a href="{% url 'week1:profession_collaborators' t_profile.profession3 %}">
+                                                        {{t_profile.profession3}} </a>
+                                                    {% endif %}
+
+                                                    {% if t_profile.profession4 %}
+                                                    <a href="{% url 'week1:profession_collaborators' t_profile.profession4 %}">
+                                                        {{t_profile.profession4}} </a>
+                                                    {% endif %}
+
+                                                    {% if t_profile.profession5 %}
+                                                    <a href="{% url 'week1:profession_collaborators' t_profile.profession5 %}">
+                                                        {{t_profile.profession5}} </a>
+                                                    {% endif %}
+                                                </em>
+                                                <p>{{t_profile.describe}}</p>
+                                                <div class="form-group">
+                                                    <label class="w-100 tiny">
+                                                        <strong>City</strong>
+                                                    </label>
+                                                    <p>{{t_profile.city}}</p>
+                                                    <label class="w-100 tiny">
+                                                        <strong>Skills</strong>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="profileSkills"
+                                                           value="{{t_profile.skill1}}, {{t_profile.skill2}}, {{t_profile.skill3}}, {{t_profile.skill4}}, {{t_profile.skill5}}"
+                                                           disabled/>
+                                                </div>
+                                            </div>
+
+                                            <div class="actionsProfile-outer col-xs- col-sm-3 col-md-3">
+                                                <input class="btn btn-bg btn-outline w-100" type="button"
+                                                       onclick="defaultMessage(1)" value="Chat"></input>
+                                                <!--button class="btn btn-bg btn-outline w-100" type="button" onclick="addCommunityFunction('{{t_user.uid}}')"><i class="fa fa-user-plus"></i><span class="small">add</span></button-->
+                                                <input class="btn btn-bg btn-outline w-100" onclick="addCommunityFunction()"
+                                                       type="button" value="Add" id="addCommunityButton"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div class="profileSubHeader clearfix">
+                            <h2 class="pull-left">Portfolio</h2>
+                        </div>
+                        <div id="carouselPortfolio-outer" class="carousel-outer">
+                            <div id="carouselPortfolio" class="carousel slide">
+
+                                <ol class="carousel-indicators">
+                                    {% if showcases %}
+                                    {% for showcase in showcases %}
+                                    {% if forloop.counter == 1 %}
+                                    <li data-target="#carouselPortfolio" data-slide-to="{{ forloop.counter }}"
+                                        class="active"></li>
+                                    {% else %}
+                                    <li data-target="#carouselPortfolio" data-slide-to="{{ forloop.counter }}"></li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                </ol>
+
+                                <div class="carousel-inner" role="listbox">
+                                    <!-- Images -->
+                                    {% if showcases %}
+                                    {% for showcase in showcases %}
+                                    {% if forloop.counter == 1 %}
+                                    <div class="carousel-item active">
+                                        {% else %}
+                                        <div class="carousel-item">
+                                            {% endif %}
+                                            <form id="personalInfoForm" class="profileForm clearfix ">
+                                                <div class="col-sm-12 col-xs-12 pull-left">
+
+                                                    {% if showcase.image or showcase.video or showcase.youtube %}
+                                                    {% if showcase.image %}
+                                                    <img class="d-block img-fluid" src="{{ showcase.image.url }}"
+                                                         alt="{{forloop.counter}}th slide">
+                                                    {% endif %}
+
+                                                    {% if showcase.video %}
+                                                    <video controls id="video">
+                                                        <source src="{{ showcase.video.url }}" class="maincontent"
+                                                                type="video/mp4">
+                                                    </video>
+                                                    {% endif %}
+
+                                                    {% if showcase.youtube %}
+                                                    <iframe class="video-youtube" width="350" height="280"
+                                                            src="{{showcase.youtube}}" frameborder="0"
+                                                            allowfullscreen></iframe>
+                                                    {% endif %}
+
+                                                    {% else %}
+                                                    <img class="d-block img-fluid"
+                                                         src="{% static 'images/empty_showcase.png'%}"
+                                                         alt="{{forloop.counter}}th slide">
+                                                    {% endif %}
+
+                                                    <div class="col-sm-10">
+                                                        <div class="form-group">
+                                                            <label for="profileTitle">
+                                                                <strong>
+                                                                    Title
+                                                                </strong>
+                                                            </label>
+                                                            <p>{{ showcase.title }</p>
+                                                            <!-- <input type="text" class="form-control form-control-sm" id="proefileTitle" value="{{showcase.title}}" disabled> -->
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="profileTitle">
+                                                                <strong>Description</strong>
+                                                            </label>
+                                                            <p>{{showcase.describe}}</p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="profileRole">
+                                                                <strong>Your Role</strong>
+                                                            </label>
+                                                            <p>{{showcase.role1}}</p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="profileKeywords">
+                                                                <strong>Keywords</strong>
+                                                            </label>
+                                                            <p>{{showcase.tag1}}</p>
+                                                            <p>{{showcase.tag2}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <!--Carousel Inner-->
+                                    <a class="carousel-control-prev" href="#carouselPortfolio" role="button"
+                                       data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span></a>
+                                    <a class="carousel-control-next" href="#carouselPortfolio" role="button"
+                                       data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span></a>
+                                </div>
+                            </div>
+
+                            <div class="profileSubHeader clearfix">
+                                <h2 class="pull-left">Upcoming project</h2>
+                            </div>
+
+                            <div id="carouselPortfolioFuture-outer" class="carousel-outer">
+                                <div id="carouselPortfolio-outer" class="video-container">
+                                    {% if upcoming.image %}
+                                    <img class="d-block img-fluid" src="{{ upcoming.image.url }}" width="560">
+                                    {% else %}
+                                    <img class="d-block img-fluid" src="{% static 'images/empty_showcase.png'%}"
+                                         width="560">
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- upcoming project carousel ende -->
+                            <form class="clearfix" id="upcomingProjectForm">
+                                <div class="col-sm-12 col-xs-12 pull-left">
+                                    <label for="upcomingTitle">
+                                        <strong>Title</strong>
+                                    </label>
+                                    <p>{{upcoming.title}}</p>
+                                    <label for="upcomingRole">
+                                        <strong>Your Role</strong>
+                                    </label>
+                                    <input type="text" class="form-control form-control-sm" id="projectRole"
+                                           value="{{upcoming.role1}}, {{upcoming.role2}}, {{upcoming.role3}}, {{upcoming.role4}}, {{upcoming.role5}}"
+                                           disabled>
+                                    <label for="upcomingStatus">
+                                        <strong>Status</strong>
+                                    </label>
+                                    <p>{{upcoming.status}}</p>
+                                    <label for="upcomingKeywords">
+                                        <strong>Keywords</strong>
+                                    </label>
+                                    <input type="text" class="form-control form-control-sm" id="upcomingKeywords"
+                                           value="{{upcoming.tag1}}, {{upcoming.tag2}}, {{upcoming.tag3}}, {{upcoming.tag4}}, {{upcoming.tag5}}"
+                                           disabled>
+                                </div>
+                            </form>
+                            <!-- upcoming project form ende -->
+                            <div class="profileSubHeader clearfix">
+                                <h2 class="pull-left">Collaborator I'd love for my upcoming project</h2>
+                                <!--button class="btn btn-sm btn-outline pull-right" type="button"><i class="fa fa-pencil"></i><span class="sr-only">edit upcoming project</span></button-->
+                            </div>
+                            <form class="clearfix" id="collaboratorIdLoveForm">
+                                <div class="col-sm-12 col-xs-12 pull-left">
+                                    <label for="upcomingTitle">
+                                        <strong>Collaborators (profession)</strong>
+                                    </label>
+                                    <input type="text" class="form-control form-control-sm" id="upcomingCollaborator"
+                                           value="{{upcoming.collaborator1}}, {{upcoming.collaborator2}}, {{upcoming.collaborator3}}, {{upcoming.collaborator4}}, {{upcoming.collaborator5}}"
+                                           disabled>
+                                    <label for="upcomingRole">
+                                        <strong>Skills</strong>
+                                    </label>
+                                    <input type="text" class="form-control form-control-sm" id="upcomingCollaboratorSkills"
+                                           value="{{upcoming.collaborator_skill1}}, {{upcoming.collaborator_skill2}}, {{upcoming.collaborator_skill3}}, {{upcoming.collaborator_skill4}}, {{upcoming.collaborator_skill5}}, {{upcoming.collaborator_skill6}}, {{upcoming.collaborator_skill7}}, {{upcoming.collaborator_skill8}}, {{upcoming.collaborator_skill9}}, {{upcoming.collaborator_skill10}}"
+                                           disabled>
+                                    <label for="upcomingStatus">
+                                        <strong>Start date</strong>
+                                    </label>
+                                    <p>{{upcoming.targetstartdate}}</p>
+                                    <label for="upcomingStatus">
+                                        <strong>End date</strong>
+                                    </label>
+                                    <p>{{upcoming.targetfinishdate}}</p>
+                                    <label for="upcomingKeywords">
+                                        <strong>Frequency of work (e.g. 3 hours per week)</strong>
+                                    </label>
+                                    <p>{{upcoming.often}}</p>
+                                    <label for="upcomingRaisingFunds">
+                                        <strong>Preferred city location of collaborator</strong>
+                                    </label>
+                                    <p>{{upcoming.preferred_city}}</p>
+                                    <label for="collaboratorAdditionalInfo">
+                                        <strong>Comment</strong>
+                                    </label>
+                                    <p>{{upcoming.comment}}</p>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- paddingCommunityThread ende -->
+                    </div>
+                    <!-- col right ende -->
+                </div>
+                <!-- row end -->
+            </div>
+    </section>
+
+    <div class="popup-box chat-popup" id="qnimate">
+        <div class="popup-head">
             <div class="popup-head-left pull-left">{{t_user.first_name}} &nbsp {{t_user.last_name}}</div>
             <div class="popup-head-right pull-right">
-               <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">x</button>
+                <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">x</button>
             </div>
-         </div>
+        </div>
 
-         <div class="popup-messages">
+        <div class="popup-messages">
             <div class="direct-chat-messages" id="chat_room">
             </div>
-         </div>
+        </div>
 
-         <div class="popup-messages-footer">
+        <div class="popup-messages-footer">
             <textarea id="status_message" placeholder="Type a message..." rows="1" cols="35" name="message"></textarea>
             <input id="image_in_message" type="file" class="form-photo"/>
             <div class="btn-footer">
-               <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send </button>
+                <button class="btn btn-primary btn-lg pull-right" onclick="sendMessage()">Send</button>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
 
 
-      <!-- content -->
-      <!-- content ende -->
-      <!-- Footer -->
-      <footer class="text-center">
-         <div class="footer-above">
+    <!-- content -->
+    <!-- content ende -->
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
             <div class="container">
-               <div class="row">
-                  <div class="footer-col col-md-3">
-                     <h3>Location</h3>
-                     <ul class="list-unstyled">
-                        <li>
-                           <a href="@">About</a>
-                        </li>
-                        <li>
-                           <a href="@">Terms</a>
-                        </li>
-                        <li>
-                           <a href="@">Privacy</a>
-                        </li>
-                        <li>
-                           <a href="@">Careers</a>
-                        </li>
-                     </ul>
-                  </div>
-                  <div class="footer-col col-md-3">
-                     <h3>Follow Us</h3>
-                     <ul class="list-inline">
-                        <li class="list-inline-item">
-                           <a class="btn-social btn-outline" href="#">
-                           <i class="fa fa-fw fa-facebook"></i>
-                           </a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="btn-social btn-outline" href="#">
-                           <i class="fa fa-fw fa-google-plus"></i>
-                           </a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="btn-social btn-outline" href="#">
-                           <i class="fa fa-fw fa-twitter"></i>
-                           </a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="btn-social btn-outline" href="#">
-                           <i class="fa fa-fw fa-linkedin"></i>
-                           </a>
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="btn-social btn-outline" href="#">
-                           <i class="fa fa-fw fa-dribbble"></i>
-                           </a>
-                        </li>
-                     </ul>
-                  </div>
-                  <div class="footer-col col-md-3">
-                     <h3>Feedback</h3>
-                     <a href="@">Feedback</a>
-                  </div>
-                  <div class="footer-col col-md-3">
-                     <h3>Contact</h3>
-                     <a href="@">Feedback</a>
-                  </div>
-               </div>
+                <div class="row">
+                    <div class="footer-col col-md-3">
+                        <h3>Location</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="@">About</a>
+                            </li>
+                            <li>
+                                <a href="@">Terms</a>
+                            </li>
+                            <li>
+                                <a href="@">Privacy</a>
+                            </li>
+                            <li>
+                                <a href="@">Careers</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-3">
+                        <h3>Follow Us</h3>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a class="btn-social btn-outline" href="#">
+                                    <i class="fa fa-fw fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-social btn-outline" href="#">
+                                    <i class="fa fa-fw fa-google-plus"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-social btn-outline" href="#">
+                                    <i class="fa fa-fw fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-social btn-outline" href="#">
+                                    <i class="fa fa-fw fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-social btn-outline" href="#">
+                                    <i class="fa fa-fw fa-dribbble"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-3">
+                        <h3>Feedback</h3>
+                        <a href="@">Feedback</a>
+                    </div>
+                    <div class="footer-col col-md-3">
+                        <h3>Contact</h3>
+                        <a href="@">Feedback</a>
+                    </div>
+                </div>
             </div>
-         </div>
-         <div class="footer-below">
+        </div>
+        <div class="footer-below">
             <div class="container">
-               <div class="row">
-                  <div class="col-lg-12">
-                     Copyright &copy; Match Hat 2017
-                  </div>
-               </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Match Hat 2017
+                    </div>
+                </div>
             </div>
-         </div>
-      </footer>
-      <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-      <div class="scroll-top d-lg-none">
-         <a class="btn btn-primary js-scroll-trigger" href="#page-top">
-         <i class="fa fa-chevron-up"></i>
-         </a>
-      </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top d-lg-none">
+        <a class="btn btn-primary js-scroll-trigger" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
 
-      <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
-      <!--script src="https://cdn.socket.io/socket.io-1.2.0.js"></script-->
+    <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
+    <!--script src="https://cdn.socket.io/socket.io-1.2.0.js"></script-->
 
-      <script type="text/javascript" src="/static/js/basic.js"></script>
-      <!-- Bootstrap core JavaScript -->
-      <script src="https://code.jquery.com/jquery.min.js"></script>
-      <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-      <!-- Plugin JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-      <!-- Tokenfield field autocomplete -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
-      <!-- Contact Form JavaScript -->
-      <!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
-      <!-- Custom scripts for this template -->
-      <script>
-         socket.emit('join message', {uid:"{{user.uid}}", firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
-         socket.emit('at userpage', {uid:"{{user.uid}}", to_uid:"{{t_user.uid}}", uname:"{{user.first_name}}"});
+    <script type="text/javascript" src="/static/js/basic.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Tokenfield field autocomplete -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+    <!-- Contact Form JavaScript -->
+    <!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
+    <!-- Custom scripts for this template -->
+    <script>
+      socket.emit('join message', {uid: "{{user.uid}}", firstname: "{{user.first_name}}", lastname: "{{user.last_name}}"});
+      socket.emit('at userpage', {uid: "{{user.uid}}", to_uid: "{{t_user.uid}}", uname: "{{user.first_name}}"});
 
-         (function($) {
-            "use strict"; // Start of use strict
+      (function ($) {
+        "use strict"; // Start of use strict
 
-             // Smooth scrolling using jQuery easing
-            $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
-               if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                  var target = $(this.hash);
-                  target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                  if (target.length) {
-                     $('html, body').animate({
-                        scrollTop: (target.offset().top - 48)
-                     }, 1000, "easeInOutExpo");
-                     return false;
-                  }
-               }
-            });
-
-             // Closes responsive menu when a scroll trigger link is clicked
-            $('.js-scroll-trigger').click(function() {
-               $('.navbar-collapse').collapse('hide');
-            });
-
-            // Activate scrollspy to add active class to navbar items on scroll
-            $('body').scrollspy({
-               target: '#mainNav',
-               offset: 54
-            });
-
-            // Collapse the navbar when page is scrolled
-            $(window).scroll(function() {
-               if ($("#mainNav").offset().top > 100) {
-                  $("#mainNav").addClass("navbar-shrink");
-               } else {
-                  $("#mainNav").removeClass("navbar-shrink");
-               }
-            });
-
-            // Floating label headings for the contact form
-            $(function() {
-               $("body").on("input propertychange", ".floating-label-form-group", function(e) {
-                  $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
-               }).on("focus", ".floating-label-form-group", function() {
-                  $(this).addClass("floating-label-form-group-with-focus");
-               }).on("blur", ".floating-label-form-group", function() {
-                  $(this).removeClass("floating-label-form-group-with-focus");
-               });
-            });
-
-            /* progress bar */
-
-            var delay = 500;
-            $(".progress-striped-outer").each(function(i){
-               $(this).find(".progress-bar").delay( delay*i ).animate( { width: $(this).find(".progress-bar").attr('aria-valuenow') + '%' }, delay );
-               $(this).find(".progress-bar").prop('Counter',0).animate({
-                  Counter: $(this).find(".progress-bar").text()
-               },{
-                  duration: delay,
-                  easing: 'swing',
-                  step: function (now) {
-                     $(this).parent().parent().find(".progPercentageNumb").text(Math.ceil(now)+'%');
-                  }
-               });
-            });
-
-            // skills token field
-            $('#profileSkills, #projectRole, #upcomingKeywords, #upcomingCollaborator, #upcomingCollaboratorSkills').tokenfield({
-                autocomplete: {
-                    delay: 100
-                },
-                showAutocompleteOnFocus: true
-            });
-
-            /* profile page carousels*/
-
-			   $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();
-
-         })(jQuery); // End of use strict
-
-         $(function(){
-            $(".addClass").click(function () {
-               $('#qnimate').addClass('popup-box-on');
-            });
-
-            $("#removeClass").click(function () {
-               $('#qnimate').removeClass('popup-box-on');
-            });
-         })
-
-         socket.on('follow status', function(data){
-            var elem = document.getElementById("addCommunityButton");
-
-            if(data.status == 2){
-               // Already community members
-               elem.value = "Community Member";
-            }else if(data.status == 1){
-               // Sent a request
-               elem.value = "Request Sent";
-            }else if(data.status == 11){
-               // Got a request
-               elem.value = "Confirm Request";
-            }else{
-               // Nothing happens
-               elem.value = "Add";
+        // Smooth scrolling using jQuery easing
+        $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
+          if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+              $('html, body').animate({
+                scrollTop: (target.offset().top - 48)
+              }, 1000, "easeInOutExpo");
+              return false;
             }
-         });
-
-         function addCommunityFunction(){
-            var elem = document.getElementById("addCommunityButton");
-
-            if (elem.value=="Add") {
-               elem.value = "Request Sent";
-               socket.emit('give follow', {to_uid:"{{t_user.uid}}", uid:socket.uid});
-               console.log('give follow');
-            } else if (elem.value = "Confirm Request"){
-               elem.value = "Community Member";
-               socket.emit('give follow', {to_uid:"{{t_user.uid}}", uid:socket.uid});
-            }
-         }
-
-         function defaultMessage(c_type){
-            console.log("defaultMessage");
-            $('#qnimate').addClass('popup-box-on');
-            if (c_type == 1){//launch chat
-               document.getElementById('status_message').value = '';
-            }else if(c_type == 2){//pitch
-               document.getElementById('status_message').value = 'Hello, I have a project I would like to pitch to you.';
-            }
-         }
-
-         function sendMessage(){
-            var post_val = $('#status_message').val();
-
-            if (post_val.length != 0){
-               var files = document.getElementById('image_in_message').files;
-               var file = files[0];
-
-               var data = {};
-
-               if (file){
-                 data = {'file':file, 'fileName':file.name, 'type':file.type};
-                 document.getElementById('image_in_message').value = "";
-               }
-              socket.emit('send message', {msg:post_val, to_uid:"{{t_user.uid}}", uid:"{{user.uid}}", data:data});
-            }
-            $('#status_message').val('');
-            return false;
-         }
-
-         function getMessage(){
-            console.log('get message');
-            //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
-         }
-
-         function createChatMessage(data){
-            var imageText = '';
-            var uid = data.uid;
-            var content = data.content;
-
-            if (uid == "{{user.uid}}") {
-                var name = "You";
-            }else{
-                var name = "{{t_user.first_name}} {{t_user.last_name}}";
-            }
-
-            if (data.image && data.image['file'] && data.image['type']){
-                var bytes = new Uint8Array(data.image['file']);
-                var ctype = data.image['type'];
-                var enc = encode(bytes);
-                var countImg = $('[id^=Image_in_]').length;
-                imageText = '<embed id="Image_in_'+countImg+'" src="data:'+ctype+';base64,'+enc+'" class="popupmessageImage" ></embed>';
-            }
-
-            var message = `
-                <!--div class="chat-box-single-line">
-                    <abbr class="timestamp">October 9th, 2015</abbr>
-                </div-->
-                <div class="direct-chat-msg doted-border">
-                    <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-right">${name}</span>
-                    </div>
-                    <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';" width=50>
-                    <div class="direct-chat-text">
-                        ${content}
-                    </div>
-                    ${imageText}
-                    <!--div class="direct-chat-info clearfix">
-                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
-                    </div-->
-                </div>'
-            `;
-            return message;
-         }
-
-         socket.on('new message', function(data){
-            var message = createChatMessage(data);
-            $('#chat_room').append($(message));
-         });
-
-
-         function createSetChatMessage(doc){
-            var content = doc['content'];
-            var imageText = '';
-
-            if (doc['image'] && doc['image']['data']){
-                var bytes = new Uint8Array(doc['image']['data']['data']);
-                var ctype = doc['image']['contentType'];
-                var enc = encode(bytes);
-                imageText = '<embed id="Image_in_'+doc['_id']+'" src="data:'+ctype+';base64,'+enc+'" class="popupmessageImage" ></embed>';
-            }
-
-            var uid = doc['uid']
-
-            if (uid == "{{user.uid}}") {
-                var name = "You";
-            }else{
-                var name = "{{t_user.first_name}} {{t_user.last_name}}";
-            }
-
-            var message = `
-                <!--div class="chat-box-single-line">
-                    <abbr class="timestamp">October 9th, 2015</abbr>
-                </div-->
-                <div class="direct-chat-msg doted-border">
-                    <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-right">${name}</span>
-                    </div>
-                    <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';" width=50>
-                    <div class="direct-chat-text">
-                        ${content}
-                    </div>
-                    ${imageText}
-                    <!--div class="direct-chat-info clearfix">
-                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
-                    </div-->
-                </div>'
-            `;
-            return message;
-         }
-
-         socket.on('set message', function(data){
-            if(data){
-               if(data['messages']){
-                  for (var i=0; i < data['messages'].length; i++){
-                     if (data['messages'][i]['content']){
-                        var doc = data['messages'][i];
-                        var message = createSetChatMessage(doc);
-                        $('#chat_room').append($(message));
-                     }
-                  }
-               }
-            }
+          }
         });
 
+        // Closes responsive menu when a scroll trigger link is clicked
+        $('.js-scroll-trigger').click(function () {
+          $('.navbar-collapse').collapse('hide');
+        });
 
-      </script>
-   </body>
+        // Activate scrollspy to add active class to navbar items on scroll
+        $('body').scrollspy({
+          target: '#mainNav',
+          offset: 54
+        });
+
+        // Collapse the navbar when page is scrolled
+        $(window).scroll(function () {
+          if ($("#mainNav").offset().top > 100) {
+            $("#mainNav").addClass("navbar-shrink");
+          } else {
+            $("#mainNav").removeClass("navbar-shrink");
+          }
+        });
+
+        // Floating label headings for the contact form
+        $(function () {
+          $("body").on("input propertychange", ".floating-label-form-group", function (e) {
+            $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+          }).on("focus", ".floating-label-form-group", function () {
+            $(this).addClass("floating-label-form-group-with-focus");
+          }).on("blur", ".floating-label-form-group", function () {
+            $(this).removeClass("floating-label-form-group-with-focus");
+          });
+        });
+
+        /* progress bar */
+
+        var delay = 500;
+        $(".progress-striped-outer").each(function (i) {
+          $(this).find(".progress-bar").delay(delay * i).animate({width: $(this).find(".progress-bar").attr('aria-valuenow') + '%'}, delay);
+          $(this).find(".progress-bar").prop('Counter', 0).animate({
+            Counter: $(this).find(".progress-bar").text()
+          }, {
+            duration: delay,
+            easing: 'swing',
+            step: function (now) {
+              $(this).parent().parent().find(".progPercentageNumb").text(Math.ceil(now) + '%');
+            }
+          });
+        });
+
+        // skills token field
+        $('#profileSkills, #projectRole, #upcomingKeywords, #upcomingCollaborator, #upcomingCollaboratorSkills').tokenfield({
+          autocomplete: {
+            delay: 100
+          },
+          showAutocompleteOnFocus: true
+        });
+
+        /* profile page carousels*/
+
+        $("#carouselPortfolio-outer, #carouselPortfolioFuture-outer").carousel();
+
+      })(jQuery); // End of use strict
+
+      $(function () {
+        $(".addClass").click(function () {
+          $('#qnimate').addClass('popup-box-on');
+        });
+
+        $("#removeClass").click(function () {
+          $('#qnimate').removeClass('popup-box-on');
+        });
+      })
+
+      socket.on('follow status', function (data) {
+        var elem = document.getElementById("addCommunityButton");
+
+        if (data.status == 2) {
+          // Already community members
+          elem.value = "Community Member";
+        } else if (data.status == 1) {
+          // Sent a request
+          elem.value = "Request Sent";
+        } else if (data.status == 11) {
+          // Got a request
+          elem.value = "Confirm Request";
+        } else {
+          // Nothing happens
+          elem.value = "Add";
+        }
+      });
+
+      function addCommunityFunction() {
+        var elem = document.getElementById("addCommunityButton");
+
+        if (elem.value == "Add") {
+          elem.value = "Request Sent";
+          socket.emit('give follow', {to_uid: "{{t_user.uid}}", uid: socket.uid});
+          console.log('give follow');
+        } else if (elem.value = "Confirm Request") {
+          elem.value = "Community Member";
+          socket.emit('give follow', {to_uid: "{{t_user.uid}}", uid: socket.uid});
+        }
+      }
+
+      function defaultMessage(c_type) {
+        console.log("defaultMessage");
+        $('#qnimate').addClass('popup-box-on');
+        if (c_type == 1) {//launch chat
+          document.getElementById('status_message').value = '';
+        } else if (c_type == 2) {//pitch
+          document.getElementById('status_message').value = 'Hello, I have a project I would like to pitch to you.';
+        }
+      }
+
+      function sendMessage() {
+        var post_val = $('#status_message').val();
+
+        if (post_val.length != 0) {
+          var files = document.getElementById('image_in_message').files;
+          var file = files[0];
+
+          var data = {};
+
+          if (file) {
+            data = {'file': file, 'fileName': file.name, 'type': file.type};
+            document.getElementById('image_in_message').value = "";
+          }
+          socket.emit('send message', {msg: post_val, to_uid: "{{t_user.uid}}", uid: "{{user.uid}}", data: data});
+        }
+        $('#status_message').val('');
+        return false;
+      }
+
+      function getMessage() {
+        console.log('get message');
+        //socket.emit('get message', { to:{{t_user.id}}, uid:{{user.id}} });
+      }
+
+      function createChatMessage(data) {
+        var imageText = '';
+        var uid = data.uid;
+        var content = data.content;
+
+        if (uid == "{{user.uid}}") {
+          var name = "You";
+        } else {
+          var name = "{{t_user.first_name}} {{t_user.last_name}}";
+        }
+
+        if (data.image && data.image['file'] && data.image['type']) {
+          var bytes = new Uint8Array(data.image['file']);
+          var ctype = data.image['type'];
+          var enc = encode(bytes);
+          var countImg = $('[id^=Image_in_]').length;
+          imageText = '<embed id="Image_in_' + countImg + '" src="data:' + ctype + ';base64,' + enc + '" class="popupmessageImage" ></embed>';
+        }
+
+        var message = `
+                        <!--div class="chat-box-single-line">
+                            <abbr class="timestamp">October 9th, 2015</abbr>
+                        </div-->
+                        <div class="direct-chat-msg doted-border">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-right">${name}</span>
+                            </div>
+                            <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';" width=50>
+                            <div class="direct-chat-text">
+                                ${content}
+                            </div>
+                            ${imageText}
+                            <!--div class="direct-chat-info clearfix">
+                                <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+                            </div-->
+                        </div>'
+                    `;
+        return message;
+      }
+
+      socket.on('new message', function (data) {
+        var message = createChatMessage(data);
+        $('#chat_room').append($(message));
+      });
+
+
+      function createSetChatMessage(doc) {
+        var content = doc['content'];
+        var imageText = '';
+
+        if (doc['image'] && doc['image']['data']) {
+          var bytes = new Uint8Array(doc['image']['data']['data']);
+          var ctype = doc['image']['contentType'];
+          var enc = encode(bytes);
+          imageText = '<embed id="Image_in_' + doc['_id'] + '" src="data:' + ctype + ';base64,' + enc + '" class="popupmessageImage" ></embed>';
+        }
+
+        var uid = doc['uid']
+
+        if (uid == "{{user.uid}}") {
+          var name = "You";
+        } else {
+          var name = "{{t_user.first_name}} {{t_user.last_name}}";
+        }
+
+        var message = `
+                        <!--div class="chat-box-single-line">
+                            <abbr class="timestamp">October 9th, 2015</abbr>
+                        </div-->
+                        <div class="direct-chat-msg doted-border">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-right">${name}</span>
+                            </div>
+                            <img alt="iamgurdeeposahan" src="{{media_url}}userphoto/${uid}.png" class="direct-chat-img" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';" width=50>
+                            <div class="direct-chat-text">
+                                ${content}
+                            </div>
+                            ${imageText}
+                            <!--div class="direct-chat-info clearfix">
+                                <span class="direct-chat-timestamp pull-right">3.36 PM</span>
+                            </div-->
+                        </div>'
+                    `;
+        return message;
+      }
+
+      socket.on('set message', function (data) {
+        if (data) {
+          if (data['messages']) {
+            for (var i = 0; i < data['messages'].length; i++) {
+              if (data['messages'][i]['content']) {
+                var doc = data['messages'][i];
+                var message = createSetChatMessage(doc);
+                $('#chat_room').append($(message));
+              }
+            }
+          }
+        }
+      });
+
+    </script>
+</body>
 </html>

@@ -4,6 +4,7 @@ hatsoff/db.sqlite3
 week1/*2.py
 week1/*.pyc
 week1/migrations/*
+.idea
 
 db.sqlite3
 *.swp

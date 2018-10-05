@@ -391,7 +391,7 @@
                                      <form id="personalInfoForm" class="profileForm clearfix ">
                                         <div class="col-sm-12">
                                             <div class="profileSubHeader clearfix">
-                                                <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_previouswork' forloop.counter %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
+                                                <button class="btn btn-sm btn-outline pull-right" type="button" onclick="location.href='{% url 'week1:edit_previouswork' showcase.number %}'"><i class="fa fa-pencil"></i><span class="sr-only">edit portfolio</span></button>
                                             </div>
                                             {% if showcase.image or showcase.video or showcase.youtube %}
                                                 {% if showcase.image %}

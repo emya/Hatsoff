@@ -1,0 +1,36 @@
+{% extends 'week1/basehome.html'%}
+
+{% block content %}
+{% load staticfiles %}
+
+<div id="home-main">
+
+
+  <h3>More Collaborators</h3>
+
+    <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+      <div class="row" id="upcoming-lists">
+
+        {% if upcomings %}
+            {% for u in upcomings %}
+                <div class="col-4 slide-row">
+                    <div class="card collaborator-card">
+                        <div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <img class="collaborator-img" src="{{ showcase.image.url }}" onerror="this.onerror=null;this.src='/static/images/empty_showcase.png';">
+                            </div>
+                        </div>
+                        <div class="slide-content">
+                            <h3>{{showcase.title}}</h3>
+                            <p class="profession">{{shocase.profession1}}</p>
+                            <p class="description">{{showcase.describe}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -32,6 +32,8 @@ import uuid
 import os
 
 ENV = os.getenv('ENVIRONMENT', 'stg')
+nodejs_url = settings.NODEJS_SOCKET_URL
+media_url = settings.MEDIA_URL
 
 # Create your views here.
 #@csrf_exempt
@@ -350,6 +352,12 @@ def signup_users_list(request):
     nodejs_url = settings.NODEJS_SOCKET_URL
     media_url = settings.MEDIA_URL
     return render(request, 'week1/signup_users_list.html', {'nodejs_url': nodejs_url, 'media_url': media_url})
+
+@csrf_protect
+@login_required
+def upcoming_list(request):
+    upcomings = UpcomingWork.objects.all()
+    return render(request, 'week1/upcoming_list.html', {'upcomings':upcomings, 'media_url': media_url})
 
 @csrf_protect
 @login_required

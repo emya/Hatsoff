@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^hatsoff/list/$', views.hatsoff_list, name='hatsoff_list'),
     url(r'^thanks/list/$', views.thanks_list, name='thanks_list'),
     url(r'^follow/list/$', views.follow_list, name='follow_list'),
+    url(r'^projects/list/$', views.upcoming_list, name='upcoming_list'),
     url(r'^profession/collaborators/(?P<p>[\w -]+)/$', views.profession_collaborators, name='profession_collaborators'),
     url(r'^messages/$', views.messages, name='messages'),
     url(r'^messages/(?P<uid>\d+)/$', views.private_message, name='private_message'),

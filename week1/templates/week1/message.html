@@ -1,8 +1,113 @@
-{% extends 'week1/basehome.html'%}
+{% extends 'week1/base_message.html'%}
 
 {% block content %}
 {% load staticfiles %}
 
+
+<section class="baseMessageBody">
+		<div class="container">
+			<div class="row">
+				<div class="baseMessageBodyLeft col-md-12 col-lg-5 mb-3">
+						<div class="panel panel-communityLeft">
+							<div class="panel-heading">
+								<div class="input-group">
+									<input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="submit">
+											<i class="fa fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+
+				<nav class="navbar">
+						
+						<ul class="navbar-nav w-100">
+						 
+						  <li class="nav-item">
+							<div class="row">
+
+								<div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
+									<div class="thumbnail">
+									   <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+									</div>
+								 </div>
+
+								 <div class="media-body dataProfile-outer col-xs-9 col-sm-9 col-md-9 ">
+									<h3>Mikeldi Chan</h3>
+									<p>Hipster Ipsum</p>
+									
+								 </div>
+							  </div>
+							  <hr>
+						  </li>
+
+						  <li class="nav-item">
+							<div class="row">
+
+								<div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
+									<div class="thumbnail">
+									   <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+									</div>
+								 </div>
+
+								 <div class="media-body dataProfile-outer col-xs-9 col-sm-9 col-md-9 ">
+									<h3>Mikeldi Chan</h3>
+									<p>Hipster Ipsum</p>
+									
+								 </div>
+							  </div>
+							  <hr>
+						  </li>
+
+						  <li class="nav-item">
+							<div class="row">
+
+								<div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
+									<div class="thumbnail">
+									   <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+									</div>
+								 </div>
+
+								 <div class="media-body dataProfile-outer col-xs-9 col-sm-9 col-md-9 ">
+									<h3>Mikeldi Chan</h3>
+									<p>Hipster Ipsum</p>
+									
+								 </div>
+							  </div>
+							  <hr>
+						  </li>
+
+						  <li class="nav-item">
+							<div class="row">
+
+								<div class="imageProfile-outer col-xs-3 col-sm-3 col-md-3">
+									<div class="thumbnail">
+									   <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+									</div>
+								 </div>
+
+								 <div class="media-body dataProfile-outer col-xs-9 col-sm-9 col-md-9 ">
+									<h3>Mikeldi Chan</h3>
+									<p>Hipster Ipsum</p>
+									
+								 </div>
+							  </div>
+							  <hr>
+						  </li>
+
+						</ul>
+						
+					  </nav>
+
+
+
+					  </div>
+					  </div>
+					  
+
+			<div class="baseMessageBodyRight col-md-12 col-lg-7" id="main">
+					<div class="paddingbaseMessageBody">
 
 
 <!--div id="nickWrap">
@@ -12,14 +117,112 @@
 	<input size="35" id="nickname"></input>
 	<input type="submit"></input>
     </form>
-</div-->
+  </div-->
+
+
+
 
 <!--div id="folderWrap"-->
 <div class="panel panel-white clearfix">
-<div id="home-main messages" class="col-md-9">
+<div id="home-main messages" class="col-md-12">
+
+  <!-- mikeldi template -->
+
+  <div class="chatModule w-100">
+  
+      <div class="chatUsrProfile">
+        
+        <div class="row">
+
+          <div class="imageProfile-outer col-xs-2 col-sm-2 col-md-2">
+            <div class="thumbnail">
+               <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+            </div>
+           </div>
+
+           <div class="media-body dataProfile-outer col-xs-10 col-sm-10 col-md-10 ">
+            <h3>Mikeldi Chan</h3>
+            <p>Hipster Ipsum</p>
+            
+           </div>
+          </div>
+        
+        </div>
+      
+      <ol class="discussion">
+        <li class="self">
+          <div class="avatar">
+              <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+          </div>
+          <div class="messages">
+            <p>yeah, they do early flights cause they connect with big airports.  they wanna get u to your connection</p>
+            <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+          </div>
+        </li>
+        <li class="other">
+          <div class="avatar">
+              <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+          </div>
+          <div class="messages">
+            <p>That makes sense.</p>
+            <p>It's a pretty small airport.</p>
+            <time datetime="2009-11-13T20:14">37 mins</time>
+          </div>
+        </li>
+        <li class="self">
+          <div class="avatar">
+              <img class="media-object" src="https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png" onerror="this.onerror=null;this.src='https://matchhat-static.s3.amazonaws.com/static/images/profileimage.png';">
+          </div>
+          <div class="messages">
+            <p>that mongodb thing looks good, huh?</p>
+            <p>
+              tiny master db, and huge document store</p>
+          </div>
+        </li>
+      </ol>
+
+      <form class="form-horizontal messageReplyForm" role="form">
+          <div class="form-group">
+              <textarea class="form-control" placeholder="Enter your comment here" autocomplete="off" name="message"></textarea>
+              <button class="btn btn-lg btn-outline pull-right" type="button">Send</button>
+              <ul class="list-inline messageActionListSmall">
+                  <li class="list-inline-item">
+                      <a href="">
+                          <i class="fa fa-camera"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a href="">
+                          <i class="fa fa-smile-o"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a href="">
+                          <i class="fa fa-star"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a href="">
+                          <i class="fa fa-picture-o"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a href="">
+                          <i class="fa fa-paperclip"></i>
+                      </a>
+                 </li>
+              </ul>
+          </div>
+      </form>
+      
+    </section>
+ 
+
+  <!-- /mikeldi template -->
+
   <div id="message-left">
 
-    <h4>Users</h4>
+    
     <ul style="list-style-type:none;">
        <div id="chatusers"></div>
     </ul>
@@ -49,10 +252,21 @@
     </div-->
 
   </div>
+  
   <div id="message-center">
     <div id="acceptMessage"></div>
-
   </div>
+
+  
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
 
     <!--script src="/socket.io/socket.io.js"></script-->
     <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>

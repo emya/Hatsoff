@@ -103,59 +103,14 @@
 		</div>
 	</nav>
 
-	<section class="baseHomeBody">
-		<div class="container">
-			<div class="row">
-				<div class="baseHomeBodyLeft col-md-12 col-lg-5 mb-3">
-						<div class="panel panel-communityLeft">
-							<div class="panel-heading">
-									<h2 href="#">Projects you took</h2>
-							</div>
-
-				<nav class="navbar">
-						
-						<ul class="navbar-nav mr-auto">
-						 
-						  <li class="nav-item">
-								<li><a class="nav-link" href="{% url 'week1:community_members' %}"><span id="num-cmembers"></span> Community Members</a></li>
-		   
-						  </li>
-						  <li class="nav-item">
-								<li><a href="{% url 'week1:project_management' %}">Projects</a></li>		   
-						  </li>
-						  <li class="nav-item">
-								<li><a href="{% url 'week1:community_needyou' %}" >Suggested projects</a></li>
-		   
-						  </li>
-						  <li class="nav-item">
-								<li><a href="{% url 'week1:collaborators_need_you' %}"><img src="{% static 'images/inactive_grey_collab_32x32.png'%}" width="32px" height=auto> Collaborators who may need you</a></li>
-		   
-						  </li>
-						  <li class="nav-item">
-								<li><a href="{% url 'week1:collaborators_you_need' %}">Collaborators you may need</a></li>
-		   
-						  </li>
 
 
-						  <li></li>
-						</ul>
-						
-					  </nav>
-					  </div>
-					  </div>
-					  
 
-			<div class="baseHomeBodyRight col-md-12 col-lg-7" id="main">
-					<div class="paddingbaseHomeBody">
-				{% block content %}
-				{% endblock %}
-			</div>
-			</div>
-		</div>
-	</div>
-		</div>
-	
-	</section>
+	{% block content %}
+	{% endblock %}
+
+
+
 <!-- Footer -->
 <footer class="text-center">
 		<div class="footer-above">

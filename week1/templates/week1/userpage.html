@@ -208,7 +208,7 @@
                                     <div class="well well-sm personEntity">
                                         <div class="row">
 
-                                            <div class="imageProfile-outer col-xs-3">
+                                            <div class="imageProfile-outer col-sm-3">
                                                 <div class="thumbnail">
                                                     <img class="media-object"
                                                          src="{{media_url}}userphoto/{{t_user.uid}}.png"
@@ -226,7 +226,7 @@
 
                                                     {% if t_profile.profession2 %}
                                                     <a href="{% url 'week1:profession_collaborators' t_profile.profession2 %}">
-                                                        {{t_profile.profession2}} </a>
+                                                        imageProfile-outer           {{t_profile.profession2}} </a>
                                                     {% endif %}
 
                                                     {% if t_profile.profession3 %}

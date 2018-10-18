@@ -1,6 +1,5 @@
-boto3==1.6.9
-botocore==1.8.11
-certifi==2017.11.5
+awscli==1.11.129
+botocore==1.5.9
 chardet==3.0.4
 Django==1.9.8
 django-storages==1.6.5

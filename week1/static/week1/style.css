@@ -7,7 +7,11 @@ body {
     color: #444;
 }
 p {
-    font-size: 20px
+    font-size: 16px
+}
+
+label {
+    font-size: 18px
 }
 /* sizing */
 
@@ -31,7 +35,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
     font-weight: 700;
     color: #444;
 }
@@ -107,7 +110,6 @@ section h2 {
     outline: 0
 }
 #mainNav {
-    font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
     font-weight: 400;
     border: none;
     background: #ffffff;
@@ -1425,8 +1427,6 @@ height: 100%;
     font-size: 21px;
     padding: 7px 10px;
     width: 100%;
-    /* font-family: Oswald;*/
-    font-family: Cabin;
 }
 
 /* Popup chat */
@@ -1439,8 +1439,6 @@ height: 100%;
     position: fixed;
     right: 70px;
     width: 300px;
-/*    font-family: 'Open Sans', sans-serif; */
-    font-family: Cabin;
 }
 
 .popupmessageImage{

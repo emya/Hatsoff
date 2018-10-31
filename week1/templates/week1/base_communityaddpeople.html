@@ -1,0 +1,231 @@
+{% load staticfiles %}
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Match Hat">
+	<meta name="author" content="Find your collaborator, complete your project.">
+	<title>Match Hat</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css"
+	/>
+	<!-- Custom fonts for this template -->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet"
+	 type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet"
+	 type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
+
+	<script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'js/tag-profession.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'js/tag-project.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'js/tag-collaborators.js' %}" type="text/javascript" charset="utf-8"></script>
+	<link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" type="text/css">
+
+	<link rel='stylesheet' type='text/css' href="/static/week1/style.css">
+
+</head>
+
+<body id="page-top">
+	<!-- Navigation -->
+	<nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
+		<div class="container">
+			<a class="navbar-brand" href="{% url 'week1:community' %}">
+					<img src="{% static 'images/MatchHat Logo-01.png'%}" >
+			</a>
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+			 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				Menu
+				<i class="fa fa-bars"></i>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<form class="form-inline my-2 my-md-0 searchBarTop navbar-nav mx-auto ">
+					<div id='header-search'>
+						<form method="GET" action="">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="fa fa-search"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</form>
+				<ul class="navbar-nav mx-auto nav-flex-icons">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'week1:feedback' %}">
+							<small> Feedback </small>
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'week1:community' %}">
+							<i class="fa fa-users"></i>
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'week1:messages' %}">
+							<i class="fa fa-comment-o"></i>
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'week1:notification' %}">
+							<i class="fa fa-bell-o"></i>
+						</a>
+					</li>
+
+				</ul>
+				<ul class="navbar-nav navbar-right">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true"
+						 aria-expanded="false">
+							<i class="fa fa-user"></i>&nbsp;{{user.first_name}}
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdown04">
+							<a class="dropdown-item" href="{% url 'week1:home' %}">My Profile</a>
+							<a class="dropdown-item" href="{% url 'week1:logout' %}" onclick="logoutFunction()">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+    </nav>
+    
+
+
+
+    <section class="baseAddPeopleBody">
+            <div class="container">
+                <div class="row">
+            <div class="baseAddPeopleBodyLeft col-md-12 col-lg-2 mb-3 d-none d-lg-block"> <img src="/static/images/expand_community.png" class="w-100" > </div>
+    
+            
+                <div class="baseAddPeopleBodyRight col-md-12 col-lg-10" id="main">
+            <div class="paddingbaseAddPeopleBody">
+             
+
+
+
+
+	{% block content %}
+	{% endblock %}
+
+</div>
+</div>
+</div>
+</div>
+</section> 
+
+<!-- Footer -->
+<footer class="text-center">
+		<div class="footer-above">
+			<div class="container">
+				<div class="row">
+					<div class="footer-col col-md-3">
+						<h3>Location</h3>
+						<ul class="list-unstyled">
+							<li>
+								<a href="@">About</a>
+							</li>
+							<li>
+								<a href="@">Terms</a>
+							</li>
+							<li>
+								<a href="@">Privacy</a>
+							</li>
+							<li>
+								<a href="@">Careers</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-col col-md-3">
+						<h3>Follow Us</h3>
+						<ul class="list-inline">
+							<li class="list-inline-item">
+								<a class="btn-social btn-outline" href="#">
+									<i class="fa fa-fw fa-facebook"></i>
+								</a>
+							</li>
+							<li class="list-inline-item">
+								<a class="btn-social btn-outline" href="#">
+									<i class="fa fa-fw fa-google-plus"></i>
+								</a>
+							</li>
+							<li class="list-inline-item">
+								<a class="btn-social btn-outline" href="#">
+									<i class="fa fa-fw fa-twitter"></i>
+								</a>
+							</li>
+							<li class="list-inline-item">
+								<a class="btn-social btn-outline" href="#">
+									<i class="fa fa-fw fa-linkedin"></i>
+								</a>
+							</li>
+							<li class="list-inline-item">
+								<a class="btn-social btn-outline" href="#">
+									<i class="fa fa-fw fa-dribbble"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer-col col-md-3">
+						<h3>Feedback</h3>
+						<a href="@">Feedback</a>
+					</div>
+					<div class="footer-col col-md-3">
+						<h3>Contact</h3>
+						<a href="@">Feedback</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-below">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+					Copyright &copy; Match Hat 2017
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+	<div class="scroll-top d-lg-none">
+		<a class="btn btn-primary js-scroll-trigger" href="#page-top">
+			<i class="fa fa-chevron-up"></i>
+	   </a>
+	</div>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.11.1"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+	<!-- Plugin JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+	<script>
+		(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date(); a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-85772251-1', 'auto');
+		ga('send', 'pageview');
+
+	</script>
+</body>
+
+</html>

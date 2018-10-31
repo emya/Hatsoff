@@ -1,17 +1,29 @@
-{% extends 'week1/basehome.html'%}
-
-{% block content %}
-{% load staticfiles %}
+{% extends 'week1/base_communityaddpeople.html'%} {% block content %} {% load staticfiles %}
 
 <div id="home-main">
 
 
-  <h3>More Collaborators</h3>
+  <h3 class="text-center">More Collaborators</h3>
 
-    <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
-      <div class="row" id="collaborator-lists">
-      </div>
+  <div class="form-check pl-5">
+    <input class="form-check-input form-control-lg" type="checkbox" value="" id="defaultCheck1">
+    <label class="form-check-label" for="defaultCheck1">
+      select all
+    </label>
+  </div>
+
+  <div style="margin-top: 20px; margin-bottom: 20px;" class="form-group">
+    <div id="collaborator-lists" class="row">
     </div>
+  </div>
+
+  <div class="addPeople-btn-outer">
+    <a href="#cacafuti" class="pull-right p-2">skip this page</a>
+    <button class="btn btn-md btn-outline pull-right mt-0" type="button" id="add-connections">Add Connections</button>
+
+
+
+  </div>
 </div>
 
 <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
@@ -19,26 +31,26 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
 <script type="text/javascript">
-  socket.emit('join message', {uid:"{{user.uid}}", firstname:"{{user.first_name}}", lastname:"{{user.last_name}}"});
+  socket.emit('join message', { uid: "{{user.uid}}", firstname: "{{user.first_name}}", lastname: "{{user.last_name}}" });
   socket.emit('list users at signup');
 
-  socket.on('get users list', function(docs){
+  socket.on('get users list', function (docs) {
     console.log(docs);
-    if (docs){
-       for (var i = 0; i < docs.length; i++){
-          var uid = docs[i].user_id;
-          var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
-          var firstname = docs[i].first_name;
-          var lastname = docs[i].last_name;
-          var profession1 = docs[i].profession1;
-          var describe = docs[i].describe;
-          var photo = docs[i].photo;
+    if (docs) {
+      for (var i = 0; i < docs.length; i++) {
+        var uid = docs[i].user_id;
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
+        var firstname = docs[i].first_name;
+        var lastname = docs[i].last_name;
+        var profession1 = docs[i].profession1;
+        var describe = docs[i].describe;
+        var photo = docs[i].photo;
 
-          $('#collaborator-lists').append($('<div class="col-4 slide-row"><div class="card collaborator-card"><div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel"><div class="carousel-inner"><img class="collaborator-img" src="{{media_url}}userphoto/'+uid+'.png" onerror="this.onerror=null;this.src=\'{% static 'images/profileimage.png' %}\';"></div></div><div class="slide-content"><a href="'+url_link+'"><h4>'+firstname+'&nbsp'+lastname+'</h4></a><p class="profession">'+profession1+'</p><p class="description">'+describe+'</p></div></div></div>'));
-        }
+        $('#collaborator-lists').append($('<div class="addCollaborator col-md-4"><div class="info-block clearfix"><div data-toggle="buttons" class="btn-group bizmoduleselect"><label class="btn btn-default"><span class="fa"></span><div class="bizcontent" style="position: relative"><input type="checkbox" name="var_id[]" autocomplete="off" value=""><div class="block-update-card"><a class="pull-left w-25 mr-2" href="#"><img class="collaborator-img w-100" src="{{media_url}}userphoto/' + uid + '.png" onerror="this.onerror=null;this.src=\'{% static 'images / profileimage.png' %}\';"></a><div class="media-body update-card-body"><a href="' + url_link + '"><h4 class="media-heading">' + firstname + '&nbsp' + lastname + '</h4></a><p class="profession">' + profession1 + '</p><p class="description">' + describe + '</p></div></div><button class="btn btn-sm btn-outline pull-right" type="button" id="add-connection">Add Connection</button></div></label></div></div></div>'));
+      }
     }
   });
 
-</script>
 
-{% endblock %}
+
+</script> {% endblock %}

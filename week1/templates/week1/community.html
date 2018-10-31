@@ -420,8 +420,8 @@
 <!-- Socket -->
 <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
 <!--script src="https://cdn.socket.io/socket.io-1.2.0.js"></script-->
-<script src="{% static 'js/tag_skills.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
+<script src="/static/js/tag_skills.js"></script>
+<script type="text/javascript" src="/static/js/basic.js"></script>
 <script>
     (function($) {
         "use strict"; // Start of use strict
@@ -755,7 +755,7 @@
                                       <a class="dropdown-item" onclick="return deletePost(\'${cid}\')">Delete post</a>
                                   </div>
                               </div>
-                              <div id="editModal_${cid}" class="modal_community">
+                              <div id="editModal_${cid}" class="modal_community" style="display: none;">
                                   <div class="modal-content">
                                       <span class="close" id="editClose_${cid}" onclick="closeEdit(\'${cid}\')">&times;</span>
                                       <div id="edit_post_${cid}">

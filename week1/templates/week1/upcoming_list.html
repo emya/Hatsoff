@@ -17,7 +17,11 @@
                     <div class="card collaborator-card">
                         <div id="carousel-1" class="carousel slide slide-carousel" data-ride="carousel">
                             <div class="carousel-inner">
+                                {% if u.image %}
                                 <img class="collaborator-img" src="{{ u.image.url }}" onerror="this.onerror=null;this.src='/static/images/empty_showcase.png';">
+                                {% else %}
+                                <img class="collaborator-img" src="/static/images/empty_showcase.png">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="slide-content">

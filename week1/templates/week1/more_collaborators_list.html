@@ -29,10 +29,11 @@
 <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
 <!--script src="https://cdn.socket.io/socket.io-1.2.0.js"></script-->
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script type="text/javascript" src="{% static 'js/basic.js' %}"></script>
+<script type="text/javascript" src="/static/js/basic.js"></script>
 <script type="text/javascript">
   socket.emit('join message', { uid: "{{user.uid}}", firstname: "{{user.first_name}}", lastname: "{{user.last_name}}" });
   socket.emit('list users at signup');
+  var media_url = "{{media_url}}";
 
   socket.on('get users list', function (docs) {
     console.log(docs);
@@ -46,7 +47,33 @@
         var describe = docs[i].describe;
         var photo = docs[i].photo;
 
-        $('#collaborator-lists').append($('<div class="addCollaborator col-md-4"><div class="info-block clearfix"><div data-toggle="buttons" class="btn-group bizmoduleselect"><label class="btn btn-default"><span class="fa"></span><div class="bizcontent" style="position: relative"><input type="checkbox" name="var_id[]" autocomplete="off" value=""><div class="block-update-card"><a class="pull-left w-25 mr-2" href="#"><img class="collaborator-img w-100" src="{{media_url}}userphoto/' + uid + '.png" onerror="this.onerror=null;this.src=\'{% static 'images / profileimage.png' %}\';"></a><div class="media-body update-card-body"><a href="' + url_link + '"><h4 class="media-heading">' + firstname + '&nbsp' + lastname + '</h4></a><p class="profession">' + profession1 + '</p><p class="description">' + describe + '</p></div></div><button class="btn btn-sm btn-outline pull-right" type="button" id="add-connection">Add Connection</button></div></label></div></div></div>'));
+        $('#collaborator-lists').append($(`
+            <div class="addCollaborator col-md-4">
+                <div class="info-block clearfix">
+                    <div data-toggle="buttons" class="btn-group bizmoduleselect">
+                        <label class="btn btn-default">
+                            <span class="fa"></span>
+                            <div class="bizcontent" style="position: relative">
+                                <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                                    <div class="block-update-card">
+                                        <a class="pull-left w-25 mr-2" href="#">
+                                            <img class="collaborator-img w-100" src="${media_url}userphoto/${uid}.png" onerror="this.onerror=null;this.src='/static/images/profileimage.png';">
+                                        </a>
+                                        <div class="media-body update-card-body">
+                                            <a href="${url_link}">
+                                                <h4 class="media-heading">${firstname} ${lastname}</h4>
+                                            </a>
+                                            <p class="profession">${profession1}</p>
+                                            <p class="description">${describe}</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline pull-right" type="button" id="add-connection">Add Connection</button>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>`));
+
       }
     }
   });

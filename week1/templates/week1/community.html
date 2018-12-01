@@ -1,26 +1,25 @@
 {% load staticfiles %}
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
 <html lang="en">
     <head>
         <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                <meta name="description" content="Match Hat">
-                    <meta name="author" content="Find your collaborator, complete your project.">
-                        <title>Match Hat - Community Page</title>
-                            <!-- Bootstrap core CSS -->
-                            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-                            <!-- Custom fonts for this template -->
-                            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-                            <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
-                            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
-                            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
-                            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
-
-                            <link rel='stylesheet' type='text/css' href="/static/week1/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Match Hat">
+        <meta name="author" content="Find your collaborator, complete your project.">
+        <title>Match Hat - Community Page</title>
+        <!-- Bootstrap core CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <!-- Custom fonts for this template -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css" rel="stylesheet" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <link rel='stylesheet' type='text/css' href="/static/week1/style.css">
     </head>
+
 <body id="page-top">
-    <!-- Navigation -->        
+    <!-- Navigation -->
     <nav class="navbar communityNav navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="{% url 'week1:community' %}">
@@ -401,8 +400,6 @@
         <i class="fa fa-chevron-up"></i>
    </a>
 </div>
-<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script-->
 
 <!-- Bootstrap core JavaScript -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
@@ -414,12 +411,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
-<!-- Contact Form JavaScript -->
-<!--<script src="js/jqBootstrapValidation.js"></script><script src="js/contact_me.js"></script>-->
-<!-- Custom scripts for this template -->
-<!-- Socket -->
+
 <script src="{{nodejs_url}}/socket.io/socket.io.js"></script>
-<!--script src="https://cdn.socket.io/socket.io-1.2.0.js"></script-->
 <script src="/static/js/tag_skills.js"></script>
 <script type="text/javascript" src="/static/js/basic.js"></script>
 <script>
@@ -486,7 +479,7 @@
 
     function submitComment(uid, c_id){
         var post_val = $('#c_'+c_id).val();
-                    
+
         if (post_val.length != 0){
             socket.emit('community comment', {msg:post_val, user:"{{user.uid}}", c_id:c_id});
         }
@@ -505,7 +498,7 @@
         for (var i = 0; i < lis.length; i++){
             var t = lis[i].childNodes[0].textContent;
             if ( t!= "" ){
-                skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
+                skillls.push(t.charAt(0).toUpperCase() + t.slice(1));
             }
         }
         */
@@ -542,7 +535,7 @@
         for (var i = 0; i < lis.length; i++){
             var t = lis[i].childNodes[0].textContent;
             if ( t!= "" ){
-                skillls.push(t.charAt(0).toUpperCase() + t.slice(1)); 
+                skillls.push(t.charAt(0).toUpperCase() + t.slice(1));
             }
         }
         */
@@ -566,7 +559,7 @@
     }
 
     function editPost(c_id){
-        var modal = document.getElementById('editModal_'+c_id);  
+        var modal = document.getElementById('editModal_'+c_id);
         modal.style.display = "block";
     }
 
@@ -577,7 +570,7 @@
 
     function submitEdit(c_id){
         var post_val = $('#post_text_'+c_id).val();
-                    
+
         if (post_val.length != 0){
             console.log('if:'+post_val);
             socket.emit('update postContent', {msg:post_val, c_id:c_id, uid:"{{user.uid}}" });
@@ -590,7 +583,7 @@
 
     function closeEdit(c_id){
         var span = document.getElementById('editClose_'+c_id);
-        var modal = document.getElementById('editModal_'+c_id);  
+        var modal = document.getElementById('editModal_'+c_id);
         modal.style.display = "none";
     }
 
@@ -621,7 +614,30 @@
                     ${imageText}
                    `;
         return body;
+    }
 
+    function createNormalBodyApi(uid, cid, data, yy, mm, dd, first_name, last_name, content_id = null){
+        if ( content_id == null ){
+            content_id = cid;
+        }
+        var imageText = '';
+        if (data['image']){
+            imageText = '<embed id="ItemPreview_'+content_id+'" src="{{community_post_url}}'+content_id+'.png" class="postImage" width=250/></embed>';
+            //imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" /></embed>';
+        }
+        var content = data['content'];
+        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
+        //<ul class="media-date text-uppercase reviews list-inline"><li class="dd">${dd}</li><li class="mm">${mm}</li><li class="aaaa">${yy}</li></ul>
+        var body = `<h3 class="media-heading"><a href=${url_link} display:block>${first_name} ${last_name} </a></h3>
+                    <h6> ${dd} ${mm} ${yy} </h6>
+                    <p id="media-content_${cid}">
+                        <strong>
+                            ${content}
+                        </strong>
+                    </p>
+                    ${imageText}
+                   `;
+        return body;
     }
 
     function createNewPostBody(uid, cid, data, yy, mm, dd, content_id = null){
@@ -642,7 +658,7 @@
         var last_name = data.last_name;
         var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
         //<ul class="media-date text-uppercase reviews list-inline"><li class="dd">${dd}</li><li class="mm">${mm}</li><li class="aaaa">${yy}</li></ul>
-        var body = ` 
+        var body = `
                     <h3 class="media-heading"><a href=${url_link} display:block>${first_name} ${last_name} </a></h3>
                     </h3>
                     <h6> ${dd} ${mm} ${yy} </h6>
@@ -654,7 +670,6 @@
                     ${imageText}
                    `;
         return body;
-
     }
 
     function createPortfolioBody(uid, cid, portfolio, data, yy, mm, dd){
@@ -662,10 +677,10 @@
         if (portfolio.image){
             imageText = '<object id="ItemPreview_'+cid+'" data="{{media_url}}'+portfolio.image+'" width="350px" /></object>';
         }
-        
+
         var first_name = data['user']['first_name'];
         var last_name = data['user']['last_name'];
-        var body = `<h3 class="media-heading">${first_name} ${last_name} 
+        var body = `<h3 class="media-heading">${first_name} ${last_name}
                     </h3>
                     <h6> ${dd} ${mm} ${yy} </h6>
                     <p>
@@ -743,7 +758,7 @@
     function createEditDelete(uid, cid, msg){
     	var user_id = "{{user.uid}}";
     	if ( uid != user_id ){
-    	    return '';	
+    	    return '';
     	}
         var editDelete  = `
                               <div class="dropdown">
@@ -796,7 +811,7 @@
                                                 </strong>
                                            ${edit_cmt}
                                            </p>
-                                       </div>`;                        
+                                       </div>`;
                     replyList += replyBodies;
                 }
             }
@@ -818,7 +833,7 @@
                               <img class="media-object" width="80" src="{{media_url}}userphoto/${uid}.png" onerror="this.onerror=null;this.src='/static/images/profileimage.png';">
                           </a>
                           <div class="media-body">
-                              ${editDelete} 
+                              ${editDelete}
                               ${body}
                           </div>
                       </div>
@@ -864,7 +879,7 @@
                   </form>
               </div>
            </div>
-        `;    
+        `;
         return thread;
     }
 
@@ -920,6 +935,8 @@
     });
 
     socket.on('update community post', function(data){
+        console.log('update community post', data);
+
         var docs = (typeof data["docs"] == "string") ? JSON.parse(data["docs"]) : data["docs"];
         var sharedocs = (typeof data["sharedocs"] == "string") ? JSON.parse(data["sharedocs"]) : data["sharedocs"];
         var likedocs = (typeof data["likedocs"] == "string") ? JSON.parse(data["likedocs"]) : data["likedocs"];
@@ -940,12 +957,13 @@
             hatsoffls.push(hatsoffdocs[i]['content_id']);
         }
 
-        for(var i=0; i < docs.length; i++){
-            if (docs[i]['user'] && docs[i]['user']['uid']) {
-                var uid = docs[i]['user']['uid'];
-                var c_id = docs[i]['_id'];
-                var n  = users.indexOf(uid.toString());
-                var created = docs[i]['created'];
+        if (env == 'staging') {
+            for(var i=0; i < docs['data'].length; i++){
+                var attributes = docs['data'][i]['attributes'];
+                var c_id = docs['data'][i]['id'];
+                var uid = attributes['uid'];
+                var n = users.indexOf(uid);
+                var created = attributes['created_at'];
                 var colonIndex = created.indexOf(":");
                 var date = created.substring(0, colonIndex-3);
                 var datels = date.split('-');
@@ -958,202 +976,288 @@
 
                 var privateShow = 0;
 
-                if (docs[i]['communityFlag']){
-                    if (docs[i]['communityFlag'] == 1){
-                        if (friends.indexOf(uid) != -1 || uid == "{{user.uid}}"){
-                            privateShow = 1;
-                        } else{
-                            privateShow = -1;
-                        }
-                    }
+                if (attributes['public_flag'] == false){
+                    privateShow = 1;
                 }
 
-                if (privateShow != -1){
-                    if (docs[i]['likes']){
-                        count_likes = docs[i]['likes']; 
-                    }
+                if (attributes['likes']){
+                    count_likes = attributes['likes'];
+                }
 
-                    if (docs[i]['shares']){
-                      count_shares = docs[i]['shares']; 
-                    }
+                if (attributes['shares']){
+                  count_shares = attributes['shares'];
+                }
 
-                    var privateText = '';
-                    if (privateShow == 1){
-                        privateText = 'Private post';
-                    }
+                if (attributes['hatsoffs']){
+                    count_hatsoffs = attributes['hatsoffs'];
+                }
 
-                    if(docs[i]['sharedBy']){
-                       var s_user = docs[i]['sharedBy']; 
-                       if(s_user == "{{user.uid}}"){
-                           shared_info = '<li class="media">You shared</li>';
+                var privateText = '';
+                if (privateShow == 1){
+                    privateText = 'Private post';
+                }
 
-                        }else{
-                           var sn  = users.indexOf(s_user.toString());
-                           console.log("sn", sn)
-                           console.log("users", users)
-                           shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
-                        }
-                    }
+                var tag = (attributes['tag']) ? attributes['tag'] : 0;
+                var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
+                var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                var profile_link = "/static/images/profileimage.png";
+                var thanks = '';
+                var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
 
-                    if(docs[i]['content_id']){
-                        c_id = docs[i]['content_id']; 
-                    }
+                if (likels.indexOf(c_id) != -1){
+                    isLike = true;
+                } else{
+                    isLike = false;
+                }
 
-                    var tag = (docs[i]['tag']) ? docs[i]['tag'] : 0;
-                    //var url_mask = "{% url 'week1:add_folder' user.uid %}".replace("{{user.uid}}", uid);
-                    var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
-                    var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
-                    var profile_link = "/static/images/profileimage.png";
-                    var thanks = '';
-                    var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
+                if (sharels.indexOf(c_id) != -1){
+                    isShare = true;
+                } else{
+                    isShare = false;
+                }
+              
+                if (hatsoffls.indexOf(c_id) != -1){
+                    isHatsoff = true;
+                } else{
+                    isHatsoff = false;
+                }
+                   
+                var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
+                var replyList = createReplyList(uid, c_id, null)
 
-                    if (likels.indexOf(c_id) != -1){
-                        isLike = true;
-                    } else{
-                        isLike = false;
-                    }
+                var listlikes = '<div id="likeModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closeLikeList(\''+c_id+'\')">&times;</span><h3>Users who liked</h3><div id="like_users_'+c_id+'"></div></div></div>';
 
-                    if (sharels.indexOf(c_id) != -1){
-                        isShare = true;
-                    } else{
-                        isShare = false;
-                    }
+                var listshares = '<div id="shareModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closeShareList(\''+c_id+'\')">&times;</span><h3>Users who shared</h3><div id="share_users_'+c_id+'"></div></div></div>';
 
-                    if (hatsoffls.indexOf(c_id) != -1){
-                        isHatsoff = true;
-                    } else{
-                        isHatsoff = false;
-                    }
-                    
-                    var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
-                    var replyList = createReplyList(uid, c_id, docs[i]['replys'])
+                var dells = '';
+                var editls = '';
+                var edit = '';
 
-                    var listlikes = '<div id="likeModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closeLikeList(\''+c_id+'\')">&times;</span><h3>Users who liked</h3><div id="like_users_'+c_id+'"></div></div></div>';
+                var deleteOrEdit = '';
 
-                    var listshares = '<div id="shareModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closeShareList(\''+c_id+'\')">&times;</span><h3>Users who shared</h3><div id="share_users_'+c_id+'"></div></div></div>';
+                var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
+                var replyList = createReplyList(uid, c_id, null)
+                var body = createNormalBodyApi(uid, c_id, attributes, yy, mm, dd, names[n][0], names[n][1])
+                var editDelete = createEditDelete(uid, c_id, attributes['content'])
+                var thread = create_thread(uid, c_id, body, actionList, replyList, editDelete, privateText)
 
-                    var dells = '';
-                    var editls = '';
-                    var edit = '';
-                      
-                    var deleteOrEdit = '';
+                $('#communityThread').append($(thread));
+            }
+        } else {
+            for(var i=0; i < docs.length; i++){
+                if (docs[i]['user'] && docs[i]['user']['uid']) {
+                    var uid = docs[i]['user']['uid'];
+                    var c_id = docs[i]['_id'];
+                    var n = users.indexOf(uid.toString());
+                    var created = docs[i]['created'];
+                    var colonIndex = created.indexOf(":");
+                    var date = created.substring(0, colonIndex-3);
+                    var datels = date.split('-');
+                    var mm = months[parseInt(datels[1])-1];
+                    var dd = datels[2];
+                    var yy = datels[0];
+                    var shared_info = '';
+                    var count_likes = 0;
+                    var count_shares = 0;
 
-                    if (docs[i]['portfolio']){
-                        var portfolio = docs[i]['portfolio'];
-                        var body = createPortfolioBody(uid, c_id, portfolio, docs[i], yy, mm, dd)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
+                    var privateShow = 0;
 
-                        $('#communityThread').append($(thread));
-                        continue;                            
-                    }
-
-                    if (docs[i]['upcoming']){
-                        var upcoming = docs[i]['upcoming'];
-                        var body = createPortfolioBody(uid, c_id, upcoming, docs[i], yy, mm, dd)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
-                        $('#communityThread').append($(thread));
-
-                        continue;                            
-                    }
-
-                    if (docs[i]['sharedBy']){
-                        var content_id = docs[i]['content_id'];
-                        for(var j=0; j < docs.length; j++){
-                            if ( docs[j]['_id'] == content_id ){
-                                break; 
+                    if (docs[i]['communityFlag']){
+                        if (docs[i]['communityFlag'] == 1){
+                            if (friends.indexOf(uid) != -1 || uid == "{{user.uid}}"){
+                                privateShow = 1;
+                            } else{
+                                privateShow = -1;
                             }
                         }
-                        uid = docs[j]['user']['uid'];
-                        tag = (docs[j]['tag']) ? docs[j]['tag'] : 0;
-                        //url_mask = "{% url 'week1:add_folder' user.uid %}".replace("{{user.uid}}", uid);
-                        url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
-                        post_link = "{% url 'week1:community_post'%}?c_id="+content_id+"&tag="+tag+"&u="+uid;
-                        created = docs[j]['created'];
-                        colonIndex = created.indexOf(":");
-                        date = created.substring(0, colonIndex-3);
-                        datels = date.split('-');
-                        mm = months[parseInt(datels[1])-1];
-                        dd = datels[2];
-                        yy = datels[0];
+                    }
 
-                        var imageText = '';
-                        if (docs[j]['image'] && docs[j]['image']['data']){
-                            var bytes = new Uint8Array(docs[j]['image']['data']);
-                            var enc = encode(bytes);
-                            var ctype = docs[j]['image']['contentType'];
-                            imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" width=250/></embed>';
+                    if (privateShow != -1){
+                        if (docs[i]['likes']){
+                            count_likes = docs[i]['likes'];
                         }
 
-                        var skillls = '';
-                        if (docs[j]['skillls']){
-                            if(docs[j]['skillls'].length != 0){
-                                var ls = docs[j]['skillls'];
-                                skillls += "<div> Tags: ";
-                                for (var k = 0; k < docs[j]['skillls'].length; k++){
-                                    var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, docs[j]['skillls'][k]);
-                                    skillls += "<a href='"+skill_link+"'>"+docs[j]['skillls'][k]+"</a>" + "&nbsp";
-                                }  
-                                skillls += "</div><br>";
+                        if (docs[i]['shares']){
+                          count_shares = docs[i]['shares'];
+                        }
+
+                        var privateText = '';
+                        if (privateShow == 1){
+                            privateText = 'Private post';
+                        }
+
+                        if(docs[i]['sharedBy']){
+                           var s_user = docs[i]['sharedBy'];
+                           if(s_user == "{{user.uid}}"){
+                               shared_info = '<li class="media">You shared</li>';
+
+                            }else{
+                               var sn  = users.indexOf(s_user.toString());
+                               console.log("sn", sn)
+                               console.log("users", users)
+                               shared_info = '<li class="media">'+names[sn][0]+'&nbsp'+names[sn][1]+' shared</li>';
                             }
                         }
 
-                        if (docs[j]['likes']){
-                            count_likes = docs[j]['likes']; 
+                        if(docs[i]['content_id']){
+                            c_id = docs[i]['content_id'];
                         }
 
-                        if (docs[j]['shares']){
-                            count_shares = docs[j]['shares']; 
-                        }
+                        var tag = (docs[i]['tag']) ? docs[i]['tag'] : 0;
+                        //var url_mask = "{% url 'week1:add_folder' user.uid %}".replace("{{user.uid}}", uid);
+                        var url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
+                        var post_link = "{% url 'week1:community_post'%}?c_id="+c_id+"&tag="+tag+"&u="+uid;
+                        var profile_link = "/static/images/profileimage.png";
+                        var thanks = '';
+                        var follow = '<div class="popupFollow" onclick="followFunction('+uid+')">Follow &nbsp</br><span class="popuptextFollow" id="followPop">Followed this user!</br></span></div>';
 
-                        if (likels.indexOf(content_id) != -1){
+                        if (likels.indexOf(c_id) != -1){
                             isLike = true;
-                        }else{
+                        } else{
                             isLike = false;
                         }
 
-                        share = '';
-                        if (sharels.indexOf(content_id) != -1){
+                        if (sharels.indexOf(c_id) != -1){
                             isShare = true;
-                        }else{
+                        } else{
                             isShare = false;
                         }
 
-                        hatsoff = '';
-                        if (hatsoffls.indexOf(content_id) != -1){
+                        if (hatsoffls.indexOf(c_id) != -1){
                             isHatsoff = true;
-                        }else{
+                        } else{
                             isHatsoff = false;
                         }
 
                         var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
                         var replyList = createReplyList(uid, c_id, docs[i]['replys'])
-                        var body = createNormalBody(uid, c_id, docs[j], yy, mm, dd, content_id)
-                        var thread = create_thread(uid, c_id, body, actionList, replyList, '', privateText)
+
+                        var listlikes = '<div id="likeModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="likeClose_'+c_id+'" onclick="closeLikeList(\''+c_id+'\')">&times;</span><h3>Users who liked</h3><div id="like_users_'+c_id+'"></div></div></div>';
+
+                        var listshares = '<div id="shareModal_'+c_id+'" class="modal_community"><div class="modal-content"><span class="close" id="shareClose_'+c_id+'" onclick="closeShareList(\''+c_id+'\')">&times;</span><h3>Users who shared</h3><div id="share_users_'+c_id+'"></div></div></div>';
+
+                        var dells = '';
+                        var editls = '';
+                        var edit = '';
+
+                        var deleteOrEdit = '';
+
+                        if (docs[i]['portfolio']){
+                            var portfolio = docs[i]['portfolio'];
+                            var body = createPortfolioBody(uid, c_id, portfolio, docs[i], yy, mm, dd)
+                            var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
+
+                            $('#communityThread').append($(thread));
+                            continue;
+                        }
+
+                        if (docs[i]['upcoming']){
+                            var upcoming = docs[i]['upcoming'];
+                            var body = createPortfolioBody(uid, c_id, upcoming, docs[i], yy, mm, dd)
+                            var thread = create_thread(uid, c_id, body, actionList, replyList, privateText)
+                            $('#communityThread').append($(thread));
+
+                            continue;
+                        }
+
+                        if (docs[i]['sharedBy']){
+                            var content_id = docs[i]['content_id'];
+                            for(var j=0; j < docs.length; j++){
+                                if ( docs[j]['_id'] == content_id ){
+                                    break;
+                                }
+                            }
+                            uid = docs[j]['user']['uid'];
+                            tag = (docs[j]['tag']) ? docs[j]['tag'] : 0;
+                            //url_mask = "{% url 'week1:add_folder' user.uid %}".replace("{{user.uid}}", uid);
+                            url_link = "{% url 'week1:get_profile' user.uid %}".replace("{{user.uid}}", uid);
+                            post_link = "{% url 'week1:community_post'%}?c_id="+content_id+"&tag="+tag+"&u="+uid;
+                            created = docs[j]['created'];
+                            colonIndex = created.indexOf(":");
+                            date = created.substring(0, colonIndex-3);
+                            datels = date.split('-');
+                            mm = months[parseInt(datels[1])-1];
+                            dd = datels[2];
+                            yy = datels[0];
+
+                            var imageText = '';
+                            if (docs[j]['image'] && docs[j]['image']['data']){
+                                var bytes = new Uint8Array(docs[j]['image']['data']);
+                                var enc = encode(bytes);
+                                var ctype = docs[j]['image']['contentType'];
+                                imageText = '<embed id="ItemPreview_'+content_id+'" src="data:'+ctype+';base64,'+enc+'" class="postImage" width=250/></embed>';
+                            }
+
+                            var skillls = '';
+                            if (docs[j]['skillls']){
+                                if(docs[j]['skillls'].length != 0){
+                                    var ls = docs[j]['skillls'];
+                                    skillls += "<div> Tags: ";
+                                    for (var k = 0; k < docs[j]['skillls'].length; k++){
+                                        var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, docs[j]['skillls'][k]);
+                                        skillls += "<a href='"+skill_link+"'>"+docs[j]['skillls'][k]+"</a>" + "&nbsp";
+                                    }
+                                    skillls += "</div><br>";
+                                }
+                            }
+
+                            if (docs[j]['likes']){
+                                count_likes = docs[j]['likes'];
+                            }
+
+                            if (docs[j]['shares']){
+                                count_shares = docs[j]['shares'];
+                            }
+
+                            if (likels.indexOf(content_id) != -1){
+                                isLike = true;
+                            }else{
+                                isLike = false;
+                            }
+
+                            share = '';
+                            if (sharels.indexOf(content_id) != -1){
+                                isShare = true;
+                            }else{
+                                isShare = false;
+                            }
+
+                            hatsoff = '';
+                            if (hatsoffls.indexOf(content_id) != -1){
+                                isHatsoff = true;
+                            }else{
+                                isHatsoff = false;
+                            }
+
+                            var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
+                            var replyList = createReplyList(uid, c_id, docs[i]['replys'])
+                            var body = createNormalBody(uid, c_id, docs[j], yy, mm, dd, content_id)
+                            var thread = create_thread(uid, c_id, body, actionList, replyList, '', privateText)
+
+                            $('#communityThread').append($(thread));
+                            continue;
+                        }
+
+                        if (docs[i]['skillls']){
+                            if(docs[i]['skillls'].length != 0){
+                                var ls = docs[i]['skillls'];
+                                skillls += "<div> Tags: ";
+                                for (var j = 0; j < docs[i]['skillls'].length; j++){
+                                    var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, docs[i]['skillls'][j]);
+                                    skillls += "<a href='"+skill_link+"'>"+docs[i]['skillls'][j]+"</a>" + "&nbsp";
+                                }
+                                skillls += "</div><br>";
+                            }
+                        }
+
+                        var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
+                        var replyList = createReplyList(uid, c_id, docs[i]['replys'])
+                        var body = createNormalBody(uid, c_id, docs[i], yy, mm, dd)
+                        var editDelete = createEditDelete(uid, c_id, docs[i]['content'])
+                        var thread = create_thread(uid, c_id, body, actionList, replyList, editDelete, privateText)
 
                         $('#communityThread').append($(thread));
-                        continue;
                     }
-                      
-                    if (docs[i]['skillls']){
-                        if(docs[i]['skillls'].length != 0){
-                            var ls = docs[i]['skillls'];
-                            skillls += "<div> Tags: ";
-                            for (var j = 0; j < docs[i]['skillls'].length; j++){
-                                var skill_link = "{% url 'week1:talent_list' 12345 %}".replace(/12345/, docs[i]['skillls'][j]);
-                                skillls += "<a href='"+skill_link+"'>"+docs[i]['skillls'][j]+"</a>" + "&nbsp";
-                            } 
-                            skillls += "</div><br>";
-                        }
-                    }
-
-                    var actionList = createActionList(uid, c_id, count_likes, count_shares, isLike, isShare, isHatsoff);
-                    var replyList = createReplyList(uid, c_id, docs[i]['replys'])
-                    var body = createNormalBody(uid, c_id, docs[i], yy, mm, dd)
-                    var editDelete = createEditDelete(uid, c_id, docs[i]['content'])
-                    var thread = create_thread(uid, c_id, body, actionList, replyList, editDelete, privateText)
-
-                    $('#communityThread').append($(thread));
-
                 }
             }
         }
@@ -1299,7 +1403,7 @@
     function sendMessage(uid){
         console.log('send message');
         var post_val = $('#status_message').val();
-                    
+
         if (post_val.length != 0){
             socket.emit('send message', {msg:post_val, to_uid:uid, uid:{{user.id}} });
         }
@@ -1312,6 +1416,5 @@
     }
 
 </script>
-                                                                                                                            
 </body>
 </html>

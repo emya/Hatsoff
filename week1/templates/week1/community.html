@@ -789,7 +789,7 @@
                     var body = replys[i]['content'];
                     var replyBodies = `<div class="communityReply" class="community_comment_${r_id}">
                                            <a class="thumbnail pull-left" href="#">
-                                                <img class="media-object" src="http://placebeard.it/57x57">
+                                                <img class="media-object" src="{{media_url}}userphoto/${ruid}.png" onerror="this.onerror=null;this.src='{% static 'images/profileimage.png' %}';">
                                            </a>
                                            <p class="replyUsername"><a href="${url_link}"><strong>${first_name} ${last_name}</strong></a>${deleteOrEdit_cmt}</p>
                                            <p>  <strong> ${body}

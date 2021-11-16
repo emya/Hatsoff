@@ -5,7 +5,7 @@
   "dependencies": {
     "array-flatten": "^2.1.1",
     "async": "^2.6.0",
-    "aws-sdk": "^2.221.1",
+    "aws-sdk": "^2.814.0",
     "content-disposition": "^0.5.2",
     "content-type": "^1.0.4",
     "depd": "^1.1.2",

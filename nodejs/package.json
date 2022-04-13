@@ -4,7 +4,7 @@
   "description": "my first socket.io app",
   "dependencies": {
     "array-flatten": "^2.1.1",
-    "async": "^2.6.0",
+    "async": "^3.2.2",
     "aws-sdk": "^2.221.1",
     "content-disposition": "^0.5.2",
     "content-type": "^1.0.4",

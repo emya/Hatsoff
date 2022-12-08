@@ -11,7 +11,7 @@
     "depd": "^1.1.2",
     "destroy": "^1.0.4",
     "etag": "^1.8.1",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "finalhandler": "^1.1.1",
     "fresh": "^0.5.2",
     "http-errors": "^1.6.3",
